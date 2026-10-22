@@ -77,8 +77,8 @@ https://findymail.com · nur anbieten, nicht aktiv einfordern.
 
 ### Umgang mit den Schlüsseln
 
-* Der Nutzer fügt den Schlüssel im Chat ein — das ist in Ordnung, er landet in seiner
-  eigenen `.env` auf seinem eigenen Rechner.
+* Der Nutzer trägt den Schlüssel selbst in seine `.env` ein — nicht in den Chat.
+  Öffne ihm die Datei bzw. nenne den Pfad.
 * Kurz erwähnen: Schlüssel nicht weitergeben, nicht in Screenshots zeigen.
 * **Niemals Keys erfinden, aus Beispielen übernehmen oder committen.** `.env` ist gitignored.
 * Ist ein Schlüssel offensichtlich unvollständig oder ein Platzhalter, nachfragen
