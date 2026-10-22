@@ -1,0 +1,10 @@
+.env
+data/
+exports/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.DS_Store
+lead-scraper.zip
+brand/_vorschau.png

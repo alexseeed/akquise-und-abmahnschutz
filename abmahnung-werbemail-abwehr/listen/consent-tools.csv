@@ -1,0 +1,16 @@
+tool;erkennung_host_oder_skript;speicherort;schluessel;ablehnung_erkennbar_an;sicherheit;hinweis
+CCM19;cloud.ccm19.de;localStorage;ccm_consent;"""clickedButton"":""decline"" und Dienste im dataLayer-Ereignis CCM19.consentStateChanged mit false";getestet;Kategorie „Sonstiges“ kann auch nach Ablehnen erlaubt bleiben – Dienste darin laden trotzdem
+Cookiebot;consent.cookiebot.com;Cookie;CookieConsent;"statistics:false, marketing:false, preferences:false";bekannt;Wert ist URL-kodiert
+OneTrust;cdn.cookielaw.org;Cookie;OptanonConsent (+ OptanonAlertBoxClosed);"groups=C0001:1,C0002:0,C0003:0,C0004:0";bekannt;C0001 = notwendig, übrige Gruppen je nach Konfiguration
+Usercentrics;app.usercentrics.eu / web.cmp.usercentrics.eu;localStorage;uc_settings (v2) bzw. ucData / uc_gcm (v3);Dienste mit status false;Schlüssel im Browser prüfen;Version anhand des geladenen Skripts bestimmen
+Borlabs Cookie;Pfad /wp-content/plugins/borlabs-cookie/;Cookie;borlabs-cookie;nur Gruppe essential im Cookie-Wert;bekannt;WordPress-Plugin
+Complianz;Pfad /wp-content/plugins/complianz;Cookie;cmplz_marketing / cmplz_statistics / cmplz_preferences;Wert deny;bekannt;WordPress-Plugin
+Real Cookie Banner;Pfad /wp-content/plugins/real-cookie-banner;Cookie;real_cookie_banner-* ;nur essenzielle Gruppe enthalten;Schlüssel im Browser prüfen;WordPress-Plugin
+CookieYes;cdn-cookieyes.com;Cookie;cookieyes-consent;"analytics:no, advertisement:no, functional:no";bekannt;
+Klaro;Skript klaro.js;Cookie oder localStorage;klaro;JSON mit Diensten auf false;bekannt;Speicherort konfigurierbar
+iubenda;cdn.iubenda.com;Cookie;_iub_cs-[Site-ID];purposes mit false;Schlüssel im Browser prüfen;
+Didomi;sdk.privacy-center.org;Cookie und localStorage;didomi_token, euconsent-v2;purposes.disabled gefüllt;Schlüssel im Browser prüfen;TCF-String in euconsent-v2
+consentmanager;cdn.consentmanager.net;Cookie;__cmpconsent* / __cmpcc*;Ablehnung im Consent-String;Schlüssel im Browser prüfen;
+Cookie Script;cdn.cookie-script.com;Cookie;CookieScriptConsent;"action:reject";bekannt;
+Google Consent Mode;googletagmanager.com (dataLayer);dataLayer;consent default / consent update;"analytics_storage:denied, ad_storage:denied";getestet;Consent Mode ist kein Banner – zeigt nur, was an Google-Dienste gemeldet wird
+IAB TCF (allgemein);__tcfapi im Fenster;Cookie oder localStorage;euconsent-v2;Zwecke im TC-String nicht gesetzt;bekannt;TC-String mit einem TCF-Decoder auslesen

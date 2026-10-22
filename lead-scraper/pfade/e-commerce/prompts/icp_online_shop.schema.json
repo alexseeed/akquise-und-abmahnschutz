@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "isActiveOnlineShop": {
+      "type": "boolean",
+      "description": "Indicates if the website is an active online shop based on the provided body text and classification criteria"
+    }
+  },
+  "required": [
+    "isActiveOnlineShop"
+  ],
+  "additionalProperties": false
+}

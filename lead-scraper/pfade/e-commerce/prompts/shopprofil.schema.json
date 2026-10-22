@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "is_icp": {
+      "type": "boolean",
+      "description": "true, wenn der Shop laut Startseitentext zum Shop-Profil des Kunden passt, sonst false"
+    },
+    "confidence": {
+      "type": "number",
+      "description": "Sicherheit der Einschätzung von 0.0 (geraten) bis 1.0 (eindeutig)"
+    },
+    "reason": {
+      "type": "string",
+      "description": "Kurze Begründung auf Deutsch"
+    }
+  },
+  "required": [
+    "is_icp",
+    "confidence",
+    "reason"
+  ],
+  "additionalProperties": false
+}

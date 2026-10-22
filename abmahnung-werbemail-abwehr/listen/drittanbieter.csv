@@ -1,0 +1,69 @@
+host_endung;anbieter;kategorie;sitz;drittland_usa;endgeraetezugriff_typisch;einwilligung_typisch_noetig;hinweis
+fonts.googleapis.com;Google (Google Fonts);Schriftarten;Irland/USA;ja;nein;ja;LG München I 3 O 17493/20 – Alternative: lokal hosten
+fonts.gstatic.com;Google (Google Fonts);Schriftarten;Irland/USA;ja;nein;ja;Schriftdateien zu fonts.googleapis.com
+googletagmanager.com;Google (Tag Manager / gtag.js);Tag-Management, Analytics;Irland/USA;ja;ja;ja;Skript-Abruf allein ist noch kein Messaufruf – auf /collect achten
+google-analytics.com;Google Analytics;Analyse;Irland/USA;ja;ja;ja;Messaufrufe /g/collect bzw. /collect
+analytics.google.com;Google Analytics;Analyse;Irland/USA;ja;ja;ja;Messaufrufe GA4
+stats.g.doubleclick.net;Google (DoubleClick);Werbung, Analyse;Irland/USA;ja;ja;ja;
+doubleclick.net;Google (DoubleClick / Ads);Werbung;Irland/USA;ja;ja;ja;
+googleadservices.com;Google Ads;Werbung, Conversion;Irland/USA;ja;ja;ja;
+googlesyndication.com;Google AdSense;Werbung;Irland/USA;ja;ja;ja;
+maps.googleapis.com;Google Maps;Karte;Irland/USA;ja;teilweise;ja;
+maps.gstatic.com;Google Maps;Karte;Irland/USA;ja;nein;ja;
+google.com/maps;Google Maps (Embed);Karte;Irland/USA;ja;teilweise;ja;Embed-iFrame – Pfad beachten
+google.com/recaptcha;Google reCAPTCHA;Bot-Schutz;Irland/USA;ja;ja;umstritten;Einwilligung nach h. M. nötig, sofern nicht technisch zwingend
+recaptcha.net;Google reCAPTCHA;Bot-Schutz;Irland/USA;ja;ja;umstritten;
+gstatic.com;Google (statische Inhalte);diverse;Irland/USA;ja;nein;ja;Zuordnung über URL-Pfad klären
+youtube.com;YouTube (Google);Video;Irland/USA;ja;ja;ja;
+youtube-nocookie.com;YouTube erweiterter Datenschutzmodus;Video;Irland/USA;ja;teilweise;ja;auch im No-Cookie-Modus Verbindung zu Google
+ytimg.com;YouTube (Vorschaubilder);Video;Irland/USA;ja;nein;ja;
+player.vimeo.com;Vimeo;Video;USA;ja;ja;ja;
+vimeocdn.com;Vimeo;Video;USA;ja;nein;ja;
+connect.facebook.net;Meta (Pixel / SDK);Werbung, Tracking;Irland/USA;ja;ja;ja;
+facebook.com/tr;Meta Pixel (Messaufruf);Werbung, Tracking;Irland/USA;ja;ja;ja;
+instagram.com;Meta (Instagram Embed);Social Media;Irland/USA;ja;ja;ja;
+snap.licdn.com;LinkedIn Insight Tag;Werbung, Tracking;Irland/USA;ja;ja;ja;
+px.ads.linkedin.com;LinkedIn Insight Tag (Messaufruf);Werbung, Tracking;Irland/USA;ja;ja;ja;
+platform.linkedin.com;LinkedIn Plugins;Social Media;Irland/USA;ja;ja;ja;
+analytics.tiktok.com;TikTok Pixel;Werbung, Tracking;Irland/China/USA;ja;ja;ja;Drittlandübermittlung besonders prüfen
+bat.bing.com;Microsoft Ads (UET);Werbung, Tracking;Irland/USA;ja;ja;ja;
+clarity.ms;Microsoft Clarity;Analyse, Session Recording;Irland/USA;ja;ja;ja;Sitzungsaufzeichnung
+hotjar.com;Hotjar;Analyse, Session Recording;Malta;nein;ja;ja;
+hs-scripts.com;HubSpot;Marketing-Automation;Irland/USA;ja;ja;ja;
+hs-analytics.net;HubSpot Analytics;Analyse;Irland/USA;ja;ja;ja;
+track.hubspot.com;HubSpot Tracking;Analyse;Irland/USA;ja;ja;ja;
+js.hsforms.net;HubSpot Formulare;Formular;Irland/USA;ja;teilweise;ja;
+cdn.jsdelivr.net;jsDelivr CDN;Bibliotheken;weltweit;ja;nein;ja;IP-Übermittlung – Alternative: lokal hosten
+cdnjs.cloudflare.com;Cloudflare CDN (cdnjs);Bibliotheken;USA;ja;nein;ja;IP-Übermittlung – Alternative: lokal hosten
+ajax.googleapis.com;Google Hosted Libraries;Bibliotheken;Irland/USA;ja;nein;ja;IP-Übermittlung – Alternative: lokal hosten
+code.jquery.com;jQuery CDN;Bibliotheken;USA;ja;nein;ja;IP-Übermittlung – Alternative: lokal hosten
+unpkg.com;unpkg CDN;Bibliotheken;USA;ja;nein;ja;IP-Übermittlung – Alternative: lokal hosten
+use.typekit.net;Adobe Fonts;Schriftarten;Irland/USA;ja;nein;ja;
+kit.fontawesome.com;Font Awesome;Icons;USA;ja;nein;ja;
+challenges.cloudflare.com;Cloudflare Turnstile;Bot-Schutz;USA;ja;teilweise;umstritten;
+static.cloudflareinsights.com;Cloudflare Web Analytics;Analyse;USA;ja;nein;ja;
+js.stripe.com;Stripe;Zahlung;Irland/USA;ja;ja;nein;auf Zahlungsseiten oft erforderlich – auf allen Seiten geladen prüfen
+paypal.com/sdk;PayPal SDK;Zahlung;Luxemburg/USA;ja;ja;nein;siehe Stripe
+assets.calendly.com;Calendly;Terminbuchung;USA;ja;ja;ja;
+embed.typeform.com;Typeform;Formular;Spanien/USA;ja;ja;ja;
+widget.intercom.io;Intercom;Chat;Irland/USA;ja;ja;ja;
+client.crisp.chat;Crisp;Chat;Frankreich;nein;ja;ja;
+embed.tawk.to;tawk.to;Chat;USA;ja;ja;ja;
+static.zdassets.com;Zendesk;Chat, Support;USA;ja;ja;ja;
+widget.trustpilot.com;Trustpilot;Bewertungs-Widget;Dänemark;nein;teilweise;ja;
+widgets.trustedshops.com;Trusted Shops;Bewertungs-Widget;Deutschland;nein;teilweise;ja;
+provenexpert.com;ProvenExpert (Expert Systems AG);Bewertungs-Widget;Deutschland;nein;teilweise;ja;
+provenexpert.net;ProvenExpert (Expert Systems AG);Bewertungssiegel;Deutschland;nein;teilweise;ja;
+trustlocal.de;Trustlocal;Bewertungs-Widget;Belgien;nein;teilweise;ja;
+wkdb-siegel.de;wer kennt den BESTEN (11880 Internet Services AG);Bewertungssiegel;Deutschland;nein;nein;ja;
+maklersieger.de;Maklersieger;Siegel-Grafik;Deutschland;nein;nein;ja;
+my.matterport.com;Matterport;3D-Rundgang;USA;ja;ja;ja;
+bottimmo.com;BOTTIMMO AG;Immobilien-Widgets, Analyse;Schweiz;nein;teilweise;ja;Schweiz mit Angemessenheitsbeschluss
+immokarten.de;immokarten.de / immoxxl;Karte, Schriftarten;Deutschland;nein;nein;ja;URL-Parameter st[ip] ist keine Besucher-IP
+cloud.ccm19.de;CCM19 (Papoo Software & Media GmbH);Consent-Tool;Deutschland;nein;ja;nein;Consent-Tool selbst ist erforderlich
+consent.cookiebot.com;Cookiebot (Usercentrics);Consent-Tool;Dänemark;nein;ja;nein;
+app.usercentrics.eu;Usercentrics;Consent-Tool;Deutschland;nein;ja;nein;
+cdn.cookielaw.org;OneTrust;Consent-Tool;USA/EU;ja;ja;nein;
+cdn.consentmanager.net;consentmanager;Consent-Tool;Deutschland;nein;ja;nein;
+cdn-cookieyes.com;CookieYes;Consent-Tool;Großbritannien/USA;ja;ja;nein;
+cdn.userway.org;UserWay;Barrierefreiheits-Widget;USA;ja;ja;umstritten;

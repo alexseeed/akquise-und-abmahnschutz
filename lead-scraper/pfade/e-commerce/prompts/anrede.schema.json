@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "anrede": {
+      "type": "string",
+      "enum": [
+        "Herr",
+        "Frau"
+      ],
+      "description": "Die bestimmte Anrede basierend auf dem Vornamen."
+    },
+    "confidence": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Confidence Score (0–100) für die Zuverlässigkeit der Geschlechtszuordnung."
+    }
+  },
+  "required": [
+    "anrede",
+    "confidence"
+  ],
+  "additionalProperties": false
+}

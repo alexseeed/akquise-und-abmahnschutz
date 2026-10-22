@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "properties": {
+    "response": {
+      "type": "string",
+      "description": "The domain URL of the company or an empty string if no result"
+    }
+  },
+  "required": [
+    "response"
+  ]
+}

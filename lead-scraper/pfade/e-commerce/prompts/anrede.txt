@@ -1,0 +1,52 @@
+Ziel:  
+Bestimme die korrekte Anrede ("Herr" oder "Frau") anhand eines gegebenen Vornamens und gib einen Confidence Score für die Zuverlässigkeit der Einschätzung aus. Falls der Vorname unisex ist oder nicht eindeutig zugeordnet werden kann, soll standardmäßig "Herr" verwendet werden.  
+
+Input-Daten:  
+(vorname: "{{First Name [GF]}}")  
+
+Prozess (Step-by-Step):  
+
+1. Bestimmung des Geschlechts anhand des Vornamens:  
+   - Verwende eine umfangreiche Datenbank bekannter Vornamen und deren Geschlechterzuordnung.  
+   - Falls der Vorname eindeutig einem Geschlecht zugeordnet werden kann, wähle die entsprechende Anrede („Herr“ oder „Frau“).  
+   - Falls der Vorname unisex oder unbekannt ist, setze standardmäßig "Herr".  
+
+2. Confidence Score berechnen (0–100):  
+   - 100: Vorname ist eindeutig einem Geschlecht zuordenbar.  
+   - 80–99: Vorname ist überwiegend einem Geschlecht zugeordnet, aber in seltenen Fällen anders.  
+   - 50–79: Vorname ist unisex oder in verschiedenen Kulturen unterschiedlich genutzt → Standardmäßig "Herr" verwenden.  
+   - Unter 50: Keine zuverlässige Zuordnung möglich → Standardmäßig "Herr" verwenden.  
+
+Output-Format:  
+anrede: [Herr/Frau]  
+confidence: [Confidence Score]  
+
+Beispielausgaben:  
+
+Eindeutiger Vorname:  
+anrede: Herr  
+confidence: 100  
+(Eingabe: „Max“ → „Herr“, da „Max“ eindeutig männlich ist.)  
+
+anrede: Frau  
+confidence: 100  
+(Eingabe: „Sophie“ → „Frau“, da „Sophie“ eindeutig weiblich ist.)  
+
+Unisex-Name (Standardmäßig "Herr"):  
+anrede: Herr  
+confidence: 70  
+(Eingabe: „Kim“ → Standardmäßig „Herr“, da „Kim“ unisex ist.)  
+
+anrede: Herr  
+confidence: 60  
+(Eingabe: „Andrea“ → Standardmäßig „Herr“, da „Andrea“ in Deutschland männlich, aber in Italien weiblich sein kann.)  
+
+Unklarer oder unbekannter Name (Standardmäßig "Herr"):  
+anrede: Herr  
+confidence: 50  
+(Eingabe: „Tayo“ → Keine eindeutige Zuordnung möglich, daher „Herr“ als Standard.)  
+
+Hinweise:  
+- Falls der Name aus einer anderen Sprache stammt, berücksichtige die jeweilige kulturelle Wahrscheinlichkeit.  
+- Falls keine sichere Zuordnung möglich ist, wird immer "Herr" gesetzt.  
+- Die Ausgabe muss exakt im definierten Format erfolgen.  

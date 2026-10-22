@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "properties": {
+    "painCategory": {
+      "type": "string",
+      "enum": ["Lead Gen", "Vertriebsprozess", "Kennzahlen", "unklar"],
+      "description": "Ergebnis der vier Prüffragen in fester Reihenfolge."
+    },
+    "partnernetzBelegt": {
+      "type": "boolean",
+      "description": "true nur, wenn ein bestehendes Netz aus Händlern, Vertriebspartnern, Importeuren oder eigenen Niederlassungen konkret belegt ist."
+    },
+    "beleg": {
+      "type": "string",
+      "description": "Maximal 15 Wörter: die konkrete Textstelle oder der Linkpfad, der die Einordnung trägt. Sonst 'kein Beleg'."
+    }
+  },
+  "required": ["painCategory", "partnernetzBelegt", "beleg"],
+  "additionalProperties": false
+}

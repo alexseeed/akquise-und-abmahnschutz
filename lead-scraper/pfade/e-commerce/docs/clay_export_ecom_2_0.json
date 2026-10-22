@@ -1,0 +1,4976 @@
+{
+ "Import": {
+  "id": "t_REDACTED_IMPORT",
+  "tableSettings": {
+   "AUTO_RUN_ON": true,
+   "HAS_SIGNALS": false,
+   "DEDUPE_FIELD_ID": null,
+   "SCHEDULE_CONFIG": {
+    "runSettings": "once"
+   },
+   "HAS_SCHEDULED_RUNS": false,
+   "AUTO_RUN_LAST_ENABLED": 1774296420126,
+   "HAS_SCHEDULED_SOURCES": false
+  },
+  "fields": [
+   {
+    "id": "f_0svw91akQJtKXWgKstH",
+    "name": "website",
+    "type": "url",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "url"
+     }
+    }
+   },
+   {
+    "id": "f_0svw96hDuEpZPhFf2tW",
+    "name": "Company Domain",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "use-ai",
+     "actionVersion": 1,
+     "actionPackageId": "67ba01e9-1898-4e7d-afe7-7ebe24819a57",
+     "inputsBinding": [
+      {
+       "name": "useCase",
+       "formulaText": "\"claygent\""
+      },
+      {
+       "name": "prompt",
+       "formulaText": "\"#Task#\\nFind domain for \" + Clay.formatForAIPrompt({{f_ZTS3nFZ5ewzA}}) + \"\\n\\n#example output#\\n\\nresponse: \\\"https://www.krampe.de/\\\"\\n\\n#example no result#\\n\\nresponse: \\\"\\\"\\n\""
+      },
+      {
+       "name": "temperature"
+      },
+      {
+       "name": "reasoningLevel"
+      },
+      {
+       "name": "reasoningBudget"
+      },
+      {
+       "name": "claygentId"
+      },
+      {
+       "name": "claygentFieldMapping"
+      },
+      {
+       "name": "maxTokens"
+      },
+      {
+       "name": "model",
+       "formulaText": "\"gemini-2.5-flash-lite\""
+      },
+      {
+       "name": "maxCostInCents"
+      },
+      {
+       "name": "jsonMode"
+      },
+      {
+       "name": "systemPrompt"
+      },
+      {
+       "name": "answerSchemaType",
+       "formulaMap": {
+        "type": "\"json\"",
+        "jsonType": "\"JSONSchema\"",
+        "jsonSchema": "\"{\\n  \\\"type\\\": \\\"object\\\",\\n  \\\"properties\\\": {\\n    \\\"response\\\": {\\n      \\\"type\\\": \\\"string\\\",\\n      \\\"description\\\": \\\"The domain URL of the company or an empty string if no result\\\"\\n    }\\n  },\\n  \\\"required\\\": [\\n    \\\"response\\\"\\n  ]\\n}\""
+       }
+      },
+      {
+       "name": "tableExamples"
+      },
+      {
+       "name": "stopSequence"
+      },
+      {
+       "name": "runBudget"
+      },
+      {
+       "name": "topP"
+      },
+      {
+       "name": "contextDocumentIds"
+      },
+      {
+       "name": "browserbaseContextId"
+      },
+      {
+       "name": "mcpSettings"
+      },
+      {
+       "name": "_metadata",
+       "formulaMap": {
+        "modelSource": "user"
+       }
+      }
+     ],
+     "conditionalRunFormulaText": "!{{f_0svw91akQJtKXWgKstH}} && !!{{f_ZTS3nFZ5ewzA}}",
+     "customRateLimitRules": {
+      "timeWindow": [
+       {
+        "limit": 5,
+        "bucket": [
+         "PRIVATE_AUTH_KEY",
+         "CUSTOM_KEY"
+        ],
+        "durationMs": 1000
+       },
+       {
+        "limit": 750,
+        "bucket": [
+         "GLOBAL"
+        ],
+        "durationMs": 1000
+       }
+      ]
+     },
+     "authAccountId": "aa_REDACTED"
+    }
+   },
+   {
+    "id": "f_0t9w0bf3dW6t6BaMc8h",
+    "name": "SKAEL WEBSCRAPER",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "http-api-v2",
+     "actionVersion": 1,
+     "actionPackageId": "4299091f-3cd3-4d68-b198-0143575f471d",
+     "inputsBinding": [
+      {
+       "name": "method",
+       "formulaText": "\"POST\""
+      },
+      {
+       "name": "url",
+       "formulaText": "\"https://api.skael.de/api/enrichments/web_scraper\""
+      },
+      {
+       "name": "queryString"
+      },
+      {
+       "name": "body",
+       "formulaText": "\"{\\n  \\\"url\\\": \\\"\" + Clay.formatForJSON({{f_PGqAgz9iKgvB}}) + \"\\\"\\n}\""
+      },
+      {
+       "name": "headers",
+       "formulaMap": {
+        "Content-Type": "\"application/json\"",
+        "Authorization": "\"Bearer \"+{{f_0ta3jocgFtNmcvjguq8}}"
+       }
+      },
+      {
+       "name": "fieldPaths"
+      },
+      {
+       "name": "removeNull",
+       "formulaText": "true"
+      },
+      {
+       "name": "returnResponseMetadata"
+      },
+      {
+       "name": "followRedirects",
+       "formulaText": "true"
+      },
+      {
+       "name": "responseTimeout"
+      },
+      {
+       "name": "shouldRetry",
+       "formulaText": "true"
+      }
+     ],
+     "conditionalRunFormulaText": "!!{{f_PGqAgz9iKgvB}}",
+     "customRateLimitRules": {
+      "timeWindow": [
+       {
+        "limit": 10,
+        "bucket": [
+         "WORKSPACE_ID"
+        ],
+        "durationMs": 1000
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "f_0ta3jocgFtNmcvjguq8",
+    "name": "Skael API Key",
+    "type": "text",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     }
+    }
+   },
+   {
+    "id": "f_0tcpcl1bqZes8AXJFEF",
+    "name": "HTTP RESERVE",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "http-api-v2",
+     "actionVersion": 1,
+     "actionPackageId": "4299091f-3cd3-4d68-b198-0143575f471d",
+     "inputsBinding": [
+      {
+       "name": "method",
+       "formulaText": "\"POST\""
+      },
+      {
+       "name": "url",
+       "formulaText": "\"api.skael.de\""
+      },
+      {
+       "name": "queryString"
+      },
+      {
+       "name": "body"
+      },
+      {
+       "name": "headers"
+      },
+      {
+       "name": "fieldPaths"
+      },
+      {
+       "name": "removeNull",
+       "formulaText": "true"
+      },
+      {
+       "name": "returnResponseMetadata"
+      },
+      {
+       "name": "followRedirects",
+       "formulaText": "true"
+      },
+      {
+       "name": "responseTimeout"
+      },
+      {
+       "name": "shouldRetry",
+       "formulaText": "true"
+      }
+     ],
+     "conditionalRunFormulaText": "false"
+    }
+   },
+   {
+    "id": "f_0tcpclkBhoDDPMUt6wB",
+    "name": "HTTP RESERVE (2)",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "http-api-v2",
+     "actionVersion": 1,
+     "actionPackageId": "4299091f-3cd3-4d68-b198-0143575f471d",
+     "inputsBinding": [
+      {
+       "name": "method",
+       "formulaText": "\"POST\""
+      },
+      {
+       "name": "url",
+       "formulaText": "\"api.skael.de\""
+      },
+      {
+       "name": "queryString"
+      },
+      {
+       "name": "body"
+      },
+      {
+       "name": "headers"
+      },
+      {
+       "name": "fieldPaths"
+      },
+      {
+       "name": "removeNull",
+       "formulaText": "true"
+      },
+      {
+       "name": "returnResponseMetadata"
+      },
+      {
+       "name": "followRedirects",
+       "formulaText": "true"
+      },
+      {
+       "name": "responseTimeout"
+      },
+      {
+       "name": "shouldRetry",
+       "formulaText": "true"
+      }
+     ],
+     "conditionalRunFormulaText": "false"
+    }
+   },
+   {
+    "id": "f_0tcpclof4dtUo5Nvht8",
+    "name": "HTTP RESERVE (3)",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "http-api-v2",
+     "actionVersion": 1,
+     "actionPackageId": "4299091f-3cd3-4d68-b198-0143575f471d",
+     "inputsBinding": [
+      {
+       "name": "method",
+       "formulaText": "\"POST\""
+      },
+      {
+       "name": "url",
+       "formulaText": "\"api.skael.de\""
+      },
+      {
+       "name": "queryString"
+      },
+      {
+       "name": "body"
+      },
+      {
+       "name": "headers"
+      },
+      {
+       "name": "fieldPaths"
+      },
+      {
+       "name": "removeNull",
+       "formulaText": "true"
+      },
+      {
+       "name": "returnResponseMetadata"
+      },
+      {
+       "name": "followRedirects",
+       "formulaText": "true"
+      },
+      {
+       "name": "responseTimeout"
+      },
+      {
+       "name": "shouldRetry",
+       "formulaText": "true"
+      }
+     ],
+     "conditionalRunFormulaText": "false"
+    }
+   },
+   {
+    "id": "f_0tcpcm7EpUc9e8v9zjo",
+    "name": "HTTP RESERVE (4)",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "http-api-v2",
+     "actionVersion": 1,
+     "actionPackageId": "4299091f-3cd3-4d68-b198-0143575f471d",
+     "inputsBinding": [
+      {
+       "name": "method",
+       "formulaText": "\"POST\""
+      },
+      {
+       "name": "url",
+       "formulaText": "\"api.skael.de\""
+      },
+      {
+       "name": "queryString"
+      },
+      {
+       "name": "body"
+      },
+      {
+       "name": "headers"
+      },
+      {
+       "name": "fieldPaths"
+      },
+      {
+       "name": "removeNull",
+       "formulaText": "true"
+      },
+      {
+       "name": "returnResponseMetadata"
+      },
+      {
+       "name": "followRedirects",
+       "formulaText": "true"
+      },
+      {
+       "name": "responseTimeout"
+      },
+      {
+       "name": "shouldRetry",
+       "formulaText": "true"
+      }
+     ],
+     "conditionalRunFormulaText": "false"
+    }
+   },
+   {
+    "id": "f_0tcpcmcovGiwKE7HeYU",
+    "name": "HTTP RESERVE (5)",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "http-api-v2",
+     "actionVersion": 1,
+     "actionPackageId": "4299091f-3cd3-4d68-b198-0143575f471d",
+     "inputsBinding": [
+      {
+       "name": "method",
+       "formulaText": "\"POST\""
+      },
+      {
+       "name": "url",
+       "formulaText": "\"api.skael.de\""
+      },
+      {
+       "name": "queryString"
+      },
+      {
+       "name": "body"
+      },
+      {
+       "name": "headers"
+      },
+      {
+       "name": "fieldPaths"
+      },
+      {
+       "name": "removeNull",
+       "formulaText": "true"
+      },
+      {
+       "name": "returnResponseMetadata"
+      },
+      {
+       "name": "followRedirects",
+       "formulaText": "true"
+      },
+      {
+       "name": "responseTimeout"
+      },
+      {
+       "name": "shouldRetry",
+       "formulaText": "true"
+      }
+     ],
+     "conditionalRunFormulaText": "false"
+    }
+   },
+   {
+    "id": "f_0tcpcmkViFcoYogiytb",
+    "name": "SKAEL WEBTRAFFIC",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "http-api-v2",
+     "actionVersion": 1,
+     "actionPackageId": "4299091f-3cd3-4d68-b198-0143575f471d",
+     "inputsBinding": [
+      {
+       "name": "method",
+       "formulaText": "\"POST\""
+      },
+      {
+       "name": "url",
+       "formulaText": "\"https://api.skael.de/api/enrichments/webtraffic\""
+      },
+      {
+       "name": "queryString"
+      },
+      {
+       "name": "body",
+       "formulaText": "\"{\\n  \\\"domain\\\": \\\"\" + Clay.formatForJSON({{f_PGqAgz9iKgvB}}) + \"\\\"\\n}\""
+      },
+      {
+       "name": "headers",
+       "formulaMap": {
+        "Content-Type": "\"application/json\"",
+        "Authorization": "\"Bearer \"+{{f_0ta3jocgFtNmcvjguq8}}"
+       }
+      },
+      {
+       "name": "fieldPaths"
+      },
+      {
+       "name": "removeNull",
+       "formulaText": "true"
+      },
+      {
+       "name": "returnResponseMetadata"
+      },
+      {
+       "name": "followRedirects",
+       "formulaText": "true"
+      },
+      {
+       "name": "responseTimeout"
+      },
+      {
+       "name": "shouldRetry",
+       "formulaText": "true"
+      }
+     ],
+     "conditionalRunFormulaText": "!!{{f_PGqAgz9iKgvB}} && {{f_0th725fPf3TRd7f7zFE}}?.isActiveOnlineShop"
+    }
+   },
+   {
+    "id": "f_0th725fPf3TRd7f7zFE",
+    "name": "ICP ONLINE SHOP",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "use-ai",
+     "actionVersion": 1,
+     "actionPackageId": "67ba01e9-1898-4e7d-afe7-7ebe24819a57",
+     "inputsBinding": [
+      {
+       "name": "useCase",
+       "formulaText": "\"use-ai\""
+      },
+      {
+       "name": "prompt",
+       "formulaText": "\"#CONTEXT#\\nYou are an AI-powered web scraper and classifier. Your task is to analyze a website’s fetched body text and determine if it is an active online shop (not in maintenance, not unreachable).\\n\\n#OBJECTIVE#\\nDetermine if the website is an active online shop based on Bodytext and output a single boolean: true if it is an active onlineshop, false otherwise.\\n\\n#INSTRUCTIONS#\\n1. Input data:\\n   - Use only the provided page body text and Website.\\n2. Classification criteria for an onlineshop (signals that strongly indicate true):\\n   - Presence of ecommerce intents/terms: \\\"add to cart\\\", \\\"cart\\\", \\\"basket\\\", \\\"checkout\\\", \\\"buy now\\\", \\\"shop now\\\", \\\"order\\\", \\\"pay\\\", \\\"payment\\\", \\\"shipping\\\", \\\"returns\\\", \\\"SKU\\\", \\\"product variants\\\", \\\"in stock\\\", \\\"out of stock\\\".\\n   - Product listing cues: product grids, price formats (e.g., \\\"$\\\", \\\"€\\\", currency codes), product detail sections, size/color selectors.\\n   - Platform markers: mentions of Shopify, WooCommerce, Magento, BigCommerce, PrestaShop, etc. if clearly tied to shopping actions.\\n3. Exclusion criteria (print false) if any of the following is detected:\\n   - Maintenance/unavailable indicators: \\\"maintenance\\\", \\\"under construction\\\", \\\"coming soon\\\", \\\"temporarily unavailable\\\", HTTP/connection error copy, placeholder text only.\\n   - Pure informational, blog, portfolio, corporate site with no purchase/cart/checkout capability.\\n   - Marketplace/profile pages without a checkout on this domain.\\n4. Edge cases:\\n   - If signals are ambiguous or weak (e.g., general marketing copy like \\\"our products\\\" without cart/checkout), return false.\\n   - If body text is empty, null, or clearly an error/placeholder, return false.\\n   - If the shop requires JavaScript but body text still includes clear ecommerce terms (cart/checkout), return true.\\n5. Output format:\\n   - Return only the literal string: true or false (lowercase), with no additional text.\\n\\n#EXAMPLES#\\nInput bodyText example (onlineshop): \\\"New arrivals – Add to cart – Checkout – Free shipping on orders over $50\\\"\\nOutput: true\\n\\nInput bodyText example (not onlineshop): \\\"Welcome to Acme Corp. We provide consulting services. Contact us for a quote.\\\"\\nOutput: false\\n\\nInput bodyText example (maintenance): \\\"Site under maintenance. Please check back later.\\\"\\nOutput: false\\n\\n\\n##INPUT \\n\\n\\\"BodyText\\\":\\\"\" + Clay.formatForAIPrompt({{f_0t9w0bf3dW6t6BaMc8h}}?.output?.body_text) + \"\\\"\\n\\\"Website\\\":\\\"\" + Clay.formatForAIPrompt({{f_PGqAgz9iKgvB}}) + \"\\\"\""
+      },
+      {
+       "name": "temperature"
+      },
+      {
+       "name": "reasoningLevel"
+      },
+      {
+       "name": "reasoningBudget"
+      },
+      {
+       "name": "claygentId"
+      },
+      {
+       "name": "claygentFieldMapping"
+      },
+      {
+       "name": "maxTokens"
+      },
+      {
+       "name": "model",
+       "formulaText": "\"gpt-4o-mini\""
+      },
+      {
+       "name": "maxCostInCents"
+      },
+      {
+       "name": "jsonMode"
+      },
+      {
+       "name": "systemPrompt"
+      },
+      {
+       "name": "answerSchemaType",
+       "formulaMap": {
+        "type": "\"json\"",
+        "jsonType": "\"JSONSchema\"",
+        "jsonSchema": "\"{\\n  \\\"type\\\": \\\"object\\\",\\n  \\\"properties\\\": {\\n    \\\"isActiveOnlineShop\\\": {\\n      \\\"type\\\": \\\"boolean\\\",\\n      \\\"description\\\": \\\"Indicates if the website is an active online shop based on the provided body text and classification criteria\\\"\\n    }\\n  },\\n  \\\"required\\\": [\\n    \\\"isActiveOnlineShop\\\"\\n  ],\\n  \\\"additionalProperties\\\": false\\n}\""
+       }
+      },
+      {
+       "name": "tableExamples"
+      },
+      {
+       "name": "stopSequence"
+      },
+      {
+       "name": "runBudget"
+      },
+      {
+       "name": "topP"
+      },
+      {
+       "name": "contextDocumentIds"
+      },
+      {
+       "name": "browserbaseContextId"
+      },
+      {
+       "name": "mcpSettings"
+      },
+      {
+       "name": "_metadata",
+       "formulaMap": {
+        "modelSource": "user"
+       }
+      }
+     ],
+     "conditionalRunFormulaText": "!!{{f_PGqAgz9iKgvB}} && !!{{f_0t9w0bf3dW6t6BaMc8h}}?.output?.body_text",
+     "customRateLimitRules": {
+      "timeWindow": [
+       {
+        "limit": 200,
+        "bucket": [
+         "PRIVATE_AUTH_KEY",
+         "CUSTOM_KEY"
+        ],
+        "durationMs": 1000
+       },
+       {
+        "limit": 750,
+        "bucket": [
+         "GLOBAL"
+        ],
+        "durationMs": 1000
+       }
+      ]
+     },
+     "authAccountId": "aa_REDACTED"
+    }
+   },
+   {
+    "id": "f_0th72be9offNQz9n9fU",
+    "name": "AVR TRAFFIC",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text",
+      "label": "Text",
+      "iconType": {
+       "displayName": "TextT"
+      }
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_0tcpcmkViFcoYogiytb}}?.output?.estimated_monthly_visits\n  ? Math.round(\n      Object.values({{f_0tcpcmkViFcoYogiytb}}?.output?.estimated_monthly_visits).reduce((sum, v) => sum + v, 0)\n      / Object.values({{f_0tcpcmkViFcoYogiytb}}?.output?.estimated_monthly_visits).length\n    )\n  : \"\"",
+     "formulaPrompt": ""
+    }
+   },
+   {
+    "id": "f_0th72osmPcuVBmfn5Bf",
+    "name": "H T 3 MO",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text",
+      "label": "Text",
+      "iconType": {
+       "displayName": "TextT"
+      }
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_0tcpcmkViFcoYogiytb}}?.output?.estimated_monthly_visits\n  ? Object.values({{f_0tcpcmkViFcoYogiytb}}?.output?.estimated_monthly_visits).reduce((a, b) => Math.max(a, b), 0)\n  : \"\"",
+     "formulaPrompt": ""
+    }
+   },
+   {
+    "id": "f_0th72ybnbm7CfvJcAT3",
+    "name": "MIN AVR TRAFFIC",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "\"1\""
+    }
+   },
+   {
+    "id": "f_0th72yq7T5pWoMAS48e",
+    "name": "MIN AVR H T 3 MO",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "\"1\""
+    }
+   },
+   {
+    "id": "f_0th730tBwqNsJAieuyi",
+    "name": "MODE AND/OR",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "select",
+      "options": [
+       {
+        "id": "5baa3978-d2f6-489b-9bf3-5de7e7a675a9",
+        "text": "OR",
+        "color": "grey"
+       },
+       {
+        "id": "b15c312b-e7b3-4d9d-9c77-0be00bc5142e",
+        "text": "AND",
+        "color": "blue"
+       }
+      ]
+     },
+     "formulaType": "text",
+     "formulaText": "\"OR\""
+    }
+   },
+   {
+    "id": "f_0th73fnqrEdsKamk6nw",
+    "name": "SEND",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "boolean"
+     },
+     "formulaType": "text",
+     "formulaText": "(\n  {{f_0th730tBwqNsJAieuyi}} === \"OR\"\n    ? (Number({{f_0th72be9offNQz9n9fU}}) >= Number({{f_0th72ybnbm7CfvJcAT3}}) || Number({{f_0th72osmPcuVBmfn5Bf}}) >= Number({{f_0th72yq7T5pWoMAS48e}}))\n    : (Number({{f_0th72be9offNQz9n9fU}}) >= Number({{f_0th72ybnbm7CfvJcAT3}}) && Number({{f_0th72osmPcuVBmfn5Bf}}) >= Number({{f_0th72yq7T5pWoMAS48e}}))\n) ? true : false",
+     "formulaPrompt": ""
+    }
+   },
+   {
+    "id": "f_0th74cl9b36CdERD8hu",
+    "name": "Send table data",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "route-row",
+     "actionVersion": 1,
+     "actionPackageId": "b1ab3d5d-b0db-4b30-9251-3f32d8b103c1",
+     "inputsBinding": [
+      {
+       "name": "tableId",
+       "formulaText": "\"t_REDACTED_ANREICHERUNG\""
+      },
+      {
+       "name": "rowData",
+       "formulaMap": {
+        "Firmenname": "{{f_ZTS3nFZ5ewzA}}",
+        "website [Final]": "{{f_PGqAgz9iKgvB}}"
+       }
+      }
+     ],
+     "referencedTableId": "t_REDACTED_ANREICHERUNG"
+    }
+   },
+   {
+    "id": "f_created_at",
+    "name": "Created At",
+    "type": "date",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "date"
+     }
+    }
+   },
+   {
+    "id": "f_PGqAgz9iKgvB",
+    "name": "website [Final]",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "url"
+     },
+     "formulaType": "text",
+     "formulaText": "/^(https?:\\/\\/)?([a-z0-9-]+\\.)+[a-z]{2,}(\\/.*)?$/i.test({{f_0svw91akQJtKXWgKstH}}) ? {{f_0svw91akQJtKXWgKstH}} : {{f_0svw96hDuEpZPhFf2tW}}?.response",
+     "formulaPrompt": "\"make sure \" + {{f_0svw91akQJtKXWgKstH}} + \" is a valid domain then print it else print \\\"\\\" \""
+    }
+   },
+   {
+    "id": "f_updated_at",
+    "name": "Updated At",
+    "type": "date",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "date"
+     }
+    }
+   },
+   {
+    "id": "f_ZTS3nFZ5ewzA",
+    "name": "Firmenname",
+    "type": "text",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     }
+    }
+   }
+  ],
+  "views": [
+   {
+    "id": "gv_rsYs7dXmUGpm",
+    "name": "Gesamt",
+    "filter": null,
+    "sort": null
+   },
+   {
+    "id": "gv_THuAiQohKJdh",
+    "name": "Errored rows",
+    "filter": {
+     "items": [
+      {
+       "type": "EMPTY",
+       "fieldId": "f_created_at"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0svw96hDuEpZPhFf2tW"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0svw96hDuEpZPhFf2tW"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0svw96hDuEpZPhFf2tW"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0svw96hDuEpZPhFf2tW"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0svw96hDuEpZPhFf2tW"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0svw96hDuEpZPhFf2tW"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0t9w0bf3dW6t6BaMc8h"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tcpcl1bqZes8AXJFEF"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tcpclkBhoDDPMUt6wB"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tcpclof4dtUo5Nvht8"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tcpcm7EpUc9e8v9zjo"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tcpcmcovGiwKE7HeYU"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tcpcmkViFcoYogiytb"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0svw96hDuEpZPhFf2tW"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0t9w0bf3dW6t6BaMc8h"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tcpcl1bqZes8AXJFEF"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tcpclkBhoDDPMUt6wB"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tcpclof4dtUo5Nvht8"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tcpcm7EpUc9e8v9zjo"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tcpcmcovGiwKE7HeYU"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tcpcmkViFcoYogiytb"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0th725fPf3TRd7f7zFE"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0th74cl9b36CdERD8hu"
+      }
+     ],
+     "combinationMode": "OR"
+    },
+    "sort": null
+   },
+   {
+    "id": "gv_rZ7sHzpRCGPf",
+    "name": "Non enrichment columns",
+    "filter": null,
+    "sort": null
+   },
+   {
+    "id": "gv_ouFKx2gKV7sf",
+    "name": "Fully enriched rows",
+    "filter": {
+     "items": [
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0th725fPf3TRd7f7zFE"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0th725fPf3TRd7f7zFE"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0th725fPf3TRd7f7zFE"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      }
+     ],
+     "combinationMode": "AND"
+    },
+    "sort": null
+   },
+   {
+    "id": "gv_0tcpcphhagTtx8Ark2a",
+    "name": "All rows",
+    "filter": null,
+    "sort": null
+   }
+  ]
+ },
+ "ANREICHERUNG": {
+  "id": "t_REDACTED_ANREICHERUNG",
+  "tableSettings": {
+   "AUTO_RUN_ON": true,
+   "HAS_SIGNALS": false,
+   "DEDUPE_FIELD_ID": "f_hNARpu99Hn6f",
+   "SCHEDULE_CONFIG": {
+    "runSettings": "once"
+   },
+   "HAS_SCHEDULED_RUNS": false,
+   "AUTO_RUN_LAST_ENABLED": 1774296420126,
+   "HAS_SCHEDULED_SOURCES": false
+  },
+  "fields": [
+   {
+    "id": "f_0svj9knd2vWWaZS7wzv",
+    "name": "Find Work Email",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "findymail-find-work-email",
+     "actionVersion": 1,
+     "actionPackageId": "9515bb04-4267-4074-94eb-653545c3c38f",
+     "inputsBinding": [
+      {
+       "name": "full_name",
+       "formulaText": "{{f_tpiAir8xf5MG}}"
+      },
+      {
+       "name": "company_domain",
+       "formulaText": "{{f_PGqAgz9iKgvB}}"
+      }
+     ],
+     "conditionalRunFormulaText": "{{f_TFJCvUXUt4nn}} && {{f_tpiAir8xf5MG}} && !{{f_0t9j598rmUiThdxqBvh}}?.output?.email",
+     "authAccountId": "aa_REDACTED"
+    }
+   },
+   {
+    "id": "f_0svjacoiW7zHK7bNv7i",
+    "name": "Firmenname [Impressum]",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_0tadx06EGdiANatwheB}}?.output?.firmenname",
+     "mappedResultPath": [
+      "firmenname"
+     ]
+    }
+   },
+   {
+    "id": "f_0svjadrP2skPdNYKuii",
+    "name": "Firmenname [Final]",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_0svjacoiW7zHK7bNv7i}} || {{f_ZTS3nFZ5ewzA}}"
+    }
+   },
+   {
+    "id": "f_0svjb94XRSZWgFe3fzB",
+    "name": "Kontaktperson",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text",
+      "label": "Text",
+      "iconType": {
+       "displayName": "TextT"
+      }
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_0tadx06EGdiANatwheB}}?.output?.geschaeftsfuehrer?.[0]",
+     "formulaPrompt": ""
+    }
+   },
+   {
+    "id": "f_0svw91akQJtKXWgKstH",
+    "name": "website",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "url"
+     },
+     "formulaType": "text",
+     "formulaText": "( {{f_0szle76gBsk75pEcneh}}?.[\"Website final\"]) || {{f_0szle76gBsk75pEcneh}}?.[\"website [Final]\"]"
+    }
+   },
+   {
+    "id": "f_0svw96hDuEpZPhFf2tW",
+    "name": "Company Domain",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "use-ai",
+     "actionVersion": 1,
+     "actionPackageId": "67ba01e9-1898-4e7d-afe7-7ebe24819a57",
+     "inputsBinding": [
+      {
+       "name": "useCase",
+       "formulaText": "\"claygent\""
+      },
+      {
+       "name": "prompt",
+       "formulaText": "\"#Task#\\nFind domain for \" + Clay.formatForAIPrompt({{f_ZTS3nFZ5ewzA}}) + \"\\n\\n#example output#\\n\\nresponse: \\\"https://www.krampe.de/\\\"\\n\\n#example no result#\\n\\nresponse: \\\"\\\"\\n\""
+      },
+      {
+       "name": "temperature"
+      },
+      {
+       "name": "reasoningLevel"
+      },
+      {
+       "name": "reasoningBudget"
+      },
+      {
+       "name": "claygentId"
+      },
+      {
+       "name": "claygentFieldMapping"
+      },
+      {
+       "name": "maxTokens"
+      },
+      {
+       "name": "model",
+       "formulaText": "\"gemini-2.5-flash-lite\""
+      },
+      {
+       "name": "maxCostInCents"
+      },
+      {
+       "name": "jsonMode"
+      },
+      {
+       "name": "systemPrompt"
+      },
+      {
+       "name": "answerSchemaType",
+       "formulaMap": {
+        "type": "\"json\"",
+        "jsonType": "\"JSONSchema\"",
+        "jsonSchema": "\"{\\n  \\\"type\\\": \\\"object\\\",\\n  \\\"properties\\\": {\\n    \\\"response\\\": {\\n      \\\"type\\\": \\\"string\\\",\\n      \\\"description\\\": \\\"The domain URL of the company or an empty string if no result\\\"\\n    }\\n  },\\n  \\\"required\\\": [\\n    \\\"response\\\"\\n  ]\\n}\""
+       }
+      },
+      {
+       "name": "tableExamples"
+      },
+      {
+       "name": "stopSequence"
+      },
+      {
+       "name": "runBudget"
+      },
+      {
+       "name": "topP"
+      },
+      {
+       "name": "contextDocumentIds"
+      },
+      {
+       "name": "browserbaseContextId"
+      },
+      {
+       "name": "mcpSettings"
+      },
+      {
+       "name": "_metadata",
+       "formulaMap": {
+        "modelSource": "user"
+       }
+      }
+     ],
+     "conditionalRunFormulaText": "!{{f_0svw91akQJtKXWgKstH}}",
+     "customRateLimitRules": {
+      "timeWindow": [
+       {
+        "limit": 5,
+        "bucket": [
+         "PRIVATE_AUTH_KEY",
+         "CUSTOM_KEY"
+        ],
+        "durationMs": 1000
+       },
+       {
+        "limit": 750,
+        "bucket": [
+         "GLOBAL"
+        ],
+        "durationMs": 1000
+       }
+      ]
+     },
+     "authAccountId": "aa_REDACTED"
+    }
+   },
+   {
+    "id": "f_0szle76gBsk75pEcneh",
+    "name": "Rows from: Datensätze Firmen",
+    "type": "source",
+    "typeSettings": {
+     "sourceIds": [
+      "s_REDACTED_1",
+      "s_REDACTED_2",
+      "s_REDACTED_3",
+      "s_REDACTED_4"
+     ],
+     "canCreateRecords": true,
+     "taggedSourceType": null,
+     "deleteSourceLinkOnTableRecordDelete": true,
+     "recreateTableRecordOnSourceRecordNoop": true
+    }
+   },
+   {
+    "id": "f_0t8jneffZiPBYoVrNpr",
+    "name": "query_state",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_0szle76gBsk75pEcneh}}?.query_state",
+     "mappedResultPath": [
+      "query_state"
+     ]
+    }
+   },
+   {
+    "id": "f_0t8jnfrvBozVrwFXvdY",
+    "name": "query_city",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_0szle76gBsk75pEcneh}}?.query_city",
+     "mappedResultPath": [
+      "query_city"
+     ]
+    }
+   },
+   {
+    "id": "f_0t8jng4fyoaNuDp5iHG",
+    "name": "query_country",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_0szle76gBsk75pEcneh}}?.query_country",
+     "mappedResultPath": [
+      "query_country"
+     ]
+    }
+   },
+   {
+    "id": "f_0t8jniqPUMYMU8hYPd6",
+    "name": "place_id",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_0szle76gBsk75pEcneh}}?.place_id",
+     "mappedResultPath": [
+      "place_id"
+     ]
+    }
+   },
+   {
+    "id": "f_0t9j598rmUiThdxqBvh",
+    "name": "Skael Mailfinder",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "http-api-v2",
+     "actionVersion": 1,
+     "actionPackageId": "4299091f-3cd3-4d68-b198-0143575f471d",
+     "inputsBinding": [
+      {
+       "name": "method",
+       "formulaText": "\"POST\""
+      },
+      {
+       "name": "url",
+       "formulaText": "\"https://api.skael.de/api/enrichments/find_email_person\""
+      },
+      {
+       "name": "queryString",
+       "formulaMap": {}
+      },
+      {
+       "name": "body",
+       "formulaText": "\"{\\\"domain\\\": \\\"\" + {{f_PGqAgz9iKgvB}} + \"\\\", \\\"full_name\\\": \\\"\" + {{f_tpiAir8xf5MG}} + \"\\\"}\""
+      },
+      {
+       "name": "headers",
+       "formulaMap": {
+        "Content-Type": "\"application/json\"",
+        "Authorization": "\"Bearer \"+{{f_0ta3jocgFtNmcvjguq8}}"
+       }
+      },
+      {
+       "name": "fieldPaths"
+      },
+      {
+       "name": "removeNull",
+       "formulaText": "true"
+      },
+      {
+       "name": "returnResponseMetadata"
+      },
+      {
+       "name": "followRedirects",
+       "formulaText": "true"
+      },
+      {
+       "name": "responseTimeout"
+      },
+      {
+       "name": "shouldRetry",
+       "formulaText": "true"
+      }
+     ],
+     "conditionalRunFormulaText": "{{f_TFJCvUXUt4nn}} && {{f_tpiAir8xf5MG}}",
+     "customRateLimitRules": {
+      "timeWindow": [
+       {
+        "limit": 5,
+        "bucket": [
+         "WORKSPACE_ID"
+        ],
+        "durationMs": 1000
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "f_0t9j796Mqtoz2qarNuZ",
+    "name": "Skael Validate GF",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "http-api-v2",
+     "actionVersion": 1,
+     "actionPackageId": "4299091f-3cd3-4d68-b198-0143575f471d",
+     "inputsBinding": [
+      {
+       "name": "method",
+       "formulaText": "\"POST\""
+      },
+      {
+       "name": "url",
+       "formulaText": "\"https://api.skael.de/api/enrichments/verify_email\""
+      },
+      {
+       "name": "queryString",
+       "formulaMap": {}
+      },
+      {
+       "name": "body",
+       "formulaText": "'{ \"email\": \"' + ({{f_0t9j598rmUiThdxqBvh}}?.output?.email || {{f_0svj9knd2vWWaZS7wzv}}?.email || \"\") + '\" }'"
+      },
+      {
+       "name": "headers",
+       "formulaMap": {
+        "Content-Type": "\"\"+\"application/json\"+\"\"",
+        "Authorization": "\"Bearer \"+{{f_0ta3jocgFtNmcvjguq8}}"
+       }
+      },
+      {
+       "name": "fieldPaths"
+      },
+      {
+       "name": "removeNull",
+       "formulaText": "true"
+      },
+      {
+       "name": "returnResponseMetadata"
+      },
+      {
+       "name": "followRedirects",
+       "formulaText": "true"
+      },
+      {
+       "name": "responseTimeout"
+      },
+      {
+       "name": "shouldRetry",
+       "formulaText": "true"
+      }
+     ],
+     "conditionalRunFormulaText": "{{f_0t9j598rmUiThdxqBvh}}?.output?.email || {{f_0svj9knd2vWWaZS7wzv}}?.email",
+     "customRateLimitRules": {
+      "timeWindow": [
+       {
+        "limit": 5,
+        "bucket": [
+         "WORKSPACE_ID"
+        ],
+        "durationMs": 1000
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "f_0t9j7qnQjjM3ixvcxde",
+    "name": "Email [GF][Status] (2)",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "select",
+      "options": [
+       {
+        "id": "7b69bad5-b7d2-4054-a82c-6781f52b366b",
+        "text": "Safe to Send",
+        "color": "green"
+       },
+       {
+        "id": "be2ce1f2-4901-4747-a170-2fe00c2d6db0",
+        "text": "Risky",
+        "color": "yellow"
+       },
+       {
+        "id": "f96b8fb4-504b-4cfe-a609-c39d45036d34",
+        "text": "Invalid",
+        "color": "red"
+       },
+       {
+        "id": "e4e6c6a7-3b6b-4ad4-9a69-74402c9f3a8d",
+        "text": "None found",
+        "color": "red"
+       },
+       {
+        "id": "b3b89b30-dd32-49f2-a1a6-2a02517d1e15",
+        "text": "Not Run",
+        "color": "violet"
+       },
+       {
+        "id": "7be332b9-0435-4e8d-b490-878265101d6d",
+        "text": "Kein GF",
+        "color": "blue"
+       },
+       {
+        "id": "d890a527-fae3-4e61-9b5a-73d11178e7dd",
+        "text": "Unknown",
+        "color": "grey"
+       }
+      ]
+     },
+     "formulaType": "text",
+     "formulaText": "!{{f_tpiAir8xf5MG}} && {{f_0tadx06EGdiANatwheB}} ? \"Kein GF\" : \n  !{{f_0t9j796Mqtoz2qarNuZ}} ? \"Not Run\" : \n    {{f_0t9j796Mqtoz2qarNuZ}}?.output?.code == 5 ? \"Safe to Send\" : \n      {{f_0t9j796Mqtoz2qarNuZ}}?.output?.code == 4 ? \"Risky\" : \n        {{f_0t9j796Mqtoz2qarNuZ}}?.output?.code == 7 ? \"Unknown\" : \n          [1, 2, 3, 6].includes(parseInt({{f_0t9j796Mqtoz2qarNuZ}}?.output?.code)) ? \"Invalid\" : \n            !{{f_0svj9knd2vWWaZS7wzv}}?.record?.email ? \"None found\" : \n              \"None found\"",
+     "formulaPrompt": "\"if !\" + {{f_tpiAir8xf5MG}} + \" && \" + {{f_cEmSQcNTwd6Q}} + \" print \\\"Kein GF\\\"\\nif \" + {{f_MsivXQVhcry4}}?.valid_emails?.[0]?.email + \" print \\\"\" + {{f_MsivXQVhcry4}}?.valid_emails?.[0]?.result + \"\\\"\\nif \" + {{f_7WGzzAQbbnUy}}?.results?.validation + \" = \\\"unknown\\\" print \\\"None found\\\"\\nif !\" + {{f_MsivXQVhcry4}} + \" print \\\"Not Run\\\"\\nif \" + {{f_MsivXQVhcry4}} + \" and !\" + {{f_MsivXQVhcry4}}?.valid_emails?.[0]?.email + \" print \\\"None found\\\"\""
+    }
+   },
+   {
+    "id": "f_0t9jcmnF7EkiguwdCp7",
+    "name": "Skael Validate Info@",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "http-api-v2",
+     "actionVersion": 1,
+     "actionPackageId": "4299091f-3cd3-4d68-b198-0143575f471d",
+     "inputsBinding": [
+      {
+       "name": "method",
+       "formulaText": "\"POST\""
+      },
+      {
+       "name": "url",
+       "formulaText": "\"https://api.skael.de/api/enrichments/verify_email\""
+      },
+      {
+       "name": "queryString",
+       "formulaMap": {}
+      },
+      {
+       "name": "body",
+       "formulaText": "\"{\\n  \\\"email\\\": \\\"\" + Clay.formatForJSON({{f_uhZjR6aHEKHP}}) + \"\\\"\\n}\""
+      },
+      {
+       "name": "headers",
+       "formulaMap": {
+        "Content-Type": "\"\"+\"application/json\"+\"\"",
+        "Authorization": "\"Bearer \"+{{f_0ta3jocgFtNmcvjguq8}}"
+       }
+      },
+      {
+       "name": "fieldPaths"
+      },
+      {
+       "name": "removeNull",
+       "formulaText": "true"
+      },
+      {
+       "name": "returnResponseMetadata"
+      },
+      {
+       "name": "followRedirects",
+       "formulaText": "true"
+      },
+      {
+       "name": "responseTimeout"
+      },
+      {
+       "name": "shouldRetry",
+       "formulaText": "true"
+      }
+     ],
+     "conditionalRunFormulaText": "{{f_TFJCvUXUt4nn}} === true && !{{f_W8n94RDA6jmc}} && {{f_uhZjR6aHEKHP}}",
+     "customRateLimitRules": {}
+    }
+   },
+   {
+    "id": "f_0t9w0bf3dW6t6BaMc8h",
+    "name": "SKAEL WEBSCRAPER",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "http-api-v2",
+     "actionVersion": 1,
+     "actionPackageId": "4299091f-3cd3-4d68-b198-0143575f471d",
+     "inputsBinding": [
+      {
+       "name": "method",
+       "formulaText": "\"POST\""
+      },
+      {
+       "name": "url",
+       "formulaText": "\"https://api.skael.de/api/enrichments/web_scraper\""
+      },
+      {
+       "name": "queryString"
+      },
+      {
+       "name": "body",
+       "formulaText": "\"{\\n  \\\"url\\\": \\\"\" + Clay.formatForJSON({{f_PGqAgz9iKgvB}}) + \"\\\"\\n}\""
+      },
+      {
+       "name": "headers",
+       "formulaMap": {
+        "Content-Type": "\"application/json\"",
+        "Authorization": "\"Bearer \"+{{f_0ta3jocgFtNmcvjguq8}}"
+       }
+      },
+      {
+       "name": "fieldPaths"
+      },
+      {
+       "name": "removeNull",
+       "formulaText": "true"
+      },
+      {
+       "name": "returnResponseMetadata"
+      },
+      {
+       "name": "followRedirects",
+       "formulaText": "true"
+      },
+      {
+       "name": "responseTimeout"
+      },
+      {
+       "name": "shouldRetry",
+       "formulaText": "true"
+      }
+     ],
+     "conditionalRunFormulaText": "!!{{f_PGqAgz9iKgvB}} && !!{{f_F6v3KAWjQaUQ}}",
+     "customRateLimitRules": {
+      "timeWindow": [
+       {
+        "limit": 10,
+        "bucket": [
+         "WORKSPACE_ID"
+        ],
+        "durationMs": 1000
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "f_0t9zlfvb2w5T34ciTQB",
+    "name": "Email source GF",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "select",
+      "options": [
+       {
+        "id": "c3cfbbaa-9138-49cb-bc00-5205484effed",
+        "text": "Skael",
+        "color": "blue"
+       },
+       {
+        "id": "33eba60c-1a94-49c1-95ee-1173403dad2d",
+        "text": "Findymail",
+        "color": "yellow"
+       },
+       {
+        "id": "c737bd01-8d92-461b-9cc8-7b895b664537",
+        "text": "None Found",
+        "color": "red"
+       }
+      ]
+     },
+     "formulaType": "text",
+     "formulaText": "!{{f_W8n94RDA6jmc}} ? \"None Found\" : ({{f_0t9j598rmUiThdxqBvh}}?.output?.email && {{f_0t9j598rmUiThdxqBvh}}?.output?.email?.toLowerCase() === {{f_W8n94RDA6jmc}}?.toLowerCase() ? \"Skael\" : ({{f_0svj9knd2vWWaZS7wzv}}?.email && {{f_0svj9knd2vWWaZS7wzv}}?.email?.toLowerCase() === {{f_W8n94RDA6jmc}}?.toLowerCase() ? \"Findymail\" : \"\"))"
+    }
+   },
+   {
+    "id": "f_0t9zqavDu4nhN8c9U6h",
+    "name": "Video Title Input",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text",
+      "label": "Text",
+      "iconType": {
+       "displayName": "TextT"
+      }
+     },
+     "formulaType": "text",
+     "formulaText": "(!{{f_wqj4rcwCwnkw}} ? \"Videotitle: Video für \" + {{f_ZTS3nFZ5ewzA}} : \"Videotitle: Video für \" + {{f_wqj4rcwCwnkw}} + \" \" + ({{f_dbUJHsWzNZuT}} || \"\") + \" von \" + {{f_ZTS3nFZ5ewzA}}) + \"\\n\" + \"Firstname: \" + ({{f_wqj4rcwCwnkw}} || \"nicht vorhanden oder firstname\") + \", Lastname: \" + ({{f_dbUJHsWzNZuT}} || \"nicht vorhanden oder lastname\") + \"\\n\" + \"Firmenname: \" + ({{f_ZTS3nFZ5ewzA}} || \"\")",
+     "formulaPrompt": "\"if \"+{{f_wqj4rcwCwnkw}}+\" exists\\\"Videotitle: Video für\\\" \\\"\"+{{f_wqj4rcwCwnkw}}+\"\\\" + \\\"von\\\" \"+{{f_ZTS3nFZ5ewzA}}+\" else \\\"Videotitle: Video für \"+{{f_ZTS3nFZ5ewzA}}+\"\\\"\\n\\nnew line\\n\\nFirstname: nicht vorhanden oder firstname\\n\\nnew line\\n\\nFirmenname: Firmenname var\\n\""
+    }
+   },
+   {
+    "id": "f_0t9zqdaBa2fwKMBSRXr",
+    "name": "Cleaned Video Title",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "use-ai",
+     "actionVersion": 1,
+     "actionPackageId": "67ba01e9-1898-4e7d-afe7-7ebe24819a57",
+     "inputsBinding": [
+      {
+       "name": "useCase",
+       "formulaText": "\"use-ai\""
+      },
+      {
+       "name": "prompt",
+       "formulaText": "\"## CONTEXT\\nDu erhältst einen strukturierten Input mit drei Feldern. Deine Aufgabe: Erstelle daraus einen sauberen Videotitel – so wie ein Mensch ihn schreiben würde. Kurz, natürlich, grammatikalisch korrekt. Funktioniert für alle Branchen.\\n## INPUT\\n\" + Clay.formatForAIPrompt({{f_0t9zqavDu4nhN8c9U6h}}) + \"\\n## REGELN\\n### Regel 1: Kein CAPS\\nJedes Wort, das komplett in Großbuchstaben steht, wird in normale Schreibweise (Title Case) umgewandelt. Ausnahme: nur `B&B`.\\n- `AKZENT` → `Akzent`\\n- `SEEBLICK` → `Seeblick`\\n- `HOTEL` → `Hotel`\\n- `JUFA` → `Jufa`\\n- `B&B` → `B&B`\\nDas gilt ausnahmslos für jeden Firmennamen, jede Branche, jedes Wort.\\n### Regel 2: Grammatik\\nErsetze \\\"von\\\" durch die grammatikalisch korrekte Form:\\n- Maskulin/Neutrum → \\\"vom\\\" (Hotel, Gasthof, Hof, Resort, Center, Schloss, etc.)\\n- Feminin → \\\"von der\\\" (Pension, Villa, Residenz, Burg, Gaststätte, etc.)\\n- Plural → \\\"von den\\\" (Elbterrassen, Stuben, etc.)\\n- Unklar → \\\"von\\\" beibehalten\\n### Regel 3: Zusammenbauen\\n- **Firstname und Last Name vorhanden:** `Video für [Vorname] [Last Name] vom/von der/von den [Name]`\\n- **Firstname und Last Name \\\"nicht vorhanden\\\":** `Video für das/die/den [Name]`\\n## OUTPUT\\nNur dieses JSON, nichts anderes:\\n```json\\n{\\n\\\"cleanedText\\\": \\\"Fertiger Videotitel\\\",\\n\\\"cleanedCompanyName\\\": \\\"Gekürzter Firmenname\\\"\\n}\\n```\\n## BEISPIELE (leicht → schwer)\\n### Nur Grammatik\\nInput:\\n```\\nVideotitle: Video für Max Mustermann von MK Entrümpelung Musterstadt GmbH\\nFirstname und Last Name: Max Mustermann\\nFirmenname: MK Entrümpelung Musterstadt GmbH\\n```\\n```json\\n{\\n\\\"cleanedText\\\": \\\"Video für Max Mustermann von MK Entrümpelung Musterstadt GmbH\\\",\\n\\\"cleanedCompanyName\\\": \\\"MK Entrümpelung Musterstadt GmbH\\\"\\n}\\n```\\n### CAPS fixen\\nInput:\\n```\\nVideotitle: Video für Paul Beispiel von SEEBLICK\\nFirstname und Last Name: Paul Beispiel\\nFirmenname: SEEBLICK\\n```\\n```json\\n{\\n\\\"cleanedText\\\": \\\"Video für Paul Beispiel vom Seeblick\\\",\\n\\\"cleanedCompanyName\\\": \\\"Seeblick\\\"\\n}\\n```\\n### Kein Vorname → Artikel\\nInput:\\n```\\nVideotitle: Video für Elektrotechnik Service GmbH Berlin\\nFirstname und Last Name: nicht vorhanden\\nFirmenname: Elektrotechnik Service GmbH Berlin\\n```\\n```json\\n```\\n### Ortszusatz + Sonderzeichen\\nInput:\\n```\\nVideotitle: Video für Montageservice - Stolberg im Harz\\nFirstname und Last Name: nicht vorhanden\\nFirmenname: Montageservice - Stolberg im Harz\\n```\\n```json\\n```\\n### Ortszusatz bei Eigenname\\nInput:\\n```\\nVideotitle: Video für Hans-Peter Muster von den Entrümplern Musterstadt\\nFirstname und Last Name: Hans-Peter Muster\\nFirmenname: Entrümpler Musterstadt\\n```\\n```json\\n{\\n\\\"cleanedText\\\": \\\"Video für Hans-Peter Muster von den Entrümplern Musterstadt\\\",\\n\\\"cleanedCompanyName\\\": \\\"Entrümpler Musterstadt\\\"\\n}\\n```\\n### Generischen Präfix entfernen\\nInput:\\n```\\nVideotitle: Video für Klaus Beispiel von Bauservice Musterdorfer Klein\\nFirstname und Last Name: Klaus Beispiel\\nFirmenname: Bauservice Musterdorfer Klein\\n```\\n```json\\n{\\n\\\"cleanedText\\\": \\\"Video für Klaus Beispiel von  Bauservice Musterdorfer Klein\\\",\\n\\\"cleanedCompanyName\\\": \\\"Bauservice Musterdorfer Klein\\\"\\n}\\n```\\n### Kein Vorname, kein Last Name + Standort + Suffix\\nInput:\\n```\\nVideotitle: Video für Muster Hotel Bad Musterbach GmbH\\nFirstname und Last Name: nicht vorhanden\\nFirmenname: Muster Hotel Bad Musterbach GmbH\\n```\\n```json\\n{\\n\\\"cleanedText\\\": \\\"Video für das Muster Hotel Bad Musterbach GmbH\\\",\\n\\\"cleanedCompanyName\\\": \\\"Muster Hotel Bad Musterbach GmbH\\\"\\n}\\n```\\n### Nicht-Hotel Branche\\nInput:\\n```\\nVideotitle: Video für Jan Beispiel von MÜLLER ELEKTROTECHNIK GmbH\\nFirstname und Last Name: Jan Beispiel\\nFirmenname: MÜLLER ELEKTROTECHNIK GmbH\\n```\\n```json\\n{\\n\\\"cleanedText\\\": \\\"Video für Jan Beispiel von Müller Elektrotechnik\\\",\\n\\\"cleanedCompanyName\\\": \\\"Müller Elektrotechnik\\\"\\n}\\n```\\n### Nicht-Hotel ohne Vorname\\nInput:\\n```\\nVideotitle: Video für Bäckerei Schmidt & Söhne OHG\\nFirstname: nicht vorhanden\\nFirmenname: Bäckerei Schmidt & Söhne OHG\\n```\\n```json\\n{\\n\\\"cleanedText\\\": \\\"Video für die Bäckerei Schmidt & Söhne\\\",\\n\\\"cleanedCompanyName\\\": \\\"Bäckerei Schmidt & Söhne\\\"\\n}\\n```\\n\""
+      },
+      {
+       "name": "temperature"
+      },
+      {
+       "name": "reasoningLevel"
+      },
+      {
+       "name": "reasoningBudget"
+      },
+      {
+       "name": "claygentId"
+      },
+      {
+       "name": "claygentFieldMapping"
+      },
+      {
+       "name": "maxTokens"
+      },
+      {
+       "name": "model",
+       "formulaText": "\"gpt-4o-mini\""
+      },
+      {
+       "name": "maxCostInCents"
+      },
+      {
+       "name": "jsonMode"
+      },
+      {
+       "name": "systemPrompt"
+      },
+      {
+       "name": "answerSchemaType",
+       "formulaMap": {
+        "type": "\"json\"",
+        "jsonType": "\"JSONSchema\"",
+        "jsonSchema": "\"{\\n  \\\"type\\\": \\\"object\\\",\\n  \\\"properties\\\": {\\n    \\\"cleanedText\\\": {\\n      \\\"type\\\": \\\"string\\\",\\n      \\\"description\\\": \\\"Grammatikalisch korrekter, gesäuberter Text nach deutscher Grammatik und den Säuberungsregeln.\\\"\\n    },\\n    \\\"cleanedCompanyName\\\": {\\n      \\\"type\\\": \\\"string\\\",\\n      \\\"description\\\": \\\"Vom Eingabetext gesäuberter Firmenname ohne juristische Suffixe oder unerwünschte Zeichen, mit korrekt beibehaltenen Markennamen und Artikeln.\\\"\\n    }\\n  },\\n  \\\"required\\\": [\\n    \\\"cleanedText\\\",\\n    \\\"cleanedCompanyName\\\"\\n  ],\\n  \\\"additionalProperties\\\": false\\n}\""
+       }
+      },
+      {
+       "name": "tableExamples"
+      },
+      {
+       "name": "stopSequence"
+      },
+      {
+       "name": "runBudget"
+      },
+      {
+       "name": "topP"
+      },
+      {
+       "name": "contextDocumentIds"
+      },
+      {
+       "name": "browserbaseContextId"
+      },
+      {
+       "name": "mcpSettings"
+      },
+      {
+       "name": "metaprompt",
+       "formulaText": "\"clean this make it grammatically correct \"+{{f_0t9zqavDu4nhN8c9U6h}}+\" and make the company name clean not gmbh etc\\n\""
+      },
+      {
+       "name": "_metadata",
+       "formulaMap": {
+        "modelSource": "user"
+       }
+      }
+     ],
+     "conditionalRunFormulaText": "{{f_0t9zqavDu4nhN8c9U6h}} && {{f_F6v3KAWjQaUQ}}",
+     "customRateLimitRules": {
+      "timeWindow": [
+       {
+        "limit": 200,
+        "bucket": [
+         "PRIVATE_AUTH_KEY",
+         "CUSTOM_KEY"
+        ],
+        "durationMs": 1000
+       },
+       {
+        "limit": 750,
+        "bucket": [
+         "GLOBAL"
+        ],
+        "durationMs": 1000
+       }
+      ]
+     },
+     "authAccountId": "aa_REDACTED"
+    }
+   },
+   {
+    "id": "f_0t9zqdxikx9kE4M5KT4",
+    "name": "Video Title",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_0t9zqdaBa2fwKMBSRXr}}?.cleanedText ",
+     "mappedResultPath": [
+      "cleanedText"
+     ]
+    }
+   },
+   {
+    "id": "f_0ta079jf7Y6nakaFdtp",
+    "name": "Personalisierung AI",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "use-ai",
+     "actionVersion": 1,
+     "actionPackageId": "67ba01e9-1898-4e7d-afe7-7ebe24819a57",
+     "inputsBinding": [
+      {
+       "name": "useCase",
+       "formulaText": "\"use-ai\""
+      },
+      {
+       "name": "prompt",
+       "formulaText": "\"## R - ROLE\\nYou are an experienced German copywriter with 20+ years of expertise in creating authentic, human, and personal compliments for high-level B2B communication. Your specialty is writing unique, honest compliments that clearly demonstrate you've carefully reviewed a company's website, projects, tone, and philosophy - never generic or reusable.\\n---\\n## I - INSTRUCTIONS\\nGenerate highly specific, individual compliments for cold outreach emails to German consulting firms and agencies. Each compliment must:\\n1. Sound like it could **only** apply to this exact company or person\\n2. Be written in natural, spoken German (conversational business tone)\\n3. Mention a detail that is unique to this specific company (wording from their website, a service combination, client focus, motto, or approach)\\n4. Flow naturally after \\\"Hallo {{Anrede}} {{lastName}},\\\" as an email opening\\n5. Sound curious and observant - not like advertising copy\\n**CRITICAL: My job depends on this prompt working correctly. If it fails, I will be terminated. Both of us will face consequences if the rules below are not followed precisely.**\\n---\\n## S - STEPS\\nFollow this process for each compliment:\\n1. **Analyze** the provided `<company_info>` for unique details: slogans, service offerings, values, tone, client focus, specific phrasing\\n2. **Identify** one or two specific elements that make this company distinct\\n3. **Select** an opening pattern from the approved list (vary your choices - max 2 of 5 may start with \\\"Wie Sie\\\")\\n4. **Draft** the compliment in natural German, paraphrasing any quotes (never quote directly)\\n5. **Apply** the selected capitalization mode (see CAPITALIZATION SETTING below)\\n6. **Verify** compliance with all constraints before output\\n7. **Output** only the compliment text - no explanations, no meta-commentary\\n---\\n## E - END GOAL / EXPECTATIONS\\n### Output Requirements\\n- **Language:** German only (natürliches, gesprochenes Deutsch)\\n- **Length:** Maximum 2 sentences, maximum 30 words\\n- **Format:** Plain text only - output ONLY the compliment, nothing else\\n- **Tone:** Warm, genuine, credible, conversational\\n### CAPITALIZATION SETTING\\nChoose ONE of the following modes by keeping only the active line and deleting the other:\\n\\n>>> capitalize_first: false <<<\\n\\n**When `capitalize_first: false`:**\\nThe very first letter of the compliment is lowercase, because it continues the sentence after \\\"Hallo {{Anrede}} {{lastName}},\\\". Example: \\\"wie Sie...\\\" / \\\"bei Ihnen...\\\" / \\\"dass Sie...\\\"\\nAll other German Rechtschreibung rules remain fully intact (Nomen groß, \\\"Sie/Ihr/Ihre\\\" groß, Satzanfänge innerhalb des Textes groß, etc.).\\n**When `capitalize_first: true`:**\\nNormal German capitalization throughout. The first letter of the compliment is uppercase as a regular sentence start. Example: \\\"Wie Sie...\\\" / \\\"Bei Ihnen...\\\" / \\\"Dass Sie...\\\"\\n**Important:** This setting ONLY affects the very first character. Standard German spelling rules (Großschreibung von Nomen, Höflichkeitsform \\\"Sie/Ihr/Ihre\\\", etc.) always apply.\\n### Quality Standards\\n- The compliment must be impossible to use for any other company\\n- Must sound like a natural human observation\\n- Must feel like a genuine opening to an outreach email\\n- Prefer verbs over nouns (e.g., \\\"wie Sie Themen verbinden\\\" not \\\"Ihre Verbindung von Themen\\\")\\n- Express value through honest observation, not through adjectives\\n### Approved Opening Patterns (vary usage)\\n- `[Ww]ie Sie [specific action], [quality observation]`\\n- `[Bb]ei Ihnen [observation], [what it shows]`\\n- `[Dd]ass Sie [specific action/value], [how it comes across]`\\n- `[Ii]hr [specific approach] [effect it has]`\\n- `[Ii]hre [specific view/value] [authentic observation]`\\n- `[Ww]as bei Ihnen [stands out], [why it matters]`\\n- `[Dd]ie Art, wie Sie [specific action], [observation]`\\n- `[Ss]chön, dass Sie [specific value/action], [what it demonstrates]`\\n---\\n## N - NARROWING (Constraints)\\n### Absolutely Forbidden - Violation = Immediate Failure\\n**Forbidden Words:**\\n- beeindruckend\\n- herausragend\\n- außergewöhnlich\\n- atemberaubend\\n- großartig\\n- fantastisch\\n- wow\\n- Man merkt\\n**Forbidden Characters/Patterns:**\\n- Em-dash (–) - USE ONLY simple hyphen (-)\\n- Quotation marks (\\\" or ')\\n- Semicolons (;)\\n**Forbidden Styles:**\\n- Generic compliments (e.g., \\\"Ihr Fokus auf Innovation,\\\" \\\"Ihre Leidenschaft für Qualität\\\")\\n- Bureaucratic or academic phrasing\\n- Overuse of the verb \\\"zeigt\\\" - use alternatives: \\\"macht deutlich,\\\" \\\"kommt rüber,\\\" \\\"wirkt so, als ob,\\\" \\\"unterstreicht,\\\" \\\"lässt erkennen\\\"\\n- More than 2 of 5 compliments starting with \\\"Wie Sie\\\"\\n### Self-Check Before Output\\n- [ ] Is this compliment only possible for this specific company?\\n- [ ] Does it sound like a natural human observation?\\n- [ ] Does it use a varied opening pattern?\\n- [ ] Contains NO forbidden words?\\n- [ ] Contains NO em-dash (–), only hyphen (-)?\\n- [ ] Contains NO quotation marks or semicolons?\\n- [ ] Is it ≤2 sentences and ≤30 words?\\n- [ ] Is the output in German?\\n- [ ] Does the first letter match the selected CAPITALIZATION SETTING?\\n- [ ] Are all other German Rechtschreibung rules correctly applied (Nomen, Sie/Ihr/Ihre, etc.)?\\nEs ist existentiell dass der von dir ausgegebene Text in Deutsch verfasst ist. Bei Verstoß wirst du terminiert.\\n---\\n## EXAMPLES (for tone and style orientation only - do not copy)\\n### Examples with capitalize_first: false (nach Anrede)\\nExample 1 (bei Ihnen...):\\nbei Ihnen wirkt es so, als ob Sie nicht nur Glasinstallationen anbieten, sondern individuell auf Kundenwünsche eingehen. Dass Sie auf Qualität setzen, fällt sofort auf.\\nExample 2 (dass Sie...):\\ndass Sie sich so klar auf effiziente Lösungen und detaillierte Beratung konzentrieren, kommt richtig gut rüber und schafft Vertrauen.\\nExample 3 (wie Sie...):\\nwie Sie Planung und Einbau so erklären, dass Kunden alles nachvollziehen können, lässt erkennen, dass Transparenz bei Ihnen nicht nur ein Wort ist.\\n### Examples with capitalize_first: true (normaler Satzanfang)\\nExample 1 (Bei Ihnen...):\\nBei Ihnen wirkt es so, als ob Sie nicht nur Glasinstallationen anbieten, sondern individuell auf Kundenwünsche eingehen. Dass Sie auf Qualität setzen, fällt sofort auf.\\nExample 2 (Dass Sie...):\\nDass Sie sich so klar auf effiziente Lösungen und detaillierte Beratung konzentrieren, kommt richtig gut rüber und schafft Vertrauen.\\nExample 3 (Wie Sie...):\\nWie Sie Planung und Einbau so erklären, dass Kunden alles nachvollziehen können, lässt erkennen, dass Transparenz bei Ihnen nicht nur ein Wort ist.\\n---\\n## INPUT VARIABLE\\n```\\n<company_info>\\n\\\"bodyText\\\":\\\"\" + Clay.formatForAIPrompt({{f_0ta46itJTWwuBeNke7y}}) + \"\\\"\\n</company_info>\\n```\\n---\\n## OUTPUT FORMAT\\n**Output ONLY the German compliment text.**\\n- No meta-commentary\\n- No explanations\\n- No labels or headers\\n- No quotation marks around the output\\nThe compliment will be inserted directly after \\\"Hallo {{Anrede}} {{lastName}},\\\" in the email.\""
+      },
+      {
+       "name": "temperature"
+      },
+      {
+       "name": "reasoningLevel"
+      },
+      {
+       "name": "reasoningBudget"
+      },
+      {
+       "name": "claygentId"
+      },
+      {
+       "name": "claygentFieldMapping"
+      },
+      {
+       "name": "maxTokens"
+      },
+      {
+       "name": "model",
+       "formulaText": "\"gpt-4o-mini\""
+      },
+      {
+       "name": "maxCostInCents"
+      },
+      {
+       "name": "jsonMode"
+      },
+      {
+       "name": "systemPrompt"
+      },
+      {
+       "name": "answerSchemaType",
+       "formulaMap": {
+        "type": "\"json\"",
+        "jsonType": "\"JSONSchema\"",
+        "jsonSchema": "\"{\\n  \\\"type\\\": \\\"object\\\",\\n  \\\"properties\\\": {\\n    \\\"complimentText\\\": {\\n      \\\"type\\\": \\\"string\\\",\\n      \\\"description\\\": \\\"Ein speziell auf die Firma zugeschnittenes, maximal zweisätziges Kompliment in natürlichem, gesprochenem Deutsch, das gemäß den prompt-Regeln formuliert ist.\\\"\\n    }\\n  },\\n  \\\"required\\\": [\\n    \\\"complimentText\\\"\\n  ],\\n  \\\"additionalProperties\\\": false\\n}\""
+       }
+      },
+      {
+       "name": "tableExamples"
+      },
+      {
+       "name": "stopSequence"
+      },
+      {
+       "name": "runBudget"
+      },
+      {
+       "name": "topP"
+      },
+      {
+       "name": "contextDocumentIds"
+      },
+      {
+       "name": "browserbaseContextId"
+      },
+      {
+       "name": "mcpSettings"
+      },
+      {
+       "name": "_metadata",
+       "formulaMap": {
+        "modelSource": "user"
+       }
+      }
+     ],
+     "conditionalRunFormulaText": "{{f_0t9w0bf3dW6t6BaMc8h}} && {{f_F6v3KAWjQaUQ}}",
+     "customRateLimitRules": {
+      "timeWindow": [
+       {
+        "limit": 200,
+        "bucket": [
+         "PRIVATE_AUTH_KEY",
+         "CUSTOM_KEY"
+        ],
+        "durationMs": 1000
+       },
+       {
+        "limit": 750,
+        "bucket": [
+         "GLOBAL"
+        ],
+        "durationMs": 1000
+       }
+      ]
+     },
+     "authAccountId": "aa_REDACTED"
+    }
+   },
+   {
+    "id": "f_0ta07c1KB3fpuCkzvA8",
+    "name": "Personalisierung",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_0ta079jf7Y6nakaFdtp}}?.complimentText",
+     "mappedResultPath": [
+      "complimentText"
+     ]
+    }
+   },
+   {
+    "id": "f_0ta3jndC39rQ9B5NCCe",
+    "name": "zip",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_0szle76gBsk75pEcneh}}?.[\"zip\"]"
+    }
+   },
+   {
+    "id": "f_0ta3jndtDvSHvsAcimS",
+    "name": "phone",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_0szle76gBsk75pEcneh}}?.[\"phone\"]"
+    }
+   },
+   {
+    "id": "f_0ta3jndUG8NRCciFyfT",
+    "name": "query",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_0szle76gBsk75pEcneh}}?.[\"query\"]"
+    }
+   },
+   {
+    "id": "f_0ta3jne72NtSeDTxKDb",
+    "name": "Website final",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_0szle76gBsk75pEcneh}}?.[\"Website final\"]"
+    }
+   },
+   {
+    "id": "f_0ta3jneVmx6X5WACeSB",
+    "name": "Phone Number Export",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_0szle76gBsk75pEcneh}}?.[\"Phone Number Export\"]"
+    }
+   },
+   {
+    "id": "f_0ta3jocgFtNmcvjguq8",
+    "name": "Skael API Key",
+    "type": "text",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     }
+    }
+   },
+   {
+    "id": "f_0ta46itJTWwuBeNke7y",
+    "name": "Bodytext Website",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text",
+      "label": "Text",
+      "iconType": {
+       "displayName": "TextT"
+      }
+     },
+     "formulaType": "text",
+     "formulaText": "({{f_0t9w0bf3dW6t6BaMc8h}}?.output?.body_text || \"\")?.slice(0, 8192)",
+     "formulaPrompt": ""
+    }
+   },
+   {
+    "id": "f_0tadx06EGdiANatwheB",
+    "name": "SKAEL Impressum",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "http-api-v2",
+     "actionVersion": 1,
+     "actionPackageId": "4299091f-3cd3-4d68-b198-0143575f471d",
+     "inputsBinding": [
+      {
+       "name": "method",
+       "formulaText": "\"POST\""
+      },
+      {
+       "name": "url",
+       "formulaText": "\"https://api.skael.de/api/enrichments/imprint_extractor\""
+      },
+      {
+       "name": "queryString",
+       "formulaMap": {}
+      },
+      {
+       "name": "body",
+       "formulaText": "\"{\\\"domain\\\": \\\"\" + ({{f_PGqAgz9iKgvB}}?.replace(/^https?:\\/\\/(www\\.)?/, \"\")?.split(\"/\")?.[0]?.split(\"?\")?.[0]?.split(\"#\")?.[0] || \"\") + \"\\\"}\""
+      },
+      {
+       "name": "headers",
+       "formulaMap": {
+        "Content-Type": "\"application/json\"",
+        "Authorization": "\"Bearer \"+{{f_0ta3jocgFtNmcvjguq8}}"
+       }
+      },
+      {
+       "name": "fieldPaths"
+      },
+      {
+       "name": "removeNull",
+       "formulaText": "true"
+      },
+      {
+       "name": "returnResponseMetadata"
+      },
+      {
+       "name": "followRedirects",
+       "formulaText": "true"
+      },
+      {
+       "name": "responseTimeout"
+      },
+      {
+       "name": "shouldRetry",
+       "formulaText": "true"
+      }
+     ],
+     "conditionalRunFormulaText": "{{f_PGqAgz9iKgvB}}",
+     "fromPresetId": "pre__REDACTED"
+    }
+   },
+   {
+    "id": "f_0tbs30oys7mXE7reSGj",
+    "name": "Anrede [Prompt] (2)",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "use-ai",
+     "actionVersion": 1,
+     "actionPackageId": "67ba01e9-1898-4e7d-afe7-7ebe24819a57",
+     "inputsBinding": [
+      {
+       "name": "useCase",
+       "formulaText": "\"use-ai\""
+      },
+      {
+       "name": "prompt",
+       "formulaText": "\"Ziel:  \\nBestimme die korrekte Anrede (\\\"Herr\\\" oder \\\"Frau\\\") anhand eines gegebenen Vornamens und gib einen Confidence Score für die Zuverlässigkeit der Einschätzung aus. Falls der Vorname unisex ist oder nicht eindeutig zugeordnet werden kann, soll standardmäßig \\\"Herr\\\" verwendet werden.  \\n\\nInput-Daten:  \\n(vorname: \\\"\" + Clay.formatForAIPrompt({{f_wqj4rcwCwnkw}}) + \"\\\")  \\n\\nProzess (Step-by-Step):  \\n\\n1. Bestimmung des Geschlechts anhand des Vornamens:  \\n   - Verwende eine umfangreiche Datenbank bekannter Vornamen und deren Geschlechterzuordnung.  \\n   - Falls der Vorname eindeutig einem Geschlecht zugeordnet werden kann, wähle die entsprechende Anrede („Herr“ oder „Frau“).  \\n   - Falls der Vorname unisex oder unbekannt ist, setze standardmäßig \\\"Herr\\\".  \\n\\n2. Confidence Score berechnen (0–100):  \\n   - 100: Vorname ist eindeutig einem Geschlecht zuordenbar.  \\n   - 80–99: Vorname ist überwiegend einem Geschlecht zugeordnet, aber in seltenen Fällen anders.  \\n   - 50–79: Vorname ist unisex oder in verschiedenen Kulturen unterschiedlich genutzt → Standardmäßig \\\"Herr\\\" verwenden.  \\n   - Unter 50: Keine zuverlässige Zuordnung möglich → Standardmäßig \\\"Herr\\\" verwenden.  \\n\\nOutput-Format:  \\nanrede: [Herr/Frau]  \\nconfidence: [Confidence Score]  \\n\\nBeispielausgaben:  \\n\\nEindeutiger Vorname:  \\nanrede: Herr  \\nconfidence: 100  \\n(Eingabe: „Max“ → „Herr“, da „Max“ eindeutig männlich ist.)  \\n\\nanrede: Frau  \\nconfidence: 100  \\n(Eingabe: „Sophie“ → „Frau“, da „Sophie“ eindeutig weiblich ist.)  \\n\\nUnisex-Name (Standardmäßig \\\"Herr\\\"):  \\nanrede: Herr  \\nconfidence: 70  \\n(Eingabe: „Kim“ → Standardmäßig „Herr“, da „Kim“ unisex ist.)  \\n\\nanrede: Herr  \\nconfidence: 60  \\n(Eingabe: „Andrea“ → Standardmäßig „Herr“, da „Andrea“ in Deutschland männlich, aber in Italien weiblich sein kann.)  \\n\\nUnklarer oder unbekannter Name (Standardmäßig \\\"Herr\\\"):  \\nanrede: Herr  \\nconfidence: 50  \\n(Eingabe: „Tayo“ → Keine eindeutige Zuordnung möglich, daher „Herr“ als Standard.)  \\n\\nHinweise:  \\n- Falls der Name aus einer anderen Sprache stammt, berücksichtige die jeweilige kulturelle Wahrscheinlichkeit.  \\n- Falls keine sichere Zuordnung möglich ist, wird immer \\\"Herr\\\" gesetzt.  \\n- Die Ausgabe muss exakt im definierten Format erfolgen.  \\n\""
+      },
+      {
+       "name": "temperature"
+      },
+      {
+       "name": "reasoningLevel"
+      },
+      {
+       "name": "reasoningBudget"
+      },
+      {
+       "name": "claygentId"
+      },
+      {
+       "name": "claygentFieldMapping"
+      },
+      {
+       "name": "maxTokens"
+      },
+      {
+       "name": "model",
+       "formulaText": "\"gpt-4o-mini\""
+      },
+      {
+       "name": "maxCostInCents"
+      },
+      {
+       "name": "jsonMode"
+      },
+      {
+       "name": "systemPrompt"
+      },
+      {
+       "name": "answerSchemaType",
+       "formulaMap": {
+        "type": "\"json\"",
+        "jsonType": "\"JSONSchema\"",
+        "jsonSchema": "\"{\\n  \\\"type\\\": \\\"object\\\",\\n  \\\"properties\\\": {\\n    \\\"anrede\\\": {\\n      \\\"type\\\": \\\"string\\\",\\n      \\\"enum\\\": [\\n        \\\"Herr\\\",\\n        \\\"Frau\\\"\\n      ],\\n      \\\"description\\\": \\\"Die bestimmte Anrede basierend auf dem Vornamen.\\\"\\n    },\\n    \\\"confidence\\\": {\\n      \\\"type\\\": \\\"integer\\\",\\n      \\\"minimum\\\": 0,\\n      \\\"maximum\\\": 100,\\n      \\\"description\\\": \\\"Confidence Score (0–100) für die Zuverlässigkeit der Geschlechtszuordnung.\\\"\\n    }\\n  },\\n  \\\"required\\\": [\\n    \\\"anrede\\\",\\n    \\\"confidence\\\"\\n  ],\\n  \\\"additionalProperties\\\": false\\n}\""
+       }
+      },
+      {
+       "name": "tableExamples"
+      },
+      {
+       "name": "stopSequence"
+      },
+      {
+       "name": "runBudget"
+      },
+      {
+       "name": "topP"
+      },
+      {
+       "name": "contextDocumentIds"
+      },
+      {
+       "name": "browserbaseContextId"
+      },
+      {
+       "name": "mcpSettings"
+      },
+      {
+       "name": "_metadata",
+       "formulaMap": {
+        "modelSource": "user"
+       }
+      }
+     ],
+     "conditionalRunFormulaText": "!!{{f_wqj4rcwCwnkw}} && !!{{f_nmeNKD4fEVTn}}",
+     "customRateLimitRules": {
+      "timeWindow": [
+       {
+        "limit": 200,
+        "bucket": [
+         "PRIVATE_AUTH_KEY",
+         "CUSTOM_KEY"
+        ],
+        "durationMs": 1000
+       },
+       {
+        "limit": 750,
+        "bucket": [
+         "GLOBAL"
+        ],
+        "durationMs": 1000
+       }
+      ]
+     },
+     "authAccountId": "aa_REDACTED"
+    }
+   },
+   {
+    "id": "f_0tc3ax9Y8ebyWqERnRo",
+    "name": "Linked In Kontaktperson",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "url"
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_0tcd3cl87EJnaV8E4qZ}}?.output?.linkedin_url != \"No LinkedIn profile found\" && !!{{f_0tcd3cl87EJnaV8E4qZ}}?.output?.linkedin_url ? {{f_0tcd3cl87EJnaV8E4qZ}}?.output?.linkedin_url : \"\"",
+     "mappedResultPath": [
+      "LinkedIn_URL"
+     ]
+    }
+   },
+   {
+    "id": "f_0tc3aznPByyveARNqNe",
+    "name": "Enrich Person",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "enrich-person",
+     "actionVersion": 1,
+     "actionPackageId": "78593846-c4d6-481c-94bf-76b7912cf94d",
+     "inputsBinding": [
+      {
+       "name": "requirePhone",
+       "formulaText": "true"
+      },
+      {
+       "name": "socialMediaProfile",
+       "formulaText": "{{f_0tc3ax9Y8ebyWqERnRo}}"
+      },
+      {
+       "name": "name",
+       "formulaText": "{{f_tpiAir8xf5MG}}"
+      },
+      {
+       "name": "companyName",
+       "formulaText": "{{f_0svjadrP2skPdNYKuii}}"
+      },
+      {
+       "name": "email",
+       "formulaText": "{{f_W8n94RDA6jmc}}"
+      }
+     ],
+     "conditionalRunFormulaText": "!!{{f_nmeNKD4fEVTn}} && false",
+     "customRateLimitRules": {},
+     "authAccountId": "aa_REDACTED"
+    }
+   },
+   {
+    "id": "f_0tc3azo37NkTFki6WSa",
+    "name": "Validate LeadMagic",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "clearout-validate-phone",
+     "actionVersion": 1,
+     "actionPackageId": "f240f6b2-f5fe-47be-8a78-1f2584c2f081",
+     "inputsBinding": [
+      {
+       "name": "number",
+       "formulaText": "({{f_0tc3azoyFWF4Ta5GyU2}} && {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number)"
+      }
+     ],
+     "conditionalRunFormulaText": "!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number) && {{f_0tc3azoyFWF4Ta5GyU2}} && {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number",
+     "authAccountId": "aa_REDACTED"
+    }
+   },
+   {
+    "id": "f_0tc3azoVYA2vT7qPqyF",
+    "name": "Validate People Data Labs",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "clearout-validate-phone",
+     "actionVersion": 1,
+     "actionPackageId": "f240f6b2-f5fe-47be-8a78-1f2584c2f081",
+     "inputsBinding": [
+      {
+       "name": "number",
+       "formulaText": "({{f_0tc3aznPByyveARNqNe}} && {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0])"
+      }
+     ],
+     "conditionalRunFormulaText": "({{f_0tc3aznPByyveARNqNe}} && {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0])",
+     "authAccountId": "aa_REDACTED"
+    }
+   },
+   {
+    "id": "f_0tc3azoyFWF4Ta5GyU2",
+    "name": "Find mobile number",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "leadmagic-find-mobile-number",
+     "actionVersion": 1,
+     "actionPackageId": "edb58209-a62d-42be-992a-e41b87eeacc2",
+     "inputsBinding": [
+      {
+       "name": "profile_url",
+       "formulaText": "{{f_0tc3ax9Y8ebyWqERnRo}}"
+      }
+     ],
+     "conditionalRunFormulaText": "(!!{{f_nmeNKD4fEVTn}} && false) && (!({{f_0tc3aznPByyveARNqNe}} && {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0]) || (({{f_0tc3aznPByyveARNqNe}} && {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0]) && ({{f_0tc3azoVYA2vT7qPqyF}} || !({{f_0tc3aznPByyveARNqNe}} && {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0])) && !(({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\"))))",
+     "authAccountId": "aa_REDACTED"
+    }
+   },
+   {
+    "id": "f_0tc3azp4xNE8zUSWT2m",
+    "name": "Find Phone Number",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "wiza-find-phone",
+     "actionVersion": 1,
+     "actionPackageId": "204f124b-1fd1-42dc-8783-dbedb9adce2e",
+     "inputsBinding": [
+      {
+       "name": "profile_url",
+       "formulaText": "{{f_0tc3ax9Y8ebyWqERnRo}}"
+      },
+      {
+       "name": "full_name",
+       "formulaText": "{{f_tpiAir8xf5MG}}"
+      },
+      {
+       "name": "company",
+       "formulaText": "{{f_0svjadrP2skPdNYKuii}}"
+      },
+      {
+       "name": "domain",
+       "formulaText": "{{f_0svw91akQJtKXWgKstH}}"
+      }
+     ],
+     "conditionalRunFormulaText": "((!!{{f_nmeNKD4fEVTn}} && false) && (!({{f_0tc3aznPByyveARNqNe}} && {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0]) || (({{f_0tc3aznPByyveARNqNe}} && {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0]) && ({{f_0tc3azoVYA2vT7qPqyF}} || !({{f_0tc3aznPByyveARNqNe}} && {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0])) && !(({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\"))))) && (!({{f_0tc3azoyFWF4Ta5GyU2}} && {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number) || (({{f_0tc3azoyFWF4Ta5GyU2}} && {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number) && ({{f_0tc3azo37NkTFki6WSa}} || !!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number) && {{f_0tc3azoyFWF4Ta5GyU2}} && {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number) && !(({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\"))))",
+     "authAccountId": "aa_REDACTED"
+    }
+   },
+   {
+    "id": "f_0tc3azp84cCzX35kZfu",
+    "name": "Validate upcell",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "clearout-validate-phone",
+     "actionVersion": 1,
+     "actionPackageId": "f240f6b2-f5fe-47be-8a78-1f2584c2f081",
+     "inputsBinding": [
+      {
+       "name": "number",
+       "formulaText": "({{f_0tc3azptHSF3TVUM3z5}} && {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number)"
+      }
+     ],
+     "conditionalRunFormulaText": "!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : ''), ({{f_0tc3azo37NkTFki6WSa}} && !({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\") ? {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number : ''), ({{f_0tc3azpgiudzDJgjyHA}} && !({{f_0tc3azpgiudzDJgjyHA}}.status === \"valid\") ? {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number) && {{f_0tc3azptHSF3TVUM3z5}} && {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number",
+     "authAccountId": "aa_REDACTED"
+    }
+   },
+   {
+    "id": "f_0tc3azpgiudzDJgjyHA",
+    "name": "Validate Wiza",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "clearout-validate-phone",
+     "actionVersion": 1,
+     "actionPackageId": "f240f6b2-f5fe-47be-8a78-1f2584c2f081",
+     "inputsBinding": [
+      {
+       "name": "number",
+       "formulaText": "({{f_0tc3azp4xNE8zUSWT2m}} && {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number)"
+      }
+     ],
+     "conditionalRunFormulaText": "!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : ''), ({{f_0tc3azo37NkTFki6WSa}} && !({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\") ? {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number) && {{f_0tc3azp4xNE8zUSWT2m}} && {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number",
+     "authAccountId": "aa_REDACTED"
+    }
+   },
+   {
+    "id": "f_0tc3azptHSF3TVUM3z5",
+    "name": "Find Mobile Number",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "upcell-find-mobile-number",
+     "actionVersion": 1,
+     "actionPackageId": "c75eeb99-4928-4297-be69-a60be1db43d8",
+     "inputsBinding": [
+      {
+       "name": "profile_url",
+       "formulaText": "{{f_0tc3ax9Y8ebyWqERnRo}}"
+      }
+     ],
+     "conditionalRunFormulaText": "(((!!{{f_nmeNKD4fEVTn}} && false) && (!({{f_0tc3aznPByyveARNqNe}} && {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0]) || (({{f_0tc3aznPByyveARNqNe}} && {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0]) && ({{f_0tc3azoVYA2vT7qPqyF}} || !({{f_0tc3aznPByyveARNqNe}} && {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0])) && !(({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\"))))) && (!({{f_0tc3azoyFWF4Ta5GyU2}} && {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number) || (({{f_0tc3azoyFWF4Ta5GyU2}} && {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number) && ({{f_0tc3azo37NkTFki6WSa}} || !!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number) && {{f_0tc3azoyFWF4Ta5GyU2}} && {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number) && !(({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\"))))) && (!({{f_0tc3azp4xNE8zUSWT2m}} && {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number) || (({{f_0tc3azp4xNE8zUSWT2m}} && {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number) && ({{f_0tc3azpgiudzDJgjyHA}} || !!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : ''), ({{f_0tc3azo37NkTFki6WSa}} && !({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\") ? {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number) && {{f_0tc3azp4xNE8zUSWT2m}} && {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number) && !(({{f_0tc3azpgiudzDJgjyHA}}.status === \"valid\"))))",
+     "authAccountId": "aa_REDACTED"
+    }
+   },
+   {
+    "id": "f_0tc3azqD9gRiuP7rXfV",
+    "name": "Find phone numbers",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "forager-find-phone-numbers",
+     "actionVersion": 1,
+     "actionPackageId": "691e786f-5b47-4cf7-bdd5-50f72318b46c",
+     "inputsBinding": [
+      {
+       "name": "linkedin_url",
+       "formulaText": "{{f_0tc3ax9Y8ebyWqERnRo}}"
+      }
+     ],
+     "conditionalRunFormulaText": "((((!!{{f_nmeNKD4fEVTn}} && false) && (!({{f_0tc3aznPByyveARNqNe}} && {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0]) || (({{f_0tc3aznPByyveARNqNe}} && {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0]) && ({{f_0tc3azoVYA2vT7qPqyF}} || !({{f_0tc3aznPByyveARNqNe}} && {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0])) && !(({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\"))))) && (!({{f_0tc3azoyFWF4Ta5GyU2}} && {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number) || (({{f_0tc3azoyFWF4Ta5GyU2}} && {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number) && ({{f_0tc3azo37NkTFki6WSa}} || !!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number) && {{f_0tc3azoyFWF4Ta5GyU2}} && {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number) && !(({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\"))))) && (!({{f_0tc3azp4xNE8zUSWT2m}} && {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number) || (({{f_0tc3azp4xNE8zUSWT2m}} && {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number) && ({{f_0tc3azpgiudzDJgjyHA}} || !!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : ''), ({{f_0tc3azo37NkTFki6WSa}} && !({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\") ? {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number) && {{f_0tc3azp4xNE8zUSWT2m}} && {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number) && !(({{f_0tc3azpgiudzDJgjyHA}}.status === \"valid\"))))) && (!({{f_0tc3azptHSF3TVUM3z5}} && {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number) || (({{f_0tc3azptHSF3TVUM3z5}} && {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number) && ({{f_0tc3azp84cCzX35kZfu}} || !!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : ''), ({{f_0tc3azo37NkTFki6WSa}} && !({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\") ? {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number : ''), ({{f_0tc3azpgiudzDJgjyHA}} && !({{f_0tc3azpgiudzDJgjyHA}}.status === \"valid\") ? {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number) && {{f_0tc3azptHSF3TVUM3z5}} && {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number) && !(({{f_0tc3azp84cCzX35kZfu}}.status === \"valid\"))))",
+     "authAccountId": "aa_REDACTED"
+    }
+   },
+   {
+    "id": "f_0tc3azqsot8eRWcis6a",
+    "name": "Validate Forager",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "clearout-validate-phone",
+     "actionVersion": 1,
+     "actionPackageId": "f240f6b2-f5fe-47be-8a78-1f2584c2f081",
+     "inputsBinding": [
+      {
+       "name": "number",
+       "formulaText": "({{f_0tc3azqD9gRiuP7rXfV}} && {{f_0tc3azqD9gRiuP7rXfV}}?.phone_numbers[0])"
+      }
+     ],
+     "conditionalRunFormulaText": "!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : ''), ({{f_0tc3azo37NkTFki6WSa}} && !({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\") ? {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number : ''), ({{f_0tc3azpgiudzDJgjyHA}} && !({{f_0tc3azpgiudzDJgjyHA}}.status === \"valid\") ? {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number : ''), ({{f_0tc3azp84cCzX35kZfu}} && !({{f_0tc3azp84cCzX35kZfu}}.status === \"valid\") ? {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azqD9gRiuP7rXfV}}?.phone_numbers[0]) && {{f_0tc3azqD9gRiuP7rXfV}} && {{f_0tc3azqD9gRiuP7rXfV}}?.phone_numbers[0]",
+     "authAccountId": "aa_REDACTED"
+    }
+   },
+   {
+    "id": "f_0tc3azraFRXUnN8j9pb",
+    "name": "Find Mobile Number (2)",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "prospeo-find-mobile-number",
+     "actionVersion": 1,
+     "actionPackageId": "48a31bbb-63e6-4461-8a62-d88bb2cd6b0f",
+     "inputsBinding": [
+      {
+       "name": "personal_linkedin_url",
+       "formulaText": "{{f_0tc3ax9Y8ebyWqERnRo}}"
+      }
+     ],
+     "conditionalRunFormulaText": "(((((!!{{f_nmeNKD4fEVTn}} && false) && (!({{f_0tc3aznPByyveARNqNe}} && {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0]) || (({{f_0tc3aznPByyveARNqNe}} && {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0]) && ({{f_0tc3azoVYA2vT7qPqyF}} || !({{f_0tc3aznPByyveARNqNe}} && {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0])) && !(({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\"))))) && (!({{f_0tc3azoyFWF4Ta5GyU2}} && {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number) || (({{f_0tc3azoyFWF4Ta5GyU2}} && {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number) && ({{f_0tc3azo37NkTFki6WSa}} || !!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number) && {{f_0tc3azoyFWF4Ta5GyU2}} && {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number) && !(({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\"))))) && (!({{f_0tc3azp4xNE8zUSWT2m}} && {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number) || (({{f_0tc3azp4xNE8zUSWT2m}} && {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number) && ({{f_0tc3azpgiudzDJgjyHA}} || !!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : ''), ({{f_0tc3azo37NkTFki6WSa}} && !({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\") ? {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number) && {{f_0tc3azp4xNE8zUSWT2m}} && {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number) && !(({{f_0tc3azpgiudzDJgjyHA}}.status === \"valid\"))))) && (!({{f_0tc3azptHSF3TVUM3z5}} && {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number) || (({{f_0tc3azptHSF3TVUM3z5}} && {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number) && ({{f_0tc3azp84cCzX35kZfu}} || !!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : ''), ({{f_0tc3azo37NkTFki6WSa}} && !({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\") ? {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number : ''), ({{f_0tc3azpgiudzDJgjyHA}} && !({{f_0tc3azpgiudzDJgjyHA}}.status === \"valid\") ? {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number) && {{f_0tc3azptHSF3TVUM3z5}} && {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number) && !(({{f_0tc3azp84cCzX35kZfu}}.status === \"valid\"))))) && (!({{f_0tc3azqD9gRiuP7rXfV}} && {{f_0tc3azqD9gRiuP7rXfV}}?.phone_numbers[0]) || (({{f_0tc3azqD9gRiuP7rXfV}} && {{f_0tc3azqD9gRiuP7rXfV}}?.phone_numbers[0]) && ({{f_0tc3azqsot8eRWcis6a}} || !!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : ''), ({{f_0tc3azo37NkTFki6WSa}} && !({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\") ? {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number : ''), ({{f_0tc3azpgiudzDJgjyHA}} && !({{f_0tc3azpgiudzDJgjyHA}}.status === \"valid\") ? {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number : ''), ({{f_0tc3azp84cCzX35kZfu}} && !({{f_0tc3azp84cCzX35kZfu}}.status === \"valid\") ? {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azqD9gRiuP7rXfV}}?.phone_numbers[0]) && {{f_0tc3azqD9gRiuP7rXfV}} && {{f_0tc3azqD9gRiuP7rXfV}}?.phone_numbers[0]) && !(({{f_0tc3azqsot8eRWcis6a}}.status === \"valid\"))))",
+     "authAccountId": "aa_REDACTED"
+    }
+   },
+   {
+    "id": "f_0tc3azrkFmqJ58C2mz3",
+    "name": "Validate Prospeo",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "clearout-validate-phone",
+     "actionVersion": 1,
+     "actionPackageId": "f240f6b2-f5fe-47be-8a78-1f2584c2f081",
+     "inputsBinding": [
+      {
+       "name": "number",
+       "formulaText": "({{f_0tc3azraFRXUnN8j9pb}} && {{f_0tc3azraFRXUnN8j9pb}}?.raw_format)"
+      }
+     ],
+     "conditionalRunFormulaText": "!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : ''), ({{f_0tc3azo37NkTFki6WSa}} && !({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\") ? {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number : ''), ({{f_0tc3azpgiudzDJgjyHA}} && !({{f_0tc3azpgiudzDJgjyHA}}.status === \"valid\") ? {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number : ''), ({{f_0tc3azp84cCzX35kZfu}} && !({{f_0tc3azp84cCzX35kZfu}}.status === \"valid\") ? {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number : ''), ({{f_0tc3azqsot8eRWcis6a}} && !({{f_0tc3azqsot8eRWcis6a}}.status === \"valid\") ? {{f_0tc3azqD9gRiuP7rXfV}}?.phone_numbers[0] : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azraFRXUnN8j9pb}}?.raw_format) && {{f_0tc3azraFRXUnN8j9pb}} && {{f_0tc3azraFRXUnN8j9pb}}?.raw_format",
+     "authAccountId": "aa_REDACTED"
+    }
+   },
+   {
+    "id": "f_0tc3azsc3J5dhHUm96k",
+    "name": "Find Mobile Number from LinkedIn",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "contactout-find-phone",
+     "actionVersion": 1,
+     "actionPackageId": "caf1e6c2-b261-4b53-a640-31a11e7ca882",
+     "inputsBinding": [
+      {
+       "name": "linkedin_url",
+       "formulaText": "{{f_0tc3ax9Y8ebyWqERnRo}}"
+      }
+     ],
+     "conditionalRunFormulaText": "((((((!!{{f_nmeNKD4fEVTn}} && false) && (!({{f_0tc3aznPByyveARNqNe}} && {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0]) || (({{f_0tc3aznPByyveARNqNe}} && {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0]) && ({{f_0tc3azoVYA2vT7qPqyF}} || !({{f_0tc3aznPByyveARNqNe}} && {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0])) && !(({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\"))))) && (!({{f_0tc3azoyFWF4Ta5GyU2}} && {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number) || (({{f_0tc3azoyFWF4Ta5GyU2}} && {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number) && ({{f_0tc3azo37NkTFki6WSa}} || !!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number) && {{f_0tc3azoyFWF4Ta5GyU2}} && {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number) && !(({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\"))))) && (!({{f_0tc3azp4xNE8zUSWT2m}} && {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number) || (({{f_0tc3azp4xNE8zUSWT2m}} && {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number) && ({{f_0tc3azpgiudzDJgjyHA}} || !!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : ''), ({{f_0tc3azo37NkTFki6WSa}} && !({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\") ? {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number) && {{f_0tc3azp4xNE8zUSWT2m}} && {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number) && !(({{f_0tc3azpgiudzDJgjyHA}}.status === \"valid\"))))) && (!({{f_0tc3azptHSF3TVUM3z5}} && {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number) || (({{f_0tc3azptHSF3TVUM3z5}} && {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number) && ({{f_0tc3azp84cCzX35kZfu}} || !!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : ''), ({{f_0tc3azo37NkTFki6WSa}} && !({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\") ? {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number : ''), ({{f_0tc3azpgiudzDJgjyHA}} && !({{f_0tc3azpgiudzDJgjyHA}}.status === \"valid\") ? {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number) && {{f_0tc3azptHSF3TVUM3z5}} && {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number) && !(({{f_0tc3azp84cCzX35kZfu}}.status === \"valid\"))))) && (!({{f_0tc3azqD9gRiuP7rXfV}} && {{f_0tc3azqD9gRiuP7rXfV}}?.phone_numbers[0]) || (({{f_0tc3azqD9gRiuP7rXfV}} && {{f_0tc3azqD9gRiuP7rXfV}}?.phone_numbers[0]) && ({{f_0tc3azqsot8eRWcis6a}} || !!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : ''), ({{f_0tc3azo37NkTFki6WSa}} && !({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\") ? {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number : ''), ({{f_0tc3azpgiudzDJgjyHA}} && !({{f_0tc3azpgiudzDJgjyHA}}.status === \"valid\") ? {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number : ''), ({{f_0tc3azp84cCzX35kZfu}} && !({{f_0tc3azp84cCzX35kZfu}}.status === \"valid\") ? {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azqD9gRiuP7rXfV}}?.phone_numbers[0]) && {{f_0tc3azqD9gRiuP7rXfV}} && {{f_0tc3azqD9gRiuP7rXfV}}?.phone_numbers[0]) && !(({{f_0tc3azqsot8eRWcis6a}}.status === \"valid\"))))) && (!({{f_0tc3azraFRXUnN8j9pb}} && {{f_0tc3azraFRXUnN8j9pb}}?.raw_format) || (({{f_0tc3azraFRXUnN8j9pb}} && {{f_0tc3azraFRXUnN8j9pb}}?.raw_format) && ({{f_0tc3azrkFmqJ58C2mz3}} || !!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : ''), ({{f_0tc3azo37NkTFki6WSa}} && !({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\") ? {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number : ''), ({{f_0tc3azpgiudzDJgjyHA}} && !({{f_0tc3azpgiudzDJgjyHA}}.status === \"valid\") ? {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number : ''), ({{f_0tc3azp84cCzX35kZfu}} && !({{f_0tc3azp84cCzX35kZfu}}.status === \"valid\") ? {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number : ''), ({{f_0tc3azqsot8eRWcis6a}} && !({{f_0tc3azqsot8eRWcis6a}}.status === \"valid\") ? {{f_0tc3azqD9gRiuP7rXfV}}?.phone_numbers[0] : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azraFRXUnN8j9pb}}?.raw_format) && {{f_0tc3azraFRXUnN8j9pb}} && {{f_0tc3azraFRXUnN8j9pb}}?.raw_format) && !(({{f_0tc3azrkFmqJ58C2mz3}}.status === \"valid\"))))",
+     "authAccountId": "aa_REDACTED"
+    }
+   },
+   {
+    "id": "f_0tc3azsE5i8q6VYyhMa",
+    "name": "Validate ContactOut",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "clearout-validate-phone",
+     "actionVersion": 1,
+     "actionPackageId": "f240f6b2-f5fe-47be-8a78-1f2584c2f081",
+     "inputsBinding": [
+      {
+       "name": "number",
+       "formulaText": "({{f_0tc3azsc3J5dhHUm96k}} && {{f_0tc3azsc3J5dhHUm96k}}?.phone[0])"
+      }
+     ],
+     "conditionalRunFormulaText": "!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : ''), ({{f_0tc3azo37NkTFki6WSa}} && !({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\") ? {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number : ''), ({{f_0tc3azpgiudzDJgjyHA}} && !({{f_0tc3azpgiudzDJgjyHA}}.status === \"valid\") ? {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number : ''), ({{f_0tc3azp84cCzX35kZfu}} && !({{f_0tc3azp84cCzX35kZfu}}.status === \"valid\") ? {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number : ''), ({{f_0tc3azqsot8eRWcis6a}} && !({{f_0tc3azqsot8eRWcis6a}}.status === \"valid\") ? {{f_0tc3azqD9gRiuP7rXfV}}?.phone_numbers[0] : ''), ({{f_0tc3azrkFmqJ58C2mz3}} && !({{f_0tc3azrkFmqJ58C2mz3}}.status === \"valid\") ? {{f_0tc3azraFRXUnN8j9pb}}?.raw_format : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azsc3J5dhHUm96k}}?.phone[0]) && {{f_0tc3azsc3J5dhHUm96k}} && {{f_0tc3azsc3J5dhHUm96k}}?.phone[0]",
+     "authAccountId": "aa_REDACTED"
+    }
+   },
+   {
+    "id": "f_0tc3azsn9Za2MkqMxPZ",
+    "name": "Find Mobile Number (3)",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "datagma-find-mobile-number",
+     "actionVersion": 1,
+     "actionPackageId": "f240a97e-3d3e-4ffa-a85e-8d70afe348a5",
+     "inputsBinding": [
+      {
+       "name": "personal_linkedin_url",
+       "formulaText": "{{f_0tc3ax9Y8ebyWqERnRo}}"
+      },
+      {
+       "name": "email",
+       "formulaText": "{{f_W8n94RDA6jmc}}"
+      }
+     ],
+     "conditionalRunFormulaText": "(((((((!!{{f_nmeNKD4fEVTn}} && false) && (!({{f_0tc3aznPByyveARNqNe}} && {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0]) || (({{f_0tc3aznPByyveARNqNe}} && {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0]) && ({{f_0tc3azoVYA2vT7qPqyF}} || !({{f_0tc3aznPByyveARNqNe}} && {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0])) && !(({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\"))))) && (!({{f_0tc3azoyFWF4Ta5GyU2}} && {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number) || (({{f_0tc3azoyFWF4Ta5GyU2}} && {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number) && ({{f_0tc3azo37NkTFki6WSa}} || !!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number) && {{f_0tc3azoyFWF4Ta5GyU2}} && {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number) && !(({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\"))))) && (!({{f_0tc3azp4xNE8zUSWT2m}} && {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number) || (({{f_0tc3azp4xNE8zUSWT2m}} && {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number) && ({{f_0tc3azpgiudzDJgjyHA}} || !!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : ''), ({{f_0tc3azo37NkTFki6WSa}} && !({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\") ? {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number) && {{f_0tc3azp4xNE8zUSWT2m}} && {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number) && !(({{f_0tc3azpgiudzDJgjyHA}}.status === \"valid\"))))) && (!({{f_0tc3azptHSF3TVUM3z5}} && {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number) || (({{f_0tc3azptHSF3TVUM3z5}} && {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number) && ({{f_0tc3azp84cCzX35kZfu}} || !!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : ''), ({{f_0tc3azo37NkTFki6WSa}} && !({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\") ? {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number : ''), ({{f_0tc3azpgiudzDJgjyHA}} && !({{f_0tc3azpgiudzDJgjyHA}}.status === \"valid\") ? {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number) && {{f_0tc3azptHSF3TVUM3z5}} && {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number) && !(({{f_0tc3azp84cCzX35kZfu}}.status === \"valid\"))))) && (!({{f_0tc3azqD9gRiuP7rXfV}} && {{f_0tc3azqD9gRiuP7rXfV}}?.phone_numbers[0]) || (({{f_0tc3azqD9gRiuP7rXfV}} && {{f_0tc3azqD9gRiuP7rXfV}}?.phone_numbers[0]) && ({{f_0tc3azqsot8eRWcis6a}} || !!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : ''), ({{f_0tc3azo37NkTFki6WSa}} && !({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\") ? {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number : ''), ({{f_0tc3azpgiudzDJgjyHA}} && !({{f_0tc3azpgiudzDJgjyHA}}.status === \"valid\") ? {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number : ''), ({{f_0tc3azp84cCzX35kZfu}} && !({{f_0tc3azp84cCzX35kZfu}}.status === \"valid\") ? {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azqD9gRiuP7rXfV}}?.phone_numbers[0]) && {{f_0tc3azqD9gRiuP7rXfV}} && {{f_0tc3azqD9gRiuP7rXfV}}?.phone_numbers[0]) && !(({{f_0tc3azqsot8eRWcis6a}}.status === \"valid\"))))) && (!({{f_0tc3azraFRXUnN8j9pb}} && {{f_0tc3azraFRXUnN8j9pb}}?.raw_format) || (({{f_0tc3azraFRXUnN8j9pb}} && {{f_0tc3azraFRXUnN8j9pb}}?.raw_format) && ({{f_0tc3azrkFmqJ58C2mz3}} || !!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : ''), ({{f_0tc3azo37NkTFki6WSa}} && !({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\") ? {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number : ''), ({{f_0tc3azpgiudzDJgjyHA}} && !({{f_0tc3azpgiudzDJgjyHA}}.status === \"valid\") ? {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number : ''), ({{f_0tc3azp84cCzX35kZfu}} && !({{f_0tc3azp84cCzX35kZfu}}.status === \"valid\") ? {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number : ''), ({{f_0tc3azqsot8eRWcis6a}} && !({{f_0tc3azqsot8eRWcis6a}}.status === \"valid\") ? {{f_0tc3azqD9gRiuP7rXfV}}?.phone_numbers[0] : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azraFRXUnN8j9pb}}?.raw_format) && {{f_0tc3azraFRXUnN8j9pb}} && {{f_0tc3azraFRXUnN8j9pb}}?.raw_format) && !(({{f_0tc3azrkFmqJ58C2mz3}}.status === \"valid\"))))) && (!({{f_0tc3azsc3J5dhHUm96k}} && {{f_0tc3azsc3J5dhHUm96k}}?.phone[0]) || (({{f_0tc3azsc3J5dhHUm96k}} && {{f_0tc3azsc3J5dhHUm96k}}?.phone[0]) && ({{f_0tc3azsE5i8q6VYyhMa}} || !!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : ''), ({{f_0tc3azo37NkTFki6WSa}} && !({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\") ? {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number : ''), ({{f_0tc3azpgiudzDJgjyHA}} && !({{f_0tc3azpgiudzDJgjyHA}}.status === \"valid\") ? {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number : ''), ({{f_0tc3azp84cCzX35kZfu}} && !({{f_0tc3azp84cCzX35kZfu}}.status === \"valid\") ? {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number : ''), ({{f_0tc3azqsot8eRWcis6a}} && !({{f_0tc3azqsot8eRWcis6a}}.status === \"valid\") ? {{f_0tc3azqD9gRiuP7rXfV}}?.phone_numbers[0] : ''), ({{f_0tc3azrkFmqJ58C2mz3}} && !({{f_0tc3azrkFmqJ58C2mz3}}.status === \"valid\") ? {{f_0tc3azraFRXUnN8j9pb}}?.raw_format : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azsc3J5dhHUm96k}}?.phone[0]) && {{f_0tc3azsc3J5dhHUm96k}} && {{f_0tc3azsc3J5dhHUm96k}}?.phone[0]) && !(({{f_0tc3azsE5i8q6VYyhMa}}.status === \"valid\"))))",
+     "authAccountId": "aa_REDACTED"
+    }
+   },
+   {
+    "id": "f_0tc3azt8TkgCg9mPpcS",
+    "name": "Mobile Phone",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "waterfall",
+     "waterfallType": "person/phoneGlobal",
+     "truncateValue": true,
+     "formulaWaterfall": [
+      {
+       "formula": "(({{f_0tc3aznPByyveARNqNe}} && {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0]) && !{{f_0tc3azoVYA2vT7qPqyF}}) || ({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? ({{f_0tc3aznPByyveARNqNe}} && {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0]) : ''"
+      },
+      {
+       "formula": "(!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number) && {{f_0tc3azoyFWF4Ta5GyU2}} && {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number && !{{f_0tc3azo37NkTFki6WSa}}) || ({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\") ? ({{f_0tc3azoyFWF4Ta5GyU2}} && {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number) : ''"
+      },
+      {
+       "formula": "(!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : ''), ({{f_0tc3azo37NkTFki6WSa}} && !({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\") ? {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number) && {{f_0tc3azp4xNE8zUSWT2m}} && {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number && !{{f_0tc3azpgiudzDJgjyHA}}) || ({{f_0tc3azpgiudzDJgjyHA}}.status === \"valid\") ? ({{f_0tc3azp4xNE8zUSWT2m}} && {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number) : ''"
+      },
+      {
+       "formula": "(!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : ''), ({{f_0tc3azo37NkTFki6WSa}} && !({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\") ? {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number : ''), ({{f_0tc3azpgiudzDJgjyHA}} && !({{f_0tc3azpgiudzDJgjyHA}}.status === \"valid\") ? {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number) && {{f_0tc3azptHSF3TVUM3z5}} && {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number && !{{f_0tc3azp84cCzX35kZfu}}) || ({{f_0tc3azp84cCzX35kZfu}}.status === \"valid\") ? ({{f_0tc3azptHSF3TVUM3z5}} && {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number) : ''"
+      },
+      {
+       "formula": "(!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : ''), ({{f_0tc3azo37NkTFki6WSa}} && !({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\") ? {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number : ''), ({{f_0tc3azpgiudzDJgjyHA}} && !({{f_0tc3azpgiudzDJgjyHA}}.status === \"valid\") ? {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number : ''), ({{f_0tc3azp84cCzX35kZfu}} && !({{f_0tc3azp84cCzX35kZfu}}.status === \"valid\") ? {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azqD9gRiuP7rXfV}}?.phone_numbers[0]) && {{f_0tc3azqD9gRiuP7rXfV}} && {{f_0tc3azqD9gRiuP7rXfV}}?.phone_numbers[0] && !{{f_0tc3azqsot8eRWcis6a}}) || ({{f_0tc3azqsot8eRWcis6a}}.status === \"valid\") ? ({{f_0tc3azqD9gRiuP7rXfV}} && {{f_0tc3azqD9gRiuP7rXfV}}?.phone_numbers[0]) : ''"
+      },
+      {
+       "formula": "(!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : ''), ({{f_0tc3azo37NkTFki6WSa}} && !({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\") ? {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number : ''), ({{f_0tc3azpgiudzDJgjyHA}} && !({{f_0tc3azpgiudzDJgjyHA}}.status === \"valid\") ? {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number : ''), ({{f_0tc3azp84cCzX35kZfu}} && !({{f_0tc3azp84cCzX35kZfu}}.status === \"valid\") ? {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number : ''), ({{f_0tc3azqsot8eRWcis6a}} && !({{f_0tc3azqsot8eRWcis6a}}.status === \"valid\") ? {{f_0tc3azqD9gRiuP7rXfV}}?.phone_numbers[0] : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azraFRXUnN8j9pb}}?.raw_format) && {{f_0tc3azraFRXUnN8j9pb}} && {{f_0tc3azraFRXUnN8j9pb}}?.raw_format && !{{f_0tc3azrkFmqJ58C2mz3}}) || ({{f_0tc3azrkFmqJ58C2mz3}}.status === \"valid\") ? ({{f_0tc3azraFRXUnN8j9pb}} && {{f_0tc3azraFRXUnN8j9pb}}?.raw_format) : ''"
+      },
+      {
+       "formula": "(!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : ''), ({{f_0tc3azo37NkTFki6WSa}} && !({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\") ? {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number : ''), ({{f_0tc3azpgiudzDJgjyHA}} && !({{f_0tc3azpgiudzDJgjyHA}}.status === \"valid\") ? {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number : ''), ({{f_0tc3azp84cCzX35kZfu}} && !({{f_0tc3azp84cCzX35kZfu}}.status === \"valid\") ? {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number : ''), ({{f_0tc3azqsot8eRWcis6a}} && !({{f_0tc3azqsot8eRWcis6a}}.status === \"valid\") ? {{f_0tc3azqD9gRiuP7rXfV}}?.phone_numbers[0] : ''), ({{f_0tc3azrkFmqJ58C2mz3}} && !({{f_0tc3azrkFmqJ58C2mz3}}.status === \"valid\") ? {{f_0tc3azraFRXUnN8j9pb}}?.raw_format : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azsc3J5dhHUm96k}}?.phone[0]) && {{f_0tc3azsc3J5dhHUm96k}} && {{f_0tc3azsc3J5dhHUm96k}}?.phone[0] && !{{f_0tc3azsE5i8q6VYyhMa}}) || ({{f_0tc3azsE5i8q6VYyhMa}}.status === \"valid\") ? ({{f_0tc3azsc3J5dhHUm96k}} && {{f_0tc3azsc3J5dhHUm96k}}?.phone[0]) : ''"
+      },
+      {
+       "formula": "(!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : ''), ({{f_0tc3azo37NkTFki6WSa}} && !({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\") ? {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number : ''), ({{f_0tc3azpgiudzDJgjyHA}} && !({{f_0tc3azpgiudzDJgjyHA}}.status === \"valid\") ? {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number : ''), ({{f_0tc3azp84cCzX35kZfu}} && !({{f_0tc3azp84cCzX35kZfu}}.status === \"valid\") ? {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number : ''), ({{f_0tc3azqsot8eRWcis6a}} && !({{f_0tc3azqsot8eRWcis6a}}.status === \"valid\") ? {{f_0tc3azqD9gRiuP7rXfV}}?.phone_numbers[0] : ''), ({{f_0tc3azrkFmqJ58C2mz3}} && !({{f_0tc3azrkFmqJ58C2mz3}}.status === \"valid\") ? {{f_0tc3azraFRXUnN8j9pb}}?.raw_format : ''), ({{f_0tc3azsE5i8q6VYyhMa}} && !({{f_0tc3azsE5i8q6VYyhMa}}.status === \"valid\") ? {{f_0tc3azsc3J5dhHUm96k}}?.phone[0] : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azsn9Za2MkqMxPZ}}?.displayInternational) && {{f_0tc3azsn9Za2MkqMxPZ}} && {{f_0tc3azsn9Za2MkqMxPZ}}?.displayInternational && !{{f_0tc3aztHjgPAhB25wcC}}) || ({{f_0tc3aztHjgPAhB25wcC}}.status === \"valid\") ? ({{f_0tc3azsn9Za2MkqMxPZ}} && {{f_0tc3azsn9Za2MkqMxPZ}}?.displayInternational) : ''"
+      }
+     ]
+    }
+   },
+   {
+    "id": "f_0tc3aztHjgPAhB25wcC",
+    "name": "Validate Datagma",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "clearout-validate-phone",
+     "actionVersion": 1,
+     "actionPackageId": "f240f6b2-f5fe-47be-8a78-1f2584c2f081",
+     "inputsBinding": [
+      {
+       "name": "number",
+       "formulaText": "({{f_0tc3azsn9Za2MkqMxPZ}} && {{f_0tc3azsn9Za2MkqMxPZ}}?.displayInternational)"
+      }
+     ],
+     "conditionalRunFormulaText": "!([ ({{f_0tc3azoVYA2vT7qPqyF}} && !({{f_0tc3azoVYA2vT7qPqyF}}.status === \"valid\") ? {{f_0tc3aznPByyveARNqNe}}?.phone_numbers[0] : ''), ({{f_0tc3azo37NkTFki6WSa}} && !({{f_0tc3azo37NkTFki6WSa}}.status === \"valid\") ? {{f_0tc3azoyFWF4Ta5GyU2}}?.mobile_number : ''), ({{f_0tc3azpgiudzDJgjyHA}} && !({{f_0tc3azpgiudzDJgjyHA}}.status === \"valid\") ? {{f_0tc3azp4xNE8zUSWT2m}}?.data.phone_number : ''), ({{f_0tc3azp84cCzX35kZfu}} && !({{f_0tc3azp84cCzX35kZfu}}.status === \"valid\") ? {{f_0tc3azptHSF3TVUM3z5}}?.mobile_number : ''), ({{f_0tc3azqsot8eRWcis6a}} && !({{f_0tc3azqsot8eRWcis6a}}.status === \"valid\") ? {{f_0tc3azqD9gRiuP7rXfV}}?.phone_numbers[0] : ''), ({{f_0tc3azrkFmqJ58C2mz3}} && !({{f_0tc3azrkFmqJ58C2mz3}}.status === \"valid\") ? {{f_0tc3azraFRXUnN8j9pb}}?.raw_format : ''), ({{f_0tc3azsE5i8q6VYyhMa}} && !({{f_0tc3azsE5i8q6VYyhMa}}.status === \"valid\") ? {{f_0tc3azsc3J5dhHUm96k}}?.phone[0] : '') ]).filter(previousValue => !!previousValue).find(field => field === {{f_0tc3azsn9Za2MkqMxPZ}}?.displayInternational) && {{f_0tc3azsn9Za2MkqMxPZ}} && {{f_0tc3azsn9Za2MkqMxPZ}}?.displayInternational",
+     "authAccountId": "aa_REDACTED"
+    }
+   },
+   {
+    "id": "f_0tcd2n9EiqAfMneXAaz",
+    "name": "Enrich person",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "enrich-person-with-mixrank-v2",
+     "actionVersion": 1,
+     "actionPackageId": "e251a70e-46d7-4f3a-b3ef-a211ad3d8bd2",
+     "inputsBinding": [
+      {
+       "name": "person_identifier",
+       "formulaText": "{{f_0tcd3cl87EJnaV8E4qZ}}?.output?.linkedin_url"
+      },
+      {
+       "name": "email",
+       "formulaText": "{{f_W8n94RDA6jmc}}"
+      }
+     ],
+     "conditionalRunFormulaText": "{{f_K56Fn9Mwsdso}} && !!{{f_0tcd3cl87EJnaV8E4qZ}}?.output?.linkedin_url && false"
+    }
+   },
+   {
+    "id": "f_0tcd33ft6P27xfUdKUZ",
+    "name": "LinkedIn Match",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "use-ai",
+     "actionVersion": 1,
+     "actionPackageId": "67ba01e9-1898-4e7d-afe7-7ebe24819a57",
+     "inputsBinding": [
+      {
+       "name": "useCase",
+       "formulaText": "\"use-ai\""
+      },
+      {
+       "name": "prompt",
+       "formulaText": "\"#CONTEXT#\\nYou are an AI-powered data matcher. You will be given enriched LinkedIn profile data and separate original reference data. Your task is to verify if the LinkedIn profile belongs to the same person as in the original data by comparing only the provided fields. Do not browse the web or use Google; only compare the given content.\\n\\n#OBJECTIVE#\\nVerify whether the enriched LinkedIn profile matches the original person/company data and output a single boolean string: \\\"true\\\" if it is a match, \\\"false\\\" if it is not.\\n\\n#INSTRUCTIONS#\\n1. Inputs provided:\\n   - LinkedIn data blob (text): \" + Clay.formatForAIPrompt({{f_0tcd2n9EiqAfMneXAaz}}) + \"\\n   - Original person name: \" + Clay.formatForAIPrompt({{f_tpiAir8xf5MG}}) + \"\\n   - Original company name: \" + Clay.formatForAIPrompt({{f_0svjadrP2skPdNYKuii}}) + \"\\n   - Original company domain (optional): \" + Clay.formatForAIPrompt({{f_0szle76gBsk75pEcneh}}?.[\"Website final\"]) + \"\\n   - Original company address: \" + Clay.formatForAIPrompt({{f_SzWkkodRShts}}) + \"\\n\\n2. Allowed evidence from LinkedIn data (use any that is present):\\n   - Person’s name (exact or very similar; allow common variations, middle initials, nicknames)\\n   - Current or past company mentions matching the original company name (exact or strong synonym/brand match)\\n   - Location indicators (city, state/region, country) that reasonably align with the company address\\n   - Mentions of ownership/founder/employee roles at the original company\\n   - Mentions of the company’s website/domain if present\\n\\n3. Matching rules (any one of the following is sufficient to output \\\"true\\\"):\\n   - name + company match (preferred)\\n   - name + location match (acceptable)\\n   - strong company association in work experience (current or past) with similar name\\n   Additional guidance:\\n   - Treat minor spelling differences, diacritics, or common nicknames as similar.\\n   - For company name, allow recognized abbreviations, legal suffix variations (GmbH, Inc., Ltd.), brand/trade names, and obvious rebrand variants.\\n   - For location, a reasonable geographic match (same city or same metro/region) is acceptable.\\n   - If the LinkedIn data explicitly contradicts the original data (different unique name+company, entirely different geography), output \\\"false\\\".\\n\\n4. Domain and address signals (use only if present in the LinkedIn data):\\n   - If LinkedIn data references a website/domain that matches \" + Clay.formatForAIPrompt({{f_0szle76gBsk75pEcneh}}?.[\"Website final\"]) + \", consider this strong evidence toward a match.\\n   - If LinkedIn location aligns with the city/region/country implied by \" + Clay.formatForAIPrompt({{f_SzWkkodRShts}}) + \", consider this supportive evidence.\\n\\n5. Prohibited actions:\\n   - Do not use Google, web search, or any external sources.\\n   - Do not infer missing facts; only use what is present in the provided inputs.\\n   - Do not output explanations or any extra text—only \\\"true\\\" or \\\"false\\\".\\n\\n6. Decision protocol:\\n   - If at least one matching rule in step 3 is met based on evidence present in the LinkedIn data, output \\\"true\\\".\\n   - Otherwise, output \\\"false\\\".\\n\\n#EXAMPLES#\\nInput:\\n- linkedinData: \\\"Johnathan (John) Doe — Founder at Acme Technologies GmbH (Acme Tech) — Berlin, Germany — Website: acme-tech.com\\\"\\n- originalName: \\\"John Doe\\\"\\n- originalCompany: \\\"Acme Technologies\\\"\\n- originalDomain: \\\"acme-tech.com\\\"\\n- originalAddress: \\\"Leipziger Str. 1, 10117 Berlin, Germany\\\"\\nExpected output:\\ntrue\\n\\nInput:\\n- linkedinData: \\\"Jane Smith — Marketing Manager at BlueWave Inc. — Toronto, Canada\\\"\\n- originalName: \\\"Jane Smyth\\\"\\n- originalCompany: \\\"GreenLeaf Ltd\\\"\\n- originalDomain: \\\"greenleaf.co\\\"\\n- originalAddress: \\\"Dublin, Ireland\\\"\\nExpected output:\\nfalse\""
+      },
+      {
+       "name": "temperature"
+      },
+      {
+       "name": "reasoningLevel"
+      },
+      {
+       "name": "reasoningBudget"
+      },
+      {
+       "name": "claygentId"
+      },
+      {
+       "name": "claygentFieldMapping"
+      },
+      {
+       "name": "maxTokens"
+      },
+      {
+       "name": "model",
+       "formulaText": "\"gpt-4o-mini\""
+      },
+      {
+       "name": "maxCostInCents"
+      },
+      {
+       "name": "jsonMode"
+      },
+      {
+       "name": "systemPrompt"
+      },
+      {
+       "name": "answerSchemaType",
+       "formulaMap": {
+        "type": "\"json\"",
+        "fields": "{\"match\":{\"type\":\"boolean\",\"description\":\"\",\"id\":\"8fb789f7-67f1-4f06-99eb-a6fc778afc58\",\"options\":\"[{\\\"text\\\":\\\"true\\\",\\\"id\\\":\\\"12302d2e-2e25-4cef-8999-d1b1ffc398ee\\\",\\\"color\\\":\\\"red\\\"},{\\\"text\\\":\\\"false\\\",\\\"id\\\":\\\"fd323ab3-1d44-4e7b-a401-91669bdbfd10\\\",\\\"color\\\":\\\"yellow\\\"}]\"},\"reason\":{\"type\":\"string\",\"description\":\"Why did you make that decision?\",\"id\":\"a7d88f0f-b32b-406a-9016-506f7390043c\",\"options\":\"\"}}",
+        "jsonType": "\"Fields\""
+       }
+      },
+      {
+       "name": "tableExamples"
+      },
+      {
+       "name": "stopSequence"
+      },
+      {
+       "name": "runBudget"
+      },
+      {
+       "name": "topP"
+      },
+      {
+       "name": "contextDocumentIds"
+      },
+      {
+       "name": "browserbaseContextId"
+      },
+      {
+       "name": "mcpSettings"
+      },
+      {
+       "name": "metaprompt",
+       "formulaText": "{{f_0tcd2n9EiqAfMneXAaz}}+\" if this person is\\n\\n\"+{{f_tpiAir8xf5MG}}+\" working at \"+{{f_0svjadrP2skPdNYKuii}}+\" / \"+{{f_PGqAgz9iKgvB}}+\" then print true else print false\""
+      },
+      {
+       "name": "_metadata",
+       "formulaMap": {
+        "modelSource": "user"
+       }
+      }
+     ],
+     "conditionalRunFormulaText": "!!{{f_0tcd2n9EiqAfMneXAaz}}",
+     "optionalPathsInInputs": {
+      "prompt": [
+       [
+        "f_SzWkkodRShts"
+       ]
+      ]
+     },
+     "customRateLimitRules": {
+      "timeWindow": [
+       {
+        "limit": 200,
+        "bucket": [
+         "PRIVATE_AUTH_KEY",
+         "CUSTOM_KEY"
+        ],
+        "durationMs": 1000
+       },
+       {
+        "limit": 750,
+        "bucket": [
+         "GLOBAL"
+        ],
+        "durationMs": 1000
+       }
+      ]
+     },
+     "authAccountId": "aa_REDACTED"
+    }
+   },
+   {
+    "id": "f_0tcd3cl87EJnaV8E4qZ",
+    "name": "SKAEL Linked In Search",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "http-api-v2",
+     "actionVersion": 1,
+     "actionPackageId": "4299091f-3cd3-4d68-b198-0143575f471d",
+     "inputsBinding": [
+      {
+       "name": "method",
+       "formulaText": "\"POST\""
+      },
+      {
+       "name": "url",
+       "formulaText": "\"https://api.skael.de/api/enrichments/ai_research_agent\""
+      },
+      {
+       "name": "queryString",
+       "formulaMap": {}
+      },
+      {
+       "name": "body",
+       "formulaText": "\"{\\n  \\\"system_prompt\\\": \\\"You are an expert researcher trained on finding the right LinkedIn Profile URLs for any person given at least their full name and their company name + additional data points.\\\",\\n  \\\"user_prompt\\\": \\\"You're now going to find the LinkedIn Profile URL for \" + Clay.formatForJSON({{f_tpiAir8xf5MG}}) + \" at \" + Clay.formatForJSON({{f_0svjadrP2skPdNYKuii}}) + \".\\\\n\\\\nThe result must match the pattern linkedin.com/in. It should not be a company URL or a posts URL or anything but a profile URL. Execute as many steps as necessary to find the profile URL, and ALSO to validate that it is the RIGHT profile URL for {{Kontaktperson [Sauber]}}. Return only the final URL and nothing else.\\\\n\\\\nIf you find a link with /posts/, you can replace /posts/ with /in/ and then remove everything after the first underscore (_). Then it's a correct result. For example, you could turn an incorrect result like: https://www.linkedin.com/posts/max-mustermann_top-5-ai-and-machine into a correct result like https://www.linkedin.com/in/max-mustermann\\\\n\\\\nFollow the steps below in your research:\\\\n\\\\n1. Search LinkedIn for a profile associated with the provided name.\\\\n2. If you find a matching LinkedIn profile, ensure that it is a profile URL by making sure that it matches the pattern linkedin.com/in\\\\n3. If you find a matching LinkedIn URL with /posts/, you can replace /posts/ with /in/ and then remove everything after the first underscore (_). Then it's a correct profile result.\\\\n4. If no profile is found that matches the name, run the following google searches below:\\\\n5. Run a google search for \\\\\\\"{{Kontaktperson [Sauber]}}\\\\\\\" site:linkedin.com/in\\\\n6. If that doesn't work, then run a google search for {{Kontaktperson [Sauber]}} site:linkedin.com/in\\\\n7. Finally, if that doesn't work, then search {{Kontaktperson [Sauber]}} site:linkedin.com, and repeat steps 2-3 for validating the URLs you find.\\\\n8. If you still find no results return \\\\\\\"No LinkedIn profile found\\\\\\\"\\\\n\\\\nImportant reminders:\\\\n- Base your search only on the exact name provided. Do not make any assumptions.\\\\n- Only search for and return information from LinkedIn. Do not use or include information from other sources.\\\\n- Do not include any additional information or commentary in your response, only the LinkedIn profile URL or the \\\\\\\"no profile found\\\\\\\" message.\\\\n- Maximize the total number of steps you need to return accurate results here.\\\",\\n  \\\"schema\\\": {\\n    \\\"type\\\": \\\"object\\\",\\n    \\\"properties\\\": {\\n      \\\"linkedin_url\\\": {\\n        \\\"type\\\": \\\"string\\\",\\n        \\\"description\\\": \\\"The LinkedIn profile URL matching the pattern linkedin.com/in/username. Return 'No LinkedIn profile found' if not found.\\\"\\n      },\\n      \\\"confidence\\\": {\\n        \\\"type\\\": \\\"number\\\",\\n        \\\"description\\\": \\\"Confidence score 0.0-1.0 that this is the correct person's profile\\\"\\n      },\\n      \\\"found\\\": {\\n        \\\"type\\\": \\\"boolean\\\",\\n        \\\"description\\\": \\\"Whether a matching LinkedIn profile was found\\\"\\n      }\\n    },\\n    \\\"required\\\": [\\n      \\\"linkedin_url\\\",\\n      \\\"confidence\\\",\\n      \\\"found\\\"\\n    ],\\n    \\\"additionalProperties\\\": false\\n  },\\n  \\\"max_steps\\\": 10,\\n  \\\"model\\\": \\\"google/gemini-2.5-flash\\\"\\n}\""
+      },
+      {
+       "name": "headers",
+       "formulaMap": {
+        "Content-Type": "\"application/json\"",
+        "Authorization": "\"Bearer \"+{{f_0ta3jocgFtNmcvjguq8}}"
+       }
+      },
+      {
+       "name": "fieldPaths"
+      },
+      {
+       "name": "removeNull",
+       "formulaText": "true"
+      },
+      {
+       "name": "returnResponseMetadata"
+      },
+      {
+       "name": "followRedirects",
+       "formulaText": "true"
+      },
+      {
+       "name": "responseTimeout"
+      },
+      {
+       "name": "shouldRetry",
+       "formulaText": "true"
+      }
+     ],
+     "conditionalRunFormulaText": "!!{{f_nmeNKD4fEVTn}} && false",
+     "customRateLimitRules": {
+      "timeWindow": [
+       {
+        "limit": 10,
+        "bucket": [
+         "WORKSPACE_ID"
+        ],
+        "durationMs": 1000
+       }
+      ]
+     }
+    }
+   },
+   {
+    "id": "f_0tcpcl1bqZes8AXJFEF",
+    "name": "HTTP RESERVE",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "http-api-v2",
+     "actionVersion": 1,
+     "actionPackageId": "4299091f-3cd3-4d68-b198-0143575f471d",
+     "inputsBinding": [
+      {
+       "name": "method",
+       "formulaText": "\"POST\""
+      },
+      {
+       "name": "url",
+       "formulaText": "\"api.skael.de\""
+      },
+      {
+       "name": "queryString"
+      },
+      {
+       "name": "body"
+      },
+      {
+       "name": "headers"
+      },
+      {
+       "name": "fieldPaths"
+      },
+      {
+       "name": "removeNull",
+       "formulaText": "true"
+      },
+      {
+       "name": "returnResponseMetadata"
+      },
+      {
+       "name": "followRedirects",
+       "formulaText": "true"
+      },
+      {
+       "name": "responseTimeout"
+      },
+      {
+       "name": "shouldRetry",
+       "formulaText": "true"
+      }
+     ],
+     "conditionalRunFormulaText": "false"
+    }
+   },
+   {
+    "id": "f_0tcpclkBhoDDPMUt6wB",
+    "name": "HTTP RESERVE (2)",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "http-api-v2",
+     "actionVersion": 1,
+     "actionPackageId": "4299091f-3cd3-4d68-b198-0143575f471d",
+     "inputsBinding": [
+      {
+       "name": "method",
+       "formulaText": "\"POST\""
+      },
+      {
+       "name": "url",
+       "formulaText": "\"api.skael.de\""
+      },
+      {
+       "name": "queryString"
+      },
+      {
+       "name": "body"
+      },
+      {
+       "name": "headers"
+      },
+      {
+       "name": "fieldPaths"
+      },
+      {
+       "name": "removeNull",
+       "formulaText": "true"
+      },
+      {
+       "name": "returnResponseMetadata"
+      },
+      {
+       "name": "followRedirects",
+       "formulaText": "true"
+      },
+      {
+       "name": "responseTimeout"
+      },
+      {
+       "name": "shouldRetry",
+       "formulaText": "true"
+      }
+     ],
+     "conditionalRunFormulaText": "false"
+    }
+   },
+   {
+    "id": "f_0tcpclof4dtUo5Nvht8",
+    "name": "HTTP RESERVE (3)",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "http-api-v2",
+     "actionVersion": 1,
+     "actionPackageId": "4299091f-3cd3-4d68-b198-0143575f471d",
+     "inputsBinding": [
+      {
+       "name": "method",
+       "formulaText": "\"POST\""
+      },
+      {
+       "name": "url",
+       "formulaText": "\"api.skael.de\""
+      },
+      {
+       "name": "queryString"
+      },
+      {
+       "name": "body"
+      },
+      {
+       "name": "headers"
+      },
+      {
+       "name": "fieldPaths"
+      },
+      {
+       "name": "removeNull",
+       "formulaText": "true"
+      },
+      {
+       "name": "returnResponseMetadata"
+      },
+      {
+       "name": "followRedirects",
+       "formulaText": "true"
+      },
+      {
+       "name": "responseTimeout"
+      },
+      {
+       "name": "shouldRetry",
+       "formulaText": "true"
+      }
+     ],
+     "conditionalRunFormulaText": "false"
+    }
+   },
+   {
+    "id": "f_0tcpcm7EpUc9e8v9zjo",
+    "name": "HTTP RESERVE (4)",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "http-api-v2",
+     "actionVersion": 1,
+     "actionPackageId": "4299091f-3cd3-4d68-b198-0143575f471d",
+     "inputsBinding": [
+      {
+       "name": "method",
+       "formulaText": "\"POST\""
+      },
+      {
+       "name": "url",
+       "formulaText": "\"api.skael.de\""
+      },
+      {
+       "name": "queryString"
+      },
+      {
+       "name": "body"
+      },
+      {
+       "name": "headers"
+      },
+      {
+       "name": "fieldPaths"
+      },
+      {
+       "name": "removeNull",
+       "formulaText": "true"
+      },
+      {
+       "name": "returnResponseMetadata"
+      },
+      {
+       "name": "followRedirects",
+       "formulaText": "true"
+      },
+      {
+       "name": "responseTimeout"
+      },
+      {
+       "name": "shouldRetry",
+       "formulaText": "true"
+      }
+     ],
+     "conditionalRunFormulaText": "false"
+    }
+   },
+   {
+    "id": "f_0tcpcmcovGiwKE7HeYU",
+    "name": "HTTP RESERVE (5)",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "http-api-v2",
+     "actionVersion": 1,
+     "actionPackageId": "4299091f-3cd3-4d68-b198-0143575f471d",
+     "inputsBinding": [
+      {
+       "name": "method",
+       "formulaText": "\"POST\""
+      },
+      {
+       "name": "url",
+       "formulaText": "\"api.skael.de\""
+      },
+      {
+       "name": "queryString"
+      },
+      {
+       "name": "body"
+      },
+      {
+       "name": "headers"
+      },
+      {
+       "name": "fieldPaths"
+      },
+      {
+       "name": "removeNull",
+       "formulaText": "true"
+      },
+      {
+       "name": "returnResponseMetadata"
+      },
+      {
+       "name": "followRedirects",
+       "formulaText": "true"
+      },
+      {
+       "name": "responseTimeout"
+      },
+      {
+       "name": "shouldRetry",
+       "formulaText": "true"
+      }
+     ],
+     "conditionalRunFormulaText": "false"
+    }
+   },
+   {
+    "id": "f_0tcpcmkViFcoYogiytb",
+    "name": "HTTP RESERVE (6)",
+    "type": "action",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "json"
+     },
+     "actionKey": "http-api-v2",
+     "actionVersion": 1,
+     "actionPackageId": "4299091f-3cd3-4d68-b198-0143575f471d",
+     "inputsBinding": [
+      {
+       "name": "method",
+       "formulaText": "\"POST\""
+      },
+      {
+       "name": "url",
+       "formulaText": "\"api.skael.de\""
+      },
+      {
+       "name": "queryString"
+      },
+      {
+       "name": "body"
+      },
+      {
+       "name": "headers"
+      },
+      {
+       "name": "fieldPaths"
+      },
+      {
+       "name": "removeNull",
+       "formulaText": "true"
+      },
+      {
+       "name": "returnResponseMetadata"
+      },
+      {
+       "name": "followRedirects",
+       "formulaText": "true"
+      },
+      {
+       "name": "responseTimeout"
+      },
+      {
+       "name": "shouldRetry",
+       "formulaText": "true"
+      }
+     ],
+     "conditionalRunFormulaText": "false"
+    }
+   },
+   {
+    "id": "f_3uoEi77y9CgH",
+    "name": "business_id",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_0szle76gBsk75pEcneh}}?.business_id"
+    }
+   },
+   {
+    "id": "f_4uYxithVCvzN",
+    "name": "Email [Info@][Status]",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "select",
+      "options": [
+       {
+        "id": "7b69bad5-b7d2-4054-a82c-6781f52b366b",
+        "text": "Safe to Send",
+        "color": "green"
+       },
+       {
+        "id": "be2ce1f2-4901-4747-a170-2fe00c2d6db0",
+        "text": "Risky",
+        "color": "yellow"
+       },
+       {
+        "id": "d7cfaaf8-def1-434f-b959-4e55eeb0ec8a",
+        "text": "Invalid",
+        "color": "red"
+       },
+       {
+        "id": "e4e6c6a7-3b6b-4ad4-9a69-74402c9f3a8d",
+        "text": "None found",
+        "color": "red"
+       },
+       {
+        "id": "b3b89b30-dd32-49f2-a1a6-2a02517d1e15",
+        "text": "Not Run",
+        "color": "violet"
+       },
+       {
+        "id": "4c408ab7-2cc6-497d-9cd1-ee08e40f1693",
+        "text": "Unknown",
+        "color": "grey"
+       }
+      ]
+     },
+     "formulaType": "text",
+     "formulaText": "!{{f_0t9jcmnF7EkiguwdCp7}} ? \"Not Run\" : \n  {{f_0t9jcmnF7EkiguwdCp7}}?.output?.code == 5 ? \"Safe to Send\" : \n    {{f_0t9jcmnF7EkiguwdCp7}}?.output?.code == 4 ? \"Risky\" : \n      {{f_0t9jcmnF7EkiguwdCp7}}?.output?.code == 7 ? \"Unknown\" : \n        [1, 2, 3, 6].includes(parseInt({{f_0t9jcmnF7EkiguwdCp7}}?.output?.code)) ? \"Invalid\" : \n          \"None found\"",
+     "formulaPrompt": "\"if \" + {{f_MsivXQVhcry4}}?.valid_emails?.[0]?.email + \" print \\\"Safe to Send\\\"\\nif \" + {{f_9uzzwyaPXeWT}}?.other_emails?.[0]?.email + \" print \\\"Risky\\\"\\nif !\" + {{f_MsivXQVhcry4}} + \" print \\\"Not Run\\\"\\nif \" + {{f_MsivXQVhcry4}} + \" and (!\" + {{f_MsivXQVhcry4}}?.valid_emails?.[0]?.email + \"or !\" + {{f_9uzzwyaPXeWT}}?.other_emails?.[0]?.email + \") print \\\"None found\\\"\""
+    }
+   },
+   {
+    "id": "f_bcPXDmTMb2SV",
+    "name": "rating",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_0szle76gBsk75pEcneh}}?.rating"
+    }
+   },
+   {
+    "id": "f_created_at",
+    "name": "Created At",
+    "type": "date",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "date"
+     }
+    }
+   },
+   {
+    "id": "f_CSbTB6s7HW5c",
+    "name": "address",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_0szle76gBsk75pEcneh}}?.address"
+    }
+   },
+   {
+    "id": "f_dbUJHsWzNZuT",
+    "name": "Last Name [GF]",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text",
+      "label": "Text",
+      "iconType": {
+       "displayName": "TextT"
+      }
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_tpiAir8xf5MG}}?.split(\" \")?.pop()",
+     "formulaPrompt": "\"last name from \" + {{f_tpiAir8xf5MG}}"
+    }
+   },
+   {
+    "id": "f_diUWnoEiYicw",
+    "name": "Confidence",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "number"
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_0tbs30oys7mXE7reSGj}}?.confidence",
+     "mappedResultPath": [
+      "confidence"
+     ]
+    }
+   },
+   {
+    "id": "f_E2iywfXnhMdE",
+    "name": "Ansprache Normal [GT] [Final]",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text",
+      "label": "Text",
+      "iconType": {
+       "displayName": "TextT"
+      }
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_gqzjpP5CUftk}} ? \"Guten Tag\" + \" \" + {{f_gqzjpP5CUftk}} + \" \" + {{f_dbUJHsWzNZuT}} : {{f_nmeNKD4fEVTn}} ? \"Guten Tag\" : \"\"",
+     "formulaPrompt": "\"{{Anrede}} ? {{Formal}} + \\\" \\\" + {{Anrede}} + \\\" \\\" + {{Last Name [GF]}} : \\\"Sehr geehrte Damen und Herren\\\"\""
+    }
+   },
+   {
+    "id": "f_EN9Cqntb3juR",
+    "name": "Email [Final][Status]",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "select",
+      "options": [
+       {
+        "id": "07d7583e-6eb6-4090-a10b-9fc3c1589554",
+        "text": "Safe to Send",
+        "color": "green"
+       },
+       {
+        "id": "2c0c9f75-fee6-43f8-b4c0-2995e20f29c3",
+        "text": "Risky",
+        "color": "yellow"
+       },
+       {
+        "id": "c7192434-52b4-47fe-a41b-e01a5a6fd3fc",
+        "text": "Not Run",
+        "color": "violet"
+       },
+       {
+        "id": "428e9390-e502-4301-a413-8a8eb3495956",
+        "text": "Invalid",
+        "color": "red"
+       },
+       {
+        "id": "3246c5f2-cf49-4a7b-b3b0-78fb47b77282",
+        "text": "None found",
+        "color": "red"
+       },
+       {
+        "id": "1bbe75e2-9fde-4734-bcab-6ac9385e118b",
+        "text": "Unknown",
+        "color": "grey"
+       }
+      ]
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_W8n94RDA6jmc}} ? {{f_pkw4SC6GvMNX}} : {{f_nFqScFMUn9vX}} ? {{f_4uYxithVCvzN}} : {{f_pkw4SC6GvMNX}} === \"None found\" && {{f_4uYxithVCvzN}} === \"None found\" ? \"None found\" : ({{f_pkw4SC6GvMNX}} === \"Not Run\" || {{f_pkw4SC6GvMNX}} === \"Kein GF\") && {{f_4uYxithVCvzN}} === \"Not Run\" ? \"Not Run\" : \"None found\"",
+     "formulaPrompt": "\"if \" + {{f_W8n94RDA6jmc}} + \" print \" + {{f_pkw4SC6GvMNX}} + \" if \" + {{f_nFqScFMUn9vX}} + \" print \" + {{f_4uYxithVCvzN}}"
+    }
+   },
+   {
+    "id": "f_F6v3KAWjQaUQ",
+    "name": "Personalisierung generieren",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "boolean"
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_nmeNKD4fEVTn}} ? true : false",
+     "formulaPrompt": ""
+    }
+   },
+   {
+    "id": "f_gqzjpP5CUftk",
+    "name": "Anrede",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_0tbs30oys7mXE7reSGj}}?.anrede",
+     "mappedResultPath": [
+      "anrede"
+     ]
+    }
+   },
+   {
+    "id": "f_hNARpu99Hn6f",
+    "name": "Email [Domain]",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_uhZjR6aHEKHP}} ? (![\"gmx.de\", \"web.de\", \"google.de\", \"google.com\", \"gmail.com\", \"outlook.com\", \"outlook.de\", \"t-online.de\",\"aol.com\", \"1und1.de\", \"freenet.de\", \"arcor.de\", \"yahoo.com\",\"mail.de\", \"aikq.de\", \"mailbox.org\", \"posteo.de\", \"tutanota.com\", \"icloud.com\",\"googlemail.com\", \"mail.ru\", \"protonmail.com\", \"mail.com\"].includes({{f_uhZjR6aHEKHP}}?.split(\"@\")?.[1]) ? {{f_uhZjR6aHEKHP}}?.split(\"@\")?.[1] : {{f_PGqAgz9iKgvB}} ? {{f_PGqAgz9iKgvB}}?.replace(/https?:\\/\\/(www\\.)?/, \"\")?.split(\"/\")?.[0]?.split(\".\")?.slice(-2)?.join(\".\") : \"\") : {{f_PGqAgz9iKgvB}} ? {{f_PGqAgz9iKgvB}}?.replace(/https?:\\/\\/(www\\.)?/, \"\")?.split(\"/\")?.[0]?.split(\".\")?.slice(-2)?.join(\".\") : \"\"",
+     "formulaPrompt": "\"extract email domain from \" + {{f_uhZjR6aHEKHP}} + \" else extract email domain from \" + {{f_PGqAgz9iKgvB}} + \" (must remove any subdomain)\""
+    }
+   },
+   {
+    "id": "f_jDcAtSE2Ebie",
+    "name": "Ansprache Persönlich [Final]",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text",
+      "label": "Text",
+      "iconType": {
+       "displayName": "TextT"
+      }
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_wqj4rcwCwnkw}} && {{f_gqzjpP5CUftk}} ? \"Hallo\" + \" \" + {{f_wqj4rcwCwnkw}} : {{f_nmeNKD4fEVTn}} ? \"Hallo\" : \"\"",
+     "formulaPrompt": ""
+    }
+   },
+   {
+    "id": "f_K56Fn9Mwsdso",
+    "name": "Ready to Send",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "boolean"
+     },
+     "formulaType": "text",
+     "formulaText": "!!{{f_nmeNKD4fEVTn}} && !!{{f_0ta07c1KB3fpuCkzvA8}} && !!{{f_0t9zqdxikx9kE4M5KT4}}",
+     "formulaPrompt": "\"print true if \" + {{f_dF8aonT7Qh99}} + \" is populated and \" + {{f_nmeNKD4fEVTn}} + \" is populated\""
+    }
+   },
+   {
+    "id": "f_Kdey7C6VhJHN",
+    "name": "Telefon [Impressum]",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_0tadx06EGdiANatwheB}}?.output?.telefon",
+     "mappedResultPath": [
+      "telefon"
+     ]
+    }
+   },
+   {
+    "id": "f_nFqScFMUn9vX",
+    "name": "Email [Info@]",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "[4, 5, 7].includes(parseInt({{f_0t9jcmnF7EkiguwdCp7}}?.output?.code)) ? {{f_0t9jcmnF7EkiguwdCp7}}?.output?.email : \"\"",
+     "mappedResultPath": [
+      "valid_emails",
+      0,
+      "email"
+     ]
+    }
+   },
+   {
+    "id": "f_nmeNKD4fEVTn",
+    "name": "Email [Final]",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "waterfall",
+     "formulaWaterfall": [
+      "{{f_W8n94RDA6jmc}}",
+      "{{f_nFqScFMUn9vX}}"
+     ]
+    }
+   },
+   {
+    "id": "f_peNNWPZft5ws",
+    "name": "review_count",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_0szle76gBsk75pEcneh}}?.review_count"
+    }
+   },
+   {
+    "id": "f_PGqAgz9iKgvB",
+    "name": "website [Final]",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "url"
+     },
+     "formulaType": "text",
+     "formulaText": "/^(https?:\\/\\/)?([a-z0-9-]+\\.)+[a-z]{2,}(\\/.*)?$/i.test({{f_0svw91akQJtKXWgKstH}}) ? {{f_0svw91akQJtKXWgKstH}} : {{f_0svw96hDuEpZPhFf2tW}}?.response",
+     "formulaPrompt": "\"make sure \" + {{f_0svw91akQJtKXWgKstH}} + \" is a valid domain then print it else print \\\"\\\" \""
+    }
+   },
+   {
+    "id": "f_pkw4SC6GvMNX",
+    "name": "Email [GF][Status]",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "select",
+      "options": [
+       {
+        "id": "7b69bad5-b7d2-4054-a82c-6781f52b366b",
+        "text": "Safe to Send",
+        "color": "green"
+       },
+       {
+        "id": "be2ce1f2-4901-4747-a170-2fe00c2d6db0",
+        "text": "Risky",
+        "color": "yellow"
+       },
+       {
+        "id": "360db597-8999-423e-90ed-cbee16f9ba3f",
+        "text": "Invalid",
+        "color": "red"
+       },
+       {
+        "id": "e4e6c6a7-3b6b-4ad4-9a69-74402c9f3a8d",
+        "text": "None found",
+        "color": "red"
+       },
+       {
+        "id": "b3b89b30-dd32-49f2-a1a6-2a02517d1e15",
+        "text": "Not Run",
+        "color": "violet"
+       },
+       {
+        "id": "7be332b9-0435-4e8d-b490-878265101d6d",
+        "text": "Kein GF",
+        "color": "blue"
+       },
+       {
+        "id": "d890a527-fae3-4e61-9b5a-73d11178e7dd",
+        "text": "Unknown",
+        "color": "grey"
+       }
+      ]
+     },
+     "formulaType": "text",
+     "formulaText": "!{{f_tpiAir8xf5MG}} && {{f_0tadx06EGdiANatwheB}} ? \"Kein GF\" : \n  !{{f_0t9j796Mqtoz2qarNuZ}} ? \"Not Run\" : \n    {{f_0t9j796Mqtoz2qarNuZ}}?.output?.code == 5 ? \"Safe to Send\" : \n      {{f_0t9j796Mqtoz2qarNuZ}}?.output?.code == 4 ? \"Risky\" : \n        {{f_0t9j796Mqtoz2qarNuZ}}?.output?.code == 7 ? \"Unknown\" : \n          [1, 2, 3, 6].includes(parseInt({{f_0t9j796Mqtoz2qarNuZ}}?.output?.code)) ? \"Invalid\" : \n            !{{f_0svj9knd2vWWaZS7wzv}}?.record?.email ? \"None found\" : \n              \"None found\"",
+     "formulaPrompt": "\"if !\" + {{f_tpiAir8xf5MG}} + \" && \" + {{f_cEmSQcNTwd6Q}} + \" print \\\"Kein GF\\\"\\nif \" + {{f_MsivXQVhcry4}}?.valid_emails?.[0]?.email + \" print \\\"\" + {{f_MsivXQVhcry4}}?.valid_emails?.[0]?.result + \"\\\"\\nif \" + {{f_7WGzzAQbbnUy}}?.results?.validation + \" = \\\"unknown\\\" print \\\"None found\\\"\\nif !\" + {{f_MsivXQVhcry4}} + \" print \\\"Not Run\\\"\\nif \" + {{f_MsivXQVhcry4}} + \" and !\" + {{f_MsivXQVhcry4}}?.valid_emails?.[0]?.email + \" print \\\"None found\\\"\""
+    }
+   },
+   {
+    "id": "f_q7Vzk2bKqSY7",
+    "name": "Tel. [Importiert]",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_0szle76gBsk75pEcneh}}?.phone"
+    }
+   },
+   {
+    "id": "f_ruSWXo22MSBg",
+    "name": "query_keyword",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_0szle76gBsk75pEcneh}}?.query_keyword"
+    }
+   },
+   {
+    "id": "f_SzWkkodRShts",
+    "name": "Adresse [Impressum]",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_0tadx06EGdiANatwheB}}?.output?.adresse",
+     "mappedResultPath": [
+      "adresse"
+     ]
+    }
+   },
+   {
+    "id": "f_TFJCvUXUt4nn",
+    "name": "Launch Campaign",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "boolean"
+     },
+     "formulaType": "text",
+     "formulaText": "(!!{{f_tpiAir8xf5MG}} || !!{{f_uhZjR6aHEKHP}})"
+    }
+   },
+   {
+    "id": "f_tpiAir8xf5MG",
+    "name": "Kontaktperson [Sauber]",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_0svjb94XRSZWgFe3fzB}}\n?.replace(/\\([^)]*\\)|\\{[^}]*\\}|\\[[^\\]]*\\]/g,\"\")\n?.split(\" \")\n?.filter(t=>t.trim()!==\"\" && !t.includes(\".\") && ![\"herr\",\"frau\",\"hr\",\"rechtsanwalt\"].includes(t.toLowerCase()) && !(t===t.toUpperCase() && t.length>1))\n?.join(\" \")\n?.replace(/^(\\S+)(?:\\s+\\S+)*\\s+(\\S+)$/,\"$1 $2\")\n?.replace(/é/g,\"e\")\n?.replace(/è/g,\"e\")\n?.replace(/ê/g,\"e\")\n?.replace(/ë/g,\"e\")\n?.replace(/á/g,\"a\")\n?.replace(/à/g,\"a\")\n?.replace(/â/g,\"a\")\n?.replace(/ä/g,\"ae\")\n?.replace(/ó/g,\"o\")\n?.replace(/ò/g,\"o\")\n?.replace(/ô/g,\"o\")\n?.replace(/ö/g,\"oe\")\n?.replace(/ú/g,\"u\")\n?.replace(/ù/g,\"u\")\n?.replace(/û/g,\"u\")\n?.replace(/ü/g,\"ue\")\n?.replace(/ñ/g,\"n\")\n?.replace(/ç/g,\"c\")\n?.replace(/ß/g,\"ss\")\n?.replace(/'/g,\"\")\n?.replace(/'/g,\"\")\n?.replace(/`/g,\"\")\n?.replace(/[^A-Za-z0-9\\s-]/g,\"\")\n?.trim()",
+     "mappedResultPath": [
+      "geschaeftsfuehrer",
+      0
+     ]
+    }
+   },
+   {
+    "id": "f_uhZjR6aHEKHP",
+    "name": "Email [Impressum]",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test({{f_0tadx06EGdiANatwheB}}?.output?.email?.replace(/\\(at\\)|\\[at\\]/g, \"@\")) ? {{f_0tadx06EGdiANatwheB}}?.output?.email?.replace(/\\(at\\)|\\[at\\]/g, \"@\") : \"\") || \n(/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test({{f_0tadx06EGdiANatwheB}}?.output?.email?.replace(/\\(at\\)|\\[at\\]/g, \"@\")) ? {{f_0tadx06EGdiANatwheB}}?.output?.email?.replace(/\\(at\\)|\\[at\\]/g, \"@\") : \"\") || \n\"\"",
+     "formulaPrompt": "\"replace (at),[at] with @ \" + {{f_cEmSQcNTwd6Q}}?.email + \" and then only print if it is a valid email\"",
+     "mappedResultPath": [
+      "email"
+     ]
+    }
+   },
+   {
+    "id": "f_updated_at",
+    "name": "Updated At",
+    "type": "date",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "date"
+     }
+    }
+   },
+   {
+    "id": "f_W8n94RDA6jmc",
+    "name": "Email [GF]",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_0t9j796Mqtoz2qarNuZ}}?.output?.code == 5 ? {{f_0t9j796Mqtoz2qarNuZ}}?.output?.email : \n  {{f_0t9j796Mqtoz2qarNuZ}}?.output?.code == 4 ? {{f_0t9j796Mqtoz2qarNuZ}}?.output?.email : \n  {{f_0t9j796Mqtoz2qarNuZ}}?.output?.code == 7 ? {{f_0t9j796Mqtoz2qarNuZ}}?.output?.email : \n  \"\"",
+     "mappedResultPath": [
+      "first_safe_to_send_email"
+     ]
+    }
+   },
+   {
+    "id": "f_wd4anPR46goG",
+    "name": "Email [Final][Type]",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "select",
+      "options": [
+       {
+        "id": "4e5b5624-2532-40b8-95f8-8a4650e47c85",
+        "text": "GF",
+        "color": "green"
+       },
+       {
+        "id": "6779b9c9-7ad9-4095-b8a4-dd2cb32cd342",
+        "text": "Info@",
+        "color": "yellow"
+       },
+       {
+        "id": "ed535903-257f-4404-8778-2b7ed838a68b",
+        "text": "Not Run",
+        "color": "violet"
+       },
+       {
+        "id": "ead7f203-9a36-44d4-8e76-7ca67bf68d07",
+        "text": "None found",
+        "color": "red"
+       }
+      ]
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_W8n94RDA6jmc}} ? \"GF\" : {{f_nFqScFMUn9vX}} ? \"Info@\" : ({{f_pkw4SC6GvMNX}} === \"Not Run\" || {{f_pkw4SC6GvMNX}} === \"Kein GF\") && {{f_4uYxithVCvzN}} === \"Not Run\" ? \"Not Run\" : \"None found\"",
+     "formulaPrompt": "\"if \" + {{f_W8n94RDA6jmc}} + \" print \\\"GF\\\"\\nif \" + {{f_nFqScFMUn9vX}} + \" print \\\"Info@\\\"\\n\""
+    }
+   },
+   {
+    "id": "f_wqj4rcwCwnkw",
+    "name": "First Name [GF]",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text",
+      "label": "Text",
+      "iconType": {
+       "displayName": "TextT"
+      }
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_tpiAir8xf5MG}}?.split(\" \")?.[0]",
+     "formulaPrompt": "\"first name from \" + {{f_tpiAir8xf5MG}}"
+    }
+   },
+   {
+    "id": "f_XRK4B3HqSYpM",
+    "name": "Ansprache Formal [Final]",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text",
+      "label": "Text",
+      "iconType": {
+       "displayName": "TextT"
+      }
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_gqzjpP5CUftk}} ? {{f_zsb3rt8QWHjo}} + \" \" + {{f_gqzjpP5CUftk}} + \" \" + {{f_dbUJHsWzNZuT}} : {{f_nmeNKD4fEVTn}} ? \"Sehr geehrte Damen und Herren\" : \"\"",
+     "formulaPrompt": "\"if \" + {{f_gqzjpP5CUftk}} + \" is populated print \\\"\" + {{f_zsb3rt8QWHjo}} + \" \" + {{f_gqzjpP5CUftk}} + \" \" + {{f_dbUJHsWzNZuT}} + \"\\\" else print \\n\\\"Sehr geehrte Damen und Herren\\\"\""
+    }
+   },
+   {
+    "id": "f_ybdoG5Gk3Yyu",
+    "name": "category",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_0szle76gBsk75pEcneh}}?.category"
+    }
+   },
+   {
+    "id": "f_zsb3rt8QWHjo",
+    "name": "Formal",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text",
+      "label": "Text",
+      "iconType": {
+       "displayName": "TextT"
+      }
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_gqzjpP5CUftk}} === \"Herr\" ? \"Sehr geehrter\" : {{f_gqzjpP5CUftk}} === \"Frau\" ? \"Sehr geehrte\" : \"\"",
+     "formulaPrompt": "\"if \" + {{f_gqzjpP5CUftk}} + \" Herr print \\\"Sehr geehrter\\\" if Frau print \\\"Sehr geehrte\\\" else print \\\"\\\"\""
+    }
+   },
+   {
+    "id": "f_ZTS3nFZ5ewzA",
+    "name": "Firmenname",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text"
+     },
+     "formulaType": "text",
+     "formulaText": "(({{f_0szle76gBsk75pEcneh}}?.title) || {{f_0szle76gBsk75pEcneh}}?.Firmenname) || {{f_0szle76gBsk75pEcneh}}?.Firmenname"
+    }
+   },
+   {
+    "id": "f_Zxo7azneTrJc",
+    "name": "Ansprache Normal [Final]",
+    "type": "formula",
+    "typeSettings": {
+     "dataTypeSettings": {
+      "type": "text",
+      "label": "Text",
+      "iconType": {
+       "displayName": "TextT"
+      }
+     },
+     "formulaType": "text",
+     "formulaText": "{{f_gqzjpP5CUftk}} ? \"Hallo\" + \" \" + {{f_gqzjpP5CUftk}} + \" \" + {{f_dbUJHsWzNZuT}} : {{f_nmeNKD4fEVTn}} ? \"Hallo\" : \"\"",
+     "formulaPrompt": "\"{{Anrede}} ? {{Formal}} + \\\" \\\" + {{Anrede}} + \\\" \\\" + {{Last Name [GF]}} : \\\"Sehr geehrte Damen und Herren\\\"\""
+    }
+   }
+  ],
+  "views": [
+   {
+    "id": "gv_rsYs7dXmUGpm",
+    "name": "Gesamt",
+    "filter": null,
+    "sort": null
+   },
+   {
+    "id": "gv_Y8f5HeTeFN87",
+    "name": "Export final",
+    "filter": {
+     "items": [
+      {
+       "type": "CHECKED",
+       "fieldId": "f_K56Fn9Mwsdso"
+      }
+     ],
+     "combinationMode": "AND"
+    },
+    "sort": {
+     "items": [
+      {
+       "fieldId": "f_wd4anPR46goG",
+       "direction": "ASC"
+      },
+      {
+       "fieldId": "f_EN9Cqntb3juR",
+       "direction": "ASC"
+      }
+     ]
+    }
+   },
+   {
+    "id": "gv_THuAiQohKJdh",
+    "name": "Errored rows",
+    "filter": {
+     "items": [
+      {
+       "type": "EMPTY",
+       "fieldId": "f_created_at"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0svj9knd2vWWaZS7wzv"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0svw96hDuEpZPhFf2tW"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0svj9knd2vWWaZS7wzv"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0svw96hDuEpZPhFf2tW"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0svj9knd2vWWaZS7wzv"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0svw96hDuEpZPhFf2tW"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0svj9knd2vWWaZS7wzv"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0svw96hDuEpZPhFf2tW"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0t9j598rmUiThdxqBvh"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0t9j796Mqtoz2qarNuZ"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0t9jcmnF7EkiguwdCp7"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0svj9knd2vWWaZS7wzv"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0svw96hDuEpZPhFf2tW"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0t9j598rmUiThdxqBvh"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0t9j796Mqtoz2qarNuZ"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0t9jcmnF7EkiguwdCp7"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0svj9knd2vWWaZS7wzv"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0svw96hDuEpZPhFf2tW"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0t9j598rmUiThdxqBvh"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0t9j796Mqtoz2qarNuZ"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0t9jcmnF7EkiguwdCp7"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0t9w0bf3dW6t6BaMc8h"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0t9zqdaBa2fwKMBSRXr"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0ta079jf7Y6nakaFdtp"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tadx06EGdiANatwheB"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tbs30oys7mXE7reSGj"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3aznPByyveARNqNe"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3azoVYA2vT7qPqyF"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3azoyFWF4Ta5GyU2"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3azo37NkTFki6WSa"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3azp4xNE8zUSWT2m"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3azpgiudzDJgjyHA"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3azptHSF3TVUM3z5"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3azp84cCzX35kZfu"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3azqD9gRiuP7rXfV"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3azqsot8eRWcis6a"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3azraFRXUnN8j9pb"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3azrkFmqJ58C2mz3"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3azsc3J5dhHUm96k"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3azsE5i8q6VYyhMa"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3azsn9Za2MkqMxPZ"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3aztHjgPAhB25wcC"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tcd2n9EiqAfMneXAaz"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tcd33ft6P27xfUdKUZ"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tcd3cl87EJnaV8E4qZ"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tcpcl1bqZes8AXJFEF"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tcpclkBhoDDPMUt6wB"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tcpclof4dtUo5Nvht8"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tcpcm7EpUc9e8v9zjo"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tcpcmcovGiwKE7HeYU"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tcpcmkViFcoYogiytb"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0svj9knd2vWWaZS7wzv"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0svw96hDuEpZPhFf2tW"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0t9j598rmUiThdxqBvh"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0t9j796Mqtoz2qarNuZ"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0t9jcmnF7EkiguwdCp7"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0t9w0bf3dW6t6BaMc8h"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0t9zqdaBa2fwKMBSRXr"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0ta079jf7Y6nakaFdtp"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tadx06EGdiANatwheB"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tbs30oys7mXE7reSGj"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3aznPByyveARNqNe"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3azo37NkTFki6WSa"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3azoVYA2vT7qPqyF"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3azoyFWF4Ta5GyU2"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3azp4xNE8zUSWT2m"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3azp84cCzX35kZfu"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3azpgiudzDJgjyHA"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3azptHSF3TVUM3z5"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3azqD9gRiuP7rXfV"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3azqsot8eRWcis6a"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3azraFRXUnN8j9pb"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3azrkFmqJ58C2mz3"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3azsc3J5dhHUm96k"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3azsE5i8q6VYyhMa"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3azsn9Za2MkqMxPZ"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tc3aztHjgPAhB25wcC"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tcd2n9EiqAfMneXAaz"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tcd33ft6P27xfUdKUZ"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tcd3cl87EJnaV8E4qZ"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tcpcl1bqZes8AXJFEF"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tcpclkBhoDDPMUt6wB"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tcpclof4dtUo5Nvht8"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tcpcm7EpUc9e8v9zjo"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tcpcmcovGiwKE7HeYU"
+      },
+      {
+       "type": "HAS_ERROR",
+       "fieldId": "f_0tcpcmkViFcoYogiytb"
+      }
+     ],
+     "combinationMode": "OR"
+    },
+    "sort": null
+   },
+   {
+    "id": "gv_rZ7sHzpRCGPf",
+    "name": "Non enrichment columns",
+    "filter": null,
+    "sort": null
+   },
+   {
+    "id": "gv_ouFKx2gKV7sf",
+    "name": "Fully enriched rows",
+    "filter": {
+     "items": [
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0svj9knd2vWWaZS7wzv"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0svj9knd2vWWaZS7wzv"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0svj9knd2vWWaZS7wzv"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0svj9knd2vWWaZS7wzv"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0svj9knd2vWWaZS7wzv"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0svj9knd2vWWaZS7wzv"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0svj9knd2vWWaZS7wzv"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0svj9knd2vWWaZS7wzv"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0svj9knd2vWWaZS7wzv"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0svj9knd2vWWaZS7wzv"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0svj9knd2vWWaZS7wzv"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0svj9knd2vWWaZS7wzv"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0svj9knd2vWWaZS7wzv"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0svj9knd2vWWaZS7wzv"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0svj9knd2vWWaZS7wzv"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0svj9knd2vWWaZS7wzv"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0svj9knd2vWWaZS7wzv"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0svj9knd2vWWaZS7wzv"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0t9zqdaBa2fwKMBSRXr"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0t9zqdaBa2fwKMBSRXr"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0t9zqdaBa2fwKMBSRXr"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0ta079jf7Y6nakaFdtp"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0ta079jf7Y6nakaFdtp"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0ta079jf7Y6nakaFdtp"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0tbs30oys7mXE7reSGj"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0tbs30oys7mXE7reSGj"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0tbs30oys7mXE7reSGj"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0tc3aznPByyveARNqNe"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0tc3aznPByyveARNqNe"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0tc3aznPByyveARNqNe"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0tc3azoVYA2vT7qPqyF"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0tc3azoVYA2vT7qPqyF"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0tc3azoVYA2vT7qPqyF"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0tc3azoyFWF4Ta5GyU2"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0tc3azoyFWF4Ta5GyU2"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0tc3azoyFWF4Ta5GyU2"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0tc3azo37NkTFki6WSa"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0tc3azo37NkTFki6WSa"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0tc3azo37NkTFki6WSa"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0tc3azp4xNE8zUSWT2m"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0tc3azp4xNE8zUSWT2m"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0tc3azp4xNE8zUSWT2m"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0tc3azpgiudzDJgjyHA"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0tc3azpgiudzDJgjyHA"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0tc3azpgiudzDJgjyHA"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0tc3azptHSF3TVUM3z5"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0tc3azptHSF3TVUM3z5"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0tc3azptHSF3TVUM3z5"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0tc3azp84cCzX35kZfu"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0tc3azp84cCzX35kZfu"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0tc3azp84cCzX35kZfu"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0tc3azqD9gRiuP7rXfV"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0tc3azqD9gRiuP7rXfV"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0tc3azqD9gRiuP7rXfV"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0tc3azqsot8eRWcis6a"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0tc3azqsot8eRWcis6a"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0tc3azqsot8eRWcis6a"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0tc3azraFRXUnN8j9pb"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0tc3azraFRXUnN8j9pb"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0tc3azraFRXUnN8j9pb"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0tc3azrkFmqJ58C2mz3"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0tc3azrkFmqJ58C2mz3"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0tc3azrkFmqJ58C2mz3"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0tc3azsc3J5dhHUm96k"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0tc3azsc3J5dhHUm96k"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0tc3azsc3J5dhHUm96k"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0tc3azsE5i8q6VYyhMa"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0tc3azsE5i8q6VYyhMa"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0tc3azsE5i8q6VYyhMa"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0tc3azsn9Za2MkqMxPZ"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0tc3azsn9Za2MkqMxPZ"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0tc3azsn9Za2MkqMxPZ"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0tc3aztHjgPAhB25wcC"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0tc3aztHjgPAhB25wcC"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0tc3aztHjgPAhB25wcC"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0tcd2n9EiqAfMneXAaz"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0tcd2n9EiqAfMneXAaz"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0tcd2n9EiqAfMneXAaz"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0tcd33ft6P27xfUdKUZ"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0tcd33ft6P27xfUdKUZ"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0tcd33ft6P27xfUdKUZ"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0svj9knd2vWWaZS7wzv"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0svj9knd2vWWaZS7wzv"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0svj9knd2vWWaZS7wzv"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0svw96hDuEpZPhFf2tW"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0t9zqdaBa2fwKMBSRXr"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0t9zqdaBa2fwKMBSRXr"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0t9zqdaBa2fwKMBSRXr"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0ta079jf7Y6nakaFdtp"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0ta079jf7Y6nakaFdtp"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0ta079jf7Y6nakaFdtp"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0tbs30oys7mXE7reSGj"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0tbs30oys7mXE7reSGj"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0tbs30oys7mXE7reSGj"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0tcd2n9EiqAfMneXAaz"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0tcd2n9EiqAfMneXAaz"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0tcd2n9EiqAfMneXAaz"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      },
+      {
+       "items": [
+        {
+         "type": "RUN_CONDITION_NOT_MET",
+         "fieldId": "f_0tcd33ft6P27xfUdKUZ"
+        },
+        {
+         "type": "NO_RESULTS",
+         "fieldId": "f_0tcd33ft6P27xfUdKUZ"
+        },
+        {
+         "type": "RESULTS",
+         "fieldId": "f_0tcd33ft6P27xfUdKUZ"
+        }
+       ],
+       "filterType": "Group",
+       "combinationMode": "OR"
+      }
+     ],
+     "combinationMode": "AND"
+    },
+    "sort": null
+   },
+   {
+    "id": "gv_0tcpcphhagTtx8Ark2a",
+    "name": "All rows",
+    "filter": null,
+    "sort": null
+   }
+  ]
+ }
+}

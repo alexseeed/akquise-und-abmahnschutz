@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "properties": {
+    "cleanedText": {
+      "type": "string",
+      "description": "Grammatikalisch korrekter, gesäuberter Text nach deutscher Grammatik und den Säuberungsregeln."
+    },
+    "cleanedCompanyName": {
+      "type": "string",
+      "description": "Vom Eingabetext gesäuberter Firmenname ohne juristische Suffixe oder unerwünschte Zeichen, mit korrekt beibehaltenen Markennamen und Artikeln."
+    }
+  },
+  "required": [
+    "cleanedText",
+    "cleanedCompanyName"
+  ],
+  "additionalProperties": false
+}

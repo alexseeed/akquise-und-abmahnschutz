@@ -1,0 +1,8 @@
+.env
+data/
+exports/
+auftraege/
+arbeit/
+__pycache__/
+*.py[cod]
+.DS_Store

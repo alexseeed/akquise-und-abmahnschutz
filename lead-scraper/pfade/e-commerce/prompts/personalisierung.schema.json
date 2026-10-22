@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "complimentText": {
+      "type": "string",
+      "description": "Ein speziell auf die Firma zugeschnittenes, maximal zweisätziges Kompliment in natürlichem, gesprochenem Deutsch, das gemäß den prompt-Regeln formuliert ist."
+    }
+  },
+  "required": [
+    "complimentText"
+  ],
+  "additionalProperties": false
+}

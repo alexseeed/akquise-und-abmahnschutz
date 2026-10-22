@@ -1,0 +1,18 @@
+.env
+.env.*
+!.env.example
+data/
+exports/
+# Lead-Listen der Nutzer gehören nach data/ – hier landen sie nie im Repository (können E-Mails enthalten)
+*.csv
+!beispiel/*.csv
+!prototypen/sample.csv
+*.xlsx
+*.xls
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.DS_Store
+lead-scraper.zip
+brand/_vorschau.png
