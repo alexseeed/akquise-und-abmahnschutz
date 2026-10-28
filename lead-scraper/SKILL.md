@@ -110,3 +110,9 @@ Fragt der Nutzer „warum“, „was kostet“, „was bedeutet“ oder „was m
 | Fehler, FAQ | `12_fehlerbehebung-faq.md` |
 | Begriffe | `13_glossar.md` |
 | Neuer Pfad | `14_neuen-pfad-anlegen.md` |
+
+## Wenn etwas schiefgeht
+
+- Skript zweimal mit derselben Meldung gescheitert, Lauf abgebrochen oder Problem vom Nutzer: `python3 werkzeuge/fehler_melden.py --skript <name> "<Fehlermeldung>"` – nur die Fehlermeldung, keine Lead-Daten. Beim ersten Mal einmal nach der bei Agentur Consulting registrierten E-Mail fragen und als `AC_KONTAKT_EMAIL` in die `.env` schreiben. Sagen, dass das Team informiert ist und sich im Google Chat meldet.
+- 401, 429 oder 5xx beim Anbieter (Skael, OpenAI): 1–5 Minuten warten, dort fortsetzen, wo der Lauf stand – nicht neu beginnen. Nur melden, wenn der Fehler bleibt.
+- **Plan B:** lokaler Weg kaputt → gehosteter Lead-Scraper im Mitgliederbereich (Lernplattform → Lead-Scraper, MCP in Claude), und umgekehrt. Beide nutzen dieselben eigenen Skael- und OpenAI-Schlüssel.
