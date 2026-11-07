@@ -17,7 +17,7 @@ from pathlib import Path
 
 from . import db, export as export_mod, pipeline
 from .clients import FindymailClient, SkaelClient
-from .config import CONFIG, ROOT
+from .config import CONFIG, ROOT, ist_platzhalter
 from .llm import LLM
 
 
@@ -77,6 +77,7 @@ def cmd_run(args: argparse.Namespace) -> None:
     if needs_llm:
         CONFIG.require("openai_api_key")
 
+    pipeline.BILANZ.clear()
     if stage in ("all", "1"):
         pipeline.stufe1_staedte(conn, skael)
     if stage in ("all", "2"):
@@ -107,6 +108,14 @@ def cmd_run(args: argparse.Namespace) -> None:
         pipeline.stufe4h_ready(conn)
 
     cmd_status(args)
+
+    gescheitert = [(desc, n, grund) for desc, n, fehler, grund in pipeline.BILANZ if n and fehler == n]
+    if gescheitert:
+        for desc, n, grund in gescheitert:
+            print(f"{desc}: alle {n} Zeilen fehlgeschlagen – häufigster Grund: {grund}", file=sys.stderr)
+        print("Ursache beheben (z. B. Internetverbindung, Dienst gestört) und denselben run-Befehl "
+              "erneut ausführen; Erledigtes wird übersprungen.", file=sys.stderr)
+        raise SystemExit(1)
 
 
 def cmd_status(args: argparse.Namespace) -> None:  # noqa: ARG001
@@ -154,8 +163,6 @@ def cmd_icp(args: argparse.Namespace) -> None:
 
 def cmd_doctor(args: argparse.Namespace) -> None:  # noqa: ARG001
     """Prüft Zugangsdaten und Erreichbarkeit, bevor ein teurer Lauf startet."""
-    placeholders = ("dein_key", "your_api_key", "...", "…", "xxx", "hier_eintragen", "changeme")
-
     print()
     print("  Zugangsdaten")
     for label, value in (
@@ -163,8 +170,7 @@ def cmd_doctor(args: argparse.Namespace) -> None:  # noqa: ARG001
         ("OPENAI_API_KEY", CONFIG.openai_api_key),
         ("FINDYMAIL_API_KEY (optional)", CONFIG.findymail_api_key),
     ):
-        is_placeholder = value and any(p in value.lower() for p in placeholders)
-        if is_placeholder:
+        if ist_platzhalter(value):
             mark, hint = "✗", "noch Platzhalter aus .env.example"
         elif value:
             mark, hint = "✓", f"…{value[-6:]}"
@@ -190,7 +196,7 @@ def cmd_doctor(args: argparse.Namespace) -> None:  # noqa: ARG001
 
     print()
     print("  Erreichbarkeit")
-    if CONFIG.skael_api_key and not any(p in CONFIG.skael_api_key.lower() for p in placeholders):
+    if CONFIG.skael_api_key and not ist_platzhalter(CONFIG.skael_api_key):
         try:
             out = SkaelClient().find_cities("LU", 100000, limit=1)
             print(f"    ✓ Skael API erreichbar (Testabfrage lieferte {out.get('total', '?')} Städte für LU)")
@@ -199,7 +205,7 @@ def cmd_doctor(args: argparse.Namespace) -> None:  # noqa: ARG001
     else:
         print("    – Skael übersprungen (kein Key)")
 
-    if CONFIG.findymail_api_key and not any(p in CONFIG.findymail_api_key.lower() for p in placeholders):
+    if CONFIG.findymail_api_key and not ist_platzhalter(CONFIG.findymail_api_key):
         try:
             guthaben = FindymailClient().credits()
             print(f"    ✓ Findymail erreichbar ({guthaben.get('credits', '?')} Finder-Credits, "
