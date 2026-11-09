@@ -1163,5 +1163,47 @@ class ListeDreiUndMarkierenTest(IsolierteDB):
             sperrliste_mod.laden = original
 
 
+class CsvFormelschutzTest(IsolierteDB):
+    """Gescrapte Werte dürfen in Excel/Sheets keine Formel starten; Zahlen/Telefone bleiben lesbar."""
+
+    def test_gleich_und_at_werden_neutralisiert(self):
+        for roh, erwartet in (("=1+1", "'=1+1"), ("@SUM(A1)", "'@SUM(A1)")):
+            with self.subTest(roh=roh):
+                self.assertEqual(export_mod.csv_zelle(roh), erwartet)
+
+    def test_tab_und_cr_werden_neutralisiert(self):
+        for roh in ("\t=1", "\r=1"):
+            with self.subTest(roh=roh):
+                self.assertEqual(export_mod.csv_zelle(roh), "'" + roh)
+
+    def test_plus_minus_ausser_zahl_telefon_werden_neutralisiert(self):
+        for roh in ("-2+3", "+cmd|' /C calc'!A0"):
+            with self.subTest(roh=roh):
+                self.assertEqual(export_mod.csv_zelle(roh), "'" + roh)
+
+    def test_zahl_und_telefon_bleiben(self):
+        for roh in ("+49 171 1234567", "-12,5", "+41 (0)44 123 45 67", "-3.2"):
+            with self.subTest(roh=roh):
+                self.assertEqual(export_mod.csv_zelle(roh), roh)
+
+    def test_harmlose_werte_bleiben(self):
+        for roh in ("Müller GmbH", "https://example.com", ""):
+            with self.subTest(roh=roh):
+                self.assertEqual(export_mod.csv_zelle(roh), roh)
+        self.assertEqual(export_mod.csv_zelle(None), "")
+
+    def test_export_neutralisiert_formel_im_firmennamen(self):
+        formel = '=HYPERLINK("http://example.com","x")'
+        db.insert_ignore(self.conn, "shops", {"import_key": "example.com", "firmenname": "Formel",
+                                              "website": "example.com", "uebergeben": 1, "send": 1})
+        shop_id = self.conn.execute("SELECT id FROM shops WHERE import_key='example.com'").fetchone()[0]
+        db.insert_ignore(self.conn, "anreicherung", {
+            "shop_id": shop_id, "firmenname": formel, "firmenname_final": formel,
+            "website_final": "https://example.com", "email_final": "max.mueller@example.com",
+            "email_final_type": "GF", "dedupe_status": "kept", "ready_to_send": 1})
+        (zeile,) = _csv(self.liste("Geschäftsführer"))
+        self.assertEqual(zeile["Firmenname"], "'" + formel)
+
+
 if __name__ == "__main__":
     unittest.main()
