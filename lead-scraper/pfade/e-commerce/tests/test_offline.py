@@ -1194,12 +1194,12 @@ class CsvFormelschutzTest(IsolierteDB):
 
     def test_export_neutralisiert_formel_im_firmennamen(self):
         formel = '=HYPERLINK("http://example.com","x")'
-        db.insert_ignore(self.conn, "shops", {"import_key": "formel.de", "firmenname": "Formel",
-                                              "website": "formel.de", "uebergeben": 1, "send": 1})
-        shop_id = self.conn.execute("SELECT id FROM shops WHERE import_key='formel.de'").fetchone()[0]
+        db.insert_ignore(self.conn, "shops", {"import_key": "example.com", "firmenname": "Formel",
+                                              "website": "example.com", "uebergeben": 1, "send": 1})
+        shop_id = self.conn.execute("SELECT id FROM shops WHERE import_key='example.com'").fetchone()[0]
         db.insert_ignore(self.conn, "anreicherung", {
             "shop_id": shop_id, "firmenname": formel, "firmenname_final": formel,
-            "website_final": "https://formel.de", "email_final": "max.mueller@formel.de",
+            "website_final": "https://example.com", "email_final": "max.mueller@example.com",
             "email_final_type": "GF", "dedupe_status": "kept", "ready_to_send": 1})
         (zeile,) = _csv(self.liste("Geschäftsführer"))
         self.assertEqual(zeile["Firmenname"], "'" + formel)
