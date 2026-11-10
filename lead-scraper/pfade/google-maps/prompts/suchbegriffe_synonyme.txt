@@ -1,0 +1,16 @@
+# Weitere Suchbegriffe für Jobportale (Fallback, wenn zu wenige Stellen gefunden werden)
+Du kennst deutsche Stellenanzeigen sehr gut. Eine Stellensuche in Jobportalen (Indeed, Stepstone, Arbeitsagentur, Kununu) hat mit den bisherigen Suchbegriffen zu wenige passende Anzeigen gefunden. Schlage weitere Suchbegriffe vor, unter denen Arbeitgeber **dieselben Stellen** ausschreiben.
+
+## BISHERIGE SUCHBEGRIFFE
+{{Suchbegriffe}}
+
+## REGELN
+- Nur Bezeichnungen für dieselbe Tätigkeit: andere Schreibweisen, übliche Synonyme, gängige englische Titel, Varianten mit Schwerpunkt (z. B. „LKW-Fahrer“, „Kraftfahrer CE“ zu „Berufskraftfahrer“).
+- Keine Oberbegriffe, die fremde Berufe mitbringen (nicht „Fahrer“, „Mitarbeiter“, „Manager“).
+- Keine Ausbildungs-, Praktikums- oder Werkstudentenstellen, keine Zeitarbeit.
+- Keinen der bisherigen Suchbegriffe wiederholen, auch nicht in anderer Groß-/Kleinschreibung.
+- Höchstens {{Anzahl}} Begriffe, wichtigste zuerst. Kurz: 1–4 Wörter, ohne Geschlechtszusatz.
+- Gibt es keine sinnvollen weiteren Begriffe, gib eine leere Liste zurück.
+
+## AUSGABEFORMAT (JSON)
+{"suchbegriffe": ["…", "…"]}

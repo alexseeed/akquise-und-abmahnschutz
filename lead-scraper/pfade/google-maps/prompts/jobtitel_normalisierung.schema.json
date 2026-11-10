@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "properties": {
+    "normalisierterTitel": {
+      "type": "string",
+      "description": "Der normalisierte deutsche Jobtitel nach den vorgegebenen Regeln. Immer im Plural, maskulin und ohne Zusätze."
+    }
+  },
+  "required": ["normalisierterTitel"],
+  "additionalProperties": false
+}

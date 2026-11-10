@@ -82,8 +82,12 @@ class Config:
     skael_rate_limit_per_sec: float = field(default_factory=lambda: _float("SKAEL_RATE_LIMIT_PER_SEC", 5.0))
     openai_rate_limit_per_sec: float = field(default_factory=lambda: _float("OPENAI_RATE_LIMIT_PER_SEC", 2.0))
     max_concurrency: int = field(default_factory=lambda: _int("MAX_CONCURRENCY", 5))
+    # Höchstdauer je HTTP-Anfrage inkl. Lesen der Antwort (Sekunden)
     http_timeout: int = field(default_factory=lambda: _int("HTTP_TIMEOUT", 180))
-    max_retries: int = field(default_factory=lambda: _int("MAX_RETRIES", 4))
+    # Höchstwartezeit je asynchronem Skael-Auftrag; danach wird die Zeile später erneut versucht
+    skael_max_wartezeit: int = field(default_factory=lambda: _int("SKAEL_MAX_WARTEZEIT", 600))
+    # Versuche je API-Aufruf bei vorübergehenden Fehlern (Netzwerk, 429, 5xx), Pause 2/4/8/16 s (429: 5/10/20/40 s)
+    max_retries: int = field(default_factory=lambda: max(1, _int("MAX_RETRIES", 5)))
 
     # Clay `Bodytext Website` (Personalisierung) kürzt auf 8.192 Zeichen
     bodytext_max_chars: int = field(default_factory=lambda: _int("BODYTEXT_MAX_CHARS", 8192))

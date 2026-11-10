@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "painCategory": {
+      "type": "string",
+      "enum": ["[[Kategorie A]]", "[[Kategorie B / Normalfall]]", "unklar"],
+      "description": "Ergebnis der Prüffragen in fester Reihenfolge."
+    },
+    "beleg": {
+      "type": "string",
+      "description": "Maximal 15 Wörter: die konkrete Textstelle oder der Linkpfad, der die Einordnung trägt. Sonst 'kein Beleg'."
+    }
+  },
+  "required": ["painCategory", "beleg"],
+  "additionalProperties": false
+}

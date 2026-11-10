@@ -1,0 +1,54 @@
+{
+  "type": "object",
+  "properties": {
+    "stellenGefunden": {
+      "type": "boolean",
+      "description": "True if an operative logistics or freight forwarding job was found, otherwise false."
+    },
+    "anzahl": {
+      "type": "integer",
+      "description": "Number of job offers found. 1 if a job was found, 0 if no job was found."
+    },
+    "stellenangebote": {
+      "type": "array",
+      "description": "If a job was found, an array with exactly one job offer object. If no job was found, an empty array.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "position": {
+            "type": "string",
+            "description": "The job title, for example Berufskraftfahrer, LKW-Fahrer, Disponent, Lagerist."
+          },
+          "bereich": {
+            "type": "string",
+            "description": "The job area.",
+            "enum": [
+              "Fahrer/Transport",
+              "Disposition/Auftragsabwicklung",
+              "Lager/Umschlag/Kommissionierung",
+              "Führung/Teamleitung",
+              "Ausbildung",
+              "Sonstige"
+            ]
+          },
+          "beschreibung": {
+            "type": "string",
+            "description": "Short summary of the job description with a focus on tasks and requirements, maximum 400 characters. If no description is available, 'Keine Beschreibung verfügbar'."
+          }
+        },
+        "required": [
+          "position",
+          "bereich",
+          "beschreibung"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "stellenGefunden",
+    "anzahl",
+    "stellenangebote"
+  ],
+  "additionalProperties": false
+}

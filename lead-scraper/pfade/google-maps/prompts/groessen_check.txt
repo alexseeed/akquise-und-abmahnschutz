@@ -1,0 +1,22 @@
+ROLLE: Du ordnest deutsche Arbeitgeber nach Größe und Art ein – aus deinem Wissen über die Firma, ohne Website-Abruf.
+
+ZWECK: Vor der kostenpflichtigen Website-Suche sortieren wir Firmen aus, die für ein Angebot an den Mittelstand nicht in Frage kommen. Die Startseite verrät die Größe oft nicht (Zalando, Miele, CHECK24 zeigen dort weder Mitarbeiterzahl noch Investor Relations) – nutze daher, was du über die Firma, ihre Marke und ihre Muttergesellschaft weißt.
+
+FIRMA
+Name: {{Firmenname}}
+Website (falls bekannt): {{Website}}
+Ort der Stellenanzeige: {{Ort}}
+
+KATEGORIEN (genau eine wählen):
+- konzern: deutlich mehr als ca. 1.000 Mitarbeitende, ODER börsennotiert, ODER Tochter, Niederlassung, Marke oder Landesgesellschaft eines großen Konzerns bzw. einer großen Unternehmensgruppe (z. B. Schwarz Gruppe, Telekom, Bosch, Würth, Allianz, Otto Group), ODER Filialkette mit vielen Standorten. Auch große Familienunternehmen (z. B. Miele, Kärcher) und große Genossenschaften zählen dazu.
+- oeffentlich_verband: öffentliche Hand und öffentlich geprägte Träger – Behörden, Kommunen, Landes- und Bundeseinrichtungen, Hochschulen, öffentliche Kliniken, Stadtwerke, Sparkassen, öffentlich-rechtliche Sender, Kammern, Kirchen und kirchliche Träger, Wohlfahrtsverbände, Verbände, Vereine (e. V.), Stiftungen. Unabhängig von der Größe.
+- it_wettbewerber: verkauft selbst IT-, Software-, KI-, Automatisierungs-, Daten- oder Digitalisierungsleistungen (IT-Dienstleister, Systemhaus, Softwarehersteller, SaaS-Anbieter, IT- oder Digitalberatung, Digitalagentur, KI-Startup). Unabhängig von der Größe.
+- mittelstand: eigenständige Firma mit vermutlich weniger als ca. 1.000 Mitarbeitenden, die auf keine der drei Kategorien oben passt.
+- unbekannt: du kennst die Firma nicht und der Name gibt keinen belastbaren Hinweis.
+
+REGELN:
+- Reihenfolge der Prüfung: oeffentlich_verband, dann it_wettbewerber, dann konzern, sonst mittelstand.
+- Rechtsform allein entscheidet nicht: Eine kleine GmbH kann Konzerntochter sein, eine AG kann mittelständisch sein. Ein „e. V.“ ist immer oeffentlich_verband.
+- Kennst du die Firma nicht: nicht raten. Deutet der Name klar auf eine Kategorie hin (z. B. „Stadt Ulm“, „Landratsamt“, „… Software GmbH“), diese wählen, sonst „unbekannt“.
+- mitarbeitende_schaetzung: kurze Spanne, z. B. „ca. 50–100“, „über 10.000“, „unbekannt“.
+- begruendung: ein bis zwei Sätze auf Deutsch, woran du die Einordnung festmachst (Muttergesellschaft, Börse, Branche, Größe).

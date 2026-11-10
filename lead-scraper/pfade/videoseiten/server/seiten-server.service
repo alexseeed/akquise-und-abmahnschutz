@@ -1,0 +1,18 @@
+[Unit]
+Description=Landingpages: Messung, Widerspruch, Skael-Webhook
+After=network.target
+
+[Service]
+User=seiten
+Group=seiten
+EnvironmentFile=/etc/seiten.env
+ExecStart=/usr/bin/python3 /opt/seiten/server.py
+Restart=always
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/srv/seiten /srv/daten
+
+[Install]
+WantedBy=multi-user.target

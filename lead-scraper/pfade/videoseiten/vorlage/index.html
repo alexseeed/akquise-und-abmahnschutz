@@ -1,0 +1,1511 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<!-- Nur eigene Dateien; das Video-iframe ist die einzige erlaubte fremde Quelle.
+     Der Generator trägt dort die Video-Domain der Kampagne ein. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src https://video.agenturintelligenz.de https://player.mux.com; form-action 'self' mailto:; base-uri 'none'; object-src 'none'">
+<title>Ein Video für Sie</title>
+<link rel="icon" href="assets/logo.svg">
+<!-- Start-Sperre: bis zum Klick auf Abspielen ist nur der Einstieg sichtbar -->
+<script>document.documentElement.classList.add("vor-start");</script>
+<style>
+  @font-face { font-family: "Funnel Display"; src: url("assets/fonts/FunnelDisplay-600.ttf") format("truetype"); font-weight: 600; font-display: swap; }
+  @font-face { font-family: "Funnel Display"; src: url("assets/fonts/FunnelDisplay-700.ttf") format("truetype"); font-weight: 700; font-display: swap; }
+  @font-face { font-family: "Inter Tight"; src: url("assets/fonts/InterTight-400.ttf") format("truetype"); font-weight: 400; font-display: swap; }
+  @font-face { font-family: "Inter Tight"; src: url("assets/fonts/InterTight-500.ttf") format("truetype"); font-weight: 500; font-display: swap; }
+  @font-face { font-family: "Inter Tight"; src: url("assets/fonts/InterTight-600.ttf") format("truetype"); font-weight: 600; font-display: swap; }
+
+  /* Farben und Formen: werden aus SEITE.design überschrieben */
+  :root {
+    --akzent: #2563EB;
+    --akzent-dunkel: #1D4ED8;
+    /* set by the page script from the contrast of the accent colour */
+    --auf-akzent: #fff;                  /* text and icons on accent surfaces */
+    --akzent-schrift: var(--akzent);     /* accent used as text or line */
+    /* derived shades: everything below follows the customer's accent colour */
+    --akzent-hell: color-mix(in srgb, var(--akzent) 72%, #fff);
+    --akzent-text: color-mix(in srgb, var(--akzent-schrift) 82%, #000); /* follows the contrast automation */
+    --akzent-flaeche: color-mix(in srgb, var(--akzent) 7%, #fff);
+    --akzent-flaeche-2: color-mix(in srgb, var(--akzent) 20%, #fff);
+    --text: #0A0A0A;
+    --text-karte: rgba(0, 0, 0, .72);
+    --text-leise: rgba(0, 0, 0, .55);
+    --linie: rgba(10, 10, 10, .08);
+    --grund: #F8F8F9;
+    --karte: #FFFFFF;
+    --rand-blau: color-mix(in srgb, var(--akzent) 22%, #fff);
+    --tint: color-mix(in srgb, var(--akzent) 7%, transparent);
+    --radius: 20px;
+    --schatten: 0 1px 0 rgba(0, 0, 0, .04), 0 10px 30px rgba(15, 23, 42, .08);
+    --schrift-titel: "Funnel Display", Helvetica, Arial, sans-serif;
+    --schrift-text: "Inter Tight", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --breite: 1120px;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--grund);
+    color: var(--text);
+    font: 400 17px/1.6 var(--schrift-text);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: var(--akzent-schrift); }
+  h1, h2, h3 { font-family: var(--schrift-titel); font-weight: 600; margin: 0; -webkit-hyphens: auto; hyphens: auto; hyphenate-limit-chars: 10 4 4; }
+  h1 { font-size: clamp(34px, 5.4vw, 64px); line-height: 1.04; letter-spacing: -.035em; }
+  h2 { font-size: clamp(30px, 3.8vw, 48px); line-height: 1.06; letter-spacing: -.035em; }
+  h3 { font-size: 20px; line-height: 1.25; letter-spacing: -.01em; }
+  p { margin: 0; }
+
+  .rahmen { width: 100%; max-width: var(--breite); margin: 0 auto; padding: 0 20px; }
+  section { padding: 96px 0; }
+  .zentriert { text-align: center; margin-left: auto; margin-right: auto; }
+  .abschnitt-kopf { max-width: 720px; margin-bottom: 48px; }
+  .abschnitt-kopf.zentriert { display: flex; flex-direction: column; align-items: center; }
+  .abschnitt-kopf h2 { margin-top: 18px; }
+  .abschnitt-kopf p { color: var(--text-leise); margin-top: 16px; font-size: 18px; }
+
+  /* Abschnittsmarke als Pille */
+  .marke-pille { display: inline-flex; align-items: center; gap: 8px; background: var(--karte); border: 1px solid var(--rand-blau); color: var(--akzent-schrift); border-radius: 999px; padding: 6px 12px; font-size: 11px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; line-height: 1.4; }
+  .marke-pille::before { content: ""; width: 6px; height: 6px; border-radius: 2px; background: var(--akzent); box-shadow: 4px -4px 0 -1px var(--akzent-hell); }
+
+  /* sichtbarer Platzhalter für fehlende Inhalte (nur Vorlage, nie live) */
+  .platzhalter, .ang-ph { background: #FFF4CC; color: #7A5B00; border-radius: 6px; padding: 0 .3em; font-family: ui-monospace, Menlo, monospace; font-size: .84em; letter-spacing: 0; text-transform: none; }
+
+  /* Knöpfe */
+  .knopf { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 56px; max-width: 100%; padding: 10px 32px; border: 0; border-radius: 999px; color: var(--auf-akzent); font: 500 16px/1.25 var(--schrift-text); text-align: center; text-decoration: none; cursor: pointer;
+    background: linear-gradient(130deg, var(--akzent-hell), var(--akzent), var(--akzent), var(--akzent-dunkel), var(--akzent-hell)); background-size: 200% 200%; background-position: 0% 50%;
+    box-shadow: inset 0 0 12px 4px color-mix(in srgb, var(--akzent-dunkel) 25%, transparent), 0 2px 14px color-mix(in srgb, var(--akzent) 30%, transparent);
+    transition: background-position .5s ease, transform .15s ease, box-shadow .2s ease; }
+  .knopf:hover { background-position: 100% 50%; box-shadow: inset 0 0 12px 4px color-mix(in srgb, var(--akzent-dunkel) 25%, transparent), 0 6px 22px color-mix(in srgb, var(--akzent) 38%, transparent); }
+  .knopf:active { transform: translateY(1px); }
+  .knopf svg { width: 18px; height: 18px; }
+  .knopf.klein { min-height: 40px; padding: 0 18px; font-size: 14px; white-space: nowrap; }
+  .knopf.ruhig { background: var(--karte); color: var(--text); box-shadow: var(--schatten); }
+  .knopf.ruhig:hover { box-shadow: 0 1px 0 rgba(0, 0, 0, .04), 0 14px 34px rgba(15, 23, 42, .12); }
+  .knopf:focus-visible, .play:focus-visible, summary:focus-visible, .textknopf:focus-visible, .marke:focus-visible { outline: 3px solid color-mix(in srgb, var(--akzent) 45%, transparent); outline-offset: 3px; }
+  .textknopf { background: none; border: 0; padding: 0; color: inherit; font: inherit; text-decoration: underline; cursor: pointer; }
+  .knopf-zeile { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .knopf-zeile small { color: var(--text-leise); font-size: 14px; }
+
+  /* Navigation: schwebende Pille */
+  .kopf { position: sticky; top: 14px; z-index: 30; padding: 0 16px; }
+  .kopf-pille { max-width: 760px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 7px 7px 7px 16px; background: rgba(255, 255, 255, .86); backdrop-filter: saturate(1.6) blur(14px); -webkit-backdrop-filter: saturate(1.6) blur(14px); border-radius: 999px; box-shadow: 0 1px 0 rgba(0, 0, 0, .04), 0 8px 28px rgba(15, 23, 42, .10); }
+  .marke { display: flex; align-items: center; gap: 10px; font: 600 15px/1 var(--schrift-titel); color: var(--text); text-decoration: none; letter-spacing: -.01em; min-width: 0; }
+  .marke img { width: 28px; height: 28px; flex: none; }
+  .marke span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .kopf-fuer { font-size: 13px; color: var(--text-leise); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+
+  /* Einstieg */
+  .begruessung { position: relative; padding: 72px 0 40px; text-align: center; isolation: isolate; }
+  .begruessung::before { content: ""; position: absolute; inset: -80px 0 0; z-index: -1;
+    background:
+      radial-gradient(60% 50% at 50% 0%, color-mix(in srgb, var(--akzent) 16%, transparent), color-mix(in srgb, var(--akzent) 0%, transparent) 70%),
+      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0) 0 118px, rgba(255, 255, 255, .7) 118px 120px),
+      linear-gradient(180deg, var(--akzent-flaeche), var(--grund) 75%); }
+  .begruessung h1 { max-width: 940px; margin: 22px auto 0; }
+  .begruessung .einleitung { max-width: 640px; margin: 22px auto 0; font-size: 19px; color: rgba(0, 0, 0, .6); }
+
+  /* Video */
+  .video-block { padding: 8px 0 96px; }
+  .video-rahmen { max-width: 980px; margin: 0 auto; padding: 10px; border-radius: 32px; background: rgba(255, 255, 255, .7); box-shadow: 0 1px 0 rgba(0, 0, 0, .04), 0 30px 80px -20px color-mix(in srgb, var(--akzent-dunkel) 28%, transparent); }
+  .video-karte { position: relative; aspect-ratio: 16 / 9; border-radius: 24px; overflow: hidden; background: var(--akzent-flaeche); }
+  .video-karte img.vorschau { width: 100%; height: 100%; object-fit: cover; }
+  .video-karte iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .play { position: absolute; inset: 0; display: grid; place-items: center; width: 100%; border: 0; padding: 0; background: linear-gradient(180deg, rgba(10, 10, 10, 0) 50%, rgba(10, 10, 10, .5)); cursor: pointer; color: #fff; }
+  .play-kreis { width: 88px; height: 88px; border-radius: 50%; display: grid; place-items: center;
+    background: linear-gradient(130deg, var(--akzent-hell), var(--akzent), var(--akzent-dunkel)); box-shadow: inset 0 0 12px 4px color-mix(in srgb, var(--akzent-dunkel) 25%, transparent), 0 0 0 10px rgba(255, 255, 255, .35), 0 12px 30px color-mix(in srgb, var(--akzent-dunkel) 35%, transparent); transition: transform .2s; }
+  .play:hover .play-kreis { transform: scale(1.06); }
+  .play-kreis { color: var(--auf-akzent); }
+  .play-kreis svg { width: 32px; height: 32px; margin-left: 5px; }
+  .video-titel { position: absolute; left: 24px; right: 24px; bottom: 20px; text-align: left; font: 500 17px/1.3 var(--schrift-text); text-shadow: 0 1px 2px rgba(0, 0, 0, .4); }
+  .video-platzhalter { position: absolute; inset: 0; display: grid; place-items: center; align-content: center; gap: 18px; padding: 24px; text-align: center; background: linear-gradient(180deg, rgba(248, 250, 255, .25), rgba(232, 241, 255, .85)); }
+  .video-platzhalter .play-kreis { opacity: .9; }
+  .video-platzhalter strong { display: inline-block; background: var(--karte); border-radius: 999px; padding: 10px 18px; font: 600 15px/1.2 var(--schrift-text); color: var(--text); box-shadow: var(--schatten); }
+  .video-fehlt { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 24px; background: rgba(246, 248, 251, .94); color: var(--text-leise); }
+  .unter-video { display: flex; flex-direction: column; align-items: center; gap: 18px; margin-top: 32px; }
+  .hinweis { max-width: 620px; font-size: 13px; line-height: 1.5; color: var(--text-leise); text-align: center; }
+
+  /* Karten */
+  .karte { background: var(--karte); border-radius: var(--radius); box-shadow: var(--schatten); }
+
+  /* Angebot: Andockstelle für den gewählten Entwurf (CSS mit Präfix .ang-) */
+  .angebot-block { padding: 0; }
+
+  /* Kundenstimmen: erste Karte breit mit Video links, weitere darunter */
+  .stimmen { display: grid; gap: 24px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stimme { margin: 0; display: flex; flex-direction: column; min-width: 0; overflow: hidden; }
+  .stimme:first-of-type { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); }
+  .stimmen > .stimme:only-of-type, .stimme.ohne-video:first-child { display: flex; }
+  .stimme-video { position: relative; aspect-ratio: 16 / 9; background: #0A0A0A; overflow: hidden; }
+  .stimme:first-of-type .stimme-video { aspect-ratio: auto; min-height: 340px; }
+  .stimme-video img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.16, 1, .3, 1); }
+  .stimme-video iframe, .stimme-video video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #000; }
+  .stimme-start { position: absolute; inset: 0; width: 100%; border: 0; padding: 18px; cursor: pointer; color: #fff; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; text-align: left;
+    background: linear-gradient(180deg, rgba(10, 10, 10, .05) 30%, rgba(10, 10, 10, .62)); }
+  .stimme-video:hover img { transform: scale(1.04); }
+  .stimme-etikett { display: inline-flex; align-items: center; gap: 7px; padding: 6px 11px; border-radius: 999px; background: rgba(255, 255, 255, .16); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); font: 500 12px/1.2 var(--schrift-text); letter-spacing: .02em; }
+  .stimme-etikett::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #FF4D4D; box-shadow: 0 0 0 3px rgba(255, 77, 77, .25); }
+  .stimme-play { display: flex; align-items: center; gap: 12px; font: 500 14px/1.3 var(--schrift-text); text-shadow: 0 1px 2px rgba(0, 0, 0, .35); }
+  .stimme-play i { flex: none; width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(130deg, var(--akzent-hell), var(--akzent), var(--akzent-dunkel)); box-shadow: inset 0 0 12px 4px color-mix(in srgb, var(--akzent-dunkel) 25%, transparent), 0 0 0 6px rgba(255, 255, 255, .22); transition: transform .25s; }
+  .stimme-play i { color: var(--auf-akzent); }
+  .stimme-play i svg { width: 20px; height: 20px; margin-left: 3px; }
+  .stimme-start:hover .stimme-play i { transform: scale(1.07); }
+  .stimme-start:focus-visible { outline: 3px solid color-mix(in srgb, var(--akzent) 60%, transparent); outline-offset: -3px; }
+  .stimme-inhalt { display: flex; flex-direction: column; flex: 1; padding: 26px 28px 26px; min-width: 0; }
+  .stimme:first-of-type .stimme-inhalt { padding: 40px 40px 34px; justify-content: center; }
+  .stimme-zitat { margin: 0; font-size: 15.5px; line-height: 1.65; color: var(--text-karte); overflow-wrap: anywhere; flex: 1; }
+  .stimme:first-of-type .stimme-zitat { font: 500 20px/1.5 var(--schrift-text); color: var(--text); letter-spacing: -.01em; flex: 0 1 auto; }
+  .stimme-zitat::before { content: "„"; display: block; font: 600 54px/.6 var(--schrift-titel); color: var(--akzent-schrift); margin: 12px 0 8px; }
+  .stimme-fuss { margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--linie); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 18px; }
+  .stimme-kopf { display: flex; align-items: center; gap: 12px; min-width: 0; }
+  .stimme-bild { flex: none; width: 44px; height: 44px; border-radius: 50%; overflow: hidden; display: grid; place-items: center; background: linear-gradient(135deg, var(--akzent-flaeche), var(--akzent-flaeche-2)); color: var(--akzent-schrift); font: 600 15px/1 var(--schrift-titel); }
+  .stimme-bild img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; }
+  .stimme-name { font: 600 15px/1.3 var(--schrift-text); overflow-wrap: anywhere; }
+  .stimme-rolle { font-size: 13px; color: var(--text-leise); overflow-wrap: anywhere; }
+  /* result card without a quote: no empty area and divider above name and result */
+  .stimme-inhalt:not(:has(.stimme-zitat)) .stimme-fuss { margin-top: 0; padding-top: 0; border-top: 0; }
+  .stimme-ergebnis { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; text-align: right; }
+  .stimme-ergebnis b { display: inline-block; padding: 6px 12px; border-radius: 999px; background: var(--akzent-flaeche); border: 1px solid var(--rand-blau); color: var(--akzent-text); font: 600 13px/1.3 var(--schrift-text); }
+  .stimme-ergebnis span { font-size: 12px; color: var(--text-leise); }
+  .stimmen-hinweis { margin-top: 22px; font-size: 13px; color: var(--text-leise); text-align: center; }
+
+  /* Unterschrift unter der Überschrift */
+  .unterschrift { display: inline-flex; align-items: center; gap: 14px; margin-top: 30px; text-align: left; }
+  .unterschrift-bild { flex: none; width: 54px; height: 54px; border-radius: 50%; overflow: hidden; display: grid; place-items: center; background: linear-gradient(135deg, var(--akzent-flaeche), var(--akzent-flaeche-2)); color: var(--akzent-schrift); font: 600 18px/1 var(--schrift-titel); box-shadow: 0 0 0 3px #fff, 0 8px 20px rgba(15, 23, 42, .14); }
+  .unterschrift-bild img { width: 100%; height: 100%; object-fit: cover; }
+  .unterschrift-name { position: relative; display: inline-block; font: italic 600 23px/1.1 var(--schrift-titel); letter-spacing: -.02em; }
+  .unterschrift-name svg { position: absolute; left: -2px; bottom: -11px; width: calc(100% + 10px); height: 12px; color: var(--akzent-schrift); overflow: visible; }
+  .unterschrift-name path { stroke-dasharray: 230; stroke-dashoffset: 230; animation: unterschrift-zug 1.1s .5s cubic-bezier(.65, 0, .35, 1) forwards; }
+  @keyframes unterschrift-zug { to { stroke-dashoffset: 0; } }
+  .unterschrift-rolle { display: block; margin-top: 14px; font-size: 14px; color: var(--text-leise); }
+
+  /* Start-Sperre: bis zum Klick nur Einstieg, Video, Hinweis und Rechtliches */
+  .start-leiste { display: none; justify-content: center; flex-wrap: wrap; gap: 6px 18px; font-size: 13px; color: var(--text-leise); }
+  .start-leiste a, .start-leiste button { color: inherit; background: none; border: 0; padding: 0; font: inherit; cursor: pointer; text-decoration: none; }
+  .start-leiste a:hover, .start-leiste button:hover { color: var(--akzent-schrift); }
+  .start-leiste .weiter { color: var(--text); font-weight: 500; text-decoration: underline; text-underline-offset: 3px; }
+  html.vor-start, html.vor-start body { height: 100%; overflow: hidden; overscroll-behavior: none; }
+  html.vor-start.vor-start-scroll, html.vor-start.vor-start-scroll body { overflow-y: auto; }
+  html.vor-start body { padding-bottom: 0; }
+  html.vor-start main > [data-block]:not([data-block="begruessung"]):not([data-block="video"]),
+  html.vor-start .fuss, html.vor-start .handy-leiste, html.vor-start .knopf-zeile, html.vor-start .kopf .knopf { display: none; }
+  html.vor-start .start-leiste { display: flex; }
+  html.vor-start .begruessung { padding: clamp(14px, 3vh, 40px) 0 clamp(12px, 2.4vh, 24px); }
+  html.vor-start .begruessung h1 { max-width: 1040px; margin-top: clamp(12px, 2vh, 20px); font-size: clamp(24px, min(4.6vw, 4.6vh), 48px); }
+  html.vor-start .unterschrift { margin-top: clamp(14px, 2.6vh, 26px); }
+  html.vor-start .hinweis { max-width: 860px; font-size: 12px; }
+  html.vor-start .video-block { padding: 0 0 16px; }
+  html.vor-start .video-rahmen { width: min(980px, 100%, var(--video-max, 980px)); }
+  html.vor-start .unter-video { margin-top: clamp(12px, 2.2vh, 22px); gap: 10px; }
+  html.gestartet .video-rahmen { width: min(1200px, 100%, var(--video-gross, 1200px)); max-width: none; }
+  .video-rahmen { will-change: transform; transform-origin: 50% 50%; }
+
+  .video-platzhalter-text { position: absolute; left: 50%; top: calc(50% + 66px); transform: translateX(-50%); white-space: nowrap; background: var(--karte); border-radius: 999px; padding: 10px 18px; font: 600 15px/1.2 var(--schrift-text); color: var(--text); box-shadow: var(--schatten); }
+  html.gestartet .begruessung { display: none; }
+  html.gestartet .video-block { padding-top: clamp(88px, 12vh, 120px); }
+
+  /* Aufbau beim Scrollen */
+  .aufbau { opacity: 0; transform: translate3d(0, 48px, 0); transition: opacity .9s cubic-bezier(.16, 1, .3, 1), transform .9s cubic-bezier(.16, 1, .3, 1); }
+  .aufbau.sichtbar { opacity: 1; transform: none; }
+  .aufbau-kind { opacity: 0; transform: translate3d(0, 26px, 0) scale(.985); transition: opacity .8s cubic-bezier(.16, 1, .3, 1), transform .8s cubic-bezier(.16, 1, .3, 1); transition-delay: calc(var(--i, 0) * 90ms + 140ms); }
+  .sichtbar .aufbau-kind { opacity: 1; transform: none; }
+  .handy-leiste { transition: transform .5s cubic-bezier(.16, 1, .3, 1); }
+  html.gestartet .handy-leiste.eingefahren { transform: translateY(110%); }
+
+  /* Ansprechpartner */
+  .person { display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: center; padding: 32px; max-width: 860px; margin: 0 auto; }
+  .person .bild { width: 112px; height: 112px; border-radius: 28px; background: linear-gradient(135deg, var(--akzent-flaeche), var(--akzent-flaeche-2)); color: var(--akzent-schrift); display: grid; place-items: center; font: 600 36px/1 var(--schrift-titel); overflow: hidden; }
+  .person .bild img { width: 100%; height: 100%; object-fit: cover; }
+  .person h3 { margin-top: 12px; }
+  .person .rolle { color: var(--text-leise); }
+  .person p.text { margin-top: 10px; color: var(--text-karte); }
+
+  /* Fragen */
+  .fragen { max-width: 820px; margin: 0 auto; display: grid; gap: 12px; }
+  .fragen details { background: var(--karte); border-radius: 16px; box-shadow: var(--schatten); padding: 0 24px; }
+  .fragen summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 20px 0; font-weight: 500; font-size: 17px; }
+  .fragen summary::-webkit-details-marker { display: none; }
+  .fragen summary::after { content: "+"; flex: none; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: var(--tint); font: 400 20px/1 var(--schrift-text); color: var(--akzent-schrift); transition: transform .2s; }
+  .fragen details[open] summary::after { transform: rotate(45deg); }
+  .fragen .antwort { padding: 0 0 22px; color: var(--text-karte); max-width: 700px; }
+
+  /* Termin */
+  .termin-band { position: relative; overflow: hidden; isolation: isolate; border-radius: 32px; padding: 72px 32px; text-align: center; color: #fff; background: #0A0A0A; }
+  .termin-band::before { content: ""; position: absolute; inset: 0; z-index: -1;
+    background: radial-gradient(55% 80% at 50% 120%, color-mix(in srgb, var(--akzent) 55%, transparent), color-mix(in srgb, var(--akzent) 0%, transparent) 70%),
+                radial-gradient(1px 1px at 1px 1px, rgba(255, 255, 255, .14) 1px, transparent 0) 0 0 / 22px 22px; }
+  .termin-band h2 { max-width: 720px; margin: 18px auto 0; }
+  .termin-band p { max-width: 560px; margin: 18px auto 32px; color: rgba(255, 255, 255, .7); }
+  .termin-band .marke-pille { background: rgba(255, 255, 255, .06); border-color: rgba(255, 255, 255, .16); color: var(--akzent-hell); }
+  .termin-band small { display: block; margin-top: 14px; color: rgba(255, 255, 255, .55); font-size: 13px; }
+
+  /* Datenherkunft */
+  .herkunft { padding-top: 64px; }
+  .herkunft-karte { padding: 36px; font-size: 15px; }
+  .herkunft-karte h2 { font-size: 26px; letter-spacing: -.02em; }
+  .herkunft-karte .unterzeile { color: var(--text-leise); margin-top: 6px; font-size: 14px; }
+  .herkunft dl { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 14px 28px; margin: 28px 0 0; }
+  .herkunft dt { font-weight: 600; }
+  .herkunft dd { margin: 0; color: var(--text-karte); overflow-wrap: anywhere; }
+  .herkunft .aktionen { margin-top: 28px; }
+
+  /* Fuß */
+  .fuss { padding: 40px 0 48px; font-size: 14px; color: var(--text-leise); }
+  .fuss .rahmen { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 18px; border-top: 1px solid var(--linie); padding-top: 28px; }
+  .fuss nav { display: flex; flex-wrap: wrap; gap: 20px; }
+  .fuss a, .fuss .textknopf { color: var(--text); text-decoration: none; }
+  .fuss a:hover, .fuss .textknopf:hover { color: var(--akzent-schrift); }
+
+  /* Termin-Leiste auf dem Handy */
+  .handy-leiste { display: none; }
+
+  /* Widerspruch-Dialog */
+  dialog { border: 0; border-radius: var(--radius); padding: 28px; max-width: 460px; width: calc(100% - 32px); box-shadow: 0 30px 80px rgba(0, 0, 0, .25); color: var(--text); }
+  dialog::backdrop { background: rgba(10, 10, 10, .45); }
+  dialog p { color: var(--text-karte); margin: 12px 0 22px; }
+  dialog .zeile { display: flex; flex-wrap: wrap; gap: 12px; }
+  .bestaetigung { padding: 140px 0; text-align: center; }
+  .bestaetigung p { color: var(--text-leise); margin-top: 14px; }
+
+  @media (max-width: 960px) {
+    .stimmen { grid-template-columns: 1fr; max-width: 620px; margin: 0 auto; }
+    .stimme:first-of-type { display: flex; }
+    .stimme:first-of-type .stimme-video { aspect-ratio: 16 / 9; min-height: 0; }
+    .stimme:first-of-type .stimme-inhalt { padding: 28px; }
+    .stimme:first-of-type .stimme-zitat { font-size: 17px; }
+    .herkunft dl { grid-template-columns: 1fr; gap: 4px; }
+    .herkunft dd { margin-bottom: 14px; }
+  }
+  @media (max-width: 640px) {
+    body { font-size: 16px; padding-bottom: 88px; }
+    section { padding: 64px 0; }
+    section.ang { padding: 56px 0 64px; }
+    .kopf { top: 10px; padding: 0 12px; }
+    .kopf .knopf, .kopf-fuer { display: none; }
+    .kopf-pille { padding: 10px 16px; }
+    .begruessung { padding: 48px 0 28px; }
+    .begruessung .einleitung { font-size: 17px; }
+    .video-block { padding-bottom: 64px; }
+    .video-rahmen { padding: 6px; border-radius: 22px; }
+    .video-karte { border-radius: 17px; }
+    .play-kreis { width: 64px; height: 64px; }
+    .play-kreis svg { width: 24px; height: 24px; }
+    .video-titel { font-size: 14px; left: 16px; bottom: 12px; }
+    .video-platzhalter strong { font-size: 13px; padding: 8px 14px; }
+    .video-platzhalter-text { font-size: 13px; padding: 8px 14px; top: calc(50% + 46px); }
+    /* nach dem Start: Video randlos über die volle Breite */
+    html.gestartet .video-block { padding-top: 76px; }
+    html.gestartet .video-block > .rahmen { padding: 0; }
+    html.gestartet .video-rahmen { padding: 0; border-radius: 0; box-shadow: 0 24px 50px -24px color-mix(in srgb, var(--akzent-dunkel) 35%, transparent); background: #0A0A0A; }
+    html.gestartet .video-karte { border-radius: 0; }
+    html.gestartet .unter-video { padding: 0 20px; }
+    .unter-video .knopf { width: 100%; }
+    .person { grid-template-columns: 1fr; padding: 24px; }
+    .stimme-inhalt, .stimme:first-of-type .stimme-inhalt { padding: 22px; }
+    .stimme-ergebnis { align-items: flex-start; text-align: left; }
+    .unterschrift-name { font-size: 20px; }
+    .unterschrift-bild { width: 46px; height: 46px; }
+    .person .bild { width: 80px; height: 80px; border-radius: 22px; font-size: 26px; }
+    .termin-band { padding: 52px 22px; border-radius: 24px; }
+    .termin-band .knopf { width: 100%; }
+    .herkunft-karte { padding: 24px; }
+    .handy-leiste { display: block; position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); background: rgba(248, 248, 249, .92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-top: 1px solid var(--linie); }
+    .handy-leiste .knopf { width: 100%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+    .aufbau, .aufbau-kind { opacity: 1 !important; transform: none !important; }
+    .unterschrift-name path { stroke-dashoffset: 0; }
+  }
+
+  /* ANGEBOT-CSS:START – CSS des gewählten Angebotsentwurfs */
+  /* Entwurf B „Paket“, Quelle: landingpage-embed/design/angebot-b-paket.html */
+/* ===== Angebotsbereich (alles mit Präfix .ang-) ===== */
+  .ang {
+    --ang-text: var(--text);
+    --ang-leise: rgba(0, 0, 0, .72);
+    --ang-neben: rgba(0, 0, 0, .55);
+    --ang-akzent: var(--akzent);
+    --ang-akzent-dunkel: var(--akzent-dunkel);
+    --ang-linie: rgba(10, 10, 10, .07);
+    --ang-titel: var(--schrift-titel);
+    --ang-schrift: var(--schrift-text);
+    background: transparent;
+    color: var(--ang-text);
+    font: 400 16px/1.6 var(--ang-schrift);
+    padding: 72px 0 80px;
+  }
+  .ang *, .ang *::before, .ang *::after { box-sizing: border-box; }
+  .ang h2, .ang h3, .ang h4, .ang p, .ang ul, .ang ol, .ang dl, .ang dd { margin: 0; }
+  .ang ul, .ang ol { padding: 0; list-style: none; }
+
+  .ang-rahmen { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 16px; }
+
+  /* Handy: Einleitung → Paket → Ablauf */
+  .ang-raster { display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .ang-links { display: contents; }
+  .ang-intro { order: 1; min-width: 0; }
+  .ang-paket { order: 2; }
+  .ang-ablauf { order: 3; min-width: 0; }
+
+  /* Platzhalter für fehlende Angaben */
+  .ang-ph {
+    background: #FFF4CC; color: #7A5B00; border-radius: 6px; padding: 0 .3em;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .86em; font-weight: 500;
+    -webkit-box-decoration-break: clone; box-decoration-break: clone; overflow-wrap: anywhere;
+  }
+
+  /* Augenbraue */
+  .ang-augenbraue {
+    display: inline-flex; align-items: center; max-width: 100%;
+    background: #fff; border: 1px solid var(--rand-blau); color: var(--akzent-schrift); border-radius: 999px;
+    padding: 6px 12px; font: 500 11px/1.3 var(--ang-schrift); text-transform: uppercase; letter-spacing: .22em;
+  }
+  .ang .ang-titel {
+    margin-top: 20px;
+    font: 600 clamp(36px, 5vw, 58px)/1.04 var(--ang-titel); letter-spacing: -.04em;
+    overflow-wrap: break-word; -webkit-hyphens: auto; hyphens: auto; hyphenate-limit-chars: 10 4 4; text-wrap: balance;
+  }
+  .ang .ang-text { margin-top: 18px; max-width: 34em; font-size: 17px; color: rgba(0, 0, 0, .6); overflow-wrap: break-word; }
+
+  /* Liquid-Knopf */
+  .ang-knopf {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    min-height: 56px; padding: 0 32px; border-radius: 999px; max-width: 100%;
+    background: linear-gradient(130deg, var(--akzent-hell), var(--akzent), var(--akzent), var(--akzent-dunkel), var(--akzent-hell));
+    background-size: 200% 100%; background-position: 0% 50%;
+    box-shadow: inset 0 0 12px 4px color-mix(in srgb, var(--akzent-dunkel) 25%, transparent), 0 2px 14px color-mix(in srgb, var(--akzent) 30%, transparent);
+    color: var(--auf-akzent); font: 500 16px/1.2 var(--ang-schrift); text-decoration: none; text-align: center;
+    text-shadow: none;
+    transition: background-position .6s ease, box-shadow .25s ease, transform .15s ease;
+  }
+  .ang-knopf:hover { background-position: 100% 50%; box-shadow: inset 0 0 12px 4px color-mix(in srgb, var(--akzent-dunkel) 30%, transparent), 0 6px 22px color-mix(in srgb, var(--akzent) 38%, transparent); }
+  .ang-knopf:active { transform: translateY(1px); }
+  .ang-knopf:focus-visible { outline: 3px solid color-mix(in srgb, var(--akzent) 45%, transparent); outline-offset: 3px; }
+  .ang-knopf svg { flex: none; width: 18px; height: 18px; transition: transform .2s ease; }
+  .ang-knopf:hover svg { transform: translateX(3px); }
+  .ang-intro .ang-knopf { display: none; margin-top: 30px; }
+
+  /* Ablauf: drei kompakte Zeilen */
+  .ang-ablauf-label {
+    font: 600 11px/1.3 var(--ang-schrift); text-transform: uppercase; letter-spacing: .22em; color: var(--ang-neben);
+    padding-bottom: 14px; border-bottom: 1px solid var(--ang-linie);
+  }
+  .ang-schritt { position: relative; display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 16px; padding: 18px 0; }
+  .ang-schritt + .ang-schritt { border-top: 1px solid var(--ang-linie); }
+  .ang-schritt-nr {
+    width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center;
+    background: #fff; border: 1px solid var(--rand-blau); color: var(--akzent-schrift);
+    font: 600 15px/1 var(--ang-titel); box-shadow: 0 1px 0 rgba(0, 0, 0, .03);
+  }
+  .ang-schritt h3 { font: 600 16px/1.35 var(--ang-schrift); padding-top: 6px; overflow-wrap: break-word; }
+  .ang-schritt p { margin-top: 4px; font-size: 15px; line-height: 1.55; color: var(--ang-neben); overflow-wrap: break-word; }
+
+  /* Paket-Karte */
+  .ang-paket {
+    min-width: 0; background: #fff; border-radius: 24px; overflow: hidden;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, .04), 0 10px 30px rgba(15, 23, 42, .08), 0 40px 80px -40px color-mix(in srgb, var(--akzent) 28%, transparent);
+  }
+
+  /* dunkle Kopfzeile */
+  .ang-kopf {
+    position: relative; padding: 24px 20px 22px; color: #fff;
+    background:
+      radial-gradient(120% 160% at 100% 0%, color-mix(in srgb, var(--akzent) 42%, transparent), color-mix(in srgb, var(--akzent) 0%, transparent) 55%),
+      radial-gradient(70% 120% at 0% 100%, color-mix(in srgb, var(--akzent) 12%, transparent), color-mix(in srgb, var(--akzent) 0%, transparent) 60%),
+      #0A0A0A;
+  }
+  .ang-kopf::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+    background: linear-gradient(90deg, var(--akzent), var(--akzent-hell) 60%, color-mix(in srgb, var(--akzent) 0%, transparent));
+  }
+  .ang-kopf-zeile { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; }
+  .ang-kopf-titel { display: flex; align-items: center; gap: 10px; font: 600 26px/1.1 var(--ang-titel); letter-spacing: -.03em; }
+  .ang-kopf-titel::before {
+    content: ""; flex: none; width: 10px; height: 10px; border-radius: 50%;
+    background: var(--akzent-hell); box-shadow: 0 0 0 4px color-mix(in srgb, var(--akzent) 20%, transparent), 0 0 14px color-mix(in srgb, var(--akzent) 80%, transparent);
+  }
+  .ang-kopf-zahl {
+    border: 1px solid rgba(255, 255, 255, .18); border-radius: 999px; padding: 5px 12px;
+    font: 500 11px/1.3 var(--ang-schrift); text-transform: uppercase; letter-spacing: .18em; color: rgba(255, 255, 255, .78);
+    background: rgba(255, 255, 255, .04);
+  }
+  .ang .ang-kopf-daten { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; margin-top: 22px; }
+  .ang-kopf-daten > div {
+    min-width: 0; padding: 12px 14px; border-radius: 14px;
+    background: rgba(255, 255, 255, .05); border: 1px solid rgba(255, 255, 255, .09);
+  }
+  .ang-kopf-daten dt { font: 500 11px/1.3 var(--ang-schrift); text-transform: uppercase; letter-spacing: .18em; color: rgba(255, 255, 255, .6); }
+  .ang-kopf-daten dd { margin-top: 6px; font: 500 15px/1.4 var(--ang-schrift); color: #fff; overflow-wrap: anywhere; }
+
+  /* Leistungen */
+  .ang-leistung {
+    display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 16px;
+    padding: 22px 20px; transition: background-color .2s ease;
+  }
+  .ang-leistung + .ang-leistung { border-top: 1px solid var(--ang-linie); }
+  .ang-leistung:hover { background: #FBFCFE; }
+  .ang-icon {
+    width: 44px; height: 44px; border-radius: 13px; display: grid; place-items: center;
+    background: linear-gradient(160deg, var(--akzent-flaeche), var(--akzent-flaeche)); color: var(--akzent-schrift);
+    box-shadow: inset 0 0 0 1px var(--rand-blau);
+  }
+  .ang-icon svg { width: 22px; height: 22px; }
+  .ang-leistung h4 { font: 600 19px/1.25 var(--ang-titel); letter-spacing: -.02em; padding-top: 2px; overflow-wrap: break-word; }
+  .ang-leistung p { margin-top: 6px; font-size: 15px; line-height: 1.6; color: var(--ang-leise); overflow-wrap: break-word; }
+  .ang-leistung .ang-chip {
+    display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; max-width: 100%;
+    margin-top: 14px; padding: 5px 10px 5px 6px; border-radius: 10px;
+    background: var(--akzent-flaeche); border: 1px solid var(--rand-blau); color: var(--akzent-text);
+    font: 500 13px/1.4 var(--ang-schrift); overflow-wrap: anywhere;
+  }
+  .ang-chip-label {
+    display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px; border-radius: 6px;
+    background: var(--akzent-dunkel); color: var(--auf-akzent); font: 600 10px/1.4 var(--ang-schrift); text-transform: uppercase; letter-spacing: .14em;
+  }
+  .ang-chip-label svg { width: 11px; height: 11px; }
+  .ang-chip-wert { min-width: 0; }
+
+  /* Inklusive */
+  .ang-inklusive { padding: 20px 20px 22px; background: #F7F9FC; border-top: 1px solid var(--ang-linie); }
+  .ang-inklusive-label { font: 600 11px/1.3 var(--ang-schrift); text-transform: uppercase; letter-spacing: .22em; color: var(--ang-neben); }
+  .ang-inklusive ul { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px 24px; margin-top: 14px; }
+  .ang-inklusive li { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; line-height: 1.45; min-width: 0; overflow-wrap: anywhere; }
+  .ang-haken {
+    flex: none; width: 20px; height: 20px; margin-top: 1px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--akzent); color: var(--auf-akzent);
+  }
+  .ang-haken svg { width: 12px; height: 12px; }
+
+  /* Fußzeile */
+  .ang-fuss {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px;
+    padding: 20px; border-top: 1px solid var(--ang-linie);
+  }
+  .ang-fuss-hinweis { flex: 1 1 220px; min-width: 0; font-size: 14px; line-height: 1.5; color: var(--ang-neben); overflow-wrap: break-word; }
+  .ang-fuss .ang-knopf { width: 100%; }
+
+  @media (min-width: 480px) {
+    .ang-kopf { padding: 28px 28px 26px; }
+    .ang-leistung { padding: 24px 28px; grid-template-columns: 48px minmax(0, 1fr); gap: 18px; }
+    .ang-icon { width: 48px; height: 48px; border-radius: 14px; }
+    .ang-inklusive { padding: 22px 28px 24px; }
+    .ang-inklusive ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .ang-fuss { padding: 22px 28px; }
+    .ang-fuss .ang-knopf { width: auto; }
+  }
+
+  @media (min-width: 860px) {
+    .ang { padding: 112px 0 120px; }
+    .ang-rahmen { padding: 0 32px; }
+    .ang-raster { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 56px; align-items: start; }
+    .ang-links { display: flex; flex-direction: column; gap: 44px; min-width: 0; }
+    .ang-intro .ang-knopf { display: inline-flex; }
+    .ang-paket { order: 0; }
+    .ang-kopf-titel { font-size: 30px; }
+  }
+
+  /* klebt nur, wenn die linke Spalte sicher in den Bildschirm passt */
+  @media (min-width: 860px) and (min-height: 760px) {
+    .ang-links { position: sticky; top: 104px; }
+  }
+
+  @media (min-width: 1100px) {
+    .ang-raster { gap: 80px; }
+    .ang-kopf { padding: 32px 36px 30px; }
+    .ang-leistung { padding: 28px 36px; }
+    .ang-inklusive { padding: 24px 36px 26px; }
+    .ang-fuss { padding: 24px 36px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ang-knopf, .ang-knopf svg, .ang-leistung { transition: none; }
+    .ang-knopf:hover svg { transform: none; }
+  }
+  /* ANGEBOT-CSS:END */
+</style>
+</head>
+<body>
+<script>
+/* =====================================================================
+   LEAD — je Lead vom Generator ersetzt (alles zwischen LEAD:START und LEAD:END).
+   Feldnamen wie im festen Lead-Format, dazu seiten_id und die drei Videofelder.
+   E-Mail, Telefon und Status werden nie auf die Seite geschrieben (leer lassen).
+   In der Vorlage ist video_url leer: dann erscheint der Video-Platzhalter.
+   ===================================================================== */
+/* LEAD:START */
+const LEAD = {
+  seiten_id: "Q7mK2pX9vLr4TbW1nZc8aE",
+  externe_id: "probe-0002",
+  firma: "Feldmark Kreativagentur GmbH",
+  rechtsform: "GmbH",
+  domain: "feldmark-kreativ.example",
+  website: "https://feldmark-kreativ.example",
+  strasse: "",
+  plz: "12345",
+  ort: "Musterstadt",
+  land: "DE",
+  telefon: "",
+  branche: "Werbeagentur",
+  mitarbeiter: "11-50",
+  handelsregister: "",
+  anrede: "Frau",
+  vorname: "Mara",
+  nachname: "Beispiel",
+  position: "Geschäftsführerin",
+  email: "",
+  email_typ: "",
+  email_status: "",
+  kontakt_telefon: "",
+  linkedin_url: "",
+  quelle: "",
+  quelle_url: "",
+  erfasst_am: "2026-10-12",
+  video_url: "",
+  video_vorschaubild: "assets/video-vorschau.svg",
+  video_titel: "Video für Mara Beispiel von der Feldmark Kreativagentur"
+};
+/* LEAD:END */
+
+/* =====================================================================
+   ABSENDER — einmal je Kunde. Werte in <spitzen Klammern> fehlen noch.
+   ===================================================================== */
+const ABSENDER = {
+  name: "<Firmenname>",
+  logo: "assets/logo.svg",
+  rechtstraeger: "<Rechtsträger laut Impressum>",
+  anschrift: "<Straße Nr., PLZ Ort>",
+  ansprechpartner: "<Vorname Nachname>",
+  rolle: "<Rolle im Unternehmen>",
+  foto: "",
+  impressum_url: "<Impressum-URL>",
+  datenschutz_url: "<Datenschutz-URL>",
+  termin_url: "<Termin-Link>",
+  termin_dauer: "<Dauer> Minuten",
+  widerspruch_email: "<E-Mail für Datenlöschung>"
+};
+
+/* =====================================================================
+   SEITE — Gestaltung, Bausteine und Texte. {feld} wird aus LEAD bzw.
+   ABSENDER eingesetzt, {ansprache} ergibt „Guten Tag Frau Beispiel“.
+   Werte in <spitzen Klammern> füllt das Interview (pfade/videoseiten/ABLAUF.md).
+   ===================================================================== */
+const SEITE = {
+  design: {
+    akzent: "#2563EB",
+    akzent_dunkel: "#1D4ED8",
+    text: "#0A0A0A",
+    grund: "#F8F8F9",
+    radius: "20px"
+  },
+  // Reihenfolge der Bausteine. Pflicht und immer sichtbar: begruessung, video, termin, herkunft.
+  // Wählbar: angebot, stimmen, ansprechpartner, fragen.
+  bausteine: ["begruessung", "video", "angebot", "stimmen", "ansprechpartner", "fragen", "termin", "herkunft"],
+  start_sperre: true,
+  laufzeit_tage: 90,
+  video_anbieter: "Skael GmbH (Grünwald), ausgeliefert über Cloudflare",
+  mess_endpunkt: "/api/m",
+  widerspruch_endpunkt: "/api/widerspruch",
+  texte: {
+    titel_tab: "Ein Video für {firma}",
+    kopf_fuer: "Persönlich für {vorname} {nachname}",
+    augenbraue: "Persönlich für {firma}",
+    ueberschrift: "{ansprache}, ich habe Ihnen ein persönliches Video aufgenommen, wie Sie <Nutzen in einem Halbsatz>.",
+    einleitung: "",
+    video_platzhalter: "Hier erscheint dann Ihr Video",
+    knopf_termin: "Termin buchen",
+    knopf_hinweis: "{termin_dauer} · <kurzer Hinweis, z. B. kostenlos und unverbindlich>",
+    angebot: {
+      augenbraue: "Das Angebot",
+      titel: "<Titel des Angebots>",
+      text: "<ein bis zwei Sätze, worum es geht>",
+      leistungen: [
+        { titel: "<Leistung 1>", text: "<ein Satz, was der Kunde bekommt>", ergebnis: "" },
+        { titel: "<Leistung 2>", text: "<ein Satz, was der Kunde bekommt>", ergebnis: "" },
+        { titel: "<Leistung 3>", text: "<ein Satz, was der Kunde bekommt>", ergebnis: "" }
+      ],
+      inklusive: ["<Stichpunkt 1>", "<Stichpunkt 2>", "<Stichpunkt 3>", "<Stichpunkt 4>"],
+      ablauf: [
+        { titel: "Video ansehen", text: "Sie sehen, was wir für die {firma} vorschlagen." },
+        { titel: "Termin wählen", text: "Sie suchen sich einen freien Termin über {termin_dauer} aus." },
+        { titel: "Gemeinsam prüfen", text: "Wir sprechen darüber, ob und wie das zu Ihnen passt." }
+      ],
+      knopf: "Termin buchen",
+      paket: { titel: "Ihr Paket", rahmen: "<Rahmen>", laufzeit: "<Laufzeit>", hinweis: "<Hinweis zu Kosten und Konditionen>" }
+    },
+    stimmen_augenbraue: "Kundenstimmen",
+    stimmen_titel: "Was Kunden über die Zusammenarbeit sagen",
+    stimmen_text: "<ein Satz, mit wem Sie zusammenarbeiten>",
+    // je Stimme optional: bild, video_url (externer Player) oder video_datei (eigene mp4 unter assets/), video_vorschaubild, video_etikett
+    stimmen: [
+      { name: "<Vorname Nachname>", rolle: "<Rolle, Firma>", branche: "<Branche · Domain>", zitat: "<Zitat in den Worten des Kunden, ein bis zwei Sätze>", ergebnis: "<Ergebnis mit Beleg>" },
+      { name: "<Vorname Nachname>", rolle: "<Rolle, Firma>", branche: "<Branche · Domain>", zitat: "<Zitat in den Worten des Kunden, ein bis zwei Sätze>", ergebnis: "<Ergebnis mit Beleg>" },
+      { name: "<Vorname Nachname>", rolle: "<Rolle, Firma>", branche: "<Branche · Domain>", zitat: "<Zitat in den Worten des Kunden, ein bis zwei Sätze>", ergebnis: "<Ergebnis mit Beleg>" }
+    ],
+    stimmen_hinweis: "Mit Zustimmung der genannten Kunden veröffentlicht.",
+    ansprechpartner_augenbraue: "Ihr Ansprechpartner",
+    ansprechpartner_text: "<ein Satz zur Person, z. B. was sie für Kunden tut>",
+    fragen_augenbraue: "Fragen",
+    fragen_titel: "Häufige Fragen",
+    fragen: [
+      { frage: "Warum habe ich diese Seite bekommen?", antwort: "Wir sind über öffentlich zugängliche Angaben auf die {firma} aufmerksam geworden und halten unser Angebot für passend. Diese Seite gibt es nur einmal und nur für Sie." },
+      { frage: "Woher stammen meine Daten?", antwort: "Aus öffentlich zugänglichen Angaben, vor allem Ihrem Impressum. Die Einzelheiten stehen weiter unten unter „Woher wir Ihre Daten haben“." },
+      { frage: "Wie lange ist diese Seite erreichbar?", antwort: "{laufzeit_tage} Tage nach dem Versand wird sie gelöscht. Wenn Sie die Datenlöschung anstoßen, sofort." },
+      { frage: "Ich möchte keine weiteren Nachrichten.", antwort: "Dann klicken Sie unten auf „Keine weiteren Nachrichten – Datenlöschung vornehmen“. Wir schreiben Ihnen danach nicht mehr und löschen Ihre Daten." }
+    ],
+    termin_augenbraue: "Nächster Schritt",
+    termin_titel: "<Frage, z. B. Passt das zu Ihnen?>",
+    termin_text: "Im Termin über {termin_dauer} klären wir, ob sich die Zusammenarbeit für die {firma} lohnt.",
+    termin_klein: "Sie wählen den Termin im Buchungstool von {name}."
+  }
+};
+</script>
+
+<header class="kopf">
+  <div class="kopf-pille">
+    <a class="marke" href="#oben" aria-label="Zum Seitenanfang">
+      <img data-bild="logo" alt="" width="28" height="28">
+      <span data-absender="name"></span>
+    </a>
+    <span class="kopf-fuer" data-text="kopf_fuer"></span>
+    <a class="knopf klein" data-termin target="_blank" rel="noopener noreferrer"><span data-text="knopf_termin"></span></a>
+  </div>
+</header>
+
+<main id="oben">
+  <section class="begruessung" data-block="begruessung">
+    <div class="rahmen">
+      <span class="marke-pille" data-text="augenbraue"></span>
+      <h1 data-text="ueberschrift"></h1>
+      <p class="einleitung" data-text="einleitung"></p>
+      <div class="unterschrift">
+        <div class="unterschrift-bild" id="unterschrift-bild"></div>
+        <div>
+          <span class="unterschrift-name"><span data-absender="ansprechpartner"></span><svg viewBox="0 0 200 14" preserveAspectRatio="none" aria-hidden="true"><path d="M3 10 C 40 3, 90 3, 130 7 S 185 11, 197 4" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></span>
+          <span class="unterschrift-rolle" data-absender="rolle"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="video-block" data-block="video" aria-label="Persönliches Video">
+    <div class="rahmen">
+      <div class="video-rahmen">
+        <div class="video-karte" id="video-karte">
+          <img class="vorschau" id="video-vorschau" alt="">
+          <button class="play" id="play" type="button">
+            <span class="play-kreis" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.14v13.72a1 1 0 0 0 1.52.85l10.79-6.86a1 1 0 0 0 0-1.7L9.52 4.29A1 1 0 0 0 8 5.14z"/></svg>
+            </span>
+            <span class="video-titel" id="video-titel"></span>
+          </button>
+        </div>
+      </div>
+      <div class="unter-video">
+        <div class="knopf-zeile">
+          <a class="knopf" data-termin target="_blank" rel="noopener noreferrer">
+            <span data-text="knopf_termin"></span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <small data-text="knopf_hinweis"></small>
+        </div>
+        <p class="hinweis" id="video-hinweis"></p>
+        <!-- Vor dem Start sichtbar: Wege ohne Video und Rechtliches -->
+        <nav class="start-leiste" aria-label="Ohne Video und Rechtliches">
+          <button type="button" class="weiter" data-start-ziel="angebot-ziel">Ohne Video weiterlesen</button>
+          <a data-link="impressum_url">Impressum</a>
+          <a data-link="datenschutz_url">Datenschutz</a>
+          <button type="button" data-start-ziel="herkunft">Datenherkunft</button>
+          <button type="button" data-widerspruch>Keine weiteren Nachrichten</button>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <section class="angebot-block ang" data-block="angebot" id="angebot-ziel" aria-labelledby="ang-titel">
+      <!-- ANGEBOT-HTML:START – Gerüst des gewählten Angebotsentwurfs -->
+      <div class="ang-rahmen">
+        <div class="ang-raster">
+          <div class="ang-links">
+            <div class="ang-intro"></div>
+            <div class="ang-ablauf"></div>
+          </div>
+          <article class="ang-paket" aria-label="Ihr Paket"></article>
+        </div>
+      </div>
+      <!-- ANGEBOT-HTML:END -->
+  </section>
+
+  <section data-block="stimmen">
+    <div class="rahmen">
+      <div class="abschnitt-kopf zentriert">
+        <span class="marke-pille" data-text="stimmen_augenbraue"></span>
+        <h2 data-text="stimmen_titel"></h2>
+        <p data-text="stimmen_text"></p>
+      </div>
+      <div class="stimmen" data-liste="stimmen">
+        <template>
+          <figure class="karte stimme">
+            <div class="stimme-video" data-stimme-video></div>
+            <div class="stimme-inhalt">
+              <blockquote class="stimme-zitat" data-feld="zitat"></blockquote>
+              <figcaption class="stimme-fuss">
+                <div class="stimme-kopf">
+                  <div class="stimme-bild" data-initialen="name"></div>
+                  <div>
+                    <div class="stimme-name" data-feld="name"></div>
+                    <div class="stimme-rolle" data-feld="rolle"></div>
+                  </div>
+                </div>
+                <div class="stimme-ergebnis"><b data-feld="ergebnis"></b><span data-feld="branche"></span></div>
+              </figcaption>
+            </div>
+          </figure>
+        </template>
+      </div>
+      <p class="stimmen-hinweis" data-text="stimmen_hinweis"></p>
+    </div>
+  </section>
+
+  <section data-block="ansprechpartner">
+    <div class="rahmen">
+      <div class="karte person">
+        <div class="bild" id="person-bild"></div>
+        <div>
+          <span class="marke-pille" data-text="ansprechpartner_augenbraue"></span>
+          <h3 data-absender="ansprechpartner"></h3>
+          <p class="rolle" data-absender="rolle"></p>
+          <p class="text" data-text="ansprechpartner_text"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-block="fragen">
+    <div class="rahmen">
+      <div class="abschnitt-kopf zentriert">
+        <span class="marke-pille" data-text="fragen_augenbraue"></span>
+        <h2 data-text="fragen_titel"></h2>
+      </div>
+      <div class="fragen" data-liste="fragen">
+        <template>
+          <details><summary data-feld="frage"></summary><p class="antwort" data-feld="antwort"></p></details>
+        </template>
+      </div>
+    </div>
+  </section>
+
+  <section data-block="termin" id="termin">
+    <div class="rahmen">
+      <div class="termin-band">
+        <span class="marke-pille" data-text="termin_augenbraue"></span>
+        <h2 data-text="termin_titel"></h2>
+        <p data-text="termin_text"></p>
+        <a class="knopf" data-termin target="_blank" rel="noopener noreferrer"><span data-text="knopf_termin"></span></a>
+        <small data-text="termin_klein"></small>
+      </div>
+    </div>
+  </section>
+
+  <section class="herkunft" data-block="herkunft" id="herkunft">
+    <div class="rahmen">
+      <div class="karte herkunft-karte">
+        <h2>Woher wir Ihre Daten haben</h2>
+        <p class="unterzeile">Informationen nach Art. 14 DSGVO</p>
+        <dl>
+          <dt>Verantwortlich</dt>
+          <dd><span data-absender="rechtstraeger"></span>, <span data-absender="anschrift"></span></dd>
+          <dt>Welche Daten</dt>
+          <dd>Firmenname, Ort und Branche der <span data-lead="firma"></span>, Name und Funktion der Geschäftsführung sowie die geschäftliche E-Mail-Adresse, an die wir geschrieben haben.</dd>
+          <dt>Quelle</dt>
+          <dd>Öffentlich zugängliche Angaben, insbesondere das Impressum der <span data-lead="firma"></span>, sowie weitere öffentlich zugängliche Quellen. Erhoben am <span data-lead="erfasst_am" data-format="datum"></span>.</dd>
+          <dt>Zweck und Rechtsgrundlage</dt>
+          <dd>Einmalige Ansprache zu einem geschäftlichen Angebot; berechtigtes Interesse nach Art. 6 Abs. 1 lit. f DSGVO.</dd>
+          <dt>Video</dt>
+          <dd>Das Video liegt bei <span data-seite="video_anbieter"></span>. Es wird erst geladen, wenn Sie auf Abspielen klicken.</dd>
+          <dt>Speicherdauer</dt>
+          <dd>Diese Seite wird <span data-seite="laufzeit_tage"></span> Tage nach dem Versand gelöscht, nach einer Datenlöschung sofort. Wir setzen keine Cookies.</dd>
+        </dl>
+        <div class="aktionen">
+          <button class="knopf ruhig" type="button" id="widerspruch-knopf">Keine weiteren Nachrichten – Datenlöschung vornehmen</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="fuss">
+  <div class="rahmen">
+    <div><span data-absender="rechtstraeger"></span> · <span data-absender="anschrift"></span></div>
+    <nav aria-label="Rechtliches">
+      <a data-link="impressum_url">Impressum</a>
+      <a data-link="datenschutz_url">Datenschutz</a>
+      <a href="#herkunft">Datenherkunft</a>
+      <button class="textknopf" type="button" data-widerspruch>Datenlöschung</button>
+    </nav>
+  </div>
+</footer>
+
+<div class="handy-leiste">
+  <a class="knopf" data-termin target="_blank" rel="noopener noreferrer"><span data-text="knopf_termin"></span></a>
+</div>
+
+<dialog id="widerspruch-dialog" aria-labelledby="wd-titel">
+  <h3 id="wd-titel">Keine weiteren Nachrichten?</h3>
+  <p id="wd-text"></p>
+  <div class="zeile" id="wd-zeile">
+    <button class="knopf" type="button" id="wd-senden">Ja, Daten löschen</button>
+    <button class="knopf ruhig" type="button" id="wd-abbrechen">Abbrechen</button>
+  </div>
+</dialog>
+
+<noscript><p style="padding:20px;text-align:center">Diese Seite braucht JavaScript. Impressum und Datenschutz erreichen Sie über die Website des Absenders.</p></noscript>
+
+<script>
+/* ANGEBOT-JS:START – renderAngebot(el, daten) des gewählten Angebotsentwurfs */
+  function renderAngebot(el, daten) {
+    if (!el || !daten) return;
+    var SVG = "http://www.w3.org/2000/svg";
+
+    // Icons (feste Formen, keine Daten)
+    var ICONS = {
+      ziel:   [["circle", { cx: 12, cy: 12, r: 8.5 }], ["circle", { cx: 12, cy: 12, r: 4.5 }], ["circle", { cx: 12, cy: 12, r: 1.2, fill: "currentColor" }]],
+      video:  [["rect", { x: 2.75, y: 5.75, width: 13.5, height: 12.5, rx: 3 }], ["path", { d: "M16.25 10.25 21.25 7.5v9l-5-2.75" }]],
+      schild: [["path", { d: "M12 3 19.25 6v5.75c0 4.4-3 7.6-7.25 9.25-4.25-1.65-7.25-4.85-7.25-9.25V6L12 3Z" }], ["path", { d: "m9 12 2.1 2.1L15.25 10" }]],
+      ebenen: [["path", { d: "M12 3.25 20.75 8 12 12.75 3.25 8 12 3.25Z" }], ["path", { d: "M3.25 12.25 12 17l8.75-4.75" }], ["path", { d: "M3.25 16.25 12 21l8.75-4.75" }]],
+      pfeil:  [["path", { d: "M5 12h14M13 6l6 6-6 6" }]],
+      haken:  [["path", { d: "m5 12.5 4.5 4.5L19 7.5" }]],
+      punkt:  [["path", { d: "M12 4v4M12 16v4M4 12h4M16 12h4" }]]
+    };
+    var ICON_REIHE = ["ziel", "video", "schild", "ebenen"];
+
+    function icon(name, strich) {
+      var s = document.createElementNS(SVG, "svg");
+      s.setAttribute("viewBox", "0 0 24 24");
+      s.setAttribute("fill", "none");
+      s.setAttribute("stroke", "currentColor");
+      s.setAttribute("stroke-width", String(strich || 1.75));
+      s.setAttribute("stroke-linecap", "round");
+      s.setAttribute("stroke-linejoin", "round");
+      s.setAttribute("aria-hidden", "true");
+      s.setAttribute("focusable", "false");
+      (ICONS[name] || ICONS.ziel).forEach(function (f) {
+        var e = document.createElementNS(SVG, f[0]);
+        Object.keys(f[1]).forEach(function (k) { e.setAttribute(k, String(f[1][k])); });
+        s.appendChild(e);
+      });
+      return s;
+    }
+
+    function knoten(tag, klasse) {
+      var e = document.createElement(tag);
+      if (klasse) e.className = klasse;
+      return e;
+    }
+
+    // Text sicher anhängen; Teile in <spitzen Klammern> werden zu gelben Platzhaltern
+    function text(e, wert) {
+      String(wert == null ? "" : wert).split(/(<[^<>]+>)/).forEach(function (teil) {
+        if (!teil) return;
+        if (/^<[^<>]+>$/.test(teil)) {
+          var ph = knoten("span", "ang-ph");
+          ph.textContent = teil;
+          e.appendChild(ph);
+        } else {
+          e.appendChild(document.createTextNode(teil));
+        }
+      });
+      return e;
+    }
+
+    function liste(x) { return Array.isArray(x) ? x.filter(Boolean) : []; }
+
+    function knopf() {
+      var a = knoten("a", "ang-knopf");
+      a.href = daten.ziel || "#termin";
+      a.setAttribute("data-termin", "");
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      text(a.appendChild(knoten("span")), daten.knopf || "<Knopftext>");
+      a.appendChild(icon("pfeil", 2));
+      return a;
+    }
+
+    var paket = daten.paket || {};
+    var leistungen = liste(daten.leistungen);
+    var inklusive = liste(daten.inklusive);
+    var ablauf = liste(daten.ablauf);
+
+    // --- Einleitung ---
+    var intro = el.querySelector(".ang-intro");
+    intro.textContent = "";
+    if (daten.augenbraue) text(intro.appendChild(knoten("span", "ang-augenbraue")), daten.augenbraue);
+    var h2 = text(intro.appendChild(knoten("h2", "ang-titel")), daten.titel || "<Titel>");
+    h2.id = "ang-titel";
+    if (daten.text) text(intro.appendChild(knoten("p", "ang-text")), daten.text);
+    intro.appendChild(knopf());
+
+    // --- Ablauf ---
+    var ab = el.querySelector(".ang-ablauf");
+    ab.textContent = "";
+    ab.hidden = !ablauf.length;
+    if (ablauf.length) {
+      var abId = "ang-ablauf-label";
+      var abLabel = text(ab.appendChild(knoten("p", "ang-ablauf-label")), daten.ablaufTitel || "So geht es weiter");
+      abLabel.id = abId;
+      var ol = ab.appendChild(knoten("ol"));
+      ol.setAttribute("aria-labelledby", abId);
+      ablauf.forEach(function (s, i) {
+        var li = ol.appendChild(knoten("li", "ang-schritt"));
+        var nr = li.appendChild(knoten("span", "ang-schritt-nr"));
+        nr.textContent = String(i + 1);
+        nr.setAttribute("aria-hidden", "true");
+        var body = li.appendChild(knoten("div"));
+        text(body.appendChild(knoten("h3")), s.titel || "<Schritt>");
+        if (s.text) text(body.appendChild(knoten("p")), s.text);
+      });
+    }
+
+    // --- Paket-Karte ---
+    var karte = el.querySelector(".ang-paket");
+    karte.textContent = "";
+
+    var kopf = karte.appendChild(knoten("header", "ang-kopf"));
+    var zeile = kopf.appendChild(knoten("div", "ang-kopf-zeile"));
+    text(zeile.appendChild(knoten("h3", "ang-kopf-titel")), paket.titel || "Ihr Paket");
+    if (leistungen.length) {
+      zeile.appendChild(knoten("span", "ang-kopf-zahl")).textContent =
+        leistungen.length + (leistungen.length === 1 ? " Baustein" : " Bausteine");
+    }
+    var dl = kopf.appendChild(knoten("dl", "ang-kopf-daten"));
+    // paket.felder: [{label, wert}, …] ersetzt die Standardfelder Rahmen und Laufzeit
+    var felder = Array.isArray(paket.felder) && paket.felder.length
+      ? paket.felder.map(function (f) { return [f.label || "", f.wert || ""]; })
+      : [["Rahmen", paket.rahmen || "<Rahmen>"], ["Laufzeit", paket.laufzeit || "<Laufzeit>"]];
+    felder.forEach(function (p) {
+      var g = dl.appendChild(knoten("div"));
+      g.appendChild(knoten("dt")).textContent = p[0];
+      text(g.appendChild(knoten("dd")), p[1]);
+    });
+
+    if (leistungen.length) {
+      var ul = karte.appendChild(knoten("ul", "ang-leistungen"));
+      leistungen.forEach(function (l, i) {
+        var li = ul.appendChild(knoten("li", "ang-leistung"));
+        li.appendChild(knoten("span", "ang-icon")).appendChild(icon(ICONS[l.icon] ? l.icon : ICON_REIHE[i % ICON_REIHE.length]));
+        var body = li.appendChild(knoten("div"));
+        text(body.appendChild(knoten("h4")), l.titel || "<Leistung>");
+        if (l.text) text(body.appendChild(knoten("p")), l.text);
+        if (l.ergebnis) {
+          var chip = body.appendChild(knoten("p", "ang-chip"));
+          var lab = chip.appendChild(knoten("span", "ang-chip-label"));
+          lab.appendChild(icon("punkt", 2.25));
+          lab.appendChild(document.createTextNode("Ergebnis"));
+          text(chip.appendChild(knoten("span", "ang-chip-wert")), l.ergebnis);
+        }
+      });
+    }
+
+    if (inklusive.length) {
+      var ink = karte.appendChild(knoten("div", "ang-inklusive"));
+      var inkLabel = ink.appendChild(knoten("p", "ang-inklusive-label"));
+      inkLabel.textContent = "Inklusive";
+      inkLabel.id = "ang-inklusive-label";
+      var iul = ink.appendChild(knoten("ul"));
+      iul.setAttribute("aria-labelledby", inkLabel.id);
+      inklusive.forEach(function (punkt) {
+        var li = iul.appendChild(knoten("li"));
+        li.appendChild(knoten("span", "ang-haken")).appendChild(icon("haken", 2.5));
+        text(li.appendChild(knoten("span")), punkt);
+      });
+    }
+
+    var fuss = karte.appendChild(knoten("footer", "ang-fuss"));
+    text(fuss.appendChild(knoten("p", "ang-fuss-hinweis")), paket.hinweis || "<Hinweis zu Kosten und Konditionen>");
+    fuss.appendChild(knopf());
+  }
+/* ANGEBOT-JS:END */
+</script>
+
+<script>
+(function () {
+  "use strict";
+
+  var PFLICHT = ["begruessung", "video", "termin", "herkunft"];
+
+  function istLeer(w) { return w === undefined || w === null || String(w).trim() === "" || /^<.*>$/.test(String(w).trim()); }
+
+  function datum(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso || "");
+    return m ? m[3] + "." + m[2] + "." + m[1] : iso;
+  }
+
+  function ansprache() {
+    if (!istLeer(LEAD.anrede) && !istLeer(LEAD.nachname) && /^(Herr|Frau)$/.test(LEAD.anrede)) {
+      return "Guten Tag " + LEAD.anrede + " " + LEAD.nachname;
+    }
+    return "Guten Tag";
+  }
+
+  // Wert für {platzhalter}: zuerst LEAD, dann ABSENDER, dann SEITE
+  function wert(name) {
+    if (name === "ansprache") return ansprache();
+    if (name in LEAD) return LEAD[name];
+    if (name in ABSENDER) return ABSENDER[name];
+    if (name in SEITE) return SEITE[name];
+    return undefined;
+  }
+
+  // {feld} durch Text ersetzen; Fehlendes wird zu <feld>
+  function ersetze(text) {
+    return String(text).replace(/\{([a-z_]+)\}/g, function (_, name) {
+      var w = wert(name);
+      return istLeer(w) && !w ? "<" + name + ">" : String(w);
+    });
+  }
+
+  // Ersetzt {felder} in allen Texten eines Objekts (für den Angebotsentwurf)
+  function ersetzeTief(x) {
+    if (typeof x === "string") return ersetze(x);
+    if (Array.isArray(x)) return x.map(ersetzeTief);
+    if (x && typeof x === "object") {
+      var o = {};
+      Object.keys(x).forEach(function (k) { o[k] = ersetzeTief(x[k]); });
+      return o;
+    }
+    return x;
+  }
+
+  function platzhalter(text) {
+    var s = document.createElement("span");
+    s.className = "platzhalter";
+    s.textContent = text;
+    return s;
+  }
+
+  // Hängt Text an; Teile in <spitzen Klammern> werden als Platzhalter markiert
+  function haengeAn(el, text) {
+    String(text).split(/(<[^<>]+>)/).forEach(function (teil) {
+      if (!teil) return;
+      if (/^<[^<>]+>$/.test(teil)) el.appendChild(platzhalter(teil));
+      else el.appendChild(document.createTextNode(teil));
+    });
+  }
+
+  // Setzt Text mit {feldern} sicher (nur Textknoten)
+  function fuelle(el, vorlage) {
+    el.textContent = "";
+    haengeAn(el, ersetze(vorlage));
+  }
+
+  function einzelwert(el, w, name) {
+    el.textContent = "";
+    if (istLeer(w) && !w) { el.appendChild(platzhalter("<" + name + ">")); return; }
+    haengeAn(el, el.dataset.format === "datum" ? datum(w) : String(w));
+  }
+
+  function initialen(name) {
+    if (istLeer(name)) return "?";
+    return String(name).split(/\s+/).map(function (t) { return t.charAt(0); }).join("").slice(0, 2).toUpperCase();
+  }
+
+  // Messung: nur an den eigenen Server, ohne Cookies, nur Kennung und Ereignis
+  function melde(ereignis) {
+    if (!SEITE.mess_endpunkt || !/^https?:$/.test(location.protocol)) return;
+    try {
+      var body = new Blob([JSON.stringify({ seiten_id: LEAD.seiten_id, ereignis: ereignis })], { type: "application/json" });
+      navigator.sendBeacon(SEITE.mess_endpunkt, body);
+    } catch (e) { /* Messung darf die Seite nie stören */ }
+  }
+
+  // --- Gestaltung
+  var d = SEITE.design || {}, wurzel = document.documentElement.style;
+  if (d.akzent) wurzel.setProperty("--akzent", d.akzent);
+  if (d.akzent_dunkel) wurzel.setProperty("--akzent-dunkel", d.akzent_dunkel);
+  if (d.text) wurzel.setProperty("--text", d.text);
+  if (d.grund) wurzel.setProperty("--grund", d.grund);
+  if (d.radius) wurzel.setProperty("--radius", d.radius);
+
+  // Contrast automation: light accents (yellow, lime …) get dark text on them and are not used
+  // as text colour on the light page. SEITE.design.auf_akzent / akzent_schrift override this.
+  function luminanz(hex) {
+    var m = /^#?([0-9a-f]{6})$/i.exec(String(hex || "").trim());
+    if (!m) return null;
+    var n = parseInt(m[1], 16);
+    var c = [n >> 16 & 255, n >> 8 & 255, n & 255].map(function (v) {
+      v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+  }
+  function kontrast(a, b) { return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05); }
+  var lAkzent = luminanz(d.akzent), lText = luminanz(d.text || "#0A0A0A"), lGrund = luminanz(d.grund || "#F8F8F9");
+  if (lAkzent !== null && lText !== null) {
+    var dunkelDrauf = kontrast(lAkzent, lText) > kontrast(lAkzent, 1);
+    wurzel.setProperty("--auf-akzent", d.auf_akzent || (dunkelDrauf ? d.text || "#0A0A0A" : "#fff"));
+    var lesbar = lGrund === null || kontrast(lAkzent, lGrund) >= 3;
+    wurzel.setProperty("--akzent-schrift", d.akzent_schrift || (lesbar ? d.akzent : d.text || "#0A0A0A"));
+  }
+
+  // --- Bausteine ein- und ausblenden, Reihenfolge übernehmen
+  var main = document.querySelector("main");
+  var gewaehlt = SEITE.bausteine.slice();
+  PFLICHT.forEach(function (p) { if (gewaehlt.indexOf(p) < 0) gewaehlt.push(p); });
+  document.querySelectorAll("[data-block]").forEach(function (b) {
+    if (gewaehlt.indexOf(b.dataset.block) < 0) b.remove();
+  });
+  gewaehlt.forEach(function (name) {
+    var b = main.querySelector('[data-block="' + name + '"]');
+    if (b) main.appendChild(b);
+  });
+
+  // --- Texte
+  document.title = ersetze(SEITE.texte.titel_tab).replace(/<[^<>]+>/g, "");
+  document.querySelectorAll("[data-text]").forEach(function (el) {
+    var v = SEITE.texte[el.dataset.text];
+    if (v === "") { el.remove(); return; }  // bewusst leer: Element entfällt
+    fuelle(el, v || "<" + el.dataset.text + ">");
+  });
+  document.querySelectorAll("[data-lead]").forEach(function (el) { einzelwert(el, LEAD[el.dataset.lead], el.dataset.lead); });
+  document.querySelectorAll("[data-absender]").forEach(function (el) { einzelwert(el, ABSENDER[el.dataset.absender], el.dataset.absender); });
+  document.querySelectorAll("[data-seite]").forEach(function (el) { einzelwert(el, SEITE[el.dataset.seite], el.dataset.seite); });
+
+  document.querySelectorAll('[data-bild="logo"]').forEach(function (img) {
+    if (istLeer(ABSENDER.logo)) img.remove(); else img.src = ABSENDER.logo;
+  });
+
+  // Video einer Kundenstimme: Vorschaubild lokal, Player erst nach Klick
+  function stimmeVideo(box, e) {
+    var figur = box.closest(".stimme");
+    // video_datei: own file on this server (e.g. assets/interview.mp4), video_url: external player (https)
+    var datei = !istLeer(e.video_datei) && /^\/?assets\/[\w.\/-]+\.(mp4|webm)$/.test(e.video_datei);
+    if (!datei && (istLeer(e.video_url) || !/^https:\/\//.test(e.video_url))) { if (figur) figur.classList.add("ohne-video"); box.remove(); return; }
+    var host = datei ? "" : new URL(e.video_url).host;
+    var etikett = istLeer(e.video_etikett) ? "Video-Interview" : e.video_etikett;
+    if (!istLeer(e.video_vorschaubild)) {
+      var vi = document.createElement("img"); vi.src = e.video_vorschaubild; vi.alt = ""; vi.loading = "lazy"; box.appendChild(vi);
+    }
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "stimme-start";
+    b.setAttribute("aria-label", etikett + " mit " + (e.name || "") + " abspielen" + (host ? ". Lädt das Video von " + host : ""));
+    b.innerHTML = '<span class="stimme-etikett"></span><span class="stimme-play"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.14v13.72a1 1 0 0 0 1.52.85l10.79-6.86a1 1 0 0 0 0-1.7L9.52 4.29A1 1 0 0 0 8 5.14z"/></svg></i><span></span></span>';
+    b.querySelector(".stimme-etikett").textContent = etikett;
+    b.querySelector(".stimme-play > span").textContent = host ? "Abspielen · lädt von " + host : "Abspielen";
+    b.addEventListener("click", function () {
+      melde("stimme_geklickt");
+      if (datei) {
+        var v = document.createElement("video");
+        v.src = e.video_datei; v.controls = true; v.autoplay = true; v.playsInline = true; v.preload = "auto";
+        v.title = etikett + " mit " + (e.name || "");
+        b.remove(); box.appendChild(v); v.play().catch(function () {});
+        return;
+      }
+      var f = document.createElement("iframe");
+      f.src = e.video_url;
+      f.title = "Video-Interview mit " + (e.name || "");
+      f.allow = "autoplay; fullscreen";
+      f.allowFullscreen = true;
+      f.referrerPolicy = "no-referrer";
+      b.remove();
+      box.appendChild(f);
+    }, { once: true });
+    box.appendChild(b);
+  }
+
+  // --- Listen (Kundenstimmen, Fragen)
+  document.querySelectorAll("[data-liste]").forEach(function (box) {
+    var vorlage = box.querySelector("template");
+    (SEITE.texte[box.dataset.liste] || []).forEach(function (eintrag) {
+      var knoten = vorlage.content.cloneNode(true);
+      knoten.querySelectorAll("[data-feld]").forEach(function (el) {
+        if (eintrag[el.dataset.feld]) fuelle(el, eintrag[el.dataset.feld]); else el.remove();
+      });
+      knoten.querySelectorAll("[data-initialen]").forEach(function (el) {
+        if (!istLeer(eintrag.bild)) {
+          var bi = document.createElement("img"); bi.src = eintrag.bild; bi.alt = ""; bi.loading = "lazy"; el.appendChild(bi);
+        } else {
+          el.textContent = initialen(eintrag[el.dataset.initialen]);
+        }
+      });
+      knoten.querySelectorAll("[data-stimme-video]").forEach(function (el) { stimmeVideo(el, eintrag); });
+      box.appendChild(knoten);
+    });
+  });
+
+  // --- Angebot (Entwurf liefert renderAngebot)
+  var angebotZiel = document.getElementById("angebot-ziel");
+  if (angebotZiel && SEITE.texte.angebot) {
+    if (typeof window.renderAngebot === "function") {
+      window.renderAngebot(angebotZiel, ersetzeTief(SEITE.texte.angebot));
+    }
+  }
+
+  // --- Links: Impressum, Datenschutz, Termin
+  function setzeLink(a, url, name) {
+    if (istLeer(url) || !/^https?:\/\//.test(url)) {
+      a.removeAttribute("href");
+      a.setAttribute("aria-disabled", "true");
+      a.title = "fehlt: " + (url || name);
+      if (!a.querySelector(".platzhalter")) {
+        a.appendChild(document.createTextNode(" "));
+        a.appendChild(platzhalter(url || "<" + name + ">"));
+      }
+      return;
+    }
+    a.href = url;
+  }
+  document.querySelectorAll("[data-link]").forEach(function (a) { setzeLink(a, ABSENDER[a.dataset.link], a.dataset.link); });
+  document.querySelectorAll("[data-termin]").forEach(function (a) {
+    if (istLeer(ABSENDER.termin_url) || !/^https?:\/\//.test(ABSENDER.termin_url)) {
+      a.href = "#termin-fehlt";
+      a.removeAttribute("target");
+      a.title = "Termin-Link fehlt: " + ABSENDER.termin_url;
+    } else {
+      a.href = ABSENDER.termin_url;
+    }
+    a.addEventListener("click", function () { melde("termin_geklickt"); });
+  });
+
+  // --- Ansprechpartner-Bild oder Initialen
+  var bild = document.getElementById("person-bild");
+  if (bild) {
+    if (!istLeer(ABSENDER.foto)) {
+      var img = document.createElement("img"); img.src = ABSENDER.foto; img.alt = ""; bild.appendChild(img);
+    } else {
+      bild.textContent = initialen(ABSENDER.ansprechpartner);
+    }
+  }
+  var ubild = document.getElementById("unterschrift-bild");
+  if (ubild) {
+    if (!istLeer(ABSENDER.foto)) {
+      var uimg = document.createElement("img"); uimg.src = ABSENDER.foto; uimg.alt = ""; ubild.appendChild(uimg);
+    } else {
+      ubild.textContent = initialen(ABSENDER.ansprechpartner);
+    }
+  }
+
+  // --- Video und Start: bis zum Klick ist nur der Einstieg sichtbar
+  var wurzelEl = document.documentElement;
+  var reduziert = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  var karte = document.getElementById("video-karte");
+  var rahmen = document.querySelector(".video-rahmen");
+  var play = document.getElementById("play");
+  var vorschau = document.getElementById("video-vorschau");
+  var hinweis = document.getElementById("video-hinweis");
+  document.getElementById("video-titel").textContent = LEAD.video_titel || "";
+  if (!istLeer(LEAD.video_vorschaubild)) vorschau.src = LEAD.video_vorschaubild; else vorschau.remove();
+
+  var videoOk = !istLeer(LEAD.video_url) && /^https:\/\//.test(LEAD.video_url);
+  if (videoOk) {
+    var host = new URL(LEAD.video_url).host;
+    play.setAttribute("aria-label", "Video abspielen. Lädt das Video von " + host);
+    hinweis.textContent = "Mit dem Klick auf Abspielen laden Sie das Video von " + host + " (" + SEITE.video_anbieter + "). Vorher lädt diese Seite nichts von Dritten.";
+  } else if (istLeer(LEAD.video_url)) {
+    var phText = document.createElement("strong");
+    phText.className = "video-platzhalter-text";
+    phText.textContent = ersetze(SEITE.texte.video_platzhalter || "Hier erscheint dann Ihr Video");
+    play.appendChild(phText);
+    play.setAttribute("aria-label", phText.textContent);
+    hinweis.textContent = "Das Video wird erst geladen, wenn Sie auf Abspielen klicken. Vorher lädt diese Seite nichts von Dritten.";
+  } else {
+    var leer = document.createElement("div");
+    leer.className = "video-fehlt";
+    leer.textContent = "Das Video ist nicht mehr verfügbar. Gern zeige ich Ihnen den Inhalt im Termin.";
+    karte.appendChild(leer);
+    hinweis.textContent = "";
+  }
+
+  function ladeVideo() {
+    if (!videoOk || !play.isConnected) return;
+    var frame = document.createElement("iframe");
+    frame.src = LEAD.video_url;
+    frame.title = LEAD.video_titel || "Persönliches Video";
+    frame.allow = "autoplay; fullscreen";
+    frame.allowFullscreen = true;
+    frame.referrerPolicy = "no-referrer";
+    // The Skael player announces "skaelreach:ready" once its scripts run. A play command sent
+    // earlier (e.g. on iframe load) is lost and the visitor has to click a second time.
+    // Until then the preview image stays visible, so the card never turns blank.
+    var herkunft = new URL(LEAD.video_url).origin;
+    var abgespielt = false;
+    function zeigePlayer() { if (vorschau.parentNode) vorschau.style.visibility = "hidden"; }
+    function spieleAb() {
+      if (abgespielt) return;
+      abgespielt = true;
+      zeigePlayer();
+      try { frame.contentWindow.postMessage({ type: "skaelreach:play" }, herkunft); } catch (e) { /* Player startet dann per Klick */ }
+    }
+    window.addEventListener("message", function (e) {
+      if (e.origin !== herkunft || e.source !== frame.contentWindow || !e.data || typeof e.data.type !== "string") return;
+      if (e.data.type === "skaelreach:ready") spieleAb();
+      if (e.data.type === "skaelreach:playing") { abgespielt = true; zeigePlayer(); }
+    });
+    // Fallback for players without the ready message: show the player shortly after load
+    frame.addEventListener("load", function () { setTimeout(spieleAb, 4000); });
+    play.remove();
+    karte.appendChild(frame);
+  }
+
+  // springt ohne weiches Scrollen (html hat scroll-behavior: smooth)
+  function scrolleSofort(y) {
+    var alt = wurzelEl.style.scrollBehavior;
+    wurzelEl.style.scrollBehavior = "auto";
+    window.scrollTo(0, Math.max(0, y));
+    wurzelEl.style.scrollBehavior = alt;
+  }
+
+  function springeZu(id) {
+    var z = document.getElementById(id) || main.querySelector('[data-block]:not([data-block="begruessung"]):not([data-block="video"])');
+    if (!z) return;
+    var y = z.getBoundingClientRect().top + window.scrollY - 90;
+    if (reduziert) scrolleSofort(y); else window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
+  }
+
+  // Videogröße so wählen, dass Einstieg, Video, Hinweis und Links auf den ersten Bildschirm passen
+  function passeStartAn() {
+    if (!wurzelEl.classList.contains("vor-start")) return;
+    wurzelEl.classList.remove("vor-start-scroll");
+    wurzelEl.style.removeProperty("--video-max");
+    var oben = rahmen.getBoundingClientRect().top + window.scrollY;
+    var unten = document.querySelector(".unter-video");
+    var untenH = unten ? unten.getBoundingClientRect().height : 0;
+    var frei = window.innerHeight - oben - untenH - 36;
+    wurzelEl.style.setProperty("--video-max", Math.round(Math.max(300, (frei - 20) * 16 / 9 + 20)) + "px");
+    if (wurzelEl.scrollHeight > window.innerHeight + 2) wurzelEl.classList.add("vor-start-scroll");
+  }
+
+  // Bereiche unterhalb des Videos bauen sich beim Scrollen auf
+  function bereiteAufbauVor() {
+    var teile = [].slice.call(main.children).filter(function (b) {
+      return b.dataset && b.dataset.block && b.dataset.block !== "begruessung" && b.dataset.block !== "video";
+    });
+    var fuss = document.querySelector(".fuss");
+    if (fuss) teile.push(fuss);
+    teile.forEach(function (b) {
+      b.classList.add("aufbau");
+      b.querySelectorAll(".stimme, .ang-leistung, .ang-schritt, .ang-inklusive li, .fragen details, .person, .herkunft-karte").forEach(function (k, i) {
+        k.classList.add("aufbau-kind");
+        k.style.setProperty("--i", String(Math.min(i, 6)));
+      });
+    });
+    if (reduziert || !("IntersectionObserver" in window)) { teile.forEach(function (b) { b.classList.add("sichtbar"); }); return; }
+    var io = new IntersectionObserver(function (eintraege) {
+      eintraege.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("sichtbar"); io.unobserve(en.target); } });
+    }, { rootMargin: "0px 0px -10% 0px", threshold: 0.06 });
+    teile.forEach(function (b) { io.observe(b); });
+  }
+
+  var gestartet = false;
+  function starte(mitVideo, zielId) {
+    if (gestartet) { if (mitVideo) ladeVideo(); if (zielId) springeZu(zielId); return; }
+    gestartet = true;
+    melde(mitVideo ? "video_geklickt" : "ohne_video");
+    // Load the player right away, in parallel to the zoom: browsers allow sound only for a few
+    // seconds after the click, and the player needs about a second to get ready.
+    if (mitVideo) ladeVideo();
+    var held = document.querySelector(".begruessung .rahmen");
+    var vorher = rahmen.getBoundingClientRect();
+    var aus = (reduziert || !held || !held.animate) ? null : held.animate(
+      [{ opacity: 1, transform: "none" }, { opacity: 0, transform: "translate3d(0,-28px,0)" }],
+      { duration: 360, easing: "cubic-bezier(.4,0,.2,1)", fill: "forwards" });
+    (aus ? aus.finished : Promise.resolve()).then(function () {
+      wurzelEl.style.setProperty("--video-gross", Math.round(Math.max(320, (window.innerHeight - 150) * 16 / 9)) + "px");
+      bereiteAufbauVor();
+      wurzelEl.classList.remove("vor-start", "vor-start-scroll");
+      wurzelEl.classList.add("gestartet");
+      scrolleSofort(0);
+      if (!mitVideo) { springeZu(zielId || "angebot-ziel"); return null; }
+      if (reduziert || !rahmen.animate) return null;
+      var nachher = rahmen.getBoundingClientRect();
+      var dx = (vorher.left + vorher.width / 2) - (nachher.left + nachher.width / 2);
+      var dy = (vorher.top + vorher.height / 2) - (nachher.top + nachher.height / 2);
+      var sk = vorher.width / nachher.width;
+      return rahmen.animate(
+        [{ transform: "translate3d(" + dx + "px," + dy + "px,0) scale(" + sk + ")" }, { transform: "none" }],
+        { duration: 850, easing: "cubic-bezier(.16,1,.3,1)" }).finished;
+    });
+  }
+
+  play.addEventListener("click", function () { starte(true); });
+  document.querySelectorAll("[data-start-ziel]").forEach(function (b) {
+    b.addEventListener("click", function () { starte(false, b.dataset.startZiel); });
+  });
+  if (SEITE.start_sperre === false) {
+    wurzelEl.classList.remove("vor-start");
+    wurzelEl.classList.add("gestartet");
+    gestartet = true;
+    bereiteAufbauVor();
+  } else {
+    passeStartAn();
+    window.addEventListener("resize", passeStartAn);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(passeStartAn);
+    window.addEventListener("load", passeStartAn);
+  }
+
+  // --- Widerspruch
+  var dlg = document.getElementById("widerspruch-dialog");
+  fuelle(document.getElementById("wd-text"), "{name} schreibt Ihnen dann nicht mehr, und diese Seite sowie Ihre Daten werden gelöscht. Nur Ihre E-Mail-Adresse bleibt auf einer Sperrliste, damit wir Sie nicht erneut anschreiben.");
+
+  function oeffneWiderspruch() { if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", ""); }
+  document.getElementById("widerspruch-knopf").addEventListener("click", oeffneWiderspruch);
+  document.querySelectorAll("[data-widerspruch]").forEach(function (b) { b.addEventListener("click", oeffneWiderspruch); });
+  document.getElementById("wd-abbrechen").addEventListener("click", function () { dlg.close(); });
+
+  function perMail() {
+    var zeile = document.getElementById("wd-zeile");
+    zeile.textContent = "";
+    var p = document.createElement("p");
+    var zu = document.createElement("button");
+    zu.type = "button";
+    zu.className = "knopf ruhig";
+    zu.textContent = "Schließen";
+    zu.addEventListener("click", function () { dlg.close(); });
+    if (istLeer(ABSENDER.widerspruch_email)) {
+      fuelle(p, "Das Senden hat nicht geklappt. Schreiben Sie bitte an {widerspruch_email} mit dem Betreff „Keine weiteren Nachrichten – Datenlöschung“.");
+      zeile.appendChild(p);
+      zeile.appendChild(zu);
+      return;
+    }
+    p.textContent = "Das Senden hat nicht geklappt. Bitte schicken Sie uns stattdessen diese Mail:";
+    var a = document.createElement("a");
+    a.className = "knopf";
+    a.href = "mailto:" + ABSENDER.widerspruch_email + "?subject=" + encodeURIComponent("Keine weiteren Nachrichten – Datenlöschung") +
+      "&body=" + encodeURIComponent("Bitte schreiben Sie mir keine weiteren Nachrichten und löschen Sie meine Daten. Kennung: " + LEAD.seiten_id);
+    a.textContent = "Datenlöschung per E-Mail";
+    zeile.appendChild(p); zeile.appendChild(a); zeile.appendChild(zu);
+  }
+
+  document.getElementById("wd-senden").addEventListener("click", function () {
+    melde("widerspruch");
+    if (!SEITE.widerspruch_endpunkt || !/^https?:$/.test(location.protocol)) { perMail(); return; }
+    fetch(SEITE.widerspruch_endpunkt, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ seiten_id: LEAD.seiten_id }),
+      credentials: "omit"
+    }).then(function (r) {
+      if (!r.ok) throw new Error(String(r.status));
+      dlg.close();
+      main.textContent = "";
+      var s = document.createElement("section");
+      s.className = "bestaetigung";
+      s.innerHTML = '<div class="rahmen"><h2>Ihre Daten werden gelöscht.</h2><p></p></div>';
+      fuelle(s.querySelector("p"), "{name} schreibt Ihnen nicht mehr. Diese Seite ist ab sofort gelöscht.");
+      main.appendChild(s);
+      document.querySelectorAll("[data-termin]").forEach(function (a) { a.remove(); });
+    }).catch(perMail);
+  });
+
+  melde("seite_geoeffnet");
+})();
+</script>
+</body>
+</html>

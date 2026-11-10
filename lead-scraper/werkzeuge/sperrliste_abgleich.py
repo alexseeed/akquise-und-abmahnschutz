@@ -58,8 +58,11 @@ def lade(url, ohne_liste):
             req = urllib.request.Request(url, headers={"User-Agent": "sperrliste-abgleich", "Cache-Control": "no-cache"})
             with urllib.request.urlopen(req, timeout=30) as r:
                 text = r.read().decode("utf-8")
-            CACHE.parent.mkdir(parents=True, exist_ok=True)
-            CACHE.write_text(text, encoding="utf-8")
+            try:  # the local copy is a convenience: a read-only home folder must not stop the check
+                CACHE.parent.mkdir(parents=True, exist_ok=True)
+                CACHE.write_text(text, encoding="utf-8")
+            except OSError:
+                pass
             return parse(text), f"online ({datetime.now():%d.%m.%Y %H:%M})"
         except (urllib.error.URLError, TimeoutError, UnicodeDecodeError) as e:
             fehler = f"nicht erreichbar ({getattr(e, 'reason', e)})"
@@ -80,11 +83,12 @@ def lies_csv(pfad):
         probe = f.read(16384)
         f.seek(0)
         try:
-            dialekt = csv.Sniffer().sniff(probe, delimiters=",;\t")
+            trenner = csv.Sniffer().sniff(probe, delimiters=",;\t").delimiter
         except csv.Error:
-            dialekt = csv.excel
-        r = csv.DictReader(f, dialect=dialekt)
-        return list(r.fieldnames or []), list(r), dialekt
+            trenner = ","
+        # only the delimiter comes from the sniffer: its guessed quoting breaks on a quote character further down
+        r = csv.DictReader(f, delimiter=trenner)
+        return list(r.fieldnames or []), list(r), trenner
 
 
 def main():
@@ -95,7 +99,13 @@ def main():
     p.add_argument("--ohne-liste", action="store_true", help="weiterarbeiten, wenn die Liste nicht ladbar ist")
     a = p.parse_args()
 
-    felder, zeilen, dialekt = lies_csv(a.liste)
+    for strom in (sys.stdout, sys.stderr):  # Windows with redirected output: never crash on a character
+        try:
+            strom.reconfigure(errors="replace")
+        except (AttributeError, ValueError):
+            pass
+
+    felder, zeilen, trenner = lies_csv(a.liste)
     if a.spalten:
         spalten = [s.strip() for s in a.spalten.split(",") if s.strip()]
         fehlend = [s for s in spalten if s not in felder]
@@ -122,16 +132,17 @@ def main():
 
     basis = os.path.splitext(a.liste)[0]
     for name, daten, extra in ((f"{basis}_bereinigt.csv", frei, []), (f"{basis}_gesperrt.csv", gesperrt, ["Sperrgrund"])):
-        with open(name, "w", encoding="utf-8-sig", newline="") as f:
-            w = csv.DictWriter(f, fieldnames=felder + extra, dialect=dialekt, extrasaction="ignore")
+        with open(name + ".tmp", "w", encoding="utf-8-sig", newline="") as f:
+            w = csv.DictWriter(f, fieldnames=felder + extra, delimiter=trenner, lineterminator="\r\n", extrasaction="ignore")
             w.writeheader()
             w.writerows(daten)
+        os.replace(name + ".tmp", name)  # never leave a truncated list behind
 
     print(f"Sperrliste: {len(sperre) if sperre else 0} Domains, {quelle}")
     print(f"Abgeglichene Spalten: {', '.join(spalten)}")
     print(f"{len(zeilen)} Zeilen: {len(frei)} frei, {len(gesperrt)} gesperrt, {ohne_domain} ohne Domain (nicht prüfbar)")
-    print(f"  {basis}_bereinigt.csv  → für die Ansprache")
-    print(f"  {basis}_gesperrt.csv   → nie anschreiben")
+    print(f"  {basis}_bereinigt.csv  -> für die Ansprache")
+    print(f"  {basis}_gesperrt.csv   -> nie anschreiben")
     return 0
 
 

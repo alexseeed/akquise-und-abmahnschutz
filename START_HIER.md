@@ -7,7 +7,7 @@ Ein Paket für B2B-Akquise, von der Zielgruppe bis zur Abmahnung:
  Wen willst du?  ──► Google Maps        ──► Abmahner-Domains  ──► dein Tool   ──►  Skill abmahnung-
  Wo findet man       Amazon-Seller          fliegen raus                           werbemail-abwehr
  sie?                E-Commerce                  ▲                                       │
-                     (Recruiting: geplant)       └──── 6 Abmahner wird gemeldet ◄───────┘
+                     Recruiting, Stellensuche    └──── 6 Abmahner wird gemeldet ◄───────┘
 ```
 
 Je mehr Leute mitmachen, desto vollständiger wird die Sperrliste. **Bedingung der Nutzung:** Wer abgemahnt wird, meldet den Abmahner. Der Skill erledigt das automatisch und zeigt vorher an, was übermittelt wird ([NUTZUNGSBEDINGUNGEN.md](NUTZUNGSBEDINGUNGEN.md)).
@@ -41,4 +41,4 @@ Nur die Sperrliste, ohne Scraper: `https://raw.githubusercontent.com/alexseeed/w
 
 ## Betreiber
 
-Diese Kunden-Fassung und die Sperrliste ([alexseeed/werbemail-sperrliste](https://github.com/alexseeed/werbemail-sperrliste)) betreibt Heeg Consulting GmbH (Agentur Consulting), Kontakt: support@agentur-consulting.de. Die Betreiber-Werkzeuge sind hier nicht enthalten. Meldungen an die Sperrliste sind noch nicht freigeschaltet. Läuft etwas schief, kann dein Claude Code die Fehlermeldung automatisch an uns schicken – nur die Meldung selbst, geschwärzt, an unsere Meldestelle (`werkzeuge/fehler_melden.py`); steht deine registrierte E-Mail als `AC_KONTAKT_EMAIL` in der `.env`, können wir uns bei dir im Google Chat melden.
+Diese Kunden-Fassung und die Sperrliste ([alexseeed/werbemail-sperrliste](https://github.com/alexseeed/werbemail-sperrliste)) betreibt Heeg Consulting GmbH (Agentur Consulting), Kontakt: support@agentur-consulting.de. Die Betreiber-Werkzeuge sind hier nicht enthalten. Meldungen an die Sperrliste sind noch nicht freigeschaltet.

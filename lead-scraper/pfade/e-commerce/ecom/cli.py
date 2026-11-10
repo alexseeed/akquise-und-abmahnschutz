@@ -196,48 +196,49 @@ def cmd_run(args: argparse.Namespace) -> None:
     findymail = FindymailClient()
     pipeline.BILANZ.clear()
     try:
-        _stufen_ausfuehren(conn, stufen, args.limit, skael, llm, findymail)
+        abgebrochen = _stufen_ausfuehren(conn, stufen, args.limit, skael, llm, findymail)
     except ZugangGesperrt as exc:
         _abbruch(f"Lauf abgebrochen: {exc}\nFür die offenen Zeilen wurde kein Fehlversuch gezählt. Nach der "
                  "Korrektur denselben run-Befehl erneut ausführen; Erledigtes wird übersprungen.")
     cmd_status(args)
 
     gescheitert = [(desc, n, grund) for desc, n, fehler, grund in pipeline.BILANZ if n and fehler == n]
+    for desc, n, grund in gescheitert:
+        print(f"{desc}: alle {n} Zeilen fehlgeschlagen – häufigster Grund: {grund}", file=sys.stderr)
     if gescheitert:
-        for desc, n, grund in gescheitert:
-            print(f"{desc}: alle {n} Zeilen fehlgeschlagen – häufigster Grund: {grund}", file=sys.stderr)
         print("Ursache beheben (z. B. Internetverbindung, Dienst gestört). Nach drei Fehlversuchen bleibt eine "
               "Zeile liegen: dann `python3 -m ecom fehler-zuruecksetzen` und denselben run-Befehl erneut.",
               file=sys.stderr)
+    if abgebrochen:
+        print(f"{'Stufe' if len(abgebrochen) == 1 else 'Stufen'} {', '.join(abgebrochen)} wegen eines unerwarteten Fehlers abgebrochen (Meldung im Protokoll "
+              "oben); die übrigen Stufen sind gelaufen. Ursache beheben und denselben run-Befehl erneut "
+              "ausführen – Erledigtes wird übersprungen, offene Zeilen laufen weiter.", file=sys.stderr)
+    if gescheitert or abgebrochen:
         raise SystemExit(1)
 
 
 def _stufen_ausfuehren(conn, stufen: set[str], limit: int | None, skael: SkaelClient, llm: LLM,
-                       findymail: FindymailClient) -> None:
-    if "1a" in stufen:
-        pipeline.stufe1a_domain(conn, llm, limit)
-    if "1b" in stufen:
-        pipeline.stufe1b_webscraper(conn, skael, limit)
-    if "1c" in stufen:
-        pipeline.stufe1c_onlineshop(conn, llm, limit)
-    if "1d" in stufen:
-        pipeline.stufe1d_webtraffic(conn, skael, limit)
-    if "1e" in stufen:
-        pipeline.stufe1e_uebergabe(conn)
-    if "2a" in stufen:
-        pipeline.stufe2a_website_final(conn, llm)
-    if "2b" in stufen:
-        pipeline.stufe2b_impressum(conn, skael)
-    if "2c" in stufen:
-        pipeline.stufe2c_emails(conn, skael, findymail)
-    if "2d" in stufen:
-        pipeline.stufe2d_anrede(conn, llm)
-    if "2e" in stufen:
-        pipeline.stufe2e_personalisierung(conn, skael, llm)
-    if "2f" in stufen:
-        pipeline.stufe2f_videotitel(conn, llm)
-    if "2g" in stufen:
-        pipeline.stufe2g_ready(conn)
+                       findymail: FindymailClient) -> list[str]:
+    """Die gewählten Stufen der Reihe nach; liefert die Stufen, die ein unerwarteter Fehler abbrach.
+
+    Jede Stufe läuft über `pipeline.stufe_sicher`: Ein Fehler beendet nur sie, die nächste läuft trotzdem.
+    """
+    plan = [
+        ("1a", pipeline.stufe1a_domain, (conn, llm, limit)),
+        ("1b", pipeline.stufe1b_webscraper, (conn, skael, limit)),
+        ("1c", pipeline.stufe1c_onlineshop, (conn, llm, limit)),
+        ("1d", pipeline.stufe1d_webtraffic, (conn, skael, limit)),
+        ("1e", pipeline.stufe1e_uebergabe, (conn,)),
+        ("2a", pipeline.stufe2a_website_final, (conn, llm)),
+        ("2b", pipeline.stufe2b_impressum, (conn, skael)),
+        ("2c", pipeline.stufe2c_emails, (conn, skael, findymail)),
+        ("2d", pipeline.stufe2d_anrede, (conn, llm)),
+        ("2e", pipeline.stufe2e_personalisierung, (conn, skael, llm)),
+        ("2f", pipeline.stufe2f_videotitel, (conn, llm)),
+        ("2g", pipeline.stufe2g_ready, (conn,)),
+    ]
+    return [name for name, stufe, argumente in plan
+            if name in stufen and not pipeline.stufe_sicher(name, stufe, *argumente)]
 
 
 def _kurz(text: str, laenge: int = 60) -> str:

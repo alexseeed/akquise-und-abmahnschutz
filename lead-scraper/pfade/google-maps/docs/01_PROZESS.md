@@ -26,6 +26,12 @@ funktioniert für jede Zielgruppe, die über Google Maps auffindbar ist.
 | 3 | **DATENSÄTZE** | Filter | Dedupe über Domain, Website-Fallback per KI, ICP-Prüfung über `icp_checker` |
 | 4 | **ANREICHERUNG** | Anreicherung | Impressum, Geschäftsführer, E-Mail-Finder + Validierung, Anrede, Personalisierung, Videotitel |
 
+**Weitere Kampagnen-Arten im selben Programm.** Recruiting (Firmen-Website) nutzt dieselben
+vier Stufen und ergänzt Stufe 3e (offene Stelle auf der Firmen-Website, Weiche RC/NK in 3d,
+Stellen-Opener in 4e): `07_RECRUITING.md`. Die Stellensuche (Jobportale) ersetzt Stufe 1–2
+durch 1j (Portale abfragen) und 1k (Anzeigen je Firma bündeln), prüft in 3g die Firmengröße
+und sucht in 3a die Website per Impressum-Beleg: `08_STELLENSUCHE.md`.
+
 `DATENSÄTZE 2` ist **kein eigener Schritt**, sondern nur ein Überlauf-Ziel für Stufe 2,
 falls DATENSÄTZE das Clay-Limit von 50.000 Zeilen reißt (siehe §2.6). Für den lokalen
 Nachbau irrelevant.
@@ -242,7 +248,7 @@ Authorization: Bearer {{Skael API Key}}
   → in Clay als `{{ICP Check}}.output.icp` etc.
 
 Der Beispiel-ICP-Prompt (Metallbaubetriebe) liegt vollständig unter
-`prompts/icp_beispiel_metallbau.txt`. Wie ein solcher Prompt für eine neue Zielgruppe
+`prompts/beispiele/icp_metallbau.txt`. Wie ein solcher Prompt für eine neue Zielgruppe
 entsteht, steht in §5.
 
 ### 3.6 Auswertung des ICP-Ergebnisses
@@ -571,7 +577,7 @@ Tier 1/2/3 geliefert — das sind die `Keyword`-Werte für Stufe 1.
 > Der Prompt schreibt `is_icp` vor, die API normalisiert das. Im Code immer `icp` lesen.
 
 Der vollständige Master-Prompt liegt in `prompts/icp_prompt_builder.md`,
-das gebaute Beispiel in `prompts/icp_beispiel_metallbau.txt`.
+das gebaute Beispiel in `prompts/beispiele/icp_metallbau.txt`.
 
 ---
 

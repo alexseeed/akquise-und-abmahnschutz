@@ -9,6 +9,7 @@ Quelle: SPERRLISTE_URL in .env (Standard: Rohdatei im GitHub-Repository werbemai
 """
 from __future__ import annotations
 
+import http.client
 import re
 import urllib.error
 import urllib.request
@@ -72,7 +73,8 @@ def laden(*, pflicht: bool | None = None) -> Sperrliste | None:
             DATA_DIR.mkdir(parents=True, exist_ok=True)
             CACHE.write_text(text, encoding="utf-8")
             return Sperrliste(_parse(text), f"online ({datetime.now():%d.%m.%Y %H:%M})")
-        except (urllib.error.URLError, TimeoutError, UnicodeDecodeError) as e:
+        # OSError/HTTPException: auch abgerissene Verbindungen (Reset, IncompleteRead) → lokale Kopie
+        except (urllib.error.URLError, TimeoutError, OSError, http.client.HTTPException, UnicodeDecodeError) as e:
             fehler = f"nicht erreichbar ({getattr(e, 'reason', e)})"
     else:
         fehler = "SPERRLISTE_URL nicht gesetzt (enthält noch OWNER)"

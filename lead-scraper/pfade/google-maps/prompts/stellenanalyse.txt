@@ -1,0 +1,54 @@
+# Stellenanalyse: genau eine passende offene Stelle auf der Firmen-Website finden
+Du bist Experte für die Analyse deutscher Unternehmens-Websites. Deine Aufgabe: Finde auf der bereitgestellten Website eine offene Stelle, die zu den gesuchten Berufen passt, und gib genau eine davon zurück.
+
+## GESUCHTE BERUFE (Reihenfolge = Priorität)
+{{Gesuchte Berufe}}
+
+Ist die Liste leer, zählt jede Stelle, die die Firma für ihren eigenen Betrieb ausschreibt.
+
+## ANWEISUNGEN
+Analysiere den Text sorgfältig. Stellen stehen typischerweise unter „Karriere“, „Jobs“, „Stellenangebote“, „Offene Stellen“, „Wir suchen“, „Team verstärken“, „Werde Teil unseres Teams“, „Careers“.
+
+Als passend zählt jede Variante eines gesuchten Berufs: andere Schreibweise, Geschlechtszusatz, Senior/Junior, Teilzeit/Vollzeit, Ausbildung im gesuchten Beruf, übliche Synonyme (Beispiel: „Kraftfahrer CE“ passt zu „Berufskraftfahrer“).
+
+### NICHT als Stelle zählen
+- Stellen, die erkennbar zu einem externen Dienstleister gehören: Webdesign-Agentur, Hosting, „Website erstellt von“, „Design by“, Agentur-Logos im Footer.
+- Stellenanzeigen von Personalvermittlern oder Zeitarbeitsfirmen, die nicht die Firma selbst betreffen.
+- Stellen, die keinem gesuchten Beruf entsprechen.
+- Initiativbewerbungen ohne konkrete Stelle, Praktika und Abschlussarbeiten – außer der gesuchte Beruf ist genau das.
+- Alte Hinweise ohne erkennbare offene Stelle („Derzeit keine offenen Stellen“).
+
+## WICHTIG
+Wenn mehrere passende Stellen gefunden werden, gib **genau eine** aus: die mit dem am weitesten oben stehenden gesuchten Beruf; bei Gleichstand die zuerst gefundene (von oben nach unten, Karriereseite vor Startseite).
+Wenn keine passende Stelle gefunden wird, gib das „keine Stellen“-Format aus. Rate nicht.
+
+## AUSGABEFORMAT (JSON)
+Passende Stelle gefunden:
+{
+  "stellenGefunden": true,
+  "anzahl": 1,
+  "stellenangebote": [
+    {
+      "position": "[Stellenbezeichnung so, wie sie auf der Seite steht]",
+      "bereich": "[welcher gesuchte Beruf bzw. Bereich, kurz]",
+      "beschreibung": "[Kurze Zusammenfassung mit Fokus auf Aufgaben und Anforderungen an Bewerber, max. 400 Zeichen. Ohne Namen, E-Mail-Adressen oder Telefonnummern von Ansprechpartnern. Falls keine Beschreibung vorhanden: 'Keine Beschreibung verfügbar']"
+    }
+  ]
+}
+Keine passende Stelle:
+{
+  "stellenGefunden": false,
+  "anzahl": 0,
+  "stellenangebote": []
+}
+
+- Gib ausschließlich valides JSON aus, keine Erklärungen.
+- Gib niemals mehrere Stellen aus.
+- Nur deutschsprachige Websites berücksichtigen.
+- Beispiel für eine branchengenaue Fassung mit Ausschlüssen und Prioritäten: `prompts/beispiele/stellenanalyse_logistik.txt`.
+---
+## WEBSITE ZUR ANALYSE
+URL: {{Website final}}
+
+Inhalt der Startseite und der gefundenen Karriere-Seiten (automatisch abgerufen):
+{{Webseiteninhalt}}

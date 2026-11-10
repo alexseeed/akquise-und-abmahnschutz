@@ -1,5 +1,41 @@
 # Änderungen
 
+## 3.1 – Oktober 2026
+
+Feste Linie statt schnellem Nachgeben. Grundlage sind die Erfahrungen aus zwei echten Fällen mit Gegenanwalt-Check.
+
+- **Grundhaltung „schnell bei der Unterlassung, fest beim Geld“:**
+  - Im ersten Schreiben wird nichts gezahlt.
+  - Der Gegenstandswert wird immer geprüft und, wenn überhöht, gerügt.
+  - Keine Angaben zur eigenen Versandinfrastruktur.
+- **Kosten:** Standard ist jetzt Variante B, also Kostennote nach § 10 RVG und Zahlungsnachweis zuerst. Die Zahlung bleibt ausdrücklich offen (§ 250 BGB), die Antwort kommt binnen 14 Tagen. Volle Zahlung nur noch auf ausdrücklichen Wunsch.
+- **Keine Rückfragen-Runde vor der UE.** Nachweisforderungen kommen in dasselbe Schreiben. Die zulässigen und die schädlichen Rückfragen sind aufgelistet.
+- **Neue Prüfpunkte:**
+  - Frist und Zugang
+  - eigene Zitate des Abmahners gegen ihn wenden
+  - Auskunftsrecht nur für natürliche Personen
+  - überdehnte Klauseln wie „sonstige elektronische Nachrichten“
+  - Rechtsform des Abgemahnten
+  - frühere Abmahnungen
+  - Geschäftsmodell der Kanzlei
+  - eigene Angriffsfläche (Versanddomains)
+- **Auskunft Art. 15:** Vollmacht oder anwaltliche Versicherung mit Frist anfordern, sonst verschlossener Umschlag über die Kanzlei. Nicht mehr direkt an die anwaltlich vertretene Person.
+- **UE-Muster:**
+  - „und ohne § 7 Abs. 3 UWG“
+  - „Werbung mittels elektronischer Post“
+  - „gleich an welche Adresse“
+  - „wie mit Schreiben … beanstandet“
+  - Variante für die GbR
+- **Versand:**
+  - Nie per Telefax, vorab nur per E-Mail.
+  - Bei Nicht-Kaufleuten Schriftform mit Original per Einschreiben.
+  - Bei der GbR unterschreiben alle Gesellschafter.
+  - Feiertage einrechnen.
+  - Neutrales Absender-Postfach, Briefkopf ohne Versanddomain.
+- Neue **Textbausteine** in `references/02_antwortbausteine.md`. Dazu weitere verbotene Formulierungen, Fallstricke und Rechtsprechung zum Gegenstandswert (AG München 142 C 1633/22, OLG Hamm 9 U 73/14 als Beschluss).
+- Neue **Phase 10 „Nachgang“:** Kostennote, Mahnung, Änderungswünsche, Mahnbescheid.
+- Musterfälle in `beispiele/01` und `02` auf die neue Linie umgestellt.
+
 ## 3.0 – Oktober 2026
 
 - Community-Sperrliste auf ein **GitHub-Repository** umgestellt (vorher Google Sheet + Formular + Moderation).

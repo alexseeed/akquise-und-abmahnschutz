@@ -6,3 +6,9 @@ arbeit/
 __pycache__/
 *.py[cod]
 .DS_Store
+
+# Kundenkampagnen bleiben lokal — im Repo nur _vorlage und Beispiele
+pfade/google-maps/kampagnen/*
+!pfade/google-maps/kampagnen/_vorlage/
+!pfade/google-maps/kampagnen/beispiel-*/
+*.log

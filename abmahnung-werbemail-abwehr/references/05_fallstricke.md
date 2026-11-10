@@ -6,7 +6,26 @@
 - **„Adresse steht im Impressum“** ist ein Eigentor: Eingeständnis der Erhebung bei Dritten, löst Art. 14 DSGVO aus.
 - **„Keine Weitergabe an Dritte“** nur, wenn Tools, AV-Verträge und Video-Hosting geklärt sind.
 - **Rückfrage nach .eml/Headern** offenbart die eigene Versand- und Tracking-Infrastruktur – weglassen.
-- **Vollmacht vor Auskunft** riskiert Fristversäumnis – Auskunft direkt an den Betroffenen.
+- **Auf die Vollmacht warten** riskiert, die Auskunftsfrist zu versäumen. **Die Auskunft direkt an die Person schicken**, obwohl sie anwaltlich vertreten ist, ist ebenfalls angreifbar. Lösung: Vollmacht oder anwaltliche Versicherung mit kurzer Frist anfordern. Kommt nichts, die Auskunft im verschlossenen, an die Person adressierten Umschlag zu Händen der Kanzlei senden.
+- **Zu schnell nachgeben:**
+  - Kosten im ersten Schreiben zahlen, nur weil die Frist kurz ist oder der Betrag „überschaubar“ wirkt.
+  - Den Gegenstandswert ungeprüft hinnehmen.
+  - Den Entwurf der Gegenseite unterschreiben.
+
+  Eilig ist nur die UE. Geld erst nach Kostennote und Zahlungsnachweis, und nur auf einen begründeten Wert.
+- **Rückfragen-Bombardement vor der UE:** hält die Frist nicht an, gefährdet § 93 ZPO, lädt zur einstweiligen Verfügung ein. Gezielte Nachweisforderungen gehören in dasselbe Schreiben wie die UE.
+- **Kosten so formulieren, dass es nach Verweigerung klingt** („lehnen ab“, „zahlen erst, wenn“): Ein Freistellungsanspruch kann dann in einen Zahlungsanspruch umschlagen (§ 250 BGB). Immer: „Eine Zahlung lehnen wir damit nicht ab.“
+- **Frist am Zugangstag still übergehen:** Wer nichts dazu sagt, wirkt säumig. Kurz festhalten, dass die Frist unangemessen kurz war und eine angemessene Frist gewahrt ist. Das Zugangsdatum vorher belegen lassen (Sendungsverfolgung).
+- **Zitate des Abmahners ungeprüft lassen:** Oft trägt das zitierte Urteil selbst einen niedrigeren Wert. Ebenso auf Urteil oder Beschluss und die richtige Fundstelle achten, sonst wird das eigene Zitat angreifbar.
+- **Infrastruktur verraten:**
+  - Versanddomain im Briefkopf.
+  - Antwort aus dem Akquise-Postfach.
+  - „in allen Systemen gesperrt“.
+  - „nur eine Mail“, ohne nach Follow-ups gesucht zu haben.
+
+  Jede dieser Angaben stützt einen höheren Wert oder eine Folgeabmahnung.
+- **Form bei Nicht-Kaufleuten:** Bei GbR, Freiberufler und Kleingewerbe reicht ein PDF per E-Mail nicht (§§ 780, 781 BGB). Vorab nur per E-Mail, nie per Telefax. Das Original muss per Post folgen. Bei der GbR unterschreiben alle Gesellschafter. Bei einer Frist für das Original die Feiertage an beiden Orten einrechnen.
+- **Schreiben vordatieren und später senden:** Das Datum muss zum Versandtag passen. Verschiebt sich der Versand, alle Dokumente neu datieren.
 - **„Kontaktieren lassen“** erfasst Dienstleister und alle Adressen des Abmahners: Sperrliste in allen Scraping-, Lead- und Versandsystemen sowie bei beauftragten Agenturen und Lead-Lieferanten umsetzen, **bevor** die UE abgegeben wird.
 - **Sperrlisten-Erkenntnisse im Schreiben** („uns sind weitere Fälle Ihres Mandanten bekannt“) – nie. Sie sind Erfahrungswerte, ihre Erwähnung provoziert Gegenreaktionen gegen die Liste.
 

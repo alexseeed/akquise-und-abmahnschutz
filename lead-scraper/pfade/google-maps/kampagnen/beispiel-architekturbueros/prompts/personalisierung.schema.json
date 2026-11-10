@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "complimentText": {
+      "type": "string",
+      "description": "Ein Beobachtungssatz auf Deutsch, beginnt mit 'dass' oder 'wie', höchstens 25 Wörter, endet mit Punkt. Leerer String, wenn die Seite kein konkretes Detail hergibt."
+    }
+  },
+  "required": [
+    "complimentText"
+  ],
+  "additionalProperties": false
+}
