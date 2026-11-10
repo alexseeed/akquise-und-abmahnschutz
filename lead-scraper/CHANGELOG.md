@@ -4,6 +4,7 @@ Neueste Einträge oben. Ein Eintrag je Änderung an Wissen, Pfaden oder Werkzeug
 
 ## 2026-11-10
 
+- **E-Commerce-`.env.example`: Sperrlisten-Kommentar korrigiert.** Der alte Text sprach von einem OWNER-Platzhalter, den es in dieser Kunden-Fassung nicht gibt; jetzt steht da, was die Liste enthält und dass der Export Treffer automatisch aussortiert.
 - **Fehler melden und Plan B (aus dem Stand vor dem Neubau übernommen):** Werkzeug `werkzeuge/fehler_melden.py` meldet eine Fehlermeldung an Agentur Consulting – nur die Meldung, geschwärzt (`.env`-Werte, Schlüssel, Tokens, fremde E-Mails), höchstens 4000 Zeichen, Kontakt aus `AC_KONTAKT_EMAIL`. `CLAUDE.md`, `AGENTS.md` und `SKILL.md` haben einen Abschnitt „Wenn etwas schiefgeht“ (zweimal derselbe Fehler → melden; 401/429/5xx erst abwarten und fortsetzen; Plan B: gehosteter Lead-Scraper im Mitgliederbereich und umgekehrt). Die Fehlertabellen in `pfade/amazon/ABLAUF.md` und `pfade/videoseiten/ABLAUF.md` verweisen dorthin; die Recruiting-Wege laufen im Google-Maps-Programm und brauchen keinen eigenen Verweis. `START_HIER.md` erwähnt die Meldung in einem Satz.
 
 ## 2026-11-02
