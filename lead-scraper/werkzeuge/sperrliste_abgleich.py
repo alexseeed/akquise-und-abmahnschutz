@@ -51,6 +51,34 @@ def parse(text):
     return {z.strip().lower() for z in text.splitlines() if z.strip() and not z.lstrip().startswith("#")}
 
 
+# shortcut: vier identische Kopien (zwei Pfade, zwei Werkzeuge), weil es kein gemeinsames Paket gibt; zusammenlegen, sobald es eines gibt
+_ZAHL_TELEFON_ZEICHEN = frozenset("0123456789+-().,/ ")
+
+
+def _ist_zahl_oder_telefon(text: str) -> bool:
+    """Reine Zahl oder Telefonnummer (z. B. -12,5 oder +41 (0)44 …): kein Buchstabe, kein =, kein Rechenzeichen innen."""
+    if not any(ch.isdigit() for ch in text):
+        return False
+    if any(ch not in _ZAHL_TELEFON_ZEICHEN for ch in text):
+        return False
+    rest = text[1:]
+    if not rest or rest[0] in "+-" or "+" in rest:
+        return False
+    return text[0] == "+" or "-" not in rest  # Minus innen nur bei +… (Telefon), sonst Ausdruck wie -2-3
+
+
+def csv_zelle(wert) -> str:
+    """Macht eine Datenzelle formelsicher: führende = + - @ Tab CR neutralisieren, Zahlen/Telefone bleiben."""
+    if wert is None:
+        return ""
+    text = wert if isinstance(wert, str) else str(wert)
+    if not text or text[0] not in "=+-@\t\r":
+        return text
+    if text[0] in "+-" and _ist_zahl_oder_telefon(text):
+        return text
+    return "'" + text
+
+
 def lade(url, ohne_liste):
     fehler = ""
     if url and "OWNER" not in url:
@@ -135,7 +163,7 @@ def main():
         with open(name + ".tmp", "w", encoding="utf-8-sig", newline="") as f:
             w = csv.DictWriter(f, fieldnames=felder + extra, delimiter=trenner, lineterminator="\r\n", extrasaction="ignore")
             w.writeheader()
-            w.writerows(daten)
+            w.writerows([{k: csv_zelle(v) for k, v in z.items()} for z in daten])
         os.replace(name + ".tmp", name)  # never leave a truncated list behind
 
     print(f"Sperrliste: {len(sperre) if sperre else 0} Domains, {quelle}")

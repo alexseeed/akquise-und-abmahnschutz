@@ -5,6 +5,7 @@
 from __future__ import annotations
 
 import contextlib
+import csv
 import io
 import logging
 import os
@@ -28,8 +29,11 @@ os.environ.update({
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from scraper import cli, db, pipeline  # noqa: E402
+from scraper import export as export_mod  # noqa: E402
+from scraper.blockliste import Blockliste  # noqa: E402
 from scraper.clients import ApiError  # noqa: E402
 from scraper.config import CONFIG  # noqa: E402
+from scraper.sperrliste import Sperrliste  # noqa: E402
 
 
 def _cli(*argv: str) -> tuple[int, str, str]:
@@ -142,6 +146,64 @@ class PlatzhalterUndExitCodeTest(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertIn("alle 2 Zeilen fehlgeschlagen", err)
         self.assertEqual(len(SkaelGestoert.calls), 2)
+
+
+class CsvFormelschutzTest(unittest.TestCase):
+    """Gescrapte Werte dürfen in Excel/Sheets keine Formel starten; Zahlen/Telefone bleiben lesbar."""
+
+    def test_gleich_und_at_werden_neutralisiert(self):
+        for roh, erwartet in (("=1+1", "'=1+1"), ("@SUM(A1)", "'@SUM(A1)")):
+            with self.subTest(roh=roh):
+                self.assertEqual(export_mod.csv_zelle(roh), erwartet)
+
+    def test_tab_und_cr_werden_neutralisiert(self):
+        for roh in ("\t=1", "\r=1"):
+            with self.subTest(roh=roh):
+                self.assertEqual(export_mod.csv_zelle(roh), "'" + roh)
+
+    def test_plus_minus_ausser_zahl_telefon_werden_neutralisiert(self):
+        for roh in ("-2+3", "+cmd|' /C calc'!A0"):
+            with self.subTest(roh=roh):
+                self.assertEqual(export_mod.csv_zelle(roh), "'" + roh)
+
+    def test_zahl_und_telefon_bleiben(self):
+        for roh in ("+49 171 1234567", "-12,5", "+41 (0)44 123 45 67", "-3.2"):
+            with self.subTest(roh=roh):
+                self.assertEqual(export_mod.csv_zelle(roh), roh)
+
+    def test_harmlose_werte_bleiben(self):
+        for roh in ("Müller GmbH", "https://example.com", ""):
+            with self.subTest(roh=roh):
+                self.assertEqual(export_mod.csv_zelle(roh), roh)
+        self.assertEqual(export_mod.csv_zelle(None), "")
+
+    def test_export_neutralisiert_formel_im_firmennamen(self):
+        original_db, original_export = CONFIG.db_path, export_mod.EXPORT_DIR
+        ordner = Path(tempfile.mkdtemp(dir=TMP))
+        CONFIG.db_path, export_mod.EXPORT_DIR = ordner / "test.db", ordner / "exports"
+        try:
+            conn = db.connect()
+            db.init(conn)
+            formel = "=SUMME(1)"
+            telefon = "+49 151 12345678"
+            conn.execute("INSERT INTO datensaetze (business_id, firmenname) VALUES ('formel-1', 'Formel')")
+            ds_id = conn.execute("SELECT id FROM datensaetze").fetchone()[0]
+            conn.execute("INSERT INTO anreicherung (datensatz_id, firmenname_final, email_final_type,"
+                         " telefon_impressum, ready_to_send) VALUES (?, ?, 'GF', ?, 1)",
+                         (ds_id, formel, telefon))
+            conn.commit()
+            with mock.patch.object(export_mod.sperrliste_mod, "laden", return_value=Sperrliste(set(), "test")), \
+                    mock.patch.object(export_mod.blockliste_mod, "laden",
+                                      return_value=Blockliste(set(), set())):
+                pfad = next(p for name, p, _ in export_mod.export_listen(conn)
+                            if name.startswith("Zielgruppe · Geschäftsführer"))
+            with pfad.open(encoding="utf-8-sig", newline="") as fh:
+                (zeile,) = list(csv.DictReader(fh, delimiter=";"))
+            self.assertEqual(zeile["Firmenname"], "'" + formel)
+            self.assertEqual(zeile["Telefon (Impressum)"], telefon)
+            conn.close()
+        finally:
+            CONFIG.db_path, export_mod.EXPORT_DIR = original_db, original_export
 
 
 if __name__ == "__main__":

@@ -33,11 +33,39 @@ def lies_csv(pfad: Path) -> tuple[list[str], list[dict], str]:
     return list(r.fieldnames or []), list(r), trenner
 
 
+# shortcut: vier identische Kopien (zwei Pfade, zwei Werkzeuge), weil es kein gemeinsames Paket gibt; zusammenlegen, sobald es eines gibt
+_ZAHL_TELEFON_ZEICHEN = frozenset("0123456789+-().,/ ")
+
+
+def _ist_zahl_oder_telefon(text: str) -> bool:
+    """Reine Zahl oder Telefonnummer (z. B. -12,5 oder +41 (0)44 …): kein Buchstabe, kein =, kein Rechenzeichen innen."""
+    if not any(ch.isdigit() for ch in text):
+        return False
+    if any(ch not in _ZAHL_TELEFON_ZEICHEN for ch in text):
+        return False
+    rest = text[1:]
+    if not rest or rest[0] in "+-" or "+" in rest:
+        return False
+    return text[0] == "+" or "-" not in rest  # Minus innen nur bei +… (Telefon), sonst Ausdruck wie -2-3
+
+
+def csv_zelle(wert) -> str:
+    """Macht eine Datenzelle formelsicher: führende = + - @ Tab CR neutralisieren, Zahlen/Telefone bleiben."""
+    if wert is None:
+        return ""
+    text = wert if isinstance(wert, str) else str(wert)
+    if not text or text[0] not in "=+-@\t\r":
+        return text
+    if text[0] in "+-" and _ist_zahl_oder_telefon(text):
+        return text
+    return "'" + text
+
+
 def schreibe_csv(pfad: Path, spalten: list[str], zeilen: list[dict], trenner: str) -> None:
     with pfad.open("w", encoding="utf-8-sig", newline="") as f:
         w = csv.DictWriter(f, fieldnames=spalten, delimiter=trenner, extrasaction="ignore")
         w.writeheader()
-        w.writerows(zeilen)
+        w.writerows([{k: csv_zelle(v) for k, v in z.items()} for z in zeilen])
 
 
 def cmd_links(a) -> None:

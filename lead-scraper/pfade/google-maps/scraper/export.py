@@ -196,6 +196,34 @@ def absatz_beobachtung(personalisierung: str | None) -> str:
     return CONFIG.absatz_standard
 
 
+# shortcut: vier identische Kopien (zwei Pfade, zwei Werkzeuge), weil es kein gemeinsames Paket gibt; zusammenlegen, sobald es eines gibt
+_ZAHL_TELEFON_ZEICHEN = frozenset("0123456789+-().,/ ")
+
+
+def _ist_zahl_oder_telefon(text: str) -> bool:
+    """Reine Zahl oder Telefonnummer (z. B. -12,5 oder +41 (0)44 …): kein Buchstabe, kein =, kein Rechenzeichen innen."""
+    if not any(ch.isdigit() for ch in text):
+        return False
+    if any(ch not in _ZAHL_TELEFON_ZEICHEN for ch in text):
+        return False
+    rest = text[1:]
+    if not rest or rest[0] in "+-" or "+" in rest:
+        return False
+    return text[0] == "+" or "-" not in rest  # Minus innen nur bei +… (Telefon), sonst Ausdruck wie -2-3
+
+
+def csv_zelle(wert) -> str:
+    """Macht eine Datenzelle formelsicher: führende = + - @ Tab CR neutralisieren, Zahlen/Telefone bleiben."""
+    if wert is None:
+        return ""
+    text = wert if isinstance(wert, str) else str(wert)
+    if not text or text[0] not in "=+-@\t\r":
+        return text
+    if text[0] in "+-" and _ist_zahl_oder_telefon(text):
+        return text
+    return "'" + text
+
+
 def _schreibe(target: Path, spalten: list[tuple[str, str]], rows) -> int:
     with target.open("w", newline="", encoding="utf-8-sig") as fh:
         writer = csv.writer(fh, delimiter=";")
@@ -210,7 +238,7 @@ def _schreibe(target: Path, spalten: list[tuple[str, str]], rows) -> int:
                     werte.append(_ABGELEITET[key](row))
                 else:
                     werte.append(row[key] if key in keys else "")
-            writer.writerow(werte)
+            writer.writerow([csv_zelle(w) for w in werte])
     return len(rows)
 
 
