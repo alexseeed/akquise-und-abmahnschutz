@@ -250,3 +250,5 @@ python3 ../../../werkzeuge/sperrliste_abgleich.py <liste>_angereichert_standard.
 | fast nur Leads aus China/HK | ohne `LAENDER` normal | Filter `LAENDER=DE,AT,CH` vorschlagen |
 
 Alle Einstellungen, Dateien und Spalten stehen in `README.md` in diesem Ordner.
+
+Bleibt ein Fehler nach zwei gleichen Versuchen oder steht er nicht in der Tabelle: nach `../../CLAUDE.md`, Abschnitt „Wenn etwas schiefgeht“, melden (nur die Fehlermeldung, keine Lead-Daten).

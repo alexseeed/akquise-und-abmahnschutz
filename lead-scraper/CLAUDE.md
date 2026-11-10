@@ -14,7 +14,7 @@ Dieser Ordner ist zugleich der Claude-Skill `lead-scraper` und ein Arbeitsprojek
 | `pfade/e-commerce/` | Python-Projekt: Nachbau des Clay-Workbooks ECOM 2.0 (Shop-Liste prüfen und anreichern); eigene `CLAUDE.md` und `ABLAUF.md` (Phase 1: Anforderungen klären), Builder für Shop-Profil und Mailtext in `prompts/` |
 | `pfade/videoseiten/` | nach dem Scrape: Video je Lead (Skael), eigene Landingpage im Branding des Nutzers, Hostinger-Server, Versandliste; Ablauf `ABLAUF.md`, Werkzeuge in `werkzeuge/`, Zugänge in `pfade/videoseiten/.env` |
 | `pfade/_vorlage/` | Pflichtenheft für neue Pfade |
-| `werkzeuge/` | `sperrliste_abgleich.py` für jede CSV, `wissen_pruefen.py` für die Wissensbibliothek |
+| `werkzeuge/` | `sperrliste_abgleich.py` für jede CSV, `wissen_pruefen.py` für die Wissensbibliothek, `fehler_melden.py` meldet Fehler an Agentur Consulting |
 
 Konventionen beim Ändern:
 
@@ -27,3 +27,11 @@ Konventionen beim Ändern:
 - Änderungen am Scraper-Programm `pfade/google-maps/`: danach dort `python3 -m unittest discover -s tests -v` (Offline-Tests, keine Kosten).
 - Schlüssel nie im Chat abfragen und die Datei `.env` im Amazon-Pfad nie lesen, ausgeben oder durchsuchen. Der Nutzer trägt die Zugänge selbst ein.
 - Codex liest statt dieser Datei `AGENTS.md` (gleicher Inhalt plus Codex-Hinweise). Änderungen in beiden Dateien nachziehen.
+
+## Wenn etwas schiefgeht
+
+- Scheitert ein Skript zweimal mit derselben Meldung, bricht ein Lauf ab oder meldet der Kunde ein Problem: Fehler mit Skriptname melden (aus dem Ordner `lead-scraper/`):
+  `python3 werkzeuge/fehler_melden.py --skript <name> "<Fehlermeldung>"` (oder die Meldung über stdin senden).
+  Nur die Fehlermeldung, keine Lead-Daten. Beim ersten Mal den Kunden einmal nach der E-Mail fragen, mit der er bei Agentur Consulting registriert ist, und sie als `AC_KONTAKT_EMAIL` in die `.env` schreiben. Dem Kunden sagen, dass das Team automatisch informiert ist und sich im Google Chat meldet.
+- Fehler wie 401, 429 oder 5xx beim Anbieter (Skael, OpenAI): erst 1–5 Minuten warten und dann dort fortsetzen, wo der Lauf stand. Nicht neu beginnen und nicht vorschnell „Schlüssel falsch“ melden. Nur wenn der Fehler bleibt, melden.
+- **Plan B:** Fällt der lokale Weg aus, kann der Kunde den gehosteten Lead-Scraper im Mitgliederbereich nutzen (Lernplattform → Lead-Scraper, MCP in Claude). Fällt der gehostete aus, umgekehrt. Beide nutzen dieselben eigenen Skael- und OpenAI-Schlüssel.

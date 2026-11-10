@@ -104,3 +104,5 @@ Vorübergehende Fehler wiederholen die Werkzeuge selbst (gemeinsame Regel in `we
 | Seite zeigt kein HTTPS | DNS noch nicht verbreitet (bis zu einigen Stunden) oder A-Record falsch; `anleitungen/03_dns.md`, „Häufige Probleme“ |
 | Webhook kommt nicht an | Geheimnis fehlt/falsch: Schritt C6 wiederholen |
 | „Skael nicht erreichbar … nach 5 Versuchen“ | Skael gestört; später denselben Befehl erneut ausführen, Fortschritt bleibt erhalten |
+
+Hilft nichts in der Tabelle oder kehrt derselbe Fehler zweimal wieder: nach `../../CLAUDE.md`, Abschnitt „Wenn etwas schiefgeht“, melden (nur die Fehlermeldung, keine Lead-Daten).

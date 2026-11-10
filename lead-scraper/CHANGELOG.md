@@ -2,6 +2,10 @@
 
 Neueste Einträge oben. Ein Eintrag je Änderung an Wissen, Pfaden oder Werkzeugen: Datum, was sich geändert hat und warum. So sieht jede KI und jeder Mensch, welcher Stand gilt und was neu ist.
 
+## 2026-11-10
+
+- **Fehler melden und Plan B (aus dem Stand vor dem Neubau übernommen):** Werkzeug `werkzeuge/fehler_melden.py` meldet eine Fehlermeldung an Agentur Consulting – nur die Meldung, geschwärzt (`.env`-Werte, Schlüssel, Tokens, fremde E-Mails), höchstens 4000 Zeichen, Kontakt aus `AC_KONTAKT_EMAIL`. `CLAUDE.md`, `AGENTS.md` und `SKILL.md` haben einen Abschnitt „Wenn etwas schiefgeht“ (zweimal derselbe Fehler → melden; 401/429/5xx erst abwarten und fortsetzen; Plan B: gehosteter Lead-Scraper im Mitgliederbereich und umgekehrt). Die Fehlertabellen in `pfade/amazon/ABLAUF.md` und `pfade/videoseiten/ABLAUF.md` verweisen dorthin; die Recruiting-Wege laufen im Google-Maps-Programm und brauchen keinen eigenen Verweis. `START_HIER.md` erwähnt die Meldung in einem Satz.
+
 ## 2026-11-02
 
 - **Retries mit exponential backoff für alle Dienste.** Anlass: Fehler der angebundenen Tools sollen den Scraper nicht abbrechen. Befund vorher: Ein ganzer Lauf brach selten ab, weil jede Stufe Fehler je Zeile abfängt. Es gab aber Lücken, die einzelne Leads kosteten:
