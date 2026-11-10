@@ -16,14 +16,15 @@ from pathlib import Path
 from unittest import mock
 
 TMP = tempfile.mkdtemp()
-# Wie im E-Commerce-Test: echte .env-Werte dürfen die Tests nicht kippen,
-# Dienste auf einer toten lokalen Adresse, Sperrliste ohne Download: kein Aufruf kostet etwas.
+# Echte .env-Werte dürfen die Tests nicht kippen, Sperrliste ohne Download.
+# Bewusst keine toten *_BASE_URL: Die Tests ersetzen den Skael-Client ganz und
+# mocken den Listenabruf – tote Adressen würden nur CONFIG für später
+# importierte Testmodule vergiften (deren Attrappen prüfen den echten Host).
 os.environ.update({
     "DB_PATH": str(Path(TMP) / "test.db"),
     "SPERRLISTE_PFLICHT": "false",
     "SPERRLISTE_URL": "https://example.invalid/OWNER-liste.txt",
     "SKAEL_API_KEY": "", "OPENAI_API_KEY": "", "FINDYMAIL_API_KEY": "",
-    "SKAEL_BASE_URL": "http://127.0.0.1:9", "OPENAI_BASE_URL": "http://127.0.0.1:9",
     "MAX_RETRIES": "1", "KAMPAGNE": "",
 })
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
