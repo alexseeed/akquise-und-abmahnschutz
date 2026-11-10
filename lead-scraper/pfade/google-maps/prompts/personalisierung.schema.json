@@ -3,9 +3,11 @@
   "properties": {
     "complimentText": {
       "type": "string",
-      "description": "Der personalisierte Einstiegssatz auf Deutsch, maximal zwei Sätze und 30 Wörter, erster Buchstabe klein, reine Beobachtung ohne Nennung von Problem oder Lösung."
+      "description": "Der personalisierte Satz auf Deutsch nach den Regeln des Prompts. Leerer String, wenn die Seite kein konkretes Detail hergibt."
     }
   },
-  "required": ["complimentText"],
+  "required": [
+    "complimentText"
+  ],
   "additionalProperties": false
 }

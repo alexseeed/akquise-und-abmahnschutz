@@ -5,6 +5,8 @@ die Erkennung von Zugangsfehlern. Änderungen am gemeinsamen Teil in beiden Date
 """
 from __future__ import annotations
 
+import hashlib
+import http.client
 import json
 import logging
 import random
@@ -19,6 +21,60 @@ from typing import Any
 from .config import CONFIG
 
 log = logging.getLogger(__name__)
+
+
+# ---------------------------------------------------------------- retry policy
+# One rule for all clients: temporary errors are retried with exponential backoff and jitter,
+# permanent ones (wrong key, no credits, bad input) fail at once.
+#   status 0 = network error / timeout / connection dropped / body not JSON (see _request)
+WIEDERHOLBAR = {0, 408, 425, 429, 500, 502, 503, 504}
+BACKOFF_START = 2.0       # seconds before the 2nd attempt, then 4, 8, 16 … (capped)
+BACKOFF_START_429 = 5.0   # rate limits need longer: 5, 10, 20, 40 s
+BACKOFF_MAX = 60.0
+
+# Skael wraps failures of its upstream services as 422 "failed" — retry those that are temporary
+_VORUEBERGEHEND = re.compile(
+    r"HTTP 5\d\d|\b50[234]\b|timed? ?out|timeout|temporar|unavailable|overloaded|rate.?limit|"
+    r"try again|ECONNRESET|connection (reset|refused|aborted)|bad gateway", re.IGNORECASE)
+
+# OpenAI answers an empty account with 429 — no point waiting, the stage stops (pruefe_zugang)
+_KONTINGENT_LEER = ("insufficient_quota", "credit_balance_exhausted")
+
+
+def wartezeit(versuch: int, status: int, data: Any = None) -> float:
+    """Pause before the next attempt (versuch = number of the attempt that just failed, from 1)."""
+    if isinstance(data, dict) and data.get("_retry_after"):
+        try:
+            return min(float(data["_retry_after"]), BACKOFF_MAX) + random.uniform(0, 1.0)
+        except (TypeError, ValueError):
+            pass
+    start = BACKOFF_START_429 if status == 429 else BACKOFF_START
+    basis = min(start * 2 ** (versuch - 1), BACKOFF_MAX)
+    return basis + random.uniform(0, basis * 0.25)
+
+
+def voruebergehend(status: int, data: Any = None, meldung: str = "") -> bool:
+    """True for errors worth retrying: network, timeouts, 429, 5xx, and Skael 'failed' with such a cause."""
+    if status in WIEDERHOLBAR:
+        return True
+    if status == 422:
+        inner = data.get("data") if isinstance(data, dict) and isinstance(data.get("data"), dict) else data
+        text = meldung
+        if isinstance(inner, dict):
+            text += " " + str(inner.get("error_message") or inner.get("message") or "")
+        return bool(_VORUEBERGEHEND.search(text))
+    return False
+
+
+def _fehlertext(data: Any) -> str:
+    """The API's own error message from a JSON body (Skael, OpenAI, Findymail shapes) or raw text."""
+    if isinstance(data, dict):
+        inner = data.get("data") if isinstance(data.get("data"), dict) else {}
+        fehler = data.get("error")
+        if isinstance(fehler, dict):
+            fehler = fehler.get("message") or fehler.get("code")
+        return str(inner.get("error_message") or inner.get("message") or fehler or data.get("message") or "")
+    return str(data or "")
 
 
 class RateLimiter:
@@ -60,23 +116,47 @@ def _request(
     for key, value in (headers or {}).items():
         req.add_header(key, value)
     try:
-        with urllib.request.urlopen(req, timeout=timeout or CONFIG.http_timeout) as resp:
-            raw = resp.read().decode("utf-8", errors="replace")
-            return resp.status, (json.loads(raw) if raw else None)
+        frist = timeout or CONFIG.http_timeout
+        ende = time.monotonic() + frist
+        with urllib.request.urlopen(req, timeout=min(frist, 60)) as resp:
+            # Stückweise lesen mit fester Gesamtfrist: Skael hält Verbindungen mit Herzschlag-Bytes
+            # offen (bis zu 1 h). Das Socket-Timeout greift dann nie, die Gesamtfrist schon.
+            teile: list[bytes] = []
+            while True:
+                if time.monotonic() > ende:
+                    return 0, {"message": f"Gesamtfrist {frist} s überschritten (Herzschlag-Antwort)"}
+                stueck = resp.read1(65536) if hasattr(resp, "read1") else resp.read(65536)
+                if not stueck:
+                    break
+                teile.append(stueck)
+            raw = b"".join(teile).decode("utf-8", errors="replace").strip()
+            try:
+                return resp.status, (json.loads(raw) if raw else None)
+            except json.JSONDecodeError:
+                # z. B. HTML-Fehlerseite eines Proxys mit Status 200 → wie Netzwerkfehler wiederholen
+                return 0, {"message": f"ungültige Antwort (kein JSON, HTTP {resp.status}): {raw[:120]}"}
     except urllib.error.HTTPError as exc:
-        raw = exc.read().decode("utf-8", errors="replace")
+        try:
+            raw = exc.read().decode("utf-8", errors="replace")
+        except (OSError, http.client.HTTPException):
+            raw = ""      # Fehlerseite abgerissen — der Status zählt trotzdem
         try:
             payload = json.loads(raw) if raw else None
         except json.JSONDecodeError:
             payload = raw
+        retry_after = exc.headers.get("Retry-After") if exc.headers else None
+        if retry_after and str(retry_after).strip().isdigit():
+            payload = payload if isinstance(payload, dict) else {"message": payload}
+            payload["_retry_after"] = int(str(retry_after).strip())
         return exc.code, payload
-    except (urllib.error.URLError, TimeoutError, OSError) as exc:
-        # Netzwerkfehler → Status 0, damit die Retry-Schleife greift
+    except (urllib.error.URLError, TimeoutError, OSError, http.client.HTTPException) as exc:
+        # Netzwerkfehler (auch abgerissene Antworten: IncompleteRead, RemoteDisconnected)
+        # → Status 0, damit die Retry-Schleife greift
         return 0, {"message": f"network error: {exc}"}
 
 
 class SkaelClient:
-    """Client für https://api.skael.de — synchroner Modus, wie im Clay-Workbook."""
+    """Client für https://api.skael.de — Aufträge asynchron einreichen, Ergebnis mit begrenzter Wartezeit abholen."""
 
     def __init__(self, api_key: str | None = None):
         self.api_key = api_key or CONFIG.skael_api_key
@@ -105,73 +185,127 @@ class SkaelClient:
         """
         url = f"{self.base}/api/enrichments/{endpoint}"
         body: dict | None = payload
+        headers = self._headers()
         if as_query:
             clean = {k: v for k, v in payload.items() if v is not None}
-            url = f"{url}?{urllib.parse.urlencode(clean)}"
+            # auch hier asynchron — sonst hält der synchrone Modus die Verbindung bis zu 1 h offen
+            url = f"{url}?{urllib.parse.urlencode({**clean, 'async': '1'})}"
             body = {}
+            schluessel = json.dumps([endpoint, clean], sort_keys=True, ensure_ascii=False)
+        else:
+            # Asynchron einreichen: Der Standardmodus hält die Verbindung bis zu 1 h offen
+            # (Heartbeat), unser Zeitlimit greift dann nie und der Lauf hängt. async=true liefert
+            # sofort 202 + id, das Ergebnis holt _poll mit begrenzter Wartezeit ab.
+            body = {**payload, "async": True}
+            schluessel = json.dumps([endpoint, payload], sort_keys=True, ensure_ascii=False)
+        # Gleicher Schlüssel + gleicher Inhalt innerhalb 24 h = derselbe Auftrag, nicht erneut berechnet
+        headers["Idempotency-Key"] = hashlib.sha256(schluessel.encode("utf-8")).hexdigest()[:64]
 
-        delay = 1.0
+        basis_schluessel = headers["Idempotency-Key"]
         last_error: str = ""
         for attempt in range(1, CONFIG.max_retries + 1):
             self.limiter.acquire()
-            status, data = _request(url, headers=self._headers(), body=body, timeout=timeout)
-
-            if status == 200:
-                return self._unwrap(data)
-
-            if status == 202:
-                resource_id = self._resource_id(data)
-                if resource_id:
-                    polled = self._poll(endpoint, resource_id)
-                    if polled is not None:
-                        return polled
-                last_error = "202 timeout ohne verwertbares Ergebnis"
-
-            elif status == 429:
-                last_error = "429 rate limited"
-
-            elif status == 422:
-                failed = isinstance(data, dict) and isinstance(data.get("data"), dict)
-                if failed and data["data"].get("status") == "failed":
-                    raise ApiError(
-                        data["data"].get("error_message") or "enrichment failed",
-                        status,
-                        data,
-                    )
-                raise ApiError(
-                    (data or {}).get("message", "validation error") if isinstance(data, dict) else "validation error",
-                    status,
-                    data,
-                )
-
-            elif 400 <= status < 500:
-                raise ApiError(f"HTTP {status}", status, data)
-
-            else:
-                last_error = f"HTTP {status}"
+            status, data = _request(url, headers=headers, body=body, timeout=timeout)
+            fehler_status = status
+            try:
+                if status == 200:
+                    return self._unwrap(data)       # raises ApiError(422) for status "failed"
+                if status == 202:
+                    resource_id = self._resource_id(data)
+                    if resource_id:
+                        polled = self._poll(endpoint, resource_id)
+                        if polled is not None:
+                            return polled
+                    last_error = "202 ohne Auftragsnummer"
+                    # Skael erkennt identische Anfragen und gibt denselben Auftrag zurück —
+                    # ein erneuter Versuch kostet daher nicht doppelt.
+                    fehler_status = 0
+                elif voruebergehend(status, data):
+                    meldung = self._meldung(data)
+                    last_error = "429 rate limited" if status == 429 else (
+                        f"Netzwerkfehler ({meldung[:120]})" if status == 0 and meldung else
+                        "Netzwerkfehler" if status == 0 else f"HTTP {status}")
+                    if status == 422:
+                        last_error = f"vorübergehender Fehler: {meldung}"
+                        # derselbe Idempotency-Key liefert 24 h lang denselben (fehlgeschlagenen) Auftrag
+                        headers["Idempotency-Key"] = f"{basis_schluessel[:56]}-w{attempt}"
+                elif status == 422:
+                    raise ApiError(self._meldung(data) or "validation error", status, data)
+                elif 400 <= status < 500:
+                    meldung = self._meldung(data)                    # Schlüssel, Guthaben, Eingabe
+                    raise ApiError(f"HTTP {status}" + (f": {meldung[:200]}" if meldung else ""), status, data)
+                else:
+                    last_error = f"HTTP {status}"
+            except ApiError as exc:
+                # Auftrag fehlgeschlagen bzw. Abholen gescheitert: nur vorübergehende Ursachen wiederholen.
+                # 202 = Höchstwartezeit erreicht: nicht neu einreichen, die Zeile läuft beim nächsten Lauf.
+                if not voruebergehend(exc.status or 0, exc.payload, str(exc)) or exc.status == 202:
+                    raise
+                last_error, fehler_status = f"vorübergehender Fehler: {exc}", exc.status or 0
+                if exc.status == 422:
+                    # derselbe Idempotency-Key liefert 24 h lang denselben (fehlgeschlagenen) Auftrag
+                    headers["Idempotency-Key"] = f"{basis_schluessel[:56]}-w{attempt}"
 
             if attempt < CONFIG.max_retries:
-                sleep_for = delay + random.uniform(0, 0.4)
-                log.warning("%s: %s — retry %s/%s in %.1fs", endpoint, last_error, attempt, CONFIG.max_retries, sleep_for)
+                sleep_for = wartezeit(attempt, fehler_status, data)
+                log.warning("%s: %s — Versuch %s/%s, erneut in %.1f s", endpoint, last_error, attempt,
+                            CONFIG.max_retries, sleep_for)
                 time.sleep(sleep_for)
-                delay = min(delay * 2, 30.0)
 
         raise ApiError(f"{endpoint}: {last_error} nach {CONFIG.max_retries} Versuchen")
 
+    @staticmethod
+    def _meldung(data: Any) -> str:
+        if not isinstance(data, dict):
+            return str(data or "")
+        inner = data.get("data") if isinstance(data.get("data"), dict) else data
+        return str(inner.get("error_message") or inner.get("message") or data.get("message") or "")
+
     def _poll(self, endpoint: str, resource_id: int | str) -> dict | None:
-        """Long-Polling gemäß API-Guide: GET /api/<resource>/{id}?wait=true&wait_time=50."""
-        url = f"{self.base}/api/{endpoint}/{resource_id}?wait=true&wait_time=50"
-        for _ in range(20):
-            self.limiter.acquire()
+        """Long-Polling: GET /api/enrichments/{id}?wait=true&wait_time=50.
+
+        Achtung: Auch ein laufender Auftrag antwortet mit 200 (status processing/queued).
+        Erst status=completed liefert das Ergebnis. Ein 404 hier heißt falsche URL — dann
+        NICHT neu einreichen, sonst entstehen doppelte, bezahlte Aufträge.
+        """
+        url = f"{self.base}/api/enrichments/{resource_id}?wait=true&wait_time=50"
+        frist = time.monotonic() + CONFIG.skael_max_wartezeit
+        pause = 2.0
+        fehlversuche = 0
+        while True:
+            if time.monotonic() > frist:
+                # Nicht neu einreichen — die Zeile wird beim nächsten Lauf erneut versucht,
+                # Skael liefert dann über Idempotency-Key/Dedupe denselben (fertigen) Auftrag.
+                raise ApiError(f"{endpoint}: nach {CONFIG.skael_max_wartezeit} s noch nicht fertig "
+                               f"(Auftrag {resource_id})", 202, None)
+            # Abholen zählt nicht gegen die Drosselung: sonst blockieren wenige hängende Aufträge
+            # (sofortige Antwort "läuft noch") mit Dauer-Nachfragen die Warteschlange aller Threads.
+            gestartet = time.monotonic()
             status, data = _request(url, method="GET", headers=self._headers(), body=None)
-            if status == 200:
+            inner = data.get("data", data) if isinstance(data, dict) else {}
+            zustand = str(inner.get("status", "")).lower() if isinstance(inner, dict) else ""
+            if status == 200 and zustand in ("", "completed", "done", "succeeded"):
                 return self._unwrap(data)
-            if status == 202:
+            if status in (200, 202) and zustand in ("processing", "queued", "pending", "running", "waiting"):
+                if time.monotonic() - gestartet < 5:   # kam sofort zurück → kurz warten statt Dauerfeuer
+                    time.sleep(pause)
+                    pause = min(pause * 1.5, 15.0)
                 continue
-            if status == 422:
-                raise ApiError("enrichment failed beim Polling", status, data)
-            return None
-        return None
+            if status == 422 or zustand == "failed":
+                meldung = self._meldung(data)
+                raise ApiError(f"enrichment failed beim Polling: {meldung}" if meldung
+                               else "enrichment failed beim Polling", 422, data)
+            if status in WIEDERHOLBAR and fehlversuche < CONFIG.max_retries:
+                # Netzwerk weg, 5xx, 429 beim Abholen: derselbe Auftrag läuft weiter — nur erneut abholen
+                fehlversuche += 1
+                sleep_for = wartezeit(fehlversuche, status, data)
+                log.warning("%s: Abholen von Auftrag %s fehlgeschlagen (HTTP %s) — erneut in %.1f s",
+                            endpoint, resource_id, status or "Netzwerk", sleep_for)
+                time.sleep(sleep_for)
+                continue
+            meldung = self._meldung(data)
+            raise ApiError(f"Polling HTTP {status} ({zustand or 'ohne Status'})"
+                           + (f": {meldung[:200]}" if meldung else ""), status, data)
 
     @staticmethod
     def _resource_id(data: Any) -> int | str | None:
@@ -271,7 +405,7 @@ class OpenAIClient:
             "Authorization": f"Bearer {self.api_key}",
         }
 
-        delay = 1.0
+        status, data, kontingent_leer = 0, None, False
         for attempt in range(1, CONFIG.max_retries + 1):
             self.limiter.acquire()
             status, data = _request(f"{self.base}/chat/completions", headers=headers, body=body)
@@ -283,12 +417,21 @@ class OpenAIClient:
                     except json.JSONDecodeError:
                         return {}
                 return content
-            if status in (429, 500, 502, 503, 504) and attempt < CONFIG.max_retries:
-                time.sleep(delay + random.uniform(0, 0.4))
-                delay = min(delay * 2, 30.0)
+            fehler = data.get("error") if isinstance(data, dict) else None
+            kontingent_leer = isinstance(fehler, dict) and (
+                fehler.get("code") in _KONTINGENT_LEER or fehler.get("type") in _KONTINGENT_LEER)
+            if status in WIEDERHOLBAR and not kontingent_leer and attempt < CONFIG.max_retries:
+                sleep_for = wartezeit(attempt, status, data)
+                log.warning("OpenAI: HTTP %s — Versuch %s/%s, erneut in %.1f s", status or "Netzwerk",
+                            attempt, CONFIG.max_retries, sleep_for)
+                time.sleep(sleep_for)
                 continue
-            raise ApiError(f"OpenAI HTTP {status}", status, data)
-        raise ApiError("OpenAI: keine Antwort")
+            break
+        meldung = _fehlertext(data)
+        wiederholt = status in WIEDERHOLBAR and not kontingent_leer and CONFIG.max_retries > 1
+        nachsatz = f" nach {CONFIG.max_retries} Versuchen" if wiederholt else ""
+        raise ApiError(f"OpenAI HTTP {status}" + (f": {meldung[:200]}" if meldung else "") + nachsatz,
+                       status, data)
 
 
 def _bare_domain(value: str) -> str:
@@ -311,7 +454,7 @@ class FindymailClient:
         self.limiter = RateLimiter(2.0)
 
     def _call(self, path: str, *, method: str = "POST", body: dict | None = None) -> tuple[int, Any]:
-        """Retry bei 429/5xx/Netzwerk. 404 und 422 gelten als „nichts gefunden“.
+        """Retry bei 408/425/429/5xx/Netzwerk. 404 und 422 gelten als „nichts gefunden“.
 
         Alles andere (401 Schlüssel falsch, 402 Guthaben leer, 423 Abo pausiert) ist ein ApiError,
         damit der Lead offen bleibt statt still als „keine E-Mail“ zu enden.
@@ -321,20 +464,22 @@ class FindymailClient:
             "Authorization": f"Bearer {self.api_key}",
             "Accept": "application/json",
         }
-        delay = 1.0
         status, data = 0, None
         for attempt in range(1, CONFIG.max_retries + 1):
             self.limiter.acquire()
             status, data = _request(f"{self.BASE}/{path}", method=method, headers=headers, body=body)
-            if status in (0, 429, 500, 502, 503, 504) and attempt < CONFIG.max_retries:
-                time.sleep(delay + random.uniform(0, 0.4))
-                delay = min(delay * 2, 30.0)
+            if status in WIEDERHOLBAR and attempt < CONFIG.max_retries:
+                sleep_for = wartezeit(attempt, status, data)
+                log.warning("Findymail: HTTP %s — Versuch %s/%s, erneut in %.1f s", status or "Netzwerk",
+                            attempt, CONFIG.max_retries, sleep_for)
+                time.sleep(sleep_for)
                 continue
             if status in (200, 404, 422):
                 return status, data
             break
-        message = (data.get("error") or data.get("message")) if isinstance(data, dict) else None
-        raise ApiError(f"Findymail HTTP {status}: {message or 'unbekannter Fehler'}", status, data)
+        message = _fehlertext(data)
+        nachsatz = f" nach {CONFIG.max_retries} Versuchen" if status in WIEDERHOLBAR and CONFIG.max_retries > 1 else ""
+        raise ApiError(f"Findymail HTTP {status}: {message or 'unbekannter Fehler'}{nachsatz}", status, data)
 
     def find_work_email(self, full_name: str, company_domain: str) -> dict:
         """{"email": str | None, "raw": ...}; ohne Schlüssel {}."""

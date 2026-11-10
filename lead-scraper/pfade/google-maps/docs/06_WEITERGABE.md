@@ -74,7 +74,7 @@ Keine Ausgabe = keine echten Keys im Ordner.
 | `CITIES_LIMIT` | `5000` kappt Deutschland bei ~7.600 Orten |
 | `DO_PERSONALISIERUNG` / `DO_VIDEO_TITLE` | beide `true` — nur sinnvoll bei Video-Outreach |
 | `MAX_CONCURRENCY` / `SKAEL_RATE_LIMIT_PER_SEC` | je nach Skael-Tarif |
-| Beispiel-ICP-Prompt | `prompts/icp_beispiel_metallbau.txt` ist ein Muster, kein Standard |
+| Beispiel-ICP-Prompt | `prompts/beispiele/icp_metallbau.txt` ist ein Muster, kein Standard |
 
 ---
 

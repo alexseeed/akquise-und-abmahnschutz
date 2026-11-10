@@ -1,170 +1,254 @@
+# Pfad „Amazon-Seller“ – Anleitung für die KI
 
-# Pfad „Amazon-Seller“ – Brand-Liste zur Kontaktliste anreichern
+> **Einstieg:** Dieser Pfad wird über `SKILL.md` gewählt (Claude Code: `CLAUDE.md`, Codex: `AGENTS.md`). Das Interview ist dann gelaufen, die Antworten stehen in der Auftragsdatei `auftraege/<datum>_<name>.md` im Paketordner. **Lies sie zuerst** und frage nur, was dort fehlt. Hintergrund für Rückfragen: `wissen/04_pfad-amazon.md`.
 
-> **Einstieg:** Dieser Pfad wird über `SKILL.md` (bzw. `CLAUDE.md`) gewählt. Die Rahmenfragen (Angebot, Zielgruppe, Länder, Ansprechpartner, Kanal) sind dann schon beantwortet – nicht erneut fragen. Hintergrund für Menschen und andere KI-Modelle: `wissen/04_pfad-amazon.md`.
->
-> **Voraussetzungen:** eine Brand-Liste als CSV (typisch: SmartScout-Export mit `Brand Name`, `Dominant Seller`, `Est. Monthly Revenue`), Chrome mit eingeloggter amazon.de-Sitzung und der Claude-in-Chrome-Erweiterung, Subagenten für Phase 4. Alle Befehle laufen aus dem Ordner `pfade/amazon/`.
-
-Aus einer rohen Brand-Liste wird eine Kontaktliste. Die Kette ist strikt sequenziell — jeder Schritt braucht das Ergebnis des vorigen:
+Der Pfad findet Drittanbieter auf **amazon.de** selbst. Eine Brand-Liste ist nicht nötig. Er liefert pro Verkäufer Firma, Adresse, Land, Sortiment und geschätzten Umsatz, auf Wunsch Kontaktdaten (Bright Data), Website und Geschäftsführung (Skael). Am Ende stehen Standardformat und Sperrlisten-Abgleich.
 
 ```
-Brand Name + Dominant Seller
-  → Phase 1  Seller ID          (Amazon-Brand-Suche im Browser)
-  → Phase 2  Storefront-URL     (aus der Seller ID gebaut)
-  → Phase 3  Firma              (Amazon-Impressum: Name, HR-Nummer, Adresse)
-  → Phase 4  Website + Geschäftsführer + Anrede   (Multi-Agent, Sonnet)
-  → Phase 5  Ansprache          ("Guten Tag Herr Mustermann" / "Guten Tag")
-  → Phase 6  Verifikation
-  → Phase 7  Sperrlisten-Abgleich (Abmahner-Domains raus)
+Phase 0  Auftrag lesen, Einstellungen ableiten
+Phase 1  Vorprüfung        node, .env, 1 Testabfrage          (--pruefen)
+Phase 2  Smoke-Test         höchstens 300 Abfragen             (SMOKE=1)
+Phase 3  Testlauf           20–50 Leads, Stichprobe zeigen     (KAMPAGNE=<name>-test)
+Phase 4  Großlauf           Kosten nennen, Bestätigung abwarten (KAMPAGNE=<name>)
+Phase 5  Anreicherung       E-Mail-Prüfung, Website, Geschäftsführung, Anrede (automatisch mit Skael-Schlüssel)
+Phase 6  Standardformat     Pflichtfelder aller Pfade          (standardformat.mjs)
+Phase 7  Sperrliste         immer, vor der Ausgabe             (werkzeuge/sperrliste_abgleich.py)
+Phase 8  Ergebnis übersetzen
 ```
 
-Ohne Seller ID kein Impressum, ohne Impressum kein Firmenname, ohne Firmenname kein Geschäftsführer, ohne Vornamen keine Anrede. Wer eine Phase überspringt, produziert Lücken, die später niemand mehr zuordnen kann. `analyse.py` sagt dir, wo die Liste gerade steht — vielleicht sind Phasen schon erledigt.
+**Grundregeln** (aus `SKILL.md`):
 
-Der Engpass ist nie die Rechenzeit, sondern **Tool-Calls und Kontext**. Jeder Schritt ist deshalb so gebaut, dass Massendaten *niemals* durch dein Kontextfenster laufen. Wenn du dich dabei erwischst, hunderte Zeilen JSON zu pasten oder zu lesen, machst du es falsch — halte an und lies `referenzen/browser-technik.md`.
+- Befehle selbst ausführen und Ausgaben übersetzen.
+- Eine Frage pro Nachricht.
+- Kosten vor jedem großen Lauf nennen und bestätigen lassen.
+- Nie nach Schlüsseln im Chat fragen. Der Nutzer trägt sie selbst in die Datei `.env` ein.
+- Die Datei `.env` nie lesen, ausgeben oder durchsuchen. Ob Zugänge gesetzt sind, zeigt allein `node ../amazon_seller_scraper.mjs --pruefen`.
+- Nie zwei Läufe derselben `KAMPAGNE` gleichzeitig. Vor jedem Neustart prüfen, dass kein Lauf mehr läuft (`pgrep -f amazon_seller_scraper`).
 
-## Phase 0: Bestandsaufnahme (immer zuerst)
+## Arbeitsordner und Befehle
 
-Nie raten, was fehlt. Zähle es:
+Alle Befehle laufen im Ordner `pfade/amazon/arbeit/`. Er ist von Git ausgeschlossen und enthält später Lead-Daten und das Gedächtnis.
 
 ```bash
-python3 scripts/analyse.py <pfad/zur/liste.csv>
+mkdir -p pfade/amazon/arbeit && cd pfade/amazon/arbeit   # bzw. <kopie>/amazon/arbeit, wenn der Pfad nach SKILL.md Schritt 1 kopiert wurde
 ```
 
-Das gibt aus, wie viele Zeilen welche Felder haben, und legt neben der Liste einen `arbeit/`-Ordner mit den Chunk-Dateien für die nächsten Phasen an. Zeig dem User die Zahlen und die geschätzte Laufzeit, bevor du loslegst.
+Den Ordnerwechsel nur **einmal** ausführen, vom Paketordner aus. Im Zweifel vorher mit `pwd` prüfen, wo die Shell steht: Ein zweiter Aufruf aus `arbeit/` heraus legt einen falschen Unterordner an.
 
-**Vorprüfung Browser** (nur nötig, wenn Seller IDs oder Impressum fehlen): Der Amazon-Teil braucht Chrome mit eingeloggter amazon.de-Session, sonst liefert Amazon andere Seiten. Prüfe mit `mcp__claude-in-chrome__list_connected_browsers`. Kein Browser verbunden → sag das dem User klar und brich ab, statt in Phase 1 zu scheitern.
+- **Skripte:** liegen eine Ebene höher (`../`). Die Zugänge liest jedes Skript aus `../.env`.
+- **Sperrlisten-Werkzeug:** im Paketordner `../../../werkzeuge/sperrliste_abgleich.py`, in einer Kopie nach SKILL.md Schritt 1 `../../werkzeuge/sperrliste_abgleich.py`.
+- **Einstellungen:** stehen als `NAME=Wert` vor dem Befehl. Zahlen ohne Tausenderpunkt.
+- **Smoke-Test, Testlauf und Großlauf im Hintergrund starten.** Sie können länger dauern, als ein Befehl im Vordergrund laufen darf: Bright Data braucht für die Kontaktdaten bis zu 30 Minuten. Claude Code: Hintergrund-Ausführung. Sonst die ganze Befehlszeile mit `nohup` und Log: `KAMPAGNE=<name> ZIEL=… BUDGET=… <Filter …> nohup node ../amazon_seller_scraper.mjs > lauf_<name>.log 2>&1 &`. Den Fortschritt mit `tail -n 15 lauf_<name>.log` ansehen und übersetzt melden.
+- **Abbruch:** kostet nichts, derselbe Befehl setzt fort. Steht „Gestoppt: Abbruch (SIGTERM)“ in der Ausgabe, wurde der Lauf von außen beendet: denselben Befehl im Hintergrund erneut starten.
+- **Windows (PowerShell):** Einstellungen einzeln mit `$env:NAME="Wert"` setzen (`../README.md`, Abschnitt 10). `python3` heißt dort meist `python` oder `py`.
 
-## Phase 1: Fehlende Seller IDs
+## Phase 0: Auftrag lesen und Einstellungen ableiten
 
-**Das Prinzip, das alles trägt:** Du navigierst *einmal* zu einer amazon.de-Seite und feuerst von dort per JavaScript hunderte `fetch()`-Aufrufe ab. Weil du same-origin bist, greift CORS nicht, und weil du im Seitenkontext parst, kommt nur das Ergebnis zurück — nicht die 1,8 MB HTML. Ein Durchlauf schafft ~1.500 Brands in ~30 Minuten bei etwa 40 Tool-Calls.
+Aus der Auftragsdatei:
 
-Ablauf:
+| Auftrag | Einstellung | Hinweis |
+|---|---|---|
+| B1 Branche / Produktbereich | `KATEGORIEN=Küche,Garten,…` (Namensteile aus `../kategorien.json`) oder `KEYWORDS=yogamatte,thermobecher` | ohne Angabe: alle 28 Kategorien. Bei sehr enger Nische Keywords zusätzlich |
+| B2 kleine / mittlere / große Händler | `MAX_PRODUKTE`, `PORTFOLIO_MAX_BEWERTUNGEN` | „keine Konzerne“: z. B. `PORTFOLIO_MAX_BEWERTUNGEN=25000`. **Nach Umsatz wird nicht gefiltert:** Der Umsatz steht als Spalte in der Liste. `UMSATZ_MAX` nur setzen, wenn der Nutzer ausdrücklich eine Umsatz-Obergrenze verlangt |
+| B2 „mit eigener Marke“ | `MIN_MARKENANTEIL=0.7` | Händler, die vor allem eine Marke verkaufen |
+| D1 Länder | `LAENDER=DE,AT,CH` | **Sitz des Verkäufers.** Der Marktplatz ist immer amazon.de. Ohne Angabe: alle Länder (viele Verkäufer sitzen in China) |
+| D2 Ausschlüsse | `FIRMEN_AUSSCHLUSS=verlag,…`, Kategorien weglassen, Größenfilter | Amazon selbst ist immer ausgeschlossen |
+| D3 Ansprechpartner | Bright Data (E-Mail, Telefon, vertretungsberechtigte Person laut Amazon) und Skael (E-Mail-Prüfung, Website, Geschäftsführung, Anrede) | E-Mail-Prüfung für alle Länder, Website und Geschäftsführung nur für DE/AT/CH (Impressumspflicht) |
+| A2 Kanal = E-Mail | **Skael-Schlüssel ist Pflicht** | ohne ihn bleiben alle Adressen ungeprüft (`Not Run`) und dürfen nicht in den Versand |
+| D4 Menge | `ZIEL=<Anzahl Leads>` | zählt für die ganze Kampagne, auch über Neustarts |
+| D4 Budget | `BUDGET=<Oxylabs-Abfragen>` | Faustregel unten |
 
-1. Tab auf eine beliebige Produktseite navigieren (`https://www.amazon.de/dp/B0CLXXWCGM` geht immer).
-2. `scripts/browser_lib.js` per `javascript_tool` injizieren — der Dateiinhalt ist direkt als `text` einsetzbar.
-3. Die Todo-Liste per **Datei-Upload** in die Seite geben, nicht per Paste. Warum: 1.500 Brands durchzupasten kostet ~40k Tokens, der Upload kostet 3 Calls. Wie das geht, steht in `referenzen/browser-technik.md` unter "Daten rein".
-4. Worker starten: `__start(6)`. Mehr als ~8 Worker lassen den Renderer einfrieren.
-5. Alle ~35 Sekunden pollen: `({done: __out.length, queued: __q.length})`. Länger als 40s warten geht nicht — der CDP-Aufruf läuft in ein Timeout.
-6. Wenn fertig: `__save('seller_ids.json')` und die Datei aus dem Downloads-Ordner einlesen.
+- **Kampagnenname:** Kurzname aus der Auftragsdatei, z. B. `KAMPAGNE=agentur-dach`. Für den Testlauf `KAMPAGNE=agentur-dach-test`.
+- **Budget-Faustregel:** Ohne Filter BUDGET ≈ 30 × ZIEL. Mit `LAENDER=DE,AT,CH` sind es eher 150–250 × ZIEL, weil nur ~15 % der Verkäufer dort sitzen. Mit weiteren Filtern noch mehr. Nach dem Testlauf zählt der gemessene Wert `requests_je_lead` aus `report_<kampagne>.json`.
+- **Kosten:**
+  - Oxylabs: ~0,45 USD je 1.000 Abfragen.
+  - Bright Data: ~1,50 USD je 1.000 Leads.
+  - Skael: 3 Credits je E-Mail-Prüfung, dazu ~5–50 Credits je DACH-Lead für Website und Geschäftsführung (ohne Firmen-E-Mail eher oben, Einzelfälle darüber).
 
-Die Matching-Regel: Eine Seller ID wird **nur** übernommen, wenn der Amazon-Verkäufername exakt (normalisiert: lowercase, ohne Sonderzeichen) dem Wert in `Dominant Seller` entspricht. Das ist bewusst streng — Amazon-Suchergebnisse sind voller Fremdprodukte und Anzeigen, und eine falsche Seller ID vergiftet alle Folgeschritte. Erwarte ~90% Trefferquote; der Rest sind Brands, deren Dominant Seller nicht unter den ersten sechs Treffern auftaucht.
+Fehlt im Auftrag etwas, das die Liste stark verändert (Länder, Größe), **eine** Frage mit Beispiel stellen. Sonst die Standardwerte nehmen und das in der Zusammenfassung sagen.
 
-## Phase 2: Storefront-URLs
+## Phase 1: Vorprüfung
 
-Reine Rechenarbeit, kein Netzwerk:
-
-```
-https://www.amazon.de/s?me=<SELLER_ID>&marketplaceID=A1PA6795UKMFR9
-```
-
-Die Marketplace-ID ist für amazon.de konstant. `scripts/merge_amazon.py` erledigt das zusammen mit Phase 3.
-
-## Phase 3: Amazon-Verkäufer-Impressum
-
-`https://www.amazon.de/sp?seller=<ID>` liefert einen Impressum-Block mit genau sieben Feldern: Geschäftsname, Geschäftsart, Handelsregisternummer, UStID, Telefon, E-Mail, Geschäftsadresse.
-
-**Wichtig, weil es sonst Stunden kostet:** Dort steht **kein Geschäftsführer**. Erwarte ihn nicht und versprich ihn dem User nicht aus dieser Quelle. Nur in Ausnahmefällen tragen Verkäufer die Person selbst in den Geschäftsnamen ein (`Muster Handel GmbH/Mustermann Max`) — das sind etwa 1 von 1.000. Der Wert dieser Phase liegt woanders: Geschäftsname und HR-Nummer sind der verlässliche Anker für Phase 4.
-
-Technisch identisch zu Phase 1 — gleiche Bibliothek, gleicher Worker-Pool, `__startImpressum(6)`. Läuft schneller, weil pro Seller nur eine Seite geholt wird (~4-5/s).
-
-Danach zusammenführen:
+Im Arbeitsordner (siehe oben):
 
 ```bash
-python3 scripts/merge_amazon.py <liste.csv> arbeit/seller_ids.json arbeit/impressum.json
+node ../amazon_seller_scraper.mjs --pruefen
+python3 --version      # für den Sperrlisten-Abgleich in Phase 7; Windows: python --version oder py --version
 ```
 
-Das schreibt Seller IDs, Storefront-URLs und die Impressumsfelder in die CSV und legt die Chunks für Phase 4 an.
-
-## Phase 4: Website, Geschäftsführer und Anrede per Multi-Agent
-
-Hier wird der Trick gewechselt. Fremde Domains kannst du nicht aus der Amazon-Seite heraus fetchen — CORS blockt, und zwar jeden Host. Der Browser-Weg müsste pro Firma navigieren und lesen; bei 1.000 Firmen sind das tausende Calls.
-
-**Subagenten lösen das**, weil jeder sein eigenes Kontextfenster hat. Die ~900 Tokens Suchergebnis pro Firma landen dort, nicht bei dir. Der Agent schreibt sein Ergebnis in eine Datei und meldet dir nur eine Zeile zurück. So kosten 960 Firmen dich etwa 25 Agenten-Calls und ~10k Tokens statt ~870k.
-
-Vorbereitung erledigen `analyse.py` bzw. `merge_amazon.py`: `arbeit/gf/chunk_00.json` … je 40 Firmen, nach Umsatz absteigend, dedupliziert nach Geschäftsname.
-
-Starte die Agenten mit `subagent_type: "general-purpose"` und **`model: "sonnet"`** — die Aufgabe ist schematisch, Sonnet reicht und ist deutlich schneller. Schicke **6-9 Agenten pro Nachricht** parallel; ein Chunk à 40 Firmen dauert ~3-4 Minuten.
-
-Den Prompt-Text nimm wörtlich aus `referenzen/agent-prompt.md` und ersetze nur die Chunk-Nummer. Er ist auf drei Dinge getrimmt, die sonst zuverlässig schiefgehen:
-
-- **Nur eine Zeile zurückmelden.** Sonst schreiben die Agenten dir ihre 40 Ergebnisse in den Antworttext und der ganze Kontextvorteil ist weg.
-- **Erst Website-Impressum, dann Handelsregister.** Der Geschäftsführer soll aus der Firmenwebsite kommen; northdata und Co. sind Fallback, wenn die Website ihn nicht nennt.
-- **Anrede gleich mitliefern.** Der Agent hat den Vornamen ohnehin vor sich — die Anrede dort mitzunehmen kostet keinen zusätzlichen Call. Ein eigener Durchlauf dafür wäre pure Verschwendung.
-
-Zusammenführen:
-
-```bash
-python3 scripts/merge_gf.py <liste.csv> arbeit/gf/
-```
-
-### Was hier realistisch herauskommt
-
-Etwa 40% der Zeilen bekommen einen Geschäftsführer. Das klingt wenig, ist aber nah an der Obergrenze: Ein großer Teil der Amazon-Seller sind Firmen aus Hongkong und China, die keinen Geschäftsführer im deutschen Sinn haben. Rechne bei den gefundenen Namen mit ~10-20% Fehlern. Sag das dem User von dir aus — eine Leadliste, der er blind vertraut, ist gefährlicher als eine, deren Grenzen er kennt.
-
-Zwei Fehlermuster, die du kennen solltest:
-
-- **Länder-Töchter.** Der Agent findet `ch.example.com/impressum` statt `example.de/impressum` und liefert die Geschäftsführerin der Schweizer Tochter. Die HR-Nummer im Chunk ist das Gegenmittel — sie steht im Prompt, damit der Agent gegenprüfen kann.
-- **Unvollständige Listen.** Agenten arbeiten aus Suchergebnis-Snippets. Nennt die Website drei Geschäftsführer, kommen manchmal nur zwei zurück. Für die Erstansprache reicht das, für Vollständigkeit nicht.
-
-Deshalb schreibt `merge_gf.py` eine `GF Confidence`-Spalte. Die als `unsicher` markierten Zeilen gehören vor jeder Ansprache geprüft.
-
-## Phase 5: Anrede und Ansprache
-
-Das ist die Spalte, mit der der User am Ende arbeitet — hier landet das Ergebnis der ganzen Kette.
-
-```bash
-python3 scripts/anrede.py <liste.csv>
-```
-
-Die Regeln stecken im Skript, nicht in den Agenten. Absicht: Schwellwert und Wortlaut gehören an *eine* Stelle, sonst laufen sie über zwanzig Agenten-Antworten auseinander.
-
-| Situation | `Ansprache` |
+| Ausgabe | Was tun |
 |---|---|
-| Anrede-Confidence **> 60** | `Guten Tag Herr Mustermann` (nur Nachname) |
-| Anrede-Confidence **≤ 60** | `Guten Tag` |
-| GF-Angabe als `unsicher` markiert | `Guten Tag` |
-| kein Geschäftsführer gefunden | `Guten Tag` |
+| `node: command not found` oder „Node … ZU ALT“ | Nutzer bitten, Node.js LTS von nodejs.org zu installieren. Danach das Terminal bzw. die App neu starten |
+| „Oxylabs-Zugang fehlt“ | Gibt es `../.env` noch nicht: `cp ../.env.example ../.env` ausführen. Die Datei dem Nutzer im Texteditor öffnen (macOS `open -e ../.env`, Windows `notepad ..\.env`), denn Dateien mit führendem Punkt zeigt der Finder nicht an. Er trägt Benutzer und Passwort des Oxylabs-API-Nutzers ein (Konto unter oxylabs.io, Produkt „Web Scraper API“), speichert und sagt Bescheid. **Nicht im Chat abfragen, die Datei nicht selbst lesen** |
+| „Oxylabs: abgelehnt (HTTP 401/403)“ | Benutzer oder Passwort falsch, oder es ist der Dashboard-Login statt des API-Nutzers |
+| „HTTP 402“ / „traffic limit“ | Guthaben bzw. Abo bei Oxylabs fehlt |
+| Bright Data „nicht gesetzt“ | E-Mail-Adresse und Telefon kommen **nur** von Bright Data. Ist der Kanal E-Mail oder Telefon (A2), erst den Token eintragen lassen, dann weiter. Sonst dem Nutzer sagen, was fehlt: keine E-Mail und kein Telefon |
+| `python3: command not found` | Nutzer bitten, Python 3 von python.org zu installieren. Es wird erst für Phase 7 gebraucht, der Lauf kann schon starten |
+| Skael „nicht gesetzt“ | Dem Nutzer sagen, was dann fehlt: keine E-Mail-Prüfung, keine Website, Geschäftsführung und persönliche Anrede. **Will der Nutzer per E-Mail anschreiben (A2), ist der Schlüssel Pflicht**: erst eintragen lassen, dann weiter |
 
-Die Asymmetrie ist gewollt: Jemanden mit falschem Geschlecht oder falschem Namen anzuschreiben kostet den Lead sofort — ein neutrales „Guten Tag" kostet nichts. Im Zweifel also neutral. Deshalb gilt die Regel auch dann, wenn der Vorname eindeutig ist, die Firmenzuordnung aber wackelt.
-
-`Ansprache Grund` hält fest, *warum* jemand neutral gegrüßt wird (`Vorname mehrdeutig (50%)`, `GF-Angabe unsicher`, …). Ohne diese Spalte ist die Ansprache eine Blackbox und niemand kann prüfen, ob die Schwelle richtig sitzt.
-
-Meldet das Skript offene Namen (`anrede_todo.json`), stammen die aus dem Amazon-Impressum statt von einem Agenten — für die hat noch niemand ein Geschlecht bestimmt. Dann Phase 4b aus `referenzen/agent-prompt.md` fahren (ein einziger Agent, keine Websuche nötig) und danach:
-
-```bash
-python3 scripts/anrede.py <liste.csv> arbeit/anrede_result.json
-```
-
-## Phase 6: Verifikation
-
-Nicht optional. Zieh 5 Zufallstreffer und lass einen Subagenten (`model: "sonnet"`) die Impressums-Seiten **tatsächlich aufrufen** und gegen die behaupteten Namen prüfen. Der Prompt steht in `referenzen/agent-prompt.md` unter "Phase 6: Verifikation".
-
-Viele Impressen sind JavaScript-gerendert. `web_fetch` liefert dann nur eine leere Hülle — das ist kein Beleg dafür, dass die Seite kaputt ist, sondern der Hinweis, über die Chrome-Tools zu gehen.
-
-Prüf außerdem programmatisch, das kostet nichts:
+## Phase 2: Smoke-Test
 
 ```bash
-python3 scripts/pruefe.py <liste.csv>
+SMOKE=1 node ../amazon_seller_scraper.mjs
 ```
 
-Berichte die gemessene Quote ehrlich — und sag dazu, dass 5 Stichproben keine belastbare Quote sind, sondern eine Größenordnung.
+Der Test macht höchstens 300 Abfragen (≈ 0,15 USD) und liefert bis zu 5 Leads in `leads_smoke_MASTER.csv`. Er nutzt eigene Dateien und berührt das echte Gedächtnis nicht. Einstellungen wie `ZIEL`, `BUDGET` oder Filter gelten im Smoke-Test nicht. Ist ein Skael-Schlüssel gesetzt, läuft die Anreicherung mit.
 
-## Phase 7: Abgleich mit der Community-Sperrliste (Pflicht vor jeder Ansprache)
+Der Smoke-Test merkt sich seinen Stand. **Vor einer Wiederholung** (z. B. nach einem korrigierten Zugang) seine Dateien löschen, sonst ruft er nichts mehr ab: `rm -f *smoke*` (PowerShell: `Remove-Item *smoke*`).
+
+Erfolg heißt:
+
+- mindestens 1 Lead, kein „Gestoppt“ außer „Budget erreicht“,
+- mit Bright-Data-Token zusätzlich: keine Zeile „Bright Data: HTTP 4…“ und kein „Bright Data lehnt den Zugang ab“. In der Zeile „Kontakte: E-Mail x/y“ sollte x über 0 liegen,
+- mit Skael-Schlüssel zusätzlich: Die Ausgabe enthält `===== ANREICHERUNG FERTIG =====` und keine Zeile „Anreicherung nicht vollständig“ oder „UNVOLLSTÄNDIG“. Hat ein Lead eine E-Mail-Adresse, steht in der Zeile „E-Mail-Prüfung:“ ein echter Status (`Safe to Send`, `Risky`, `Unknown` oder `Invalid`), nicht nur `Not Run`.
+
+Ist die Anreicherung nicht sauber durchgelaufen, **nicht** in den Großlauf gehen. Die Meldung dem Nutzer übersetzen und nach „Wenn etwas klemmt“ vorgehen.
+
+## Phase 3: Testlauf
+
+Mit den Einstellungen aus Phase 0, aber kleinem Ziel:
 
 ```bash
-python3 ../../werkzeuge/sperrliste_abgleich.py <liste.csv>
+KAMPAGNE=<name>-test ZIEL=20 BUDGET=<Faustregel × 1,5> <Filter …> node ../amazon_seller_scraper.mjs
 ```
 
-Schreibt `<liste>_bereinigt.csv` (für die Ansprache) und `<liste>_gesperrt.csv` (nie anschreiben). Abgeglichen werden Website- und E-Mail-Spalten; Zeilen ohne eigene Website lassen sich nicht abgleichen – das dem User sagen. Ist die Liste nicht ladbar, bricht das Skript ab.
+Danach aus `report_<name>-test.json` lesen: `funnel`, `ausschluss`, `requests_je_lead`, `kosten_usd`. Aus der Ausgabe der Anreicherung die Zeilen „E-Mail-Prüfung:“ und „Verbrauch … Credits“ lesen und die Skael-Credits je Lead ausrechnen. Für die Anreicherung gelten dieselben Erfolgskriterien wie im Smoke-Test. Aus `leads_<name>-test_MASTER.csv` drei Leads ziehen (Firma, Land, Kategorie, Produkte, Umsatz/Monat ca. EUR). Dem Nutzer übersetzt zeigen, etwa so:
 
-## Spalten
+> „Ich habe 20 Händler gefunden, z. B. *Müller Haushaltswaren GmbH* aus Berlin mit 40 Produkten und rund 12.000 € Umsatz im Monat. Aussortiert habe ich vor allem Händler mit Sitz außerhalb von DACH. Ein Lead hat 140 Abfragen gekostet, also etwa 6 Cent. Passt das so?“
 
-Die Eingabelisten sehen praktisch immer gleich aus. Gelesen werden `Brand Name`, `Dominant Seller`, `Seller ID`, `Est. Monthly Revenue`. Geschrieben bzw. angelegt werden `Seller ID`, `Seller Storefront URL`, `Match Method`, `Geschäftsname (Impressum)`, `Handelsregister`, `Geschäftsadresse`, `Website`, `GF Vorname`, `GF Nachname`, `GF Alle`, `GF Quelle`, `GF Confidence`, `Anrede`, `Anrede Confidence`, `Ansprache`, `Ansprache Grund`.
+`ZIEL` zählt Treffer vor der Endkontrolle. Es können also etwas weniger als 20 Leads herauskommen.
 
-Alle Skripte sind idempotent: Sie überschreiben nie eine bereits gefüllte Seller ID und überspringen Zeilen, die schon einen Geschäftsführer haben. Ein abgebrochener Lauf wird einfach neu gestartet. Details in `referenzen/spalten.md`.
+- **Passt die Stichprobe nicht:** Filter anpassen und den Testlauf mit einem **neuen** Kampagnennamen wiederholen, z. B. `<name>-test2`. Unter dem alten Namen sind Ziel und Budget schon verbraucht, und die alten Leads blieben in der Liste. Das Gedächtnis gilt für alle Kampagnen: Bereits geprüfte Produkte und Verkäufer kosten kaum etwas.
+- **Stoppt der Testlauf mit „Budget erreicht“:** nicht von selbst erhöhen. Mit den vorhandenen Leads die Stichprobe zeigen, `requests_je_lead` ablesen und ein höheres Budget nur nach Rückfrage mit Kostenangabe setzen.
 
-Am Ende dem User immer vier Zahlen nennen: wie viele Zeilen eine Seller ID haben, wie viele einen Geschäftsführer, wie viele eine persönliche Ansprache – und wie viele wegen der Sperrliste rausgefallen sind. Die dritte ist die, die zählt.
+## Phase 4: Großlauf
 
-## Zwischenstände sichern
+Vorher Kosten nennen und die Bestätigung abwarten:
 
-Die Browser-Phasen laufen lange und der Tab kann einfrieren. Sichere alle ~1.500 Datensätze mit `__save()`. Chrome erlaubt pro Tab nur *einen* automatischen Download und blockt den zweiten stillschweigend — der Umweg über `localStorage` und einen frischen Tab steht in `referenzen/browser-technik.md`.
+- `BUDGET = ZIEL × requests_je_lead × 1,2`
+- dazu Bright Data ZIEL × 1,5 USD je 1.000 und die Skael-Credits (ZIEL × Credits je Lead aus dem Testlauf).
+- Beim ersten Großlauf `SKAEL_MAX_CREDITS=<freigegebener Betrag>` in die Befehlszeile setzen. Der Deckel stoppt die Anreicherung sauber, die E-Mail-Prüfungen laufen zuerst.
+
+```bash
+KAMPAGNE=<name> ZIEL=<D4> BUDGET=<berechnet> <Filter …> node ../amazon_seller_scraper.mjs
+```
+
+- **Lange Läufe** im Hintergrund starten (siehe oben). Es gibt keine eigene Laufzeitmessung: Ab ~15 Abfragen pro Sekunde dauern 1.000 Leads ohne Filter etwa 30–60 Minuten.
+- **Budget reicht nicht:** Der Lauf stoppt sauber und liefert die bisherigen Leads. Fortsetzen mit höherem `BUDGET`.
+- **Mehr Leads später:** `ZIEL` erhöhen, derselbe Befehl setzt fort.
+- **Ausgeschöpft:** Meldet der Lauf, dass die Listen leer sind, bevor das Ziel erreicht ist, einmal `KAMPAGNE=<name> node ../ernter_unterkategorien.mjs` ausführen und dann mit `SUB_SEITEN=5` fortsetzen. Der Ernter kostet bis zu 600 Abfragen (ca. 0,27 USD) **zusätzlich** zum `BUDGET`. Das dem Nutzer vorher sagen.
+
+## Phase 5: Anreicherung und E-Mail-Prüfung (Skael)
+
+Ist `SKAEL_API_KEY` in `../.env` gesetzt, startet sie am Ende jedes Scraper-Laufs automatisch für die Gesamtliste der Kampagne. Bezahlt werden dabei nur offene Leads. Was schon erledigt ist, kostet nichts.
+
+Sie macht zwei Dinge, in dieser Reihenfolge:
+
+1. **E-Mail-Prüfung** für jeden Lead mit Adresse, in allen Ländern (3 Credits je Adresse). Ergebnis in der Spalte `E-Mail Status`:
+
+   | Status | Bedeutung | Versand |
+   |---|---|---|
+   | `Safe to Send` | zustellbar | ja |
+   | `Risky` | Server nimmt jede Adresse an (Catch-all) | getrennt und vorsichtig |
+   | `Unknown` | nicht prüfbar | getrennt und vorsichtig |
+   | `Invalid` | ungültig, wird zurückkommen | nie. Die Adresse wird im Standardformat aus dem E-Mail-Feld entfernt |
+   | `Not Run` | nicht geprüft (kein Schlüssel, Abbruch, Störung bei Skael, abgeschaltet) | nie per E-Mail |
+
+2. **Website, Impressum, Geschäftsführung, Anrede** für Leads aus DE/AT/CH.
+
+Manuell nachholen (beides) – nach einem Abbruch, nach Code 2, 3, 4 oder 5, oder wenn der Schlüssel erst später eingetragen wurde:
+
+```bash
+KAMPAGNE=<name> node ../anreicherung.mjs
+```
+
+- Ergebnis: `leads_<name>_MASTER_angereichert.csv` mit E-Mail Status, Website, Geschäftsführung, Anrede, Vorname, Nachname, Ansprache und Match-Status.
+- Am Ende steht eine Zeile „E-Mail-Prüfung: Safe to Send … · Risky … · Invalid …“. Diese Zahlen in Phase 8 nennen.
+- Der Fortschritt hängt an Kampagne und Seller-ID. Kein Lead wird doppelt bezahlt, ein Abbruch kostet nichts.
+- Website und Geschäftsführung nur für DE/AT/CH (`ANREICHERUNG_LAENDER`). Leads aus anderen Ländern bekommen nur die E-Mail-Prüfung.
+- Deckel für Credits: `SKAEL_MAX_CREDITS=<Zahl>`. Er gilt für alle Starts der Kampagne zusammen.
+- **`Not Run` bleibt stehen:** Eine Adresse wird höchstens in 3 Starts geprüft. Meldet der Start „… Adressen wurden schon in 3 Starts ohne Ergebnis geprüft“, nicht weiter wiederholen. Erst wenn die Ursache behoben ist (Skael-Störung vorbei), einmal mit `ERNEUT_VERSUCHEN=1` starten.
+- Stoppt die Anreicherung mit „Skael liefert seit 10 Abfragen in Folge kein Ergebnis“ (Code 5), ist der Stand gespeichert und nichts fälschlich als erledigt markiert. Denselben Befehl **innerhalb von 24 Stunden** erneut starten: Dann werden schon abgeschickte Abfragen nicht noch einmal berechnet.
+
+## Phase 6: Standardformat
+
+```bash
+node ../standardformat.mjs leads_<name>_MASTER_angereichert.csv     # ohne Anreicherung: leads_<name>_MASTER.csv
+```
+
+Schreibt `…_standard.csv`. Vorne stehen die Pflichtfelder aller Pfade (`wissen/07`): Firmenname, Website, E-Mail, E-Mail Status, Anrede, Vorname, Nachname, Ansprache („Guten Tag Herr Müller“ oder neutral „Guten Tag“), Quelle, Pfad. Dahinter folgen alle übrigen Spalten. Eine Personalisierung liefert dieser Pfad nicht.
+
+Adressen mit Status `Invalid` stehen nicht mehr im Feld E-Mail, sondern in der letzten Spalte `E-Mail ungültig`.
+
+Meldet das Skript „ACHTUNG: … Adressen sind ungeprüft“:
+
+- **Der Nutzer schreibt per E-Mail an:** einmal Phase 5 nachholen und das Standardformat neu erzeugen. Bleiben danach Adressen `Not Run`, nicht weiter wiederholen. Die Liste ausliefern, die Zahl nennen und sagen, dass diese Adressen nicht per E-Mail angeschrieben werden dürfen.
+- **Anderer Kanal (Telefon, Brief):** Die Meldung ist ohne Skael-Schlüssel normal. Weiter mit Phase 7.
+
+## Phase 7: Sperrliste (immer)
+
+```bash
+python3 ../../../werkzeuge/sperrliste_abgleich.py leads_<name>_MASTER_angereichert_standard.csv --spalten "E-Mail,E-Mail ungültig,Website,Impressum-URL"
+```
+
+Ohne Anreicherung gibt es die Spalte `Impressum-URL` nicht. Dann:
+
+```bash
+python3 ../../../werkzeuge/sperrliste_abgleich.py leads_<name>_MASTER_standard.csv --spalten "E-Mail,E-Mail ungültig,Website"
+```
+
+- Ergebnis: `…_bereinigt.csv` für den Versand und `…_gesperrt.csv`. Gesperrte Firmen nie anschreiben, über keinen Kanal.
+- `--spalten` ist Pflicht, sonst würden Amazon-Links mitgeprüft. `E-Mail ungültig` gehört dazu, damit auch die Domain einer aussortierten Adresse geprüft wird.
+- Ist die Sperrliste nicht ladbar (Internet, Adresse falsch), wird **nicht** ausgeliefert. Die Ursache klären, nicht abschalten.
+- **Ausnahme „nicht eingerichtet“:** Meldet das Werkzeug „SPERRLISTE_URL nicht eingerichtet (enthält noch OWNER)“, hat der Herausgeber des Pakets die Community-Sperrliste noch nicht online gestellt. Das dem Nutzer so sagen. Steht in der Auftragsdatei dazu ein Hinweis oder stimmt er zu, denselben Befehl mit `--ohne-liste` am Ende ausführen. Im Ergebnis ausdrücklich sagen, dass **kein** Abgleich stattgefunden hat. Nennt der Herausgeber später die Adresse: `SPERRLISTE_URL=<adresse>` vor den Befehl setzen und den Abgleich wiederholen.
+- Ohne Anreicherung gibt es nur Bright-Data-E-Mails zum Abgleichen. Verkäufer ohne Website und E-Mail lassen sich nicht abgleichen, das dem Nutzer sagen.
+
+## Phase 8: Ergebnis übersetzen
+
+Dem Nutzer nennen (Abschluss nach `SKILL.md` Schritt 4):
+
+- **Gefundene Leads:** Zeilen in `_bereinigt.csv`.
+- **Davon mit Website / E-Mail / persönlicher Ansprache:** aus der Ausgabe von `standardformat.mjs`.
+- **E-Mail-Prüfung:** wie viele `Safe to Send`, `Risky`, `Unknown`, `Invalid` und `Not Run`. Dazu sagen: zuerst nur an `Safe to Send` senden, `Risky` und `Unknown` getrennt und vorsichtig, sonst leidet die Absender-Reputation.
+- **Durch die Sperrliste gefallen:** Zeilen in `_gesperrt.csv`.
+- **Kosten:** `kosten_usd` und `requests_je_lead` aus dem Report.
+- **Datei für den Versand:** vollständiger Pfad zur `_bereinigt.csv`. Das ist eine Tabelle, die sich in Excel öffnet.
+- **Lief Phase 7 mit `--ohne-liste`:** ausdrücklich sagen, dass die Liste trotz des Namens `_bereinigt` **nicht** mit der Sperrliste abgeglichen ist und der Abgleich nachgeholt wird, sobald die Sperrliste online ist.
+
+## Sonderfall: eigene Firmenliste
+
+Für eine vorhandene Liste (CSV mit Spalte `Firma` oder `Firmenname`, ideal dazu `Adresse`/`Ort`, `Land`, `Handelsregister`, `E-Mail`) ohne Amazon-Bezug. Braucht nur den Skael-Schlüssel. Hat die Liste eine E-Mail-Spalte, wird jede Adresse auf Zustellbarkeit geprüft (3 Credits je Adresse, alle Länder). Die Original-CSV angeben, keine schon angereicherte Datei:
+
+```bash
+cp <liste.csv> . && KAMPAGNE=<name> CSV=<liste.csv> ANREICHERUNG_LAENDER=alle node ../anreicherung.mjs
+node ../standardformat.mjs <liste>_angereichert.csv
+python3 ../../../werkzeuge/sperrliste_abgleich.py <liste>_angereichert_standard.csv --spalten "E-Mail,E-Mail ungültig,Website,Impressum-URL"
+```
+
+`ANREICHERUNG_LAENDER=alle` nur setzen, wenn die Liste keine Länderspalte hat oder ausschließlich DACH-Firmen enthält.
+
+## Wenn etwas klemmt
+
+**Vorübergehende API-Fehler wiederholen die Skripte selbst.** Das gilt für Oxylabs, Bright Data und Skael gleichermaßen (`wiederholen.mjs`). Netzwerkfehler, Zeitüberschreitungen, unlesbare Antworten und HTTP 408, 425, 429, 500, 502, 503 und 504 werden bis zu `MAX_RETRIES` Mal versucht (Standard 5). Dazwischen liegen 2, 4, 8 und 16 Sekunden Pause, bei 429 (Rate-Limit) 5, 10, 20 und 40 Sekunden. Eine Pause dauert höchstens 60 Sekunden, nennt die API eine Wartezeit (`Retry-After`), gilt diese. Dauerhafte Fehler (HTTP 400, 401, 402, 403, 404, Eingabe abgelehnt) brechen sofort ab, die Meldung der API steht dabei. Auf ein Skael-Ergebnis wird höchstens `SKAEL_MAX_WARTEZEIT` Sekunden gewartet, auf einen Bright-Data-Block höchstens `BD_TIMEOUT_MIN` Minuten. Danach holt der nächste Start es ab, ohne es neu zu bezahlen. Ist ein Skael-Auftrag aus vorübergehendem Grund gescheitert („timeout“, „unavailable“ …), wird er einmal neu eingereicht. Scheitert ein einzelner Lead oder Verkäufer auch nach allen Versuchen, bleibt er offen und der Lauf geht weiter. Am Ende steht eine Zeile „Fehler: …“ bzw. „Fehler in diesem Start: …“ mit der Anzahl. Ein Lauf hängt deshalb nie endlos. Läuft er scheinbar still, wartet er gerade eine Pause ab. Bei einer längeren Störung kann `MAX_RETRIES=8` helfen, ein Neustart setzt in jedem Fall am Checkpoint fort.
+
+| Meldung | Bedeutung | Was tun |
+|---|---|---|
+| „Budget erreicht“ | harte Obergrenze erreicht, Leads wurden geliefert | mit höherem `BUDGET` fortsetzen. Vorher dem Nutzer die Mehrkosten nennen |
+| „KATEGORIEN: kein Treffer für …“ | ein Kategoriename ist falsch geschrieben oder die Umlaute kamen verstümmelt an | Namen aus der Meldung übernehmen. Es wurde nichts bezahlt |
+| „Bright Data: HTTP 401/402/403“ / „Bright Data lehnt den Zugang ab“ | Token falsch oder Guthaben leer. Die Leads sind gefunden und warten auf Kontaktdaten | Nutzer bitten, Token bzw. Guthaben zu prüfen, dann denselben Befehl erneut. Nur wenn er ausdrücklich ohne E-Mail und Telefon weitermachen will: Token aus der `.env` nehmen lassen und erneut starten |
+| „Gestoppt: Abbruch (SIGTERM)“ | der Lauf wurde von außen beendet, z. B. durch ein Zeitlimit | denselben Befehl im Hintergrund erneut starten, es geht nichts verloren |
+| „Leer auf Seite 1 …“ / „Tote Listen“ | Kategorie liefert keine Neuheiten | nichts. Nach zwei leeren Starts wird die Liste nicht mehr bezahlt |
+| „HTTP 402“ / „Ausfall: 30 Abrufe in Folge ohne Ergebnis“ | Oxylabs-Guthaben leer bzw. Netz weg | Guthaben bzw. Internet prüfen, dann denselben Befehl erneut |
+| „X ist ungültig“ | Tippfehler in einer Einstellung | Wert korrigieren, es wurde nichts bezahlt |
+| „Leads warten noch auf Kontaktdaten“ | Bright Data war noch nicht fertig | später denselben Befehl erneut, bereits bezahlt |
+| Anreicherung Code 2 / 3 / 4 | Skael-Schlüssel abgelehnt / Credits leer / Deckel erreicht | Schlüssel bzw. Guthaben prüfen, Deckel erhöhen, dann `KAMPAGNE=<name> node ../anreicherung.mjs` |
+| Anreicherung Code 5: „Skael liefert seit 10 Abfragen in Folge kein Ergebnis“ oder „UNVOLLSTÄNDIG“ | Skael oder das Internet ist gerade gestört | der Stand ist gespeichert. Innerhalb von 24 Stunden erneut starten, dann wird nichts doppelt berechnet: `KAMPAGNE=<name> node ../anreicherung.mjs` |
+| „Skael lehnt alle Anfragen an … ab“ (Code 1) | die Schnittstelle hat sich geändert oder `SKAEL_URL` ist falsch | nicht wiederholen, es wurde nichts berechnet. Meldung an den Betreiber des Pakets geben |
+| `E-Mail Status` = `Not Run` | Prüfung lief nicht: kein Schlüssel, Störung, `EMAIL_PRUEFUNG=0` | Skael-Schlüssel prüfen, einmal `KAMPAGNE=<name> node ../anreicherung.mjs`. Nach 3 Starts ohne Ergebnis hilft nur `ERNEUT_VERSUCHEN=1`, wenn die Ursache behoben ist. Sonst die Adressen nicht per E-Mail anschreiben |
+| „… ist bereits angereichert bzw. im Standardformat“ | der Anreicherung wurde eine fertige Datei übergeben | die MASTER- bzw. Original-CSV angeben |
+| Sperrliste: „SPERRLISTE_URL nicht eingerichtet (enthält noch OWNER)“ | die Community-Sperrliste ist in diesem Paket noch nicht online | Phase 7, Ausnahme „nicht eingerichtet“: mit `--ohne-liste` ausführen und sagen, dass nicht abgeglichen wurde |
+| fast nur Leads aus China/HK | ohne `LAENDER` normal | Filter `LAENDER=DE,AT,CH` vorschlagen |
+
+Alle Einstellungen, Dateien und Spalten stehen in `README.md` in diesem Ordner.
+
+Bleibt ein Fehler nach zwei gleichen Versuchen oder steht er nicht in der Tabelle: nach `../../CLAUDE.md`, Abschnitt „Wenn etwas schiefgeht“, melden (nur die Fehlermeldung, keine Lead-Daten).

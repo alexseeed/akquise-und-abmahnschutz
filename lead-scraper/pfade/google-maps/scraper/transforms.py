@@ -50,9 +50,35 @@ def strip_query_fragment(url: str | None) -> str:
 
 
 def website_final(website: str | None, domain_url_response: str | None) -> str:
-    """Clay DATENSÄTZE.`Website final` (Merge-Spalte)."""
-    cleaned = strip_query_fragment(website)
+    """Clay DATENSÄTZE.`Website final` (Merge-Spalte).
+
+    Abweichung vom Original: Maps liefert oft Unterseiten (/kontakt, /impressum.php),
+    die der ICP-Checker nicht erreicht oder die nichts über das Büro sagen. Deshalb
+    wird auf die Startseite gekürzt.
+    """
+    cleaned = "" if ist_plattform(website) else startseite(strip_query_fragment(website))
     return cleaned or (domain_url_response or "")
+
+
+_PLATTFORMEN = ("instagram.com", "facebook.com", "linkedin.com", "xing.com", "twitter.com", "x.com",
+                "youtube.com", "tiktok.com", "pinterest.", "houzz.", "google.", "goo.gl", "linktr.ee")
+
+
+def ist_plattform(url: str | None) -> bool:
+    """Social-Media- und Plattform-Links sind keine Firmenwebsite."""
+    host = host_of(url)
+    return bool(host) and any(host == p or host.endswith("." + p) or (p.endswith(".") and p in host)
+                              for p in _PLATTFORMEN)
+
+
+def startseite(url: str | None) -> str:
+    """Protokoll + Host, ohne Pfad. Ohne Protokoll wird https:// ergänzt."""
+    if not url or not url.strip():
+        return ""
+    m = re.match(r"^\s*(https?://)?([^/\s%]+)", url.strip(), flags=re.IGNORECASE)
+    if not m or "." not in m.group(2):
+        return url.strip()
+    return f"{(m.group(1) or 'https://').lower()}{m.group(2).lower()}/"
 
 
 _WEBSITE_RE = re.compile(r"^(https?://)?([a-z0-9-]+\.)+[a-z]{2,}(/.*)?$", re.IGNORECASE)
@@ -378,3 +404,89 @@ def site_links(scraper_output: dict | None, limit: int = 150) -> str:
 def ready_to_send(email_final_value: str, personalisierung: str, video_title: str) -> bool:
     """Clay ANREICHERUNG.`Ready to Send`."""
     return bool(email_final_value) and bool(personalisierung) and bool(video_title)
+
+
+# ------------------------------------------------------- Ansprache
+
+def ansprache_sicher(anrede: str | None, last: str | None, confidence: Any) -> tuple[str, str]:
+    """Standard-Ansprache des Pakets (wissen/07): persönlich nur bei Sicherheit > 60.
+
+    Keine Clay-Entsprechung. Der Anrede-Prompt setzt bei unsicheren Vornamen „Herr“;
+    diese Spalte fängt das ab.
+    """
+    if not last:
+        return "Guten Tag", "kein Geschäftsführer"
+    if anrede not in ("Herr", "Frau"):
+        return "Guten Tag", "Anrede nicht bestimmbar"
+    try:
+        conf = int(float(confidence or 0))
+    except (TypeError, ValueError):
+        conf = 0
+    if conf <= 60:
+        return "Guten Tag", f"Vorname mehrdeutig ({conf}%)"
+    return f"Guten Tag {anrede} {last}", f"{conf}%"
+
+
+# ------------------------------------------------------- Pfad Recruiting
+
+# Pfadbestandteile von Karriere-Seiten, wichtigste zuerst
+_KARRIERE_SIGNALE = (
+    "stellenangebot", "offene-stellen", "jobs", "karriere", "career", "stellen",
+    "wir-suchen", "bewerb", "ausbildung", "job", "team",
+)
+
+
+def karriere_links(scraper_output: dict | None, limit: int = 2, basis: str = "") -> list[str]:
+    """Links der Startseite, die nach Karriere-/Jobseiten aussehen (eigene Domain).
+
+    Ersatz für das Browsen des Clay-Claygents in DATENSÄTZE.`Stelle`: Der Agent
+    klickt sich zu „Karriere“/„Jobs“ durch, lokal werden diese Seiten gezielt abgerufen.
+    `basis` ist die angefragte Website, falls die Antwort keine `final_url` enthält.
+    """
+    out = scraper_output or {}
+    host = registrable_domain(out.get("final_url") or basis)
+    gefunden: list[tuple[int, str]] = []
+    seen: set[str] = set()
+    for link in out.get("links") or []:
+        if not isinstance(link, str) or not link.lower().startswith("http"):
+            continue
+        if host and registrable_domain(link) != host:
+            continue
+        sauber = link.split("#")[0].rstrip("/")
+        pfad = re.sub(r"^https?://[^/]+", "", sauber).lower()
+        if not pfad or pfad in seen:
+            continue
+        rang = next((i for i, s in enumerate(_KARRIERE_SIGNALE) if s in pfad), None)
+        if rang is None:
+            continue
+        seen.add(pfad)
+        gefunden.append((rang, sauber))
+    gefunden.sort(key=lambda x: (x[0], len(x[1])))
+    return [url for _, url in gefunden[:limit]]
+
+
+def stellen_text(seiten: list[tuple[str, dict]], max_chars: int) -> str:
+    """Text von Startseite und Karriere-Seiten für die Stellenanalyse, je Seite gekennzeichnet."""
+    teile, rest = [], max_chars
+    for url, out in seiten:
+        body = ((out or {}).get("body_text") or "").strip()
+        if not body or rest <= 0:
+            continue
+        stueck = body[:rest]
+        teile.append(f"=== Seite: {url} ===\n{stueck}")
+        rest -= len(stueck)
+    return "\n\n".join(teile)
+
+
+def stellen_ergebnis(result: dict | None) -> dict:
+    """Clay DATENSÄTZE.`Stelle vorhanden`, `JOB TITLE`, `JOB DESCRIPTION` aus der Stellenanalyse."""
+    result = result or {}
+    angebote = result.get("stellenangebote")
+    erste = angebote[0] if isinstance(angebote, list) and angebote and isinstance(angebote[0], dict) else {}
+    vorhanden = bool(result.get("stellenGefunden")) and bool(erste.get("position"))
+    return {
+        "stelle_vorhanden": 1 if vorhanden else 0,
+        "job_title": (erste.get("position") or "") if vorhanden else "",
+        "job_description": (erste.get("beschreibung") or "") if vorhanden else "",
+        "job_bereich": (erste.get("bereich") or "") if vorhanden else "",
+    }

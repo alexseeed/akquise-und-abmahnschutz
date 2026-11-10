@@ -48,7 +48,7 @@
 ## Nutzungsbedingungen der Datenquellen
 
 - **Google Maps:** über einen Drittanbieter (Skael). Es gelten dessen Bedingungen und die von Google.
-- **Amazon:** Automatisierte Abrufe können gegen die Amazon-Nutzungsbedingungen verstoßen. Risiko: Captcha oder Kontosperre (`04_pfad-amazon.md`).
+- **Amazon:** über einen Drittanbieter (Oxylabs), nicht über ein eigenes Amazon-Konto. Es gelten dessen Bedingungen und die von Amazon. Kontaktdaten der Verkäufer kommen von Bright Data (`04_pfad-amazon.md`).
 - **Handelsregister und Wirtschaftsdatenbanken:** Abruf für Recherche üblich; massenhafte automatisierte Abrufe je nach Anbieter untersagt.
 - **Jobbörsen, LinkedIn, Xing** (künftige Pfade): Scraping meist ausdrücklich untersagt.
 

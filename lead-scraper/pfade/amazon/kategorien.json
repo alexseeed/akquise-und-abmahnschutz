@@ -1,0 +1,150 @@
+[
+  {
+    "name": "Küche & Haushalt",
+    "node": 3167641,
+    "aktiv": true
+  },
+  {
+    "name": "Beauty",
+    "node": 84230031,
+    "aktiv": true
+  },
+  {
+    "name": "Haustier",
+    "node": 340852031,
+    "aktiv": true
+  },
+  {
+    "name": "Auto & Motorrad",
+    "node": 78193031,
+    "aktiv": true
+  },
+  {
+    "name": "Baby",
+    "node": 355007011,
+    "aktiv": true
+  },
+  {
+    "name": "Lebensmittel & Getränke",
+    "node": 340846031,
+    "aktiv": true
+  },
+  {
+    "name": "Elektronik & Foto",
+    "node": 562066,
+    "aktiv": true
+  },
+  {
+    "name": "Computer & Zubehör",
+    "node": 340843031,
+    "aktiv": true
+  },
+  {
+    "name": "Garten",
+    "node": 10925031,
+    "alias": "garden",
+    "aktiv": true
+  },
+  {
+    "name": "Spielzeug",
+    "node": 12950651,
+    "alias": "toys",
+    "aktiv": true
+  },
+  {
+    "name": "Sport & Freizeit",
+    "node": 16435051,
+    "alias": "sports",
+    "aktiv": true
+  },
+  {
+    "name": "Drogerie & Körperpflege",
+    "node": 64187031,
+    "alias": "drugstore",
+    "aktiv": true
+  },
+  {
+    "name": "Baumarkt",
+    "node": 80084031,
+    "alias": "diy",
+    "aktiv": true
+  },
+  {
+    "name": "Bürobedarf & Schreibwaren",
+    "node": 192416031,
+    "alias": "office-products",
+    "aktiv": true
+  },
+  {
+    "name": "Beleuchtung",
+    "node": 213083031,
+    "alias": "lighting",
+    "aktiv": true
+  },
+  {
+    "name": "Musikinstrumente & DJ-Equipment",
+    "node": 340849031,
+    "alias": "mi",
+    "aktiv": true
+  },
+  {
+    "name": "Bücher",
+    "node": 186606,
+    "aktiv": true
+  },
+  {
+    "name": "Bekleidung",
+    "node": 77028031,
+    "aktiv": true
+  },
+  {
+    "name": "Schuhe & Handtaschen",
+    "node": 355006011,
+    "aktiv": true
+  },
+  {
+    "name": "Uhren",
+    "node": 193707031,
+    "aktiv": true
+  },
+  {
+    "name": "Schmuck",
+    "node": 327472011,
+    "aktiv": true
+  },
+  {
+    "name": "Koffer, Rucksäcke & Taschen",
+    "node": 2454118031,
+    "aktiv": true
+  },
+  {
+    "name": "Games",
+    "node": 300992,
+    "aktiv": true
+  },
+  {
+    "name": "Gewerbe, Industrie & Wissenschaft",
+    "node": 5866098031,
+    "aktiv": true
+  },
+  {
+    "name": "Elektro-Großgeräte",
+    "node": 908823031,
+    "aktiv": true
+  },
+  {
+    "name": "Musik-CDs & Vinyl",
+    "node": 255882,
+    "aktiv": true
+  },
+  {
+    "name": "DVD & Blu-ray",
+    "node": 284266,
+    "aktiv": true
+  },
+  {
+    "name": "Software",
+    "node": 301927,
+    "aktiv": true
+  }
+]

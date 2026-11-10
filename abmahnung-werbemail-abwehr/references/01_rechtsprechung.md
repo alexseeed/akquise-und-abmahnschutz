@@ -10,6 +10,9 @@ Stand: Oktober 2026. Vor jeder Nutzung per Websuche auf neue Entscheidungen und 
 | Einwilligung | AG Düsseldorf 290c C 153/25 (19.01.2026) | Kontaktaufforderung auf Website ist keine Einwilligung; Abmeldelink/Sperre ersetzt keine UE |
 | Wiederholungsgefahr | BGH I ZR 144/21 (01.12.2022) | Neuer Hamburger Brauch genügt; Ablehnung lässt Wiederholungsgefahr fortbestehen |
 | UE per PDF | BGH I ZR 49/22 (12.01.2023) | Für Kaufleute ausreichend, Original nicht nötig |
+| UE bei Nicht-Kaufleuten | §§ 780, 781 BGB; § 350 HGB (nur Kaufleute) | GbR, Freiberufler, Kleingewerbe: Schriftform, Original per Post |
+| GbR-Vertretung | § 720 BGB (seit 01.01.2024) | Ohne abweichende Regelung Gesamtvertretung: alle Gesellschafter unterschreiben |
+| Sofortiges Anerkenntnis | § 93 ZPO | Wer sofort eine ausreichende UE abgibt und Änderungswünsche anbietet, trägt bei Klage die Kosten nicht |
 | Vollmacht Abmahnung | BGH I ZR 140/08 (19.05.2010) | § 174 BGB nicht anwendbar |
 | Rechtsmissbrauch | BGH I ZR 83/23 (07.03.2024); OLG Frankfurt 6 U 68/18; AG Kassel 435 C 1051/21 | Gesamtwürdigung; Zahl allein reicht nicht; Indizien u. a. Verknüpfung UE mit Kosten, Kostenfreistellung, Serienabmahnung |
 | Fehlzitat-Beispiel | BGH VI ZR 721/15 | Betrifft das allgemeine Persönlichkeitsrecht, nicht den Gewerbebetrieb |
@@ -23,6 +26,8 @@ Stand: Oktober 2026. Vor jeder Nutzung per Websuche auf neue Entscheidungen und 
 | Art. 82 Funktion | EuGH C-655/23 (04.09.2025) | Nur Ausgleich, keine Abschreckung; Ärger/Sorge können Schaden sein, wenn nachgewiesen |
 | Kontrollverlust | BGH VI ZR 10/24 (18.11.2024) | ca. 100 € als Richtwert – im Schreiben nicht nennen (liefert eine Hausnummer) |
 | Missbräuchliche Auskunft | EuGH C-526/24 „Brillen Rottler“ (19.03.2026) | Auch ein erster Antrag kann missbräuchlich sein; Beweislast beim Verantwortlichen |
+| Auskunftsberechtigter | Art. 15 i. V. m. Art. 4 Nr. 1 DSGVO | Nur die betroffene natürliche Person, nicht die abmahnende GmbH oder KG |
+| Auskunftsfrist | Art. 12 Abs. 3 DSGVO | Ein Monat ab Eingang des Antrags |
 
 ## Gegenstandswert und Kosten
 
@@ -30,9 +35,18 @@ Stand: Oktober 2026. Vor jeder Nutzung per Websuche auf neue Entscheidungen und 
 |---|---|---|
 | NRW | AG Düsseldorf 23 C 120/25 (20.11.2025), 38 C 135/25 (30.04.2026), AG Langenfeld 11 C 58/25 (14.07.2025) | 3.500 € bei B2B üblich (3.500–6.000 €), 403,50 € Kosten zugesprochen, Anwalt erforderlich |
 | Berlin | KG 5 W 152/21 (17.01.2022) | 3.000 € |
-| Bayern | LG München II 6 T 1583/17 (12.05.2017) | 1.000 € (Mindermeinung) |
+| Bayern | LG München II 6 T 1583/17 (12.05.2017) | 1.000 € für eine einzelne Werbe-Mail an eine Anwaltskanzlei (Mindermeinung); aus BGH I ZR 218/07 folgt kein Regelwert von 6.000 € |
+| Bayern | AG München 142 C 1633/22 (05.08.2022) | 3.000 € für **drei** Werbe-Mails **nach ausdrücklichem Widerspruch**. Wird oft von Abmahnern für höhere Werte zitiert, trägt aber selbst nur 3.000 € |
+| NRW | OLG Hamm 9 U 73/14, **Beschluss** vom 09.12.2014, MMR 2015, 203 | 1.000 € für die einmalige Zusendung einer Werbe-Mail an einen Gewerbebetrieb |
+| BGH | I ZR 218/07, Beschluss vom 20.05.2009 | 6.000 €, aber für einen 15-seitigen Newsletter. Kein Regelwert für eine einzelne Mail |
 
 Immer am Gerichtsstand des Abmahners nachrecherchieren (§ 32 ZPO, Ort des Empfangs). Amtsgerichte sind seit 01.01.2026 bis 10.000 € Streitwert zuständig.
+
+**Kostennachweis:**
+- Erstattungsfähig sind nur Kosten, die der Abmahner seinem Anwalt tatsächlich schuldet.
+- Legitim ist die Bitte um die Berechnung der Vergütung (§ 10 RVG) und den Nachweis der Zahlung oder Zahlungspflicht.
+- Eine ernsthafte, endgültige Zahlungsverweigerung kann einen Freistellungsanspruch in einen Zahlungsanspruch umwandeln (§ 250 BGB). Deshalb Kosten nie „ablehnen“, sondern den Nachweis anfordern und die Zahlung ausdrücklich offenhalten.
+- Die Umsatzsteuer ist auch bei vorsteuerabzugsberechtigten Abmahnern zu erstatten (BGH I ZR 87/20). Das ist kein tragfähiger Einwand.
 
 **RVG-Tabelle ab 01.06.2025 (Auszug, 1,0-Gebühr):** bis 500 € = 51,50 · bis 1.000 € = 93,00 · bis 1.500 € = 134,50 · bis 2.000 € = 176,00 · bis 3.000 € = 235,50 · bis 4.000 € = 295,00 · bis 5.000 € = 354,50 · bis 6.000 € = 414,00. Auslagenpauschale Nr. 7002 VV RVG: 20 % der Gebühren, höchstens 20 €. Werte über 3.000 € vor Verwendung an der amtlichen Tabelle prüfen.
 

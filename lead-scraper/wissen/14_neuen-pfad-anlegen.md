@@ -25,8 +25,8 @@
    |---|---|
    | Prüfprofil (Website gegen Wunschkunden) | Google Maps, Stufe 3c / Skael `icp_checker` |
    | Impressum, E-Mail-Suche, E-Mail-Prüfung | Google Maps, Stufe 4 / Skael-Endpunkte |
-   | Geschäftsführung per Recherche-Agent | Amazon, Phase 4 (`referenzen/agent-prompt.md`) |
-   | Anrede- und Ansprache-Regeln | Amazon `scripts/anrede.py` |
+   | Website, Impressum, Geschäftsführung zu einer Firmenliste (mit Abgleich über Register, USt-IdNr., Firmenname) | Amazon `anreicherung.mjs` (liest jede CSV mit Spalte `Firma`/`Firmenname`) |
+   | Anrede- und Ansprache-Regeln, Standardfelder | Amazon `anreicherung.mjs` und `standardformat.mjs` |
    | Sperrlisten-Abgleich | `werkzeuge/sperrliste_abgleich.py` |
 
 5. **Interview erweitern** in `wissen/02_zielgruppen-interview.md`:

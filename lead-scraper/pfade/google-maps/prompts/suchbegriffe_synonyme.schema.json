@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "properties": {
+    "suchbegriffe": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Weitere Suchbegriffe für dieselbe Tätigkeit, wichtigste zuerst, ohne die bisherigen."
+    }
+  },
+  "required": ["suchbegriffe"],
+  "additionalProperties": false
+}

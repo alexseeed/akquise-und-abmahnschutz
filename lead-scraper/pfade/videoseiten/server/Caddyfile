@@ -1,0 +1,44 @@
+# Caddy holt das HTTPS-Zertifikat selbst, sobald der DNS-A-Record auf den VPS zeigt.
+# Platzhalter-Domain nicht von Hand ändern: einrichten.sh --domain <seiten-domain> setzt sie
+# beim Kopieren nach /etc/caddy/Caddyfile ein (sucht genau die Zeile "angebot.example.de {").
+angebot.example.de {
+	# Kein Zugriffsprotokoll: Caddy schreibt ohne "log"-Direktive keine Aufrufe mit IP-Adresse.
+
+	header {
+		X-Robots-Tag "noindex, nofollow, noarchive"
+		Referrer-Policy "no-referrer"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Strict-Transport-Security "max-age=31536000"
+		Permissions-Policy "camera=(), microphone=(), geolocation=()"
+		-Server
+	}
+
+	handle /robots.txt {
+		respond "User-agent: *
+Disallow: /" 200
+	}
+
+	# Messung, Widerspruch, Skael-Webhook -> server.py
+	handle /api/* {
+		reverse_proxy 127.0.0.1:8080
+	}
+	handle /webhook/* {
+		reverse_proxy 127.0.0.1:8080
+	}
+
+	# Seiten und gemeinsame Dateien. Ordnerliste und Startseite gibt es nicht.
+	handle /v/* {
+		@meta path */.meta.json
+		respond @meta 404
+		root * /srv/seiten
+		file_server
+	}
+	handle /assets/* {
+		root * /srv/seiten
+		file_server
+	}
+	handle {
+		respond 404
+	}
+}

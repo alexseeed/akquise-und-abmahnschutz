@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "properties": {
+    "kategorie": {
+      "type": "string",
+      "enum": ["mittelstand", "konzern", "oeffentlich_verband", "it_wettbewerber", "unbekannt"],
+      "description": "Einordnung der Firma nach Größe und Art."
+    },
+    "mitarbeitende_schaetzung": {
+      "type": "string",
+      "description": "Geschätzte Zahl der Mitarbeitenden als kurze Spanne, z. B. 'ca. 50–100' oder 'über 10.000'."
+    },
+    "begruendung": {
+      "type": "string",
+      "description": "Ein bis zwei Sätze, woran die Einordnung festgemacht ist."
+    }
+  },
+  "required": ["kategorie", "mitarbeitende_schaetzung", "begruendung"],
+  "additionalProperties": false
+}

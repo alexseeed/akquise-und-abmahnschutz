@@ -52,6 +52,18 @@ Die Domain des meldenden Unternehmens dient nur der Berechnung eines anonymen Sc
 
 Gelistete Unternehmen können jederzeit widersprechen (`WIDERSPRUCH.md` im Repository). Der Betreiber trägt die Domain in die Widerspruchsliste ein; sie verschwindet sofort aus allen Listen.
 
+## Eigene Blockliste (bereits kontaktiert)
+
+Firmen aus früheren Kampagnen gehören **nicht** auf die Community-Sperrliste, sondern auf die private Blockliste des Google-Maps-Pfads:
+
+```bash
+python3 -m scraper blockliste-import alte_leads.csv
+```
+
+- Liegt in `data/blockliste.txt`, bleibt lokal, wird nie weitergegeben.
+- Firmen-Domains werden komplett gesperrt, Freemail-Adressen (t-online.de, web.de …) nur als einzelne Adresse.
+- Greift vor der Prüfung gegen das Wunschkundenprofil (spart Kosten) und noch einmal beim Export (Liste 5).
+
 ## Grenzen
 
 - Ohne Moderation sind **Falschmeldungen möglich**. Die harmlose Wirkung eines Eintrags (nur Werbe-Sperre) begrenzt den Schaden.

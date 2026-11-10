@@ -9,6 +9,10 @@ Keyword + Land  →  Städte  →  Google Maps  →  ICP-Prüfung  →  Impressu
 Die Zielgruppe ist austauschbar. Der Prozess funktioniert für alles, was über
 Google Maps auffindbar ist.
 
+Dasselbe Programm fährt auch die beiden Recruiting-Wege: Firmen aus Google Maps mit einer
+offenen Stelle auf der eigenen Website (`init --pfad recruiting`, `docs/07_RECRUITING.md`)
+und konkrete Anzeigen aus Jobportalen (`stellensuche`, `docs/08_STELLENSUCHE.md`).
+
 ---
 
 ## Schnellstart
@@ -16,7 +20,7 @@ Google Maps auffindbar ist.
 ```bash
 cd <projektverzeichnis>
 
-# 1. Eigene Zugänge in .env eintragen: SKAEL_API_KEY und OPENAI_API_KEY
+# 1. Eigene Zugänge in .env eintragen: SKAEL_API_KEY (OPENAI_API_KEY nur bei LLM_PROVIDER=openai)
 python3 -m scraper doctor
 
 # 2. ICP-Prompt bauen (siehe docs/00_ANLEITUNG.md) und ablegen
@@ -141,7 +145,7 @@ Benötigt werden:
 | Variable | Wofür | Pflicht |
 |---|---|---|
 | `SKAEL_API_KEY` | alle Scraping- und Anreicherungs-Endpunkte | ✅ |
-| `OPENAI_API_KEY` | die vier KI-Schritte | ✅ |
+| `OPENAI_API_KEY` | KI-Schritte, nur bei `LLM_PROVIDER=openai` bzw. `DOMAINSUCHE=openai` (Standard: Skael-KI) | optional |
 | `FINDYMAIL_API_KEY` | Fallback-Mailfinder | optional |
 
 `.env`, `data/` und `exports/` stehen in `.gitignore`.

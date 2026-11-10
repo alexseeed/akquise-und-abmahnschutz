@@ -5,6 +5,12 @@ Was du beantworten musst, was das System tut, und was am Ende rauskommt.
 Du kannst den ganzen Weg im Chat gehen (Skill `lead-scraper`) oder selbst auf der
 Kommandozeile. Diese Anleitung beschreibt beides parallel.
 
+> **Firmen, die gerade einstellen?** Dann gilt nicht diese Anleitung, sondern einer der
+> beiden Recruiting-Wege im selben Programm: über die Firmen-Website
+> (`../../recruiting/ABLAUF.md`, Start mit `init --pfad recruiting`) oder über Jobportale
+> (`../../stellensuche/ABLAUF.md`, Start mit `stellensuche`). Technik: `07_RECRUITING.md`,
+> `08_STELLENSUCHE.md`.
+
 ---
 
 ## Die 12 Fragen, die vor jedem Lauf geklärt sein müssen
@@ -89,7 +95,7 @@ Im Chat: *„Ich will [Zielgruppe] scrapen"* → der Skill führt durch die Rund
 legt `prompts/icp_<zielgruppe>.txt` an.
 
 Ohne Chat: `prompts/icp_prompt_builder.md` als Vorlage nehmen,
-`prompts/icp_beispiel_metallbau.txt` als fertiges Muster.
+`prompts/beispiele/icp_metallbau.txt` als fertiges Muster.
 
 ### Schritt 2 — Lauf anlegen
 

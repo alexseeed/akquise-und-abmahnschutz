@@ -13,24 +13,28 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 TMP = tempfile.mkdtemp()
-# Wie im E-Commerce-Test: echte .env-Werte dürfen die Tests nicht kippen,
-# Dienste auf einer toten lokalen Adresse: kein Aufruf kostet etwas.
+# Echte .env-Werte dürfen die Tests nicht kippen, Sperrliste ohne Download.
+# Bewusst keine toten *_BASE_URL: Die Tests ersetzen den Skael-Client ganz und
+# mocken den Listenabruf – tote Adressen würden nur CONFIG für später
+# importierte Testmodule vergiften (deren Attrappen prüfen den echten Host).
 os.environ.update({
     "DB_PATH": str(Path(TMP) / "test.db"),
     "SPERRLISTE_PFLICHT": "false",
     "SPERRLISTE_URL": "https://example.invalid/OWNER-liste.txt",
     "SKAEL_API_KEY": "", "OPENAI_API_KEY": "", "FINDYMAIL_API_KEY": "",
-    "SKAEL_BASE_URL": "http://127.0.0.1:9", "OPENAI_BASE_URL": "http://127.0.0.1:9",
-    "MAX_RETRIES": "1",
+    "MAX_RETRIES": "1", "KAMPAGNE": "",
 })
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from scraper import cli, db  # noqa: E402
+from scraper import cli, db, pipeline  # noqa: E402
 from scraper import export as export_mod  # noqa: E402
+from scraper.blockliste import Blockliste  # noqa: E402
 from scraper.clients import ApiError  # noqa: E402
 from scraper.config import CONFIG  # noqa: E402
+from scraper.sperrliste import Sperrliste  # noqa: E402
 
 
 def _cli(*argv: str) -> tuple[int, str, str]:
@@ -77,6 +81,7 @@ def _skael_im_cli(klasse):
 
 class SkaelGestoert:
     """Anbieter gestört: jede Abfrage scheitert, ohne Netz."""
+
     calls: list = []
 
     def find_cities(self, country_code, min_population, limit=None):
@@ -96,7 +101,11 @@ class PlatzhalterUndExitCodeTest(unittest.TestCase):
 
     def setUp(self):
         self.original_db = CONFIG.db_path
+        self.original_url = CONFIG.sperrliste_url
         CONFIG.db_path = Path(TMP) / f"{self._testMethodName}.db"
+        # CONFIG kann schon von einem anderen Testmodul geladen sein – hermetisch setzen
+        CONFIG.sperrliste_url = "https://example.invalid/OWNER-liste.txt"
+        pipeline.BILANZ.clear()
         self.conn = db.connect()
         db.init(self.conn)
         for keyword, country in (("Metallbau", "DE"), ("Schlosserei", "AT")):
@@ -108,6 +117,7 @@ class PlatzhalterUndExitCodeTest(unittest.TestCase):
     def tearDown(self):
         self.conn.close()
         CONFIG.db_path = self.original_db
+        CONFIG.sperrliste_url = self.original_url
 
     def test_platzhalter_bricht_vor_dem_lauf_mit_exit_2_ab(self):
         with _einstellung(skael_api_key="eak_dein_key_hier"), _skael_im_cli(SkaelGestoert):
@@ -175,17 +185,23 @@ class CsvFormelschutzTest(unittest.TestCase):
         try:
             conn = db.connect()
             db.init(conn)
-            formel = '=HYPERLINK("http://example.com","x")'
+            formel = "=SUMME(1)"
+            telefon = "+49 151 12345678"
             conn.execute("INSERT INTO datensaetze (business_id, firmenname) VALUES ('formel-1', 'Formel')")
             ds_id = conn.execute("SELECT id FROM datensaetze").fetchone()[0]
             conn.execute("INSERT INTO anreicherung (datensatz_id, firmenname_final, email_final_type,"
-                         " ready_to_send) VALUES (?, ?, 'GF', 1)", (ds_id, formel))
+                         " telefon_impressum, ready_to_send) VALUES (?, ?, 'GF', ?, 1)",
+                         (ds_id, formel, telefon))
             conn.commit()
-            pfad = next(p for name, p, _ in export_mod.export_listen(conn)
-                        if name.startswith("Zielgruppe · Geschäftsführer"))
+            with mock.patch.object(export_mod.sperrliste_mod, "laden", return_value=Sperrliste(set(), "test")), \
+                    mock.patch.object(export_mod.blockliste_mod, "laden",
+                                      return_value=Blockliste(set(), set())):
+                pfad = next(p for name, p, _ in export_mod.export_listen(conn)
+                            if name.startswith("Zielgruppe · Geschäftsführer"))
             with pfad.open(encoding="utf-8-sig", newline="") as fh:
                 (zeile,) = list(csv.DictReader(fh, delimiter=";"))
             self.assertEqual(zeile["Firmenname"], "'" + formel)
+            self.assertEqual(zeile["Telefon (Impressum)"], telefon)
             conn.close()
         finally:
             CONFIG.db_path, export_mod.EXPORT_DIR = original_db, original_export

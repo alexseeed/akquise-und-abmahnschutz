@@ -85,6 +85,24 @@ def profil_ok_sql(conn: sqlite3.Connection) -> str:
 BILANZ: list[tuple[str, int, int, str]] = []
 
 
+def stufe_sicher(name: str, stufe: Callable, *args, **kwargs) -> bool:
+    """Eine Stufe ausführen; ein unerwarteter Fehler beendet nur diese Stufe, nicht den Lauf.
+
+    Fehler einzelner Zeilen fangen die Stufen selbst ab (`_run_parallel`, `_fehlschlag`). Hier geht
+    es um alles andere, z. B. eine gesperrte Datenbank. Die Stufen sind idempotent — der nächste
+    Lauf macht an derselben Stelle weiter. `ZugangGesperrt` (jede weitere Stufe scheiterte genauso)
+    und SystemExit (fehlende Anforderung) brechen weiterhin den ganzen Lauf ab.
+    """
+    try:
+        stufe(*args, **kwargs)
+        return True
+    except ZugangGesperrt:
+        raise
+    except Exception as exc:  # noqa: BLE001
+        log.exception("Stufe %s abgebrochen: %s — weiter mit der nächsten Stufe", name, exc)
+        return False
+
+
 def _fehlschlag(conn: sqlite3.Connection, table: str, row_id: int, message: str) -> str:
     """Fehlversuch verbuchen (`db.note_failure`) und die Meldung für die Bilanz zurückgeben."""
     db.note_failure(conn, table, row_id, message)

@@ -7,7 +7,7 @@ Ein Paket für B2B-Akquise, von der Zielgruppe bis zur Abmahnung:
  Wen willst du?  ──► Google Maps        ──► Abmahner-Domains  ──► dein Tool   ──►  Skill abmahnung-
  Wo findet man       Amazon-Seller          fliegen raus                           werbemail-abwehr
  sie?                E-Commerce                  ▲                                       │
-                     (Recruiting: geplant)       └──── 6 Abmahner wird gemeldet ◄───────┘
+                     Recruiting, Stellensuche    └──── 6 Abmahner wird gemeldet ◄───────┘
 ```
 
 Je mehr Leute mitmachen, desto vollständiger wird die Sperrliste. **Bedingung der Nutzung:** Wer abgemahnt wird, meldet den Abmahner. Der Skill erledigt das automatisch und zeigt vorher an, was übermittelt wird ([NUTZUNGSBEDINGUNGEN.md](NUTZUNGSBEDINGUNGEN.md)).

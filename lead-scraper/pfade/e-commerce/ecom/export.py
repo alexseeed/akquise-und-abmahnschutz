@@ -69,7 +69,7 @@ AUSSORTIERT_COLUMNS = [
 ]
 
 
-# shortcut: zwei identische Kopien, weil die Pfade eigenständige Pakete sind; zusammenlegen, sobald es ein gemeinsames Paket gibt
+# shortcut: vier identische Kopien (zwei Pfade, zwei Werkzeuge), weil es kein gemeinsames Paket gibt; zusammenlegen, sobald es eines gibt
 _ZAHL_TELEFON_ZEICHEN = frozenset("0123456789+-().,/ ")
 
 
