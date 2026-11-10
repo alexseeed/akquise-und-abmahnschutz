@@ -25,7 +25,7 @@ from pathlib import Path
 
 from . import db, export as export_mod, pipeline
 from .clients import ApiError, FindymailClient, SkaelClient
-from .config import CONFIG, PORTALE, ROOT
+from .config import CONFIG, PORTALE, ROOT, ist_platzhalter
 from .llm import LLM
 
 
@@ -249,6 +249,7 @@ def cmd_run(args: argparse.Namespace) -> None:
     _llm_schluessel_pruefen(stage in ("all", "3", "3a", "3e", "3g", "4", "4a", "4d", "4e", "4f")
                             and not pipeline.nur_stellen(conn))
 
+    pipeline.BILANZ.clear()
     fehler = 0
     if stage in ("all", "1"):
         fehler += not pipeline.stufe_sicher("1", pipeline.stufe1_staedte, conn, skael)
@@ -290,9 +291,18 @@ def cmd_run(args: argparse.Namespace) -> None:
         fehler += not pipeline.stufe_sicher("4h", pipeline.stufe4h_ready, conn)
 
     cmd_status(args)
+
+    gescheitert = [(desc, n, grund) for desc, n, n_fehler, grund in pipeline.BILANZ if n and n_fehler == n]
+    if gescheitert:
+        for desc, n, grund in gescheitert:
+            print(f"{desc}: alle {n} Zeilen fehlgeschlagen – häufigster Grund: {grund}", file=sys.stderr)
+        print("Ursache beheben (z. B. Internetverbindung, Dienst gestört) und denselben run-Befehl "
+              "erneut ausführen; Erledigtes wird übersprungen.", file=sys.stderr)
     if fehler:
         raise SystemExit(f"{fehler} Stufe(n) mit Fehler abgebrochen (Details im Log oben) — "
                          "denselben Befehl erneut starten, erledigte Zeilen werden übersprungen.")
+    if gescheitert:
+        raise SystemExit(1)
 
 
 def cmd_status(args: argparse.Namespace) -> None:  # noqa: ARG001
@@ -567,8 +577,6 @@ def cmd_icp(args: argparse.Namespace) -> None:
 
 def cmd_doctor(args: argparse.Namespace) -> None:  # noqa: ARG001
     """Prüft Zugangsdaten und Erreichbarkeit, bevor ein teurer Lauf startet."""
-    placeholders = ("dein_key", "your_api_key", "...", "…", "xxx", "hier_eintragen", "changeme")
-
     from .config import KAMPAGNE, KAMPAGNE_DIR
     print()
     print(f"  Kampagne: {KAMPAGNE + '  (' + str(KAMPAGNE_DIR) + ')' if KAMPAGNE else '– keine (Standardordner)'}")
@@ -582,8 +590,7 @@ def cmd_doctor(args: argparse.Namespace) -> None:  # noqa: ARG001
                        ("OPENAI_API_KEY_FALLBACK (optional)", CONFIG.openai_api_key_fallback)]
     schluessel.append(("FINDYMAIL_API_KEY (optional)", CONFIG.findymail_api_key))
     for label, value in schluessel:
-        is_placeholder = value and any(p in value.lower() for p in placeholders)
-        if is_placeholder:
+        if ist_platzhalter(value):
             mark, hint = "✗", "noch Platzhalter aus .env.example"
         elif value:
             mark, hint = "✓", f"…{value[-6:]}"
@@ -633,7 +640,7 @@ def cmd_doctor(args: argparse.Namespace) -> None:  # noqa: ARG001
 
     print()
     print("  Erreichbarkeit")
-    if CONFIG.skael_api_key and not any(p in CONFIG.skael_api_key.lower() for p in placeholders):
+    if CONFIG.skael_api_key and not ist_platzhalter(CONFIG.skael_api_key):
         try:
             out = SkaelClient().find_cities("LU", 100000, limit=1)
             print(f"    ✓ Skael API erreichbar (Testabfrage lieferte {out.get('total', '?')} Städte für LU)")
@@ -641,7 +648,7 @@ def cmd_doctor(args: argparse.Namespace) -> None:  # noqa: ARG001
             print(f"    ✗ Skael API: {exc}")
     else:
         print("    – Skael übersprungen (kein Key)")
-    if CONFIG.findymail_api_key and not any(p in CONFIG.findymail_api_key.lower() for p in placeholders):
+    if CONFIG.findymail_api_key and not ist_platzhalter(CONFIG.findymail_api_key):
         try:
             guthaben = FindymailClient().credits()
             print(f"    ✓ Findymail erreichbar ({guthaben.get('credits', '?')} Finder-Credits, "

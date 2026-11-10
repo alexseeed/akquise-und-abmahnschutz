@@ -20,7 +20,7 @@ import json
 import logging
 import sqlite3
 import threading
-from collections import defaultdict
+from collections import Counter, defaultdict
 import time
 from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
 from typing import Callable
@@ -68,6 +68,17 @@ def budget_ok() -> bool:
     return BUDGET_OK is None or BUDGET_OK()
 
 
+# Bilanz je Stufe: (Bezeichnung, Zeilen, Fehlversuche, häufigster Grund). `run` leert die Liste vor
+# dem Lauf und meldet danach Stufen, in denen jede Zeile scheiterte.
+BILANZ: list[tuple[str, int, int, str]] = []
+
+
+def _fehlschlag(conn: sqlite3.Connection, table: str, row_id: int, message: str) -> str:
+    """Fehlversuch verbuchen (`db.note_failure`) und die Meldung für die Bilanz zurückgeben."""
+    db.note_failure(conn, table, row_id, message)
+    return message
+
+
 def stufe_sicher(name: str, stufe: Callable, *args, **kwargs) -> bool:
     """Eine Stufe ausführen; ein unerwarteter Fehler beendet nur diese Stufe, nicht den Lauf.
 
@@ -99,18 +110,21 @@ def einstellung(conn: sqlite3.Connection, key: str, default):
 
 
 def _run_parallel(items: list, worker: Callable, desc: str, max_workers: int | None = None) -> None:
-    """Führt worker(item) parallel aus und protokolliert den Fortschritt."""
+    """Führt worker(item) parallel aus und protokolliert den Fortschritt.
+
+    Ein Worker gibt nach einem verbuchten Fehlversuch dessen Meldung zurück (`_fehlschlag`), sonst None.
+    """
     if not items:
         log.info("%s: nichts zu tun", desc)
         return
     workers = max_workers or CONFIG.max_concurrency
+    gruende: Counter[str] = Counter()
     done = failed = gestoppt = 0
 
-    def ausfuehren(item) -> bool:
+    def ausfuehren(item):
         if not budget_ok():
             return False   # Budget erreicht: Zeile bleibt offen, nächster Lauf macht weiter
-        worker(item)
-        return True
+        return worker(item)
 
     start = letzte_meldung = time.monotonic()
     with ThreadPoolExecutor(max_workers=workers) as pool:
@@ -120,10 +134,15 @@ def _run_parallel(items: list, worker: Callable, desc: str, max_workers: int | N
             fertig, offen = wait(offen, timeout=LEBENSZEICHEN_S, return_when=FIRST_COMPLETED)
             for future in fertig:
                 try:
-                    if future.result() is False:
+                    ergebnis = future.result()
+                    if ergebnis is False:
                         gestoppt += 1
+                    elif isinstance(ergebnis, str):
+                        failed += 1
+                        gruende[ergebnis[:120]] += 1
                 except Exception as exc:  # noqa: BLE001
                     failed += 1
+                    gruende[f"{type(exc).__name__}: {exc}"[:120]] += 1
                     log.error("%s: %s", desc, exc)
                 done += 1
                 if done % 25 == 0 or done == len(items):
@@ -133,6 +152,10 @@ def _run_parallel(items: list, worker: Callable, desc: str, max_workers: int | N
                 log.info("%s: läuft – %s/%s fertig, %s Fehler, seit %.0f min", desc, done, len(items),
                          failed, (time.monotonic() - start) / 60)
                 letzte_meldung = time.monotonic()
+    grund = gruende.most_common(1)[0][0] if gruende else ""
+    BILANZ.append((desc, len(items), failed, grund))
+    if failed:
+        log.warning("%s: %s von %s Zeilen fehlgeschlagen, häufigster Grund: %s", desc, failed, len(items), grund)
     if gestoppt:
         log.warning("%s: Budget erreicht — %s Zeilen nicht bearbeitet", desc, gestoppt)
 
@@ -143,7 +166,7 @@ def stufe1_staedte(conn: sqlite3.Connection, skael: SkaelClient) -> None:
     rows = conn.execute("SELECT * FROM eingabe WHERE status != 'done'").fetchall()
     log.info("Stufe 1 — Städte auflösen: %s offene Kombinationen", len(rows))
 
-    def work(row: sqlite3.Row) -> None:
+    def work(row: sqlite3.Row) -> str | None:
         try:
             out = skael.find_cities(row["country_code"], row["min_population"], CONFIG.cities_limit)
         except ApiError as exc:
@@ -193,7 +216,7 @@ def stufe2_maps(conn: sqlite3.Connection, skael: SkaelClient, limit: int | None 
     rows = conn.execute(sql, params).fetchall()
     log.info("Stufe 2 — Google Maps: %s offene Queries", len(rows))
 
-    def work(row: sqlite3.Row) -> None:
+    def work(row: sqlite3.Row) -> str | None:
         try:
             out = skael.maps_search(row["query"])
         except ApiError as exc:
@@ -201,8 +224,7 @@ def stufe2_maps(conn: sqlite3.Connection, skael: SkaelClient, limit: int | None 
             raise
 
         if T.contains_error(out):
-            db.note_failure(conn, "verarbeitung", row["id"], "Antwort als Fehler markiert")
-            return
+            return _fehlschlag(conn, "verarbeitung", row["id"], "Antwort als Fehler markiert")
 
         items = out.get("items") or []
         for index, item in enumerate(items):
@@ -286,7 +308,7 @@ def stufe1j_stellensuche(conn: sqlite3.Connection, skael: SkaelClient, limit: in
     rows = conn.execute(sql, params).fetchall()
     log.info("Stufe 1j — Jobportale: %s offene Suchen (je bis %s Seiten)", len(rows), max_seiten)
 
-    def work(row: sqlite3.Row) -> None:
+    def work(row: sqlite3.Row) -> str | None:
         endpoint = PORTALE[row["portal"]]["endpoint"]
         seite, cursor, gesamt = 1, None, 0
         if row["status"] == "done":
@@ -298,8 +320,7 @@ def stufe1j_stellensuche(conn: sqlite3.Connection, skael: SkaelClient, limit: in
             try:
                 out = skael.stellen_suche(endpoint, payload)
             except ApiError as exc:
-                db.note_failure(conn, "stellen_suche", row["id"], f"{row['portal']} Seite {seite}: {exc}")
-                return
+                return _fehlschlag(conn, "stellen_suche", row["id"], f"{row['portal']} Seite {seite}: {exc}")
             gefunden = S.stellen_aus_antwort(row["portal"], out, CONFIG.stellen_beschreibung_max)
             for stelle in gefunden:
                 db.upsert(conn, "stellen", {
@@ -502,12 +523,11 @@ def stufe3g_groesse(conn: sqlite3.Connection, llm: LLM) -> None:
     ).fetchall()
     log.info("Stufe 3g — Größen-Check (%s): %s Firmen", CONFIG.model_groesse, len(rows))
 
-    def work(row: sqlite3.Row) -> None:
+    def work(row: sqlite3.Row) -> str | None:
         result = llm.groessen_check(row["firmenname"] or "", row["website_final"] or row["website"] or "",
                                     row["stelle_ort"] or row["query_city"] or "")
         if result is None:
-            db.note_failure(conn, "datensaetze", row["id"], "Größen-Check fehlgeschlagen")
-            return
+            return _fehlschlag(conn, "datensaetze", row["id"], "Größen-Check fehlgeschlagen")
         kategorie = result.get("kategorie") or ""
         if kategorie not in (*GROESSE_AUSSCHLUSS, "mittelstand"):
             kategorie = "unbekannt"
@@ -563,7 +583,7 @@ def _domains_stellensuche(conn: sqlite3.Connection, skael: SkaelClient, limit: i
         if not hinweise.get(s["datensatz_id"]):
             hinweise[s["datensatz_id"]] = S.bewerben_host({"bewerben_url": s["bewerben_url"]})
 
-    def work(row: sqlite3.Row) -> None:
+    def work(row: sqlite3.Row) -> str | None:
         hinweis = hinweise.get(row["id"], "")
         try:
             out = skael.find_domain(
@@ -573,13 +593,11 @@ def _domains_stellensuche(conn: sqlite3.Connection, skael: SkaelClient, limit: i
                 website=f"https://{hinweis}" if hinweis else "",
                 max_pages=CONFIG.find_domain_max_pages)
         except ApiError as exc:
-            db.note_failure(conn, "datensaetze", row["id"], f"find_domain: {exc}")
-            return
+            return _fehlschlag(conn, "datensaetze", row["id"], f"find_domain: {exc}")
         status = out.get("status") or "none"
         if status in ("queued", "processing", "waiting", "timeout"):
             # Ergebnis noch nicht fertig — nicht als „nichts gefunden“ speichern, später erneut abholen
-            db.note_failure(conn, "datensaetze", row["id"], f"find_domain noch nicht fertig ({status})")
-            return
+            return _fehlschlag(conn, "datensaetze", row["id"], f"find_domain noch nicht fertig ({status})")
         domain = T.host_of(out.get("domain")) if status == "verified" else ""
         db.update(conn, "datensaetze", row["id"], {
             "domain_raw": json.dumps(out, ensure_ascii=False),
@@ -636,12 +654,11 @@ def stufe3a_domains(conn: sqlite3.Connection, llm: LLM, skael: SkaelClient | Non
     ).fetchall() if not r["website"] or T.ist_plattform(r["website"])]
     log.info("Stufe 3a — Domainsuche (%s): %s Firmen ohne Website", CONFIG.domainsuche, len(rows))
 
-    def work(row: sqlite3.Row) -> None:
+    def work(row: sqlite3.Row) -> str | None:
         response = domain_suchen(skael, llm, row["firmenname"], row["query_city"] or "",
                                  row["query_country"] or "")
         if response is None:
-            db.note_failure(conn, "datensaetze", row["id"], "Domainsuche fehlgeschlagen")
-            return
+            return _fehlschlag(conn, "datensaetze", row["id"], "Domainsuche fehlgeschlagen")
         db.update(conn, "datensaetze", row["id"], {"domain_url": response, "error": None})
 
     _run_parallel(list(rows), work, "Stufe 3a", max_workers=min(CONFIG.max_concurrency, 4))
@@ -727,12 +744,11 @@ def stufe3c_icp(conn: sqlite3.Connection, skael: SkaelClient, icp_prompt: str) -
     ).fetchall()
     log.info("Stufe 3c — ICP-Check: %s Firmen", len(rows))
 
-    def work(row: sqlite3.Row) -> None:
+    def work(row: sqlite3.Row) -> str | None:
         try:
             out = skael.icp_checker(row["website_final"], icp_prompt)
         except ApiError as exc:
-            db.note_failure(conn, "datensaetze", row["id"], str(exc))
-            return
+            return _fehlschlag(conn, "datensaetze", row["id"], str(exc))
         db.update(conn, "datensaetze", row["id"], {
             "icp_raw": json.dumps(out, ensure_ascii=False),
             "is_icp": 1 if out.get("icp") is True else (0 if out.get("icp") is False else None),
@@ -758,7 +774,7 @@ def _webseite_holen(conn: sqlite3.Connection, skael: SkaelClient, row: sqlite3.R
         out = skael.web_scraper(row["website_final"])
     except ApiError as exc:
         db.note_failure(conn, "datensaetze", row["id"], f"Webscraper: {exc}")
-        return None
+        raise
     db.update(conn, "datensaetze", row["id"], {"webscraper_raw": json.dumps(out, ensure_ascii=False)})
     return out
 
@@ -786,7 +802,7 @@ def stufe3e_stellen(conn: sqlite3.Connection, skael: SkaelClient, llm: LLM) -> N
     # Gesuchte Berufe der Kampagne (init --berufe), eine Zeile je Beruf, Reihenfolge = Priorität
     berufe = db.get_meta(conn, "berufe", "") or ""
 
-    def work(row: sqlite3.Row) -> None:
+    def work(row: sqlite3.Row) -> str | None:
         url = row["website_final"]
         home = _webseite_holen(conn, skael, row)
         if home is None:
@@ -808,8 +824,7 @@ def stufe3e_stellen(conn: sqlite3.Connection, skael: SkaelClient, llm: LLM) -> N
             return
         result = llm.stellenanalyse(url, text, berufe)
         if result is None:
-            db.note_failure(conn, "datensaetze", row["id"], "Stellenanalyse fehlgeschlagen")
-            return
+            return _fehlschlag(conn, "datensaetze", row["id"], "Stellenanalyse fehlgeschlagen")
         db.update(conn, "datensaetze", row["id"], {
             "stelle_raw": json.dumps(result, ensure_ascii=False),
             "stelle_url": ", ".join(u for u, _ in seiten[1:]) or url,
@@ -901,7 +916,7 @@ def stufe4a_website_final(conn: sqlite3.Connection, llm: LLM, skael: SkaelClient
     ).fetchall()
     log.info("Stufe 4a — website [Final]: %s Leads", len(rows))
 
-    def work(row: sqlite3.Row) -> None:
+    def work(row: sqlite3.Row) -> str | None:
         company_domain = row["company_domain"]
         if not row["website"] and company_domain is None:
             if CONFIG.domainsuche == "aus":
@@ -909,8 +924,7 @@ def stufe4a_website_final(conn: sqlite3.Connection, llm: LLM, skael: SkaelClient
             else:
                 company_domain = domain_suchen(skael, llm, row["firmenname"] or "")
             if company_domain is None:
-                db.note_failure(conn, "anreicherung", row["id"], "Company Domain fehlgeschlagen")
-                return
+                return _fehlschlag(conn, "anreicherung", row["id"], "Company Domain fehlgeschlagen")
         db.update(conn, "anreicherung", row["id"], {
             "company_domain": company_domain or "",
             "website_final": T.website_final_anreicherung(row["website"], company_domain),
@@ -930,7 +944,7 @@ def stufe4b_impressum(conn: sqlite3.Connection, skael: SkaelClient) -> None:
     ).fetchall()
     log.info("Stufe 4b — Impressum: %s Leads", len(rows))
 
-    def work(row: sqlite3.Row) -> None:
+    def work(row: sqlite3.Row) -> str | None:
         domain = T.host_of(row["website_final"])
         if not domain:
             db.update(conn, "anreicherung", row["id"],
@@ -939,8 +953,7 @@ def stufe4b_impressum(conn: sqlite3.Connection, skael: SkaelClient) -> None:
         try:
             out = skael.imprint_extractor(domain)
         except ApiError as exc:
-            db.note_failure(conn, "anreicherung", row["id"], str(exc))
-            return
+            return _fehlschlag(conn, "anreicherung", row["id"], str(exc))
 
         gf_list = out.get("geschaeftsfuehrer") or []
         kontaktperson = gf_list[0] if gf_list else ""
@@ -975,7 +988,7 @@ def stufe4c_emails(conn: sqlite3.Connection, skael: SkaelClient, findymail: Find
     ).fetchall()
     log.info("Stufe 4c — E-Mail-Wasserfall: %s Leads", len(rows))
 
-    def work(row: sqlite3.Row) -> None:
+    def work(row: sqlite3.Row) -> str | None:
         clean = row["kontaktperson_sauber"] or ""
         website_final = row["website_final"] or ""
         impressum_ran = bool(row["impressum_raw"])
@@ -1015,8 +1028,7 @@ def stufe4c_emails(conn: sqlite3.Connection, skael: SkaelClient, findymail: Find
 
         if hard_error:
             # Transienter Fehler → Zeile bleibt offen und wird erneut versucht
-            db.note_failure(conn, "anreicherung", row["id"], hard_error)
-            return
+            return _fehlschlag(conn, "anreicherung", row["id"], hard_error)
 
         email_gf = T.email_from_verify(verify_gf)
         status_gf = T.email_status(verify_gf, kein_gf=not clean, impressum_ran=impressum_ran)
@@ -1028,8 +1040,7 @@ def stufe4c_emails(conn: sqlite3.Connection, skael: SkaelClient, findymail: Find
             try:
                 verify_info = skael.verify_email(email_impressum)
             except ApiError as exc:
-                db.note_failure(conn, "anreicherung", row["id"], f"Verify Info@: {exc}")
-                return
+                return _fehlschlag(conn, "anreicherung", row["id"], f"Verify Info@: {exc}")
 
         email_info = T.email_from_verify(verify_info)
         status_info = T.email_status(verify_info)
@@ -1075,11 +1086,10 @@ def stufe4d_anrede(conn: sqlite3.Connection, llm: LLM) -> None:
     ).fetchall()
     log.info("Stufe 4d — Anrede: %s Leads", len(rows))
 
-    def work(row: sqlite3.Row) -> None:
+    def work(row: sqlite3.Row) -> str | None:
         result = llm.anrede(row["first_name"])
         if result is None:
-            db.note_failure(conn, "anreicherung", row["id"], "Anrede-KI fehlgeschlagen")
-            return
+            return _fehlschlag(conn, "anreicherung", row["id"], "Anrede-KI fehlgeschlagen")
         anrede = result.get("anrede") or ""
         texts = T.ansprachen(anrede or None, row["first_name"] or "", row["last_name"] or "",
                              row["email_final"] or "")
@@ -1125,16 +1135,16 @@ def stufe4e_personalisierung(conn: sqlite3.Connection, skael: SkaelClient, llm: 
     log.info("Stufe 4e — Personalisierung: %s Leads", len(rows))
     opener_prompt = einstellung(conn, "opener_prompt", "personalisierung_stellenanzeige.txt")
 
-    def work(row: sqlite3.Row) -> None:
+    def work(row: sqlite3.Row) -> str | None:
         strecke = row["strecke"] or "gmaps"
         if strecke == "rc":
-            work_stelle(row)
+            return work_stelle(row)
         elif strecke == "nk":
-            work_website(row)
+            return work_website(row)
         else:
-            work_gmaps(row)
+            return work_gmaps(row)
 
-    def work_stelle(row: sqlite3.Row) -> None:
+    def work_stelle(row: sqlite3.Row) -> str | None:
         """Clay RC: `Normalisierter Jobtitel` → `Personalisierung AI` → `Personalisierung`."""
         norm = row["job_title_norm"]
         if norm is None:
@@ -1144,8 +1154,7 @@ def stufe4e_personalisierung(conn: sqlite3.Connection, skael: SkaelClient, llm: 
                 return
             norm = llm.jobtitel_normalisieren(row["job_title"])
             if norm is None:
-                db.note_failure(conn, "anreicherung", row["id"], "Jobtitel-KI fehlgeschlagen")
-                return
+                return _fehlschlag(conn, "anreicherung", row["id"], "Jobtitel-KI fehlgeschlagen")
             db.update(conn, "anreicherung", row["id"], {"job_title_norm": norm})
         if not norm:
             # Clay-Run-Bedingung: normalisierterTitel muss gefüllt sein
@@ -1154,12 +1163,11 @@ def stufe4e_personalisierung(conn: sqlite3.Connection, skael: SkaelClient, llm: 
         text = llm.stellen_opener(norm, row["job_description"] or "", prompt_datei=opener_prompt,
                                   original=row["job_title"] or "")
         if text is None:
-            db.note_failure(conn, "anreicherung", row["id"], "Stellen-Opener fehlgeschlagen")
-            return
+            return _fehlschlag(conn, "anreicherung", row["id"], "Stellen-Opener fehlgeschlagen")
         db.update(conn, "anreicherung", row["id"], {
             "personalisierung": text, "stage": "personalisierung_done", "error": None})
 
-    def work_website(row: sqlite3.Row) -> None:
+    def work_website(row: sqlite3.Row) -> str | None:
         """Clay NK: `SKAEL WEBSCRAPER` → `Bodytext Website` → Satz zur Website."""
         if row["webscraper_raw"]:
             out = json.loads(row["webscraper_raw"])
@@ -1167,8 +1175,7 @@ def stufe4e_personalisierung(conn: sqlite3.Connection, skael: SkaelClient, llm: 
             try:
                 out = skael.web_scraper(row["website_final"])
             except ApiError as exc:
-                db.note_failure(conn, "anreicherung", row["id"], f"Webscraper: {exc}")
-                return
+                return _fehlschlag(conn, "anreicherung", row["id"], f"Webscraper: {exc}")
             db.update(conn, "anreicherung", row["id"], {
                 "webscraper_raw": json.dumps(out, ensure_ascii=False),
                 "bodytext": T.bodytext(out), "site_links": T.site_links(out)})
@@ -1178,12 +1185,11 @@ def stufe4e_personalisierung(conn: sqlite3.Connection, skael: SkaelClient, llm: 
             return
         text = llm.personalisierung_website(body)
         if text is None:
-            db.note_failure(conn, "anreicherung", row["id"], "Personalisierungs-KI fehlgeschlagen")
-            return
+            return _fehlschlag(conn, "anreicherung", row["id"], "Personalisierungs-KI fehlgeschlagen")
         db.update(conn, "anreicherung", row["id"], {
             "bodytext": body, "personalisierung": text, "stage": "personalisierung_done", "error": None})
 
-    def work_gmaps(row: sqlite3.Row) -> None:
+    def work_gmaps(row: sqlite3.Row) -> str | None:
         # Der Website-Abruf kostet Credits, die KI-Schritte danach koennen
         # scheitern (Rate-Limit). Deshalb: bereits geholte Daten wiederverwenden
         # statt erneut zu bezahlen, und neu geholte SOFORT speichern — vor den
@@ -1194,8 +1200,7 @@ def stufe4e_personalisierung(conn: sqlite3.Connection, skael: SkaelClient, llm: 
             try:
                 out = skael.web_scraper(row["website_final"])
             except ApiError as exc:
-                db.note_failure(conn, "anreicherung", row["id"], f"Webscraper: {exc}")
-                return
+                return _fehlschlag(conn, "anreicherung", row["id"], f"Webscraper: {exc}")
             db.update(conn, "anreicherung", row["id"], {
                 "webscraper_raw": json.dumps(out, ensure_ascii=False),
                 "bodytext": T.bodytext(out),
@@ -1215,8 +1220,7 @@ def stufe4e_personalisierung(conn: sqlite3.Connection, skael: SkaelClient, llm: 
         links = T.site_links(out)
         einordnung = llm.pain_kategorie(body, links)
         if einordnung is None:
-            db.note_failure(conn, "anreicherung", row["id"], "Einordnung fehlgeschlagen")
-            return
+            return _fehlschlag(conn, "anreicherung", row["id"], "Einordnung fehlgeschlagen")
         # Jeder Lead in dieser Tabelle hat das ICP-Profil bestanden. "unklar" heisst
         # hier nur, dass die Startseite wenig hergibt — fachlich ist das der
         # Normalfall der Kampagne (KATEGORIE_NORMALFALL), kein unbekannter.
@@ -1227,8 +1231,7 @@ def stufe4e_personalisierung(conn: sqlite3.Connection, skael: SkaelClient, llm: 
 
         text = llm.personalisierung(body, links, einordnung["kategorie"])
         if text is None:
-            db.note_failure(conn, "anreicherung", row["id"], "Personalisierungs-KI fehlgeschlagen")
-            return
+            return _fehlschlag(conn, "anreicherung", row["id"], "Personalisierungs-KI fehlgeschlagen")
         db.update(conn, "anreicherung", row["id"], {
             "webscraper_raw": meta,
             "bodytext": body,
@@ -1257,13 +1260,12 @@ def stufe4f_videotitel(conn: sqlite3.Connection, llm: LLM) -> None:
     ).fetchall()
     log.info("Stufe 4f — Videotitel: %s Leads (Recruiting und Stellensuche ohne Videotitel)", len(rows))
 
-    def work(row: sqlite3.Row) -> None:
+    def work(row: sqlite3.Row) -> str | None:
         firmenname = row["firmenname"] or row["firmenname_final"] or ""
         vti = T.video_title_input(row["first_name"] or "", row["last_name"] or "", firmenname)
         result = llm.video_title(vti)
         if result is None:
-            db.note_failure(conn, "anreicherung", row["id"], "Videotitel-KI fehlgeschlagen")
-            return
+            return _fehlschlag(conn, "anreicherung", row["id"], "Videotitel-KI fehlgeschlagen")
         db.update(conn, "anreicherung", row["id"], {
             "video_title_input": vti,
             "video_title": result.get("cleanedText", "") or "",
@@ -1292,7 +1294,7 @@ def stufe4g_linkedin(conn: sqlite3.Connection, skael: SkaelClient) -> None:
     ).fetchall()
     log.info("Stufe 4g — LinkedIn: %s Leads", len(rows))
 
-    def work(row: sqlite3.Row) -> None:
+    def work(row: sqlite3.Row) -> str | None:
         firma = row["firmenname_final"] or row["firmenname"] or ""
         body = json.loads(render(template, {
             "Kontaktperson [Sauber]": row["kontaktperson_sauber"],
@@ -1305,8 +1307,7 @@ def stufe4g_linkedin(conn: sqlite3.Connection, skael: SkaelClient) -> None:
                 model=body.get("model", "google/gemini-2.5-flash"),
             )
         except ApiError as exc:
-            db.note_failure(conn, "anreicherung", row["id"], f"LinkedIn: {exc}")
-            return
+            return _fehlschlag(conn, "anreicherung", row["id"], f"LinkedIn: {exc}")
         url = out.get("linkedin_url") or ""
         if url == "No LinkedIn profile found":
             url = ""

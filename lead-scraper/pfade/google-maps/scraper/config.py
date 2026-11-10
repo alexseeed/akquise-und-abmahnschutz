@@ -10,12 +10,20 @@ Jede Kampagne hat eigene Prompts, Datenbank, Blockliste und Exporte unter `kampa
 from __future__ import annotations
 
 import os
+import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 KAMPAGNEN_ROOT = ROOT / "kampagnen"
 _PROZESS_ENV = set(os.environ)  # echte Umgebungsvariablen haben immer Vorrang
+
+# Schlüssel, die noch aus .env.example stammen (z. B. eak_dein_key_hier)
+PLATZHALTER_SCHLUESSEL = ("dein_key", "your_api_key", "...", "…", "xxx", "hier_eintragen", "changeme")
+
+
+def ist_platzhalter(wert: str) -> bool:
+    return bool(wert) and any(p in wert.lower() for p in PLATZHALTER_SCHLUESSEL)
 
 
 def _load_dotenv(path: Path, *, ueberschreiben: bool = False) -> None:
@@ -205,16 +213,20 @@ class Config:
     db_path: Path = field(default_factory=lambda: Path(os.environ.get("DB_PATH", str(DATA_DIR / "leads.db"))))
 
     def require(self, *keys: str) -> None:
-        missing = [k for k in keys if not getattr(self, k, "")]
+        # Platzhalter aus .env.example zählen wie fehlende Werte: sonst ginge der
+        # Platzhalter an den Dienst und jede Zeile verbrauchte einen Fehlversuch.
+        missing = [k for k in keys if not getattr(self, k, "") or ist_platzhalter(getattr(self, k, ""))]
         if missing:
             names = {
                 "skael_api_key": "SKAEL_API_KEY",
+                "skael_llm_api_key": "SKAEL_LLM_API_KEY",
                 "openai_api_key": "OPENAI_API_KEY",
+                "openai_api_key_fallback": "OPENAI_API_KEY_FALLBACK",
                 "findymail_api_key": "FINDYMAIL_API_KEY",
             }
-            raise SystemExit(
-                "Fehlende Zugangsdaten in .env: " + ", ".join(names.get(k, k) for k in missing)
-            )
+            print("Fehlende Zugangsdaten in .env: " + ", ".join(names.get(k, k) for k in missing),
+                  file=sys.stderr)
+            raise SystemExit(2)
 
 
 CONFIG = Config()

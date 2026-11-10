@@ -519,7 +519,10 @@ class TestStellensuche(Kampagne):
         self.assertTrue(nicht["Wilkes GmbH"]["Begründung"].startswith("Größen-Check: öffentliche Hand/Verband (ca. 200"))
         self.assertNotIn("Wilkes GmbH", [r["Firmenname"] for r in listen["3_unsicher"]])
 
-        self.cli("run", "--stage", "all")
+        with self.assertRaises(SystemExit) as ctx:
+            with contextlib.redirect_stderr(io.StringIO()):
+                self.cli("run", "--stage", "all")
+        self.assertEqual(ctx.exception.code, 1, "only the failing kununu search is left")
         self.assertEqual(len(self.groesse_aufrufe()), 6, "a finished check is not paid twice")
 
     def test_groessen_check_abschaltbar(self):
@@ -536,7 +539,10 @@ class TestStellensuche(Kampagne):
         self.anlegen("--portale", "stepstone")
         self.api.groesse_fehler = True
         self.cli("run", "--stage", "1")
-        self.cli("run", "--stage", "3")
+        with self.assertRaises(SystemExit) as ctx:
+            with contextlib.redirect_stderr(io.StringIO()):
+                self.cli("run", "--stage", "3")
+        self.assertEqual(ctx.exception.code, 1, "every row of the stage failed")
         ds = self.rows("SELECT * FROM datensaetze")
         self.assertTrue(all(r["groesse_kategorie"] is None for r in ds))
         self.assertEqual({(r["attempts"], r["error"]) for r in ds}, {(1, "Größen-Check fehlgeschlagen")})
