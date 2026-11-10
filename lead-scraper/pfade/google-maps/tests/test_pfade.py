@@ -23,7 +23,10 @@ from unittest import mock
 # Settings must be in place before the package reads its configuration
 os.environ.update({
     "SKAEL_API_KEY": "eak_test", "OPENAI_API_KEY": "sk-test",
-    "FINDYMAIL_API_KEY": "", "SPERRLISTE_PFLICHT": "false", "MAX_CONCURRENCY": "2",
+    "FINDYMAIL_API_KEY": "", "SPERRLISTE_PFLICHT": "false",
+    # wie in den E-Commerce-Tests: nie die echte Liste laden (enthält OWNER → gilt als nicht eingerichtet)
+    "SPERRLISTE_URL": "https://example.invalid/OWNER-liste.txt",
+    "MAX_CONCURRENCY": "2",
     "SKAEL_RATE_LIMIT_PER_SEC": "1000", "OPENAI_RATE_LIMIT_PER_SEC": "1000", "MAX_RETRIES": "1",
     # the fake answers the OpenAI endpoint; Skael chat (LLM_PROVIDER=skael) is covered elsewhere
     "LLM_PROVIDER": "openai", "DOMAINSUCHE": "aus", "KAMPAGNE": "",
@@ -300,7 +303,8 @@ class Kampagne(unittest.TestCase):
             mock.patch.object(CONFIG, "db_path", self.db),
             # CONFIG may already be loaded by another test module — set the test values directly
             mock.patch.multiple(CONFIG, skael_api_key="eak_test", openai_api_key="sk-test", findymail_api_key="",
-                                sperrliste_pflicht=False, max_concurrency=2, max_retries=1,
+                                sperrliste_pflicht=False, sperrliste_url="https://example.invalid/OWNER-liste.txt",
+                                max_concurrency=2, max_retries=1,
                                 skael_rate_limit_per_sec=1000.0, openai_rate_limit_per_sec=1000.0,
                                 llm_provider="openai", domainsuche="aus"),
             mock.patch.object(llm, "PROMPT_DIRS", [self.tmp / "prompts", PROMPTS_DIR]),
