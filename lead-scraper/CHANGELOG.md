@@ -2,6 +2,17 @@
 
 Neueste Einträge oben. Ein Eintrag je Änderung an Wissen, Pfaden oder Werkzeugen: Datum, was sich geändert hat und warum. So sieht jede KI und jeder Mensch, welcher Stand gilt und was neu ist.
 
+## 2026-11-14
+
+- **Versand positiv beschreiben statt vor E-Mail-Akquise warnen.** `wissen/08_versand-und-recht.md` heißt jetzt „Versand – so arbeiten wir sauber“ (Kanäle, Pflichtangaben, Datenschutz, Checkliste); Abschnitte „Rechtliches“ heißen „Daten und Versand“; SKILL, README, START_HIER, Pfad-Doku, Prompts und Referenzen bieten die Versand-Checkliste an statt auf § 7 UWG hinzuweisen. Der Hinweis „Keine Rechtsberatung“ bleibt überall.
+- **Export-Gesamtliste ohne Dubletten und nicht passende Firmen.** `export --einzeln` (Google Maps) schließt Dubletten und nachträglich aussortierte Firmen aus, wie die vier getrennten Listen. Die Gesamtliste wird dadurch kleiner.
+- **E-Commerce: bezahlten Findymail-Treffer nicht erneut kaufen.** Die Antwort wird sofort gespeichert und bei einer Wiederholung nach gescheiterter Verifikation wiederverwendet.
+- **Schlüssel nie im Chat.** Der Nutzer trägt jeden Schlüssel selbst in die `.env` ein (Datei öffnen, Zeile nennen). `.env.example` an die Code-Defaults angeglichen (`SKAEL_MAX_WARTEZEIT=600`, `MAX_RETRIES=5`); Gitignores für `.env.*`, Leadlisten, Logs und `node_modules/`.
+- **Videoseiten:** `--basis` ist Pflicht außer mit `--probe`; die Probe braucht noch kein Video; Lead-Daten im Skript sicher maskiert; nur Bild-Vorschaubilder; kaputte `.meta.json` stoppt das Aufräumen nicht mehr; ungültiges JSON am Server gibt 400.
+- **Sperrlisten-Abgleich:** Der Excel-Schutz-Apostroph am Zellanfang wird vor dem Abgleich entfernt.
+- **Amazon:** Strg+C wird in der Budget-Rettung und bei Bright-Data-Wiederholungen nicht mehr übergangen; Tests laufen auch unter Node 18.
+- **Doku:** `START_HIER.md` (OpenAI optional, Amazon-Voraussetzungen), gezieltes Löschen der Smoke-Dateien, Skael-Neueinreichung mit neuem Idempotency-Key; `WISSEN_KOMPLETT.md` neu erzeugt.
+
 ## 2026-11-12
 
 - **Abmahnung: Kostenstreit nach Erfahrungen aus einem echten Fall.** `wissen/10_abmahnung-was-tun.md`: Kosten erst nach Darlegung und, bei Umsatzsteuer, Rechnung des Abmahners statt Kostennote nach § 10 RVG (darauf gibt es vorprozessual keinen Anspruch); neuer Abschnitt „Wenn die Kanzlei antwortet“ (Annahme der UE, „eigener Leistungsanspruch“ nach BFH XI R 27/14, Streitwert-Listen, Mahnbescheid); aktuelle Linie für eine einzelne Mail 1.000 bis 3.000 €. Details im Skill `abmahnung-werbemail-abwehr` 3.2.

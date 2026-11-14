@@ -2,7 +2,6 @@
 
 Automatisch erzeugt aus `lead-scraper/wissen/` (einrichten.py). Für KI-Modelle, die nur eine Datei aufnehmen. Nicht von Hand bearbeiten.
 
-
 ---
 
 <!-- Datei: wissen/00_INDEX.md -->
@@ -35,7 +34,7 @@ Start-Prompt für andere Modelle:
 | `05_pfad-recruiting.md` | Recruiting über die Firmen-Website: Firmen aus Google Maps, offene Stelle auf der eigenen Website erkennen, Opener zur Stelle; Kosten, Grenzen, Recht | Firmen gesucht sind, die gerade einstellen, und die Branche bekannt ist |
 | `06_pfad-e-commerce.md` | Onlineshops: erst Anforderungen klären, dann Shop-Liste prüfen (aktiver Shop, passt zum Shop-Profil, Traffic), anreichern und je Lead die fertige Mail ausgeben; Kosten, Grenzen, Recht | eine Liste von Onlineshops vorliegt |
 | `07_lead-ausgabe-und-spalten.md` | Ausgabedateien, Spalten, Ansprache-Regeln, Standardformat | die Liste in ein Versandtool soll |
-| `08_versand-und-recht.md` | UWG, DSGVO, Pflichtangaben, Quellen-Nutzungsbedingungen | vor dem ersten Versand |
+| `08_versand-und-recht.md` | so arbeiten wir sauber: Kanäle, Pflichtangaben, Datenschutz, Quellen-Nutzungsbedingungen, Checkliste | vor dem ersten Versand |
 | `09_sperrliste.md` | Community-Sperrliste: Abgleich, Melden, Widerspruch | Fragen zur Sperrliste |
 | `10_abmahnung-was-tun.md` | erste Schritte nach einer Abmahnung | eine Abmahnung ist da |
 | `11_zugaenge-und-kosten.md` | Konten, Schlüssel, Kostenhebel | vor der Einrichtung, vor großen Läufen |
@@ -56,8 +55,7 @@ Start-Prompt für andere Modelle:
 - Technische Details zu einem Pfad stehen in `pfade/<pfad>/referenzen/`. Hier steht nur, was Nutzer und KI für Entscheidungen brauchen.
 - Prüfen: `python3 werkzeuge/wissen_pruefen.py` (abgelaufene Fristen, fehlende Index-Einträge, tote Verweise, veraltete `WISSEN_KOMPLETT.md`).
 - Änderungen mit Datum in `CHANGELOG.md` festhalten.
-- Rechtsstand dieser Bibliothek: **Oktober 2026**. Rechtliche Aussagen vor Verwendung prüfen.
-
+- Stand dieser Bibliothek: **November 2026**.
 
 ---
 
@@ -113,8 +111,7 @@ Je mehr Unternehmen mitmachen, desto vollständiger wird die Sperrliste. Bedingu
 2. **Lieber neutral als falsch.** Unsichere Namen oder Geschlechter bekommen „Guten Tag“ statt einer falschen persönlichen Anrede.
 3. **Ehrliche Zahlen.** Fund- und Fehlerquoten werden genannt, nicht geschönt.
 4. **Gesperrt heißt gesperrt.** Firmen auf der Sperrliste werden nie angeschrieben, über keinen Kanal.
-5. **Kein Ersatz für Rechtsberatung.** Kaltakquise per E-Mail bleibt rechtlich riskant (`08_versand-und-recht.md`).
-
+5. **Sauber ansprechen.** Persönlich, mit klarem Absender, Abmeldeweg und Datenschutzhinweis; Widersprüche sofort sperren (`08_versand-und-recht.md`).
 
 ---
 
@@ -144,7 +141,7 @@ Je mehr Unternehmen mitmachen, desto vollständiger wird die Sperrliste. Bedingu
 | # | Frage an den Nutzer | Beispiel dazusagen | Wofür |
 |---|---|---|---|
 | A1 | „Was bietest du an – in einem Satz?“ | „Zum Beispiel: Wir bauen Vertriebssysteme für Großhändler.“ | Prüfprofil, Personalisierung |
-| A2 | „Wie willst du die Firmen ansprechen?“ | „Per E-Mail, Telefon, Brief, LinkedIn oder mit einem persönlichen Video?“ | Rechtlicher Hinweis, Videotitel ja/nein |
+| A2 | „Wie willst du die Firmen ansprechen?“ | „Per E-Mail, Telefon, Brief, LinkedIn oder mit einem persönlichen Video?“ | Versand-Checkliste (`08`), Videotitel ja/nein |
 
 ## Block B – Wer ist der Wunschkunde?
 
@@ -302,7 +299,6 @@ Der E-Commerce-Pfad stellt danach eigene Rückfragen (Shop-Liste, Shopsystem, Mi
 | D3 Ansprechpartner | Geschäftsführung aus dem Impressum, info@ als Reserve | wie Recruiting; „nur Stellenliste“ ganz ohne Kontakt |
 | D4 Menge/Budget | `--min-population`, Anzahl Suchbegriffe, `--nk` | Orte × Suchbegriffe, `--max-seiten`, `--max-alter`, `--nur-stellen` |
 
-
 ---
 
 <!-- Datei: wissen/03_pfad-google-maps.md -->
@@ -422,14 +418,13 @@ Die Quoten hängen stark von der Branche und vom Profil ab. Erst der Testlauf sa
 - Die Skael-API liefert identische Anfragen innerhalb von 20 Minuten aus dem Zwischenspeicher, auch Fehlschläge. Beim Wiederholen beachten.
 - Der Prozess ist die Portierung eines Clay-Workbooks; Formeln und Prompts stammen von dort (`pfade/google-maps/docs/05_ABWEICHUNGEN.md`).
 
-## Rechtliches in Kürze
+## Daten und Versand in Kürze
 
 - **Datenquellen:** Google-Maps-Einträge und Impressen werden über einen Drittanbieter abgefragt. Dessen Nutzungsbedingungen und die von Google gelten.
 - **Personenbezogene Daten:** Namen der Geschäftsführung und persönliche E-Mail-Adressen sind personenbezogene Daten (DSGVO).
-- **Kaltakquise per E-Mail** ist ohne Einwilligung grundsätzlich unzulässig.
+- **Versand:** persönlich, mit klarem Absender, Abmeldeweg und Datenschutzhinweis; vorher mit der Sperrliste abgleichen.
 
 Mehr in `08_versand-und-recht.md`.
-
 
 ---
 
@@ -555,13 +550,12 @@ Wie für alle Pfade (`07_lead-ausgabe-und-spalten.md`): „Guten Tag Herr/Frau N
 - **Keine Personalisierung:** Einen individuellen Einstiegssatz liefert dieser Pfad nicht.
 - **Ungetestete Echtläufe:** Die überarbeitete Version wurde gegen einen Test-Server geprüft, der Skael-Teil zusätzlich gegen die veröffentlichte Schnittstellen-Beschreibung (api.skael.de/docs). Den ersten echten Lauf immer mit Smoke-Test und Testlauf beginnen.
 
-## Risiken und Recht
+## Daten und Versand
 
 - **Amazon-Nutzungsbedingungen:** Die Seiten werden über einen Scraping-Dienst (Oxylabs) abgerufen, nicht über ein eigenes Amazon-Konto. Es gibt daher keine Kontosperre. Die Nutzung muss trotzdem mit den Bedingungen von Amazon und der Dienste vereinbar sein.
 - **Datenschutz:** Namen von Geschäftsführung und Einzelunternehmern sind personenbezogene Daten. Bei Ansprache gilt die Informationspflicht nach Art. 14 DSGVO (`08_versand-und-recht.md`). Lead-Daten liegen in `pfade/amazon/arbeit/`. Den Ordner nie weitergeben.
-- **E-Mail-Werbung:** ohne Einwilligung grundsätzlich unzulässig (§ 7 UWG), auch an Firmen.
+- **Versand:** persönlich, mit klarem Absender, Abmeldeweg und Datenschutzhinweis (`08_versand-und-recht.md`).
 - **Sperrliste:** Abgeglichen werden E-Mail-Domain (auch die einer als ungültig aussortierten Adresse), Website und Impressum-URL. Verkäufer ohne all das lassen sich nicht abgleichen, das dem Nutzer sagen.
-
 
 ---
 
@@ -693,14 +687,13 @@ Erwartung (ungeprüft): Die Stellen-Quote hängt stark von der Branche ab. Handw
 - **Nur der erste Geschäftsführer** aus dem Impressum; die Personalabteilung wird nicht gesucht.
 - **Anrede:** Der Anrede-Prompt setzt bei unsicheren Vornamen „Herr“. Die Exportspalte `Ansprache` ist deshalb nur bei Anrede-Sicherheit > 60 persönlich, sonst neutral.
 
-## Rechtliches in Kürze
+## Daten und Versand in Kürze
 
 - **Datenquellen:** öffentliche Unternehmens-Websites und Google Maps (über Skael). Jobportale nutzt dieser Pfad nicht; die Stellensuche bezieht sie über die Skael-Schnittstelle (Einordnung in `18_pfad-stellensuche.md`).
 - **Personenbezug:** Namen der Geschäftsführung und persönliche E-Mail-Adressen sind personenbezogen (DSGVO). Kontaktpersonen aus Stellenangeboten werden **nicht** übernommen.
-- **Ansprache:** E-Mail-Werbung ohne Einwilligung bleibt unzulässig (§ 7 Abs. 2 Nr. 2 UWG). Der Bezug auf eine öffentliche Stellenanzeige ändert daran nichts. Den Aufhänger nicht fingieren: nur Stellen nennen, die wirklich ausgeschrieben sind (Stichprobe!), Listen nicht wochenlang liegen lassen.
+- **Ansprache:** Die ausgeschriebene Stelle ist ein echter, sachlicher Aufhänger. Ihn nicht fingieren: nur Stellen nennen, die wirklich ausgeschrieben sind (Stichprobe!), Listen nicht wochenlang liegen lassen.
 
 Mehr in `08_versand-und-recht.md`.
-
 
 ---
 
@@ -878,7 +871,7 @@ Dazu kommt ein JSON-Archiv mit allen Rohdaten. Details: `07_lead-ausgabe-und-spa
 - **Kein Sitzland-Filter:** Der Pfad prüft nicht, ob die Firma laut Impressum in den gewünschten Ländern sitzt (Interviewfrage D1). Das Shop-Profil prüft nur, was auf der Startseite steht (Sprache, Währung, Lieferländer). Ausländische Shops mit deutscher Seite verbrauchen deshalb weiter Credits und landen im Export. Clay filterte das auch nicht. Geplant als Schritt nach dem Impressum (`shop-katalog.md`, „Einbau“).
 - **Kein Telefon, kein LinkedIn:** Telefon-Wasserfall und LinkedIn-Suche waren im Clay-Workbook abgeschaltet und sind nicht nachgebaut.
 
-## Rechtliches
+## Daten und Versand
 
 - **Datenquellen:**
   - Startseite, Impressum und SimilarWeb-Daten werden über Skael abgefragt. Es gelten dessen Nutzungsbedingungen.
@@ -886,7 +879,7 @@ Dazu kommt ein JSON-Archiv mit allen Rohdaten. Details: `07_lead-ausgabe-und-spa
 - **Personenbezogene Daten:**
   - Namen und persönliche E-Mail-Adressen der Geschäftsführung sind personenbezogen.
   - Informationspflicht nach Art. 14 DSGVO beim Erstkontakt.
-- **Kaltakquise per E-Mail** ist ohne Einwilligung grundsätzlich unzulässig (§ 7 Abs. 2 Nr. 2 UWG). In Österreich gilt eine Impressum-Adresse ausdrücklich nicht als Einwilligung.
+- **Versand:** persönlich, mit klarem Absender, Abmeldeweg und Datenschutzhinweis (`08_versand-und-recht.md`). Für Österreich und die Schweiz gelten eigene Regeln; vor dem ersten Lauf dort klären.
 - **Sperrliste:** Der Abgleich ist eingebaut. Ohne ladbare Liste wird nicht exportiert.
 
 Mehr in `08_versand-und-recht.md`.
@@ -898,7 +891,6 @@ Mehr in `08_versand-und-recht.md`.
 3. **Shop-Profil und Mailtext im ersten echten Lauf prüfen** (neu seit 2026-10-09): Wie viele aktive Shops sortiert das Profil aus, stimmen die Gründe (Stichprobe)? Wiederholt der persönliche Satz den Mailtext, oder passt er? Quote oben eintragen.
 
 Entschieden: Übergabe an Stufe 2 nur bei `SEND = true` (vom Betreiber bestätigt am 2026-10-08).
-
 
 ---
 
@@ -1093,55 +1085,50 @@ Beim Amazon-Pfad stellt `pfade/amazon/standardformat.mjs` diese Felder nach vorn
 2. Gesperrte Domains zusätzlich im Versandtool als Domain-Sperre hinterlegen (`09_sperrliste.md`).
 3. Nach dem Export `export --mark` ausführen. Sonst landen dieselben Leads beim nächsten Export erneut in der Liste.
 
-
 ---
 
 <!-- Datei: wissen/08_versand-und-recht.md -->
 
-# Versand und Recht – was vor dem ersten Kontakt klar sein muss
+# Versand – so arbeiten wir sauber
 
-**Zweck:** die rechtlichen Rahmenbedingungen für Datensammlung und Ansprache, kompakt und ehrlich.
+**Zweck:** wie wir Daten sammeln und Firmen ansprechen, damit jede Kontaktaufnahme sauber und nachvollziehbar ist.
 **Für wen:** Nutzer vor dem Versand und KI-Modelle, die Fragen dazu beantworten.
-**Verwandt:** `09_sperrliste.md` · `10_abmahnung-was-tun.md` · Skill `abmahnung-werbemail-abwehr` (Rechtsprechung im Detail)
-**Stand:** 2026-10-04, Deutschland · **Prüfen bis:** 2027-04-04. **Keine Rechtsberatung.** Im Zweifel anwaltlich prüfen lassen.
+**Verwandt:** `09_sperrliste.md` · `10_abmahnung-was-tun.md` · Skill `abmahnung-werbemail-abwehr` (falls doch einmal eine Abmahnung kommt)
+**Stand:** 2026-11-13, Deutschland · **Prüfen bis:** 2027-05-13. Keine Rechtsberatung.
 
 ---
 
 ## Das Wichtigste in drei Sätzen
 
-1. **E-Mail-Werbung ohne vorherige ausdrückliche Einwilligung** ist eine unzumutbare Belästigung (§ 7 Abs. 2 Nr. 2 UWG). Das gilt auch gegenüber Unternehmen, auch bei einer einzigen Mail, auch an info@-Adressen aus dem Impressum.
-2. Das Risiko ist eine **Abmahnung**:
-   - durch Mitbewerber (§ 8 UWG),
-   - oder durch den Empfänger selbst über §§ 823, 1004 BGB (Eingriff in den eingerichteten und ausgeübten Gewerbebetrieb).
+1. **Wir schreiben passende Firmen gezielt und persönlich an:** ein echter Bezug zum Geschäft des Empfängers, klarer Absender, Abmeldeweg in jeder Mail.
+2. **Wer keine Post mehr möchte, bekommt keine mehr:** Abmeldungen und Werbewidersprüche werden sofort und in allen Systemen gesperrt.
+3. **Die Sperrliste hält bekannte Abmahner fern:** Gleich jede Liste vor dem Versand mit der Sperrliste ab (`09_sperrliste.md`) und übertrag die Treffer in die Blockliste deines Versandtools.
 
-   Dazu kommen oft Forderungen nach DSGVO-Auskunft und Schadensersatz.
-3. **Die Sperrliste senkt das Risiko** wiederholter Abmahnungen durch bekannte Abmahner. Sie macht Kaltakquise per E-Mail **nicht zulässig**.
+## Kanäle
 
-## Kanäle im Vergleich (B2B)
+| Kanal | So gehen wir vor |
+|---|---|
+| E-Mail | persönlich, mit konkretem Bezug zur Firma, klarer Absender, Abmeldelink, Datenschutzhinweis. Vorher mit der Sperrliste abgleichen. |
+| Telefon | mit einem konkreten, sachlichen Bezug zum Geschäft des Angerufenen. |
+| Brief | wie E-Mail: persönlich, klarer Absender, Widersprüche sofort vermerken. |
+| LinkedIn/Xing-Nachricht | Regeln der Plattform beachten; einzeln und persönlich statt massenhaft automatisiert. |
 
-| Kanal | Regel | Einordnung |
-|---|---|---|
-| E-Mail, Fax | vorherige ausdrückliche Einwilligung nötig (§ 7 Abs. 2 Nr. 2 UWG). Ausnahme nur für Bestandskunden unter den engen Voraussetzungen des § 7 Abs. 3 UWG | höchstes Abmahnrisiko |
-| Telefon | gegenüber Unternehmen genügt eine **mutmaßliche** Einwilligung (§ 7 Abs. 2 Nr. 1 UWG). Es muss ein konkreter, sachlicher Bezug zum Geschäft des Angerufenen bestehen. Gegenüber Verbrauchern ist eine ausdrückliche Einwilligung nötig | Einzelfallfrage |
-| Brief | grundsätzlich zulässig, solange kein erkennbarer Widerspruch vorliegt | geringes Risiko |
-| LinkedIn/Xing-Nachricht | Plattformregeln; massenhaft automatisiert oft unzulässig bzw. regelwidrig | Plattform- und Einzelfallfrage |
+## Das gehört in jede Nachricht
 
-## Pflichtangaben in jeder Werbe-Nachricht
-
-- **Absender klar erkennbar,** keine Verschleierung. Der Betreff darf den werblichen Charakter nicht verschleiern (§ 6 DDG, § 7 Abs. 2 Nr. 3 UWG).
-- **Gültige Adresse,** über die der Empfänger weitere Nachrichten abbestellen kann (§ 7 Abs. 2 Nr. 3 UWG).
-- **Rechtsträger und Anschrift** im Footer.
-- **Keine fingierten Aufhänger** wie „Ein Kollege hat mich auf Sie aufmerksam gemacht“ oder ein falsches „AW:“/„WG:“ im Betreff. Das ist irreführend und leicht beweisbar.
+- **Absender klar erkennbar:** Name, Firma und Anschrift; ein Betreff, der sagt, worum es geht (§ 6 DDG).
+- **Abmeldeweg:** ein Abmeldelink oder eine Adresse, über die der Empfänger weitere Nachrichten abbestellen kann.
+- **Impressum und Rechtsträger** im Footer.
+- **Ehrliche Aufhänger:** nur echte Beobachtungen, kein „Ein Kollege hat mich auf Sie aufmerksam gemacht“ und kein falsches „AW:“/„WG:“ im Betreff.
 
 ## Datenschutz (DSGVO)
 
-| Thema | Was gilt |
+| Thema | So machen wir es |
 |---|---|
 | **Personenbezug** | Namen der Geschäftsführung, persönliche E-Mail-Adressen (vorname.nachname@…) und Einzelunternehmer-Domains sind personenbezogene Daten. Firmendaten allein (info@, Firmenname) meist nicht. |
-| **Rechtsgrundlage** | in der Regel berechtigtes Interesse (Art. 6 Abs. 1 lit. f, Erwägungsgrund 47). Verstößt die Ansprache gegen das UWG, trägt diese Abwägung kaum. |
-| **Informationspflicht** | Werden Daten aus anderen Quellen erhoben (Google Maps, Impressum, Amazon), muss spätestens bei der ersten Kontaktaufnahme informiert werden (Art. 14 Abs. 3 lit. b). Das geht z. B. per Link zu einer Datenschutz-Seite mit Quelle, Zweck, Speicherdauer und Widerspruchsrecht. |
-| **Widerspruch** | Widerspricht jemand der Direktwerbung, ist das endgültig (Art. 21 Abs. 2 und 3). Sofort sperren, in **allen** Systemen. |
-| **Auskunft** | Anfragen nach Art. 15 innerhalb eines Monats vollständig beantworten: Quelle, Zwecke, Empfänger, Speicherdauer, Kopie der Daten. Dafür muss nachvollziehbar sein, woher jeder Lead stammt. Die Exporte enthalten dafür Keyword, Stadt, Quelle. |
+| **Rechtsgrundlage** | in der Regel berechtigtes Interesse (Art. 6 Abs. 1 lit. f, Erwägungsgrund 47): sachlicher Bezug, zurückhaltende Ansprache, einfacher Widerspruch. |
+| **Informationspflicht** | Werden Daten aus anderen Quellen erhoben (Google Maps, Impressum, Amazon), informieren wir spätestens bei der ersten Kontaktaufnahme (Art. 14 Abs. 3 lit. b), z. B. per Link zu einer Datenschutz-Seite mit Quelle, Zweck, Speicherdauer und Widerspruchsrecht. |
+| **Widerspruch** | Widerspricht jemand der Direktwerbung, gilt das dauerhaft (Art. 21 Abs. 2 und 3). Sofort sperren, in **allen** Systemen. |
+| **Auskunft** | Anfragen nach Art. 15 innerhalb eines Monats vollständig beantworten: Quelle, Zwecke, Empfänger, Speicherdauer, Kopie der Daten. Die Exporte enthalten dafür Keyword, Stadt und Quelle je Lead. |
 | **Löschkonzept** | Rohdaten (`data/`, `exports/`, Archiv) nicht unbegrenzt aufbewahren; eine Frist festlegen. |
 | **Auftragsverarbeitung** | Versandtool, CRM und Anreicherungsdienste verarbeiten Daten im Auftrag. AV-Verträge abschließen; bei Diensten außerhalb der EU die Übermittlungsgrundlage prüfen. |
 
@@ -1154,14 +1141,13 @@ Beim Amazon-Pfad stellt `pfade/amazon/standardformat.mjs` diese Felder nach vorn
 
 ## Vor dem ersten Versand – Checkliste
 
-- [ ] Kanal und Rechtslage bewusst entschieden (siehe Tabelle oben)
-- [ ] Nur bereinigte Listen; Sperrliste auch im Versandtool hinterlegt
-- [ ] Absender, Footer, Abmeldeweg, Datenschutzhinweis nach Art. 14 vorhanden
-- [ ] Keine fingierten Aufhänger in den Vorlagen
+- [ ] Kanal gewählt (siehe Tabelle oben)
+- [ ] Nur bereinigte Listen (Abgleich mit der Sperrliste); gesperrte Domains auch in der Blockliste des Versandtools
+- [ ] Absender, Footer mit Impressum, Abmeldeweg, Datenschutzhinweis nach Art. 14 vorhanden
+- [ ] Nur echte Aufhänger in den Vorlagen
 - [ ] Prozess für Widerspruch, Abmeldung und Auskunft steht (wer, wie schnell, in welchen Systemen)
 - [ ] Leadquelle je Datensatz nachvollziehbar
-- [ ] Bei einer Abmahnung: nicht vorschnell zahlen oder unterschreiben → `10_abmahnung-was-tun.md`
-
+- [ ] Falls doch eine Abmahnung kommt: nicht vorschnell zahlen oder unterschreiben → `10_abmahnung-was-tun.md`
 
 ---
 
@@ -1237,8 +1223,7 @@ python3 -m scraper blockliste-import alte_leads.csv
 
 - Ohne Moderation sind **Falschmeldungen möglich**. Die harmlose Wirkung eines Eintrags (nur Werbe-Sperre) begrenzt den Schaden.
 - Firmen **ohne eigene Website** (z. B. manche Amazon-Seller) lassen sich nicht abgleichen.
-- Die Liste schützt nur vor **bekannten** Abmahnern. Sie macht Kaltakquise nicht zulässig (`08`).
-
+- Die Liste kennt nur **gemeldete** Abmahner. Deshalb gehören Abmeldeweg, Widerspruchsprozess und Blockliste im Versandtool trotzdem dazu (`08`).
 
 ---
 
@@ -1313,9 +1298,7 @@ Abmahnung als PDF in Claude legen: *„Ich habe diese Abmahnung wegen einer Werb
 
 - Keine frisch registrierten Versanddomains ohne Website und Impressum. Die Gegenseite prüft sie und nutzt sie für einen höheren Wert.
 - Zwei Abmahnungen in wenigen Wochen sind ein Muster. Nach der ersten die Kampagne, die Liste und die Vorlagen prüfen.
-- Wer selbst versendet, kann zusätzlich persönlich abgemahnt werden.
 - Abmahner-Domains sofort in alle Sperrlisten und an die Community-Sperrliste (`09_sperrliste.md`).
-
 
 ---
 
@@ -1433,7 +1416,6 @@ Zweiter Mailfinder für die Geschäftsführer-Adresse. Er wird nur gefragt, wenn
 3. Kosten-Größenordnung nennen und Freigabe einholen.
 4. Erst dann der Vollstart.
 
-
 ---
 
 <!-- Datei: wissen/12_fehlerbehebung-faq.md -->
@@ -1526,17 +1508,16 @@ Weil Name oder Geschlecht nicht sicher genug waren. Eine falsche persönliche An
 | „Skael liefert seit 10 Abfragen in Folge kein Ergebnis“ | Skael oder das Internet ist gestört | innerhalb von 24 Stunden erneut starten; der Stand ist gespeichert, schon abgeschickte Abfragen werden dann nicht noch einmal berechnet |
 | „Skael lehnt alle Anfragen an … ab“ | Schnittstelle geändert oder `SKAEL_URL` falsch | nicht wiederholen, nichts wurde berechnet; an den Betreiber des Pakets melden |
 
-## Sperrliste und Recht
+## Sperrliste und Versand
 
-**Darf ich nach dem Abgleich bedenkenlos versenden?**
-Nein. Der Abgleich entfernt bekannte Abmahner. E-Mail-Werbung ohne Einwilligung bleibt grundsätzlich unzulässig (`08`).
+**Reicht der Abgleich vor dem Versand?**
+Der Abgleich entfernt bekannte Abmahner und gesperrte Adressen. Dazu gehören persönliche Ansprache, klarer Absender, Abmeldeweg und Datenschutzhinweis (Checkliste in `08`).
 
 **Eine Firma auf der Sperrliste ist ein Wunschkunde – was tun?**
 Nicht anschreiben, über keinen Kanal. Wer eine Abmahnung ausgesprochen hat, will keinen Kontakt.
 
 **Ich wurde abgemahnt – muss ich melden?**
 Ja, das ist die Bedingung der Nutzung. Der Abmahnungs-Skill erledigt das automatisch und zeigt vorher, was gesendet wird.
-
 
 ---
 
@@ -1589,10 +1570,9 @@ Ja, das ist die Bedingung der Nutzung. Der Abmahnungs-Skill erledigt das automat
 | **Stellensuche** | Pfad, der konkrete Anzeigen per Suchbegriff aus Jobportalen holt (Indeed, Stepstone, Arbeitsagentur, Kununu) und je Firma bündelt |
 | **Stufe 1–4 / 3c** | Abschnitte des Google-Maps-Ablaufs; 3c = Prüfung gegen das Profil |
 | **Testlauf (Dry-Run)** | kleiner Lauf über wenige Städte bzw. 20–50 Amazon-Leads, um Profil, Filter und Kosten zu prüfen |
-| **UWG § 7** | Verbot unzumutbarer Belästigung; E-Mail-Werbung nur mit vorheriger ausdrücklicher Einwilligung |
+| **UWG** | Gesetz gegen den unlauteren Wettbewerb; Grundlage der meisten Abmahnungen wegen Werbe-E-Mails (`10_abmahnung-was-tun.md`) |
 | **Welle** (Amazon) | Abschnitt eines Laufs: Jede Stufe holt nur, was die nächste für das Lead-Ziel noch braucht |
 | **Widerspruch** | Gelistete Firma verlangt Entfernung von der Sperrliste – wird dauerhaft entfernt |
-
 
 ---
 
@@ -1617,7 +1597,7 @@ Ja, das ist die Bedingung der Nutzung. Der Abmahnungs-Skill erledigt das automat
 2. **Quelle prüfen:**
    - Nutzungsbedingungen, Kosten, API statt Scraping wo möglich.
    - Personenbezug der Daten.
-   - Ergebnis im Abschnitt „Rechtliches“ der Wissensdatei.
+   - Ergebnis im Abschnitt „Daten und Versand“ der Wissensdatei.
 3. **Ordner anlegen** nach `pfade/_vorlage/README.md`: `ABLAUF.md`, `README.md`, `scripts/`, `referenzen/`.
 4. **Wiederverwenden statt neu bauen:**
 
@@ -1648,7 +1628,6 @@ Ja, das ist die Bedingung der Nutzung. Der Abmahnungs-Skill erledigt das automat
 ## Prompt für Claude Code zum Start
 
 > Lies `lead-scraper/CLAUDE.md`, `wissen/14_neuen-pfad-anlegen.md`, `pfade/_vorlage/README.md` und `wissen/NN_pfad-<name>.md`. Baue den Pfad `<name>` nach dem Pflichtenheft. Kläre zuerst mit mir die offenen Entscheidungen aus der Wissensdatei, eine Frage pro Nachricht. Nutze die vorhandenen Bausteine, statt sie neu zu bauen.
-
 
 ---
 
@@ -1779,14 +1758,13 @@ Messung über den Kontostand vor und nach jedem Schritt (Bamberg + Passau, 62 fe
 - Telefon- und LinkedIn-Anreicherung sind in Clay eingebaut, aber abgeschaltet.
 - **Vorgabe für das Paket:** Alle KI-Schritte und die Domainsuche laufen standardmäßig über Skael, weil die Rate-Limits einzelner ChatGPT-Konten oft nicht reichen. OpenAI bleibt als optionaler Schalter.
 
-
 ---
 
 <!-- Datei: wissen/16_videoseiten.md -->
 
 # Videoseiten – persönliches Video und eigene Landingpage je Lead
 
-**Zweck:** Wissen zum Pfad `pfade/videoseiten/`: was entsteht, was es kostet, was der Nutzer selbst tun muss, wie die Vorlage aufgebaut ist und was rechtlich zu beachten ist.
+**Zweck:** Wissen zum Pfad `pfade/videoseiten/`: was entsteht, was es kostet, was der Nutzer selbst tun muss, wie die Vorlage aufgebaut ist und wie Datenschutz und Versand sauber laufen.
 **Für wen:** Nutzer mit Rückfragen und KI-Modelle, die den Ablauf (`pfade/videoseiten/ABLAUF.md`) begleiten.
 **Verwandt:** `02_zielgruppen-interview.md` (Blöcke V und L) · `07_lead-ausgabe-und-spalten.md` (Lead-Format) · `08_versand-und-recht.md` · `11_zugaenge-und-kosten.md`
 
@@ -1849,15 +1827,14 @@ Beispiel: 500 Leads mit einem 1:50-Minuten-Video = 55.000 Credits = 55 €. Mit 
 
 **Branding:** `branding.py` liest Farben, Schriften und Logo von der Website, lädt die Schriften als Dateien herunter (nie per Link einbinden) und schreibt sie in die Kopie. Vor dem Klick lädt die Seite nichts von Dritten.
 
-## Datenschutz und Recht (Kurzfassung)
+## Datenschutz und Versand (Kurzfassung)
 
 - **An Skael** gehen nur Vorname, Firma, Domain, Website und die interne Kennung. Skael zeigt alles Übergebene ohne Anmeldung auf der Videoseite an, deshalb nie E-Mail oder Telefon.
 - **Link-Kennung:** 22 zufällige Zeichen, nicht der Skael-Token, nie Name oder Firma in der Adresse.
 - **Datenschutz-Information nach Art. 14 DSGVO** steht auf jeder Seite: Verantwortlicher, Daten, Quelle, Zweck, Speicherdauer. Die Quelle ist bewusst allgemein gehalten („Impressum … sowie weitere öffentlich zugängliche Quellen“, dazu `erfasst_am`). `quelle` und `quelle_url` aus dem Lead-Format bleiben intern als Nachweis und landen nie auf der Seite. Die Rechte stehen nur in der Datenschutzerklärung, nicht auf der Seite, und die Seite nennt keine IP-Übertragung (beides steht in der Datenschutzerklärung).
 - **„Keine weiteren Nachrichten – Datenlöschung vornehmen“:** löscht die Seite sofort und meldet die Kennung an den Server. Der Nutzer sperrt die Adresse im Mailtool und im Scraper (`ABLAUF.md`, Teil F).
 - **Datenschutzerklärung des Nutzers** muss die Videoseiten, Skael und den Server nennen (`anleitungen/05_datenschutzerklaerung.md`).
-- Werbe-Mails ohne Einwilligung bleiben nach § 7 Abs. 2 Nr. 2 UWG riskant (`08_versand-und-recht.md`). Die Seite senkt Angriffsflächen, ersetzt aber keine Rechtsberatung.
-
+- **Versand:** persönlich, mit klarem Absender, Abmeldeweg und Datenschutzhinweis (`08_versand-und-recht.md`). Keine Rechtsberatung.
 
 ---
 
@@ -1919,7 +1896,6 @@ Für einen ersten Blick vor dem Hostinger-Server lässt sich der `seiten`-Ordner
 - `noindex` setzen. Die Vorlage hat das Meta-Tag schon, zusätzlich den Header `X-Robots-Tag`.
 - Nur zum Ansehen, nicht für den Versand. Datenlöschung und Zählung brauchen den eigenen Server.
 - Nach einem neuen Upload zeigt der Browser oft noch die alte Fassung aus dem Cache. Vor dem Urteil neu laden.
-
 
 ---
 
@@ -2061,10 +2037,10 @@ Erkenntnisse aus Lauf 1:
 - **Ohne belegte Website** keine Anreicherung: Die Firma steht in Liste 4 mit „keine eigene Website gefunden“.
 - **Ort:** Die Suche im Umkreis überschneidet sich zwischen Nachbarorten. Doppelte Anzeigen werden über Portal und Anzeigen-ID erkannt, doppelte Firmen über Website oder Namen.
 
-## Rechtliches in Kürze
+## Daten und Versand in Kürze
 
 - **Datenquelle:** Die Anzeigen kommen über die Skael-Schnittstelle, die die Portale abfragt. Wir lesen die Portale nicht selbst aus. Ob Nutzungsbedingungen der Portale berührt sind, ist eine Frage zwischen Skael und den Portalen; die Arbeitsagentur ist eine öffentliche Stelle. Genutzt werden nur Firmenangaben (wer stellt wen ein), keine Daten von Bewerbern.
 - **Kontaktpersonen aus Anzeigen werden nicht übernommen.** Der Stellentext wird vor dem Speichern gekürzt: Kontaktblock, E-Mail-Adressen und Telefonnummern fallen weg. Ansprechpartner kommen nur aus dem Impressum (Geschäftsführung).
-- **Ansprache:** E-Mail-Werbung ohne Einwilligung bleibt unzulässig (§ 7 Abs. 2 Nr. 2 UWG), auch mit Bezug auf eine öffentliche Anzeige. Den Aufhänger nicht fingieren: Liste zeitnah nutzen; das Datum der Anzeige steht in jeder Zeile.
+- **Ansprache:** Die ausgeschriebene Stelle ist ein echter, sachlicher Aufhänger. Ihn nicht fingieren: Liste zeitnah nutzen; das Datum der Anzeige steht in jeder Zeile.
 
 Mehr in `08_versand-und-recht.md`.
