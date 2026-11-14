@@ -75,7 +75,7 @@ Die DFN-Wurzel ist nicht in jedem Zertifikatsspeicher enthalten. Ihren Fingerabd
 
 Der Nutzer sichert selbst nach der Zeugenanleitung unten. Die gelieferten Dateien (HAR, Screenshots) werden gehasht und, wenn möglich, mit Zeitstempel versehen. Aussagen über Ladeverhalten nie aus bloßem Textabruf per Websuche ableiten – solche Werkzeuge führen kein JavaScript aus und respektieren oft robots.txt.
 
-## Empfehlungen an den Nutzer (immer mitgeben)
+## Hinweise an den Nutzer (immer mitgeben)
 
 1. **Zeugenwiederholung** durch eine Person, die später aussagen kann, am eigenen Rechner mit deutschem Anschluss:
    1. Chrome im Inkognito-Fenster öffnen.

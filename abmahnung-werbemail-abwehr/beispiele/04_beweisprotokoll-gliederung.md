@@ -39,11 +39,11 @@ Tabelle festgestellter Dienst → in DSE erwähnt ja/nein; überholte Angaben mi
 
 Tabelle Fundstelle (Datei, Seite) → Feststellung. Klarstellungen zu Werten, die missverstanden werden könnten.
 
-## 6. Integrität, Grenzen, Empfehlungen
+## 6. Integrität, Grenzen, Hinweise
 
 - Integrität: SHA-256 aller Dateien, zwei RFC-3161-Zeitstempel, Verweis auf PRUEFANLEITUNG.txt
 - Grenzen (immer): Eigendokumentation (§ 286 ZPO), KI-Durchführung, Ausgangs-IP/Proxy, Headless-Browser, ggf. ausgelassene Dateien
-- Empfehlungen: Zeugenwiederholung (Schrittfolge), archive.org, Notar/Sachverständiger, Aufbewahrung
+- Hinweise: Zeugenwiederholung (Schrittfolge), archive.org, Notar/Sachverständiger, Aufbewahrung
 
 ## Anlagen
 

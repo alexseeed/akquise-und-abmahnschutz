@@ -12,7 +12,7 @@
   - Den Gegenstandswert ungeprüft hinnehmen.
   - Den Entwurf der Gegenseite unterschreiben.
 
-  Eilig ist nur die UE. Geld erst nach Kostennote und Zahlungsnachweis, und nur auf einen begründeten Wert.
+  Eilig ist nur die UE. Geld erst nach Darlegung der Kostenbelastung bzw. Rechnung des Abmahners, und nur auf einen begründeten Wert.
 - **Rückfragen-Bombardement vor der UE:** hält die Frist nicht an, gefährdet § 93 ZPO, lädt zur einstweiligen Verfügung ein. Gezielte Nachweisforderungen gehören in dasselbe Schreiben wie die UE.
 - **Kosten so formulieren, dass es nach Verweigerung klingt** („lehnen ab“, „zahlen erst, wenn“): Ein Freistellungsanspruch kann dann in einen Zahlungsanspruch umschlagen (§ 250 BGB). Immer: „Eine Zahlung lehnen wir damit nicht ab.“
 - **Frist am Zugangstag still übergehen:** Wer nichts dazu sagt, wirkt säumig. Kurz festhalten, dass die Frist unangemessen kurz war und eine angemessene Frist gewahrt ist. Das Zugangsdatum vorher belegen lassen (Sendungsverfolgung).
@@ -27,6 +27,13 @@
 - **Form bei Nicht-Kaufleuten:** Bei GbR, Freiberufler und Kleingewerbe reicht ein PDF per E-Mail nicht (§§ 780, 781 BGB). Vorab nur per E-Mail, nie per Telefax. Das Original muss per Post folgen. Bei der GbR unterschreiben alle Gesellschafter. Bei einer Frist für das Original die Feiertage an beiden Orten einrechnen.
 - **Schreiben vordatieren und später senden:** Das Datum muss zum Versandtag passen. Verschiebt sich der Versand, alle Dokumente neu datieren.
 - **„Kontaktieren lassen“** erfasst Dienstleister und alle Adressen des Abmahners: Sperrliste in allen Scraping-, Lead- und Versandsystemen sowie bei beauftragten Agenturen und Lead-Lieferanten umsetzen, **bevor** die UE abgegeben wird.
+- **Kostennote nach § 10 RVG als Anspruch behandeln:** Vor einem Prozess gibt es keinen Anspruch darauf; die Kanzlei darf ablehnen. Stattdessen um Darlegung bitten, die Kostenbelastung mit Nichtwissen bestreiten und bei Umsatzsteuer die Rechnung des Abmahners nach § 14 UStG verlangen.
+- **Zahlung an „Rechnung über [Betrag]“ knüpfen:** Der Abmahner stellt eine Rechnung über die volle Forderung, die Bedingung tritt nie ein. Richtig: „nach Eingang einer ordnungsgemäßen Rechnung“, ohne Betrag.
+- **„Darüber hinausgehende Forderungen weisen wir zurück“:** wirkt als ernsthafte Erfüllungsverweigerung (§ 286 Abs. 2 Nr. 3 BGB) und gibt Anlass zur Klage. Besser: „Einen darüber hinausgehenden Anspruch sehen wir nicht.“
+- **Abgeschriebene Passagen glauben:** Kanzleien übernehmen Sätze aus Urteilen (z. B. BFH XI R 27/14, Rn. 20 und 27) und ergänzen eigene („in jedem Fall zu erstatten“). Immer mit dem Original vergleichen.
+- **Normen und Beträge aus dem Gedächtnis:** § 14 Abs. 2 Satz 1 Nr. 2 UStG ist seit 2025 veraltet (richtig: Satz 2 Nr. 1). Umsatzsteuer nachrechnen (19 % von 558,20 € sind 106,06 €). Urteil oder Beschluss, Datum und Randnummer am Volltext prüfen.
+- **Sekundärquellen zitieren:** Blogs, Leitsatz-Sammlungen und Kanzlei-Newsletter genügen nicht. Was nicht im Volltext belegt ist, fliegt raus, auch wenn es gut passt.
+- **Empfehlung im Begleitschreiben:** nie „Empfehlung“ oder „empfehlen“; immer „wir würden an Ihrer Stelle … vorgehen“ und der gerahmte Hinweis „keine Rechtsberatung“ oben und am Ende (`02_antwortbausteine.md`).
 - **Sperrlisten-Erkenntnisse im Schreiben** („uns sind weitere Fälle Ihres Mandanten bekannt“) – nie. Sie sind Erfahrungswerte, ihre Erwähnung provoziert Gegenreaktionen gegen die Liste.
 
 ## Website-Block

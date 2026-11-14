@@ -3,7 +3,7 @@
 **Zweck:** die ersten Schritte nach einer Abmahnung wegen einer Werbe-E-Mail. Die ausführliche Prüfung übernimmt der Skill `abmahnung-werbemail-abwehr`.
 **Für wen:** Nutzer, die gerade eine Abmahnung bekommen haben, und KI-Modelle, die erste Fragen beantworten.
 **Verwandt:** `08_versand-und-recht.md` · `09_sperrliste.md` · Skill `abmahnung-werbemail-abwehr` (Rechtsprechung, Bausteine, Beweissicherung)
-**Stand:** Oktober 2026. **Keine Rechtsberatung.** Bei Klage, einstweiliger Verfügung oder hohen Beträgen einen Anwalt einschalten.
+**Stand:** November 2026. **Keine Rechtsberatung.** Bei Klage, einstweiliger Verfügung oder hohen Beträgen einen Anwalt einschalten.
 
 ---
 
@@ -21,7 +21,7 @@
 
 - **Schnell:** Die eigene, modifizierte Unterlassungserklärung geht fristgerecht raus. Nur sie verhindert eine einstweilige Verfügung.
 - **Fest:**
-  - Im ersten Schreiben wird nichts gezahlt. Kosten gibt es erst nach Kostennote und Nachweis, dass der Abmahner seinen Anwalt zahlt oder zahlen muss.
+  - Im ersten Schreiben wird nichts gezahlt. Kosten gibt es erst, wenn der Abmahner darlegt, dass er seinem Anwalt etwas schuldet, und, wenn er Umsatzsteuer verlangt, eine Rechnung stellt.
   - Der Gegenstandswert wird geprüft und bei Überhöhung gerügt. Oft trägt schon das Urteil, das der Abmahner selbst zitiert, einen niedrigeren Wert.
   - Schadensersatz nach Art. 82 wird ohne dargelegten Schaden zurückgewiesen.
 - **Nicht laut:** keine Drohungen, keine Wertungen, kein Rückfragen-Bombardement vor der Erklärung. Alle Nachweisforderungen stehen in **einem** Schreiben zusammen mit der Erklärung.
@@ -47,7 +47,14 @@ Abmahnung als PDF in Claude legen: *„Ich habe diese Abmahnung wegen einer Werb
 | **Unterlassung** | meist begründet. Abgegeben wird eine **modifizierte** Unterlassungserklärung ohne Anerkennung einer Rechtspflicht und ohne Zahlungspflichten |
 | **Schadensersatz nach Art. 82 DSGVO** | ohne konkret dargelegten Schaden kein Anspruch. Der bloße Erhalt einer Werbe-Mail genügt nach der BGH-Rechtsprechung nicht |
 | **Auskunft nach Art. 15 DSGVO** | steht nur der betroffenen Person zu, nicht der abmahnenden Firma. Fristgerecht und vollständig erteilen. Ist die Person anwaltlich vertreten, Vollmacht anfordern, sonst verschlossen über die Kanzlei |
-| **Anwaltskosten** | erst Kostennote und Zahlungsnachweis anfordern, Gegenstandswert rügen, dann auf begründeter Basis zahlen. Nie als „abgelehnt“ formulieren, das kann einen Zahlungsanspruch auslösen |
+| **Anwaltskosten** | Darlegung der Kosten verlangen und sie bis dahin bestreiten, bei Umsatzsteuer eine Rechnung des Abmahners verlangen, Gegenstandswert rügen, dann auf begründeter Basis zahlen. Für eine einzelne Mail setzen die Oberlandesgerichte heute 1.000 bis 3.000 € an, nicht 6.000 €. Nie als bloße Verweigerung formulieren, das kann einen Zahlungsanspruch auslösen |
+
+## Wenn die Kanzlei antwortet
+
+- **Annahme der Unterlassungserklärung:** Damit ist die Unterlassung erledigt; offen sind nur noch die Kosten.
+- **„Kein Anspruch auf Rechnung“, „eigener Leistungsanspruch“ (BFH XI R 27/14):** Das Urteil betrifft nur die Umsatzsteuer. Wer Umsatzsteuer verlangt, muss eine Rechnung stellen; bis dahin darf man die Zahlung zurückhalten. Der Skill prüft alle zitierten Entscheidungen im Volltext und bereitet zwei Varianten vor: Angebot auf begründetem Wert gegen Rechnung, oder Ablehnung (mit höherem Risiko).
+- **Lange Liste von Streitwert-Urteilen:** meist alte Entscheidungen, Eilverfahren oder nicht veröffentlichte Beschlüsse. Am Gerichtsstand zählt die aktuelle Linie, und der liegt am Sitz des Abgemahnten oder des Abmahners, nicht am Sitz der Kanzlei.
+- **Mahnbescheid:** binnen zwei Wochen Widerspruch einlegen und einen Anwalt einschalten.
 
 ## Was man vermeiden muss
 

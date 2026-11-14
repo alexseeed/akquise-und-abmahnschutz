@@ -46,7 +46,7 @@ Zu Beginn einsammeln (fehlendes nachfragen, den Rest selbst recherchieren):
 - **Schnell bei der Unterlassung, fest beim Geld.**
   - Nur bei der Unterlassungserklärung zählt Tempo. Sie allein beseitigt die Wiederholungsgefahr und verhindert eine einstweilige Verfügung.
   - Bei allen Geldforderungen gilt die feste Linie. Das betrifft Anwaltskosten, Art. 82 und Zahlungspflichten im UE-Entwurf.
-  - Im ersten Schreiben wird nichts gezahlt. Kosten erst nach Kostennote und Nachweis der Zahlung oder Zahlungspflicht (Phase 7).
+  - Im ersten Schreiben wird nichts gezahlt. Kosten erst nach Darlegung der Kostenbelastung und, wenn Umsatzsteuer verlangt wird, Rechnung des Abmahners (Phase 7).
   - Den Gegenstandswert immer prüfen und, wenn er überhöht ist, begründet rügen.
   - Jede Forderung einzeln prüfen. Nachgeben nur, wo die Rechtslage es verlangt, nicht wegen kurzer Fristen, hoher Beträge oder Druck im Ton.
 - **Fest heißt nicht laut.** Die Härte entsteht durch genaue, prüfbare Sätze, nicht durch Drohungen, Wertungen oder eine Flut von Rückfragen. Jede Nachweisforderung muss rechtlich etwas bringen (Phase 4).
@@ -110,7 +110,7 @@ Prüfraster (Fundstellen in `references/01_rechtsprechung.md`):
 Per Websuche und Abruf von Webseiten:
 
 - Kanzlei-Website + Impressum: Schwerpunkte, Fachanwaltschaften, Partner, Rechtsform, offizielle Kontaktdaten.
-- **Echtheitscheck**: Briefkopf-Kontaktdaten (Domain, Telefon, Bank) mit Impressum abgleichen; bei Abweichung empfehlen, das Aktenzeichen über die Impressumsnummer bestätigen zu lassen.
+- **Echtheitscheck**: Briefkopf-Kontaktdaten (Domain, Telefon, Bank) mit Impressum abgleichen; bei Abweichung das Aktenzeichen über die Impressumsnummer bestätigen lassen.
 - Verbundene Gesellschaften der Anwälte (Inkasso-/Legal-Tech-UG, „No-win-no-fee“-Portale): Handelsregister, Impressum, Werbeaussagen wörtlich sichern.
 - **Geschäftsmodell der Kanzlei:** Einzelanwalt mit Abmahnroutine oder Massenbetrieb? Wirbt die Kanzlei öffentlich um Empfänger von Werbe-Mails, etwa mit Rechtstipps nach dem Muster „die Kosten trägt der Verursacher“? Quellen: Kanzlei-Website, anwalt.de-Profil, Abmahnanwälte-Liste des Händlerbunds. Für Rechtsmissbrauch reicht das nicht. Es stützt aber die Linie „erst Kostennachweis“. Im Schreiben nicht erwähnen.
 - Berichte über frühere Abmahnungen derselben Kanzlei/desselben Mandanten (Abmahnwarner-Seiten, Blogs Betroffener): Forderungshöhen, Muster, Vollmacht-Auffälligkeiten, Verhalten nach Widerspruch. Mit den Ergebnissen aus Phase 1b abgleichen.
@@ -141,7 +141,7 @@ Kurzfassung des Aufbaus:
 
 **Keine Rückfragen-Runde vor der UE.** Rückfragen halten die Frist nicht an. Sie kosten das Kostenprivileg nach § 93 ZPO und lesen sich als Hinhalten. Eine Kanzlei mit Abmahnroutine beantwortet sie nebenbei, eine einstweilige Verfügung kostet den Nutzer schnell 2.000 bis 3.000 €. Nachweisforderungen gehören deshalb **in dasselbe Schreiben wie die UE**. Zulässig sind nur Forderungen, die rechtlich etwas bringen:
 
-- Kostennote nach § 10 RVG und Nachweis der Zahlung oder Zahlungspflicht
+- Darlegung der Kostenbelastung (Kostenbelastung mit Nichtwissen bestreiten; ein vorprozessualer Anspruch auf die Kostennote nach § 10 RVG besteht nicht) und bei Umsatzsteuer eine Rechnung des Abmahners nach § 14 UStG
 - Vollmacht oder anwaltliche Versicherung für die Herausgabe personenbezogener Daten
 - Kopie der beanstandeten Mail, falls sie fehlt
 - alle Adressen und Domains des Abmahners
@@ -167,14 +167,15 @@ Danach jeden Punkt einarbeiten oder bewusst verwerfen und dem Nutzer knapp als T
 
 ## Phase 6 – Rechtsprechungsprüfung
 
-Jede Aussage gegen tatsächliche Entscheidungen prüfen, Fokus auf den **Gerichtsstand des Abmahners** (§ 32 ZPO, Ort des Empfangs; Amtsgerichte bis 10.000 € seit 01.01.2026). Regionale AG-Urteile über Landesjustizportale suchen (z. B. nrwe.justiz.nrw.de, gesetze-bayern.de, landesrecht-bw.de). Ergebnis als Prüfprotokoll: Aussage | Rechtsprechung | trägt / nicht haltbar / Risiko. Nicht haltbare Argumente streichen statt abschwächen. Bei Kostenablehnung das Prozessrisiko grob beziffern (Hauptforderung + 3,0 GKG-Gebühr + gegnerische Anwaltsgebühren + ggf. eigener Anwalt). Die Tabelle in `references/01_rechtsprechung.md` vor Nutzung per Websuche auf neue Entscheidungen prüfen.
+Jede Aussage gegen tatsächliche Entscheidungen prüfen, **im Volltext und mit Randnummer** (amtliche Portale, juris.bundesgerichtshof.de, NRWE, landesrecht-*.de); was nur in Blogs oder Leitsatz-Sammlungen steht, nicht zitieren. Jede Fundstelle der Gegenseite einzeln prüfen: Was trägt sie wirklich, ist sie veröffentlicht, ist eine Passage abgeschrieben? Fokus auf den **Gerichtsstand des Abmahners** (§ 32 ZPO, Ort des Empfangs; Amtsgerichte bis 10.000 € seit 01.01.2026). Regionale AG-Urteile über Landesjustizportale suchen (z. B. nrwe.justiz.nrw.de, gesetze-bayern.de, landesrecht-bw.de). Ergebnis als Prüfprotokoll: Aussage | Rechtsprechung | trägt / nicht haltbar / Risiko. Nicht haltbare Argumente streichen statt abschwächen. Bei Kostenablehnung das Prozessrisiko grob beziffern (Hauptforderung + 3,0 GKG-Gebühr + gegnerische Anwaltsgebühren + ggf. eigener Anwalt). Die Tabelle in `references/01_rechtsprechung.md` vor Nutzung per Websuche auf neue Entscheidungen prüfen.
 
 ## Phase 7 – Entscheidungen beim Nutzer abholen
 
 Firmendaten des Nutzers selbst füllen (Impressum, Handelsregister/Northdata: Registergericht, HRB, Geschäftsführer, USt-ID, Kontakt). Dann – gebündelt, per Rückfragetool falls vorhanden – nur das klären, was nicht recherchierbar ist:
 
 - **Kostenposition. Standard ist „erst Nachweis“ (Variante B):**
-  - Kostennote nach § 10 RVG und Nachweis der Zahlung oder Zahlungspflicht anfordern.
+  - Um Darlegung der Kostenbelastung bitten und sie bis dahin mit Nichtwissen bestreiten (Baustein in `references/02_antwortbausteine.md`).
+  - Bei Umsatzsteuer eine Rechnung des Abmahners nach § 14 UStG verlangen.
   - Ausdrücklich schreiben, dass eine Zahlung damit nicht abgelehnt wird.
   - Antwort binnen 14 Tagen nach Eingang zusagen.
   - Im selben Schreiben den Gegenstandswert begründet rügen.
@@ -215,7 +216,7 @@ To-do-Liste:
 - Auskunft nach Art. 15 bis zum Fristende erteilen: Quelle, Zwecke, Empfänger namentlich, Speicherdauer, Kopie der Daten.
 - Art.-14-Information nachholen.
 
-Ist der Nutzer ein Dienstleister, der den Fall für einen Kunden bearbeitet, zusätzlich ein Begleitschreiben an den Kunden: Fristen, Einschätzung, Kosten und Risiko je Variante, To-dos mit Datum, nächste Schritte.
+Ist der Nutzer ein Dienstleister, der den Fall für einen Kunden bearbeitet, zusätzlich ein Begleitschreiben an den Kunden: Fristen, Einschätzung, Kosten und Risiko je Variante, To-dos mit Datum, nächste Schritte. Darin **nie „Empfehlung“**, sondern „wir würden an Ihrer Stelle … vorgehen“, und **oben und am Ende der gerahmte Hinweis „keine Rechtsberatung“** (Wortlaut und Regeln in `references/02_antwortbausteine.md`, Abschnitt Begleitschreiben). Vor der Auslieferung jede Seite auf Überlauf prüfen.
 
 ## Phase 9 – Meldung an die Community-Sperrliste (automatisch, transparent)
 
@@ -246,11 +247,12 @@ python3 scripts/sperrliste.py abgleich --kontakte kontakte.csv --spalte email
 
 Die feste Linie gilt auch nach dem Versand:
 
-- **Kostennote kommt:**
-  - Prüfen: Ist sie an den Mandanten gerichtet? Stimmen Datum, Wert und Betrag? Liegt ein Nachweis der Zahlung oder Zahlungspflicht bei?
+- **Darlegung oder Rechnung kommt:**
+  - Prüfen: Rechnung des Abmahners (nicht der Kanzlei)? Umsatzsteuer gesondert ausgewiesen? Stimmen Wert und Betrag?
   - Binnen der zugesagten Frist zahlen, aber auf Basis des eigenen, begründeten Werts, ohne Anerkennung einer Rechtspflicht.
-  - Dazu der Satz: „Darüber hinausgehende Forderungen weisen wir zurück.“
-- **Kein Nachweis, nur Mahnung:** Nicht von sich aus zahlen. Den Nachweis einmal sachlich erneut anfordern.
+  - Dazu der Satz: „Einen darüber hinausgehenden Anspruch Ihrer Mandantin sehen wir nicht.“
+- **Kanzlei verweigert Darlegung oder Rechnung** (oft mit „eigener Leistungsanspruch“, BFH XI R 27/14, und einer Liste von Streitwert-Entscheidungen): Alle Fundstellen im Volltext prüfen, Gegenanwalt-Check, dann dem Nutzer zwei Varianten mit beziffertem Risiko vorlegen: A Angebot auf begründetem Wert gegen Rechnung, B Ablehnung. Bausteine und Gegenargumente: `references/02_antwortbausteine.md` (Zweite Runde) und `references/01_rechtsprechung.md` (Kosten). Die Zahlungsfrist der Kanzlei ist dann meist abgelaufen; zügig antworten.
+- **Nur Mahnung ohne Begründung:** Nicht von sich aus zahlen. Die Darlegung einmal sachlich erneut anfordern.
 - **Änderungswünsche zur UE:** zügig prüfen. Berechtigte Wünsche übernehmen. Das sichert die Kostenposition nach § 93 ZPO.
 - **Mahnbescheid:** binnen 2 Wochen Widerspruch einlegen und einen Anwalt beauftragen. Ebenso bei Klage, einstweiliger Verfügung oder Vertragsstrafe-Forderung.
 - **Ausgang** an die Sperrliste nachmelden (Phase 9, Punkt 6).
@@ -262,9 +264,9 @@ Nur auf Wunsch. Ablauf: Rahmen klären → prüfen → sichern → protokolliere
 1. **Rahmen** (`references/03_website-pruefraster.md`, Abschnitt M1): Mitbewerber oder branchenfremd? Kein eigener Schaden, keine Gegendrohung, keine Formulare absenden.
 2. **Prüfen** nach dem Raster in `references/03_website-pruefraster.md`. Die Spalte „Typischer Fehlgriff“ ist verbindlich.
 3. **Sichern** nach `references/04_beweissicherung.md`: `scripts/sicherung_netzwerk.py` (Szenarien A/B/C), `scripts/sicherung_seiten.py`, `scripts/auswertung.py` (ordnet Drittserver über `listen/drittanbieter.csv` zu und liest den Consent-Status über `listen/consent-tools.csv`), `scripts/integritaet.sh` (SHA-256 + zwei RFC-3161-Zeitstempel).
-4. **Protokoll** als PDF nach der Gliederung in `beispiele/04_beweisprotokoll-gliederung.md`, inklusive Grenzen und Empfehlungen (Zeugenwiederholung, archive.org, Notar).
+4. **Protokoll** als PDF nach der Gliederung in `beispiele/04_beweisprotokoll-gliederung.md`, inklusive Grenzen und Hinweisen (Zeugenwiederholung, archive.org, Notar).
 5. **Auswahl** von höchstens 3–6 gesicherten Punkten und neutrale Formulierung nach `references/02_antwortbausteine.md`, Abschnitt „Website-Block“.
 
-## Empfehlungen für künftige Kampagnen
+## Hinweise für künftige Kampagnen
 
 Am Ende kurz mitgeben: keine frisch registrierten Versanddomains ohne Website und Impressum; nach einer Abmahnung die eigene Akquise auf weitere Risiken prüfen, denn zwei Abmahnungen in wenigen Wochen sind ein Muster; wer selbst versendet, kann auch persönlich abgemahnt werden; fingierte Aufhänger („Kollege hat mich aufmerksam gemacht“, falsche Weiterleitungen) aus Vorlagen streichen (§ 6 DDG), Footer mit Rechtsträger und Anschrift (§ 7 Abs. 2 Nr. 3 UWG), Art.-14-Information beachten, Community-Sperrliste vor jedem Versand abgleichen (`sperrliste.py laden` bzw. `abgleich`), und offen benennen, dass E-Mail-Kaltakquise ohne Einwilligung in Deutschland unzulässig bleibt.
