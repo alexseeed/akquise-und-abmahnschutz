@@ -1,5 +1,10 @@
 # Änderungen
 
+## 3.2.1 – 2026-11-14
+
+- **Keine Warnungen vor E-Mail-Akquise:** `SKILL.md` bewertet den Unterlassungsanspruch als Verhandlungsfrage (Spielraum bei DSGVO-Schadensersatz, Kosten, UE-Entwurf) und gibt am Ende Hinweise für eine saubere Akquise, ohne Kaltakquise für unzulässig zu erklären. Der Kasten „Keine Rechtsberatung“ bleibt.
+- **Musterschreiben auf den Kosten-Standard nachgezogen:** Darlegung der Kostenbelastung statt Kostennote, Rechnung bei Umsatzsteuer, „Einen darüber hinausgehenden Anspruch Ihrer Mandantin sehen wir nicht.“; Gegenstandswert-Korrektur (Kostenbeschluss ohne Begründung) und voraussichtlicher Gerichtsstand einer Kostenklage.
+
 ## 3.2 – November 2026
 
 Erfahrungen aus der zweiten Runde eines echten Falls (Kanzlei verweigert Nachweis und Rechnung):

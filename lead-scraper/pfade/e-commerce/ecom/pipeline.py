@@ -432,14 +432,23 @@ def stufe2c_emails(conn: sqlite3.Connection, skael: SkaelClient, findymail: Find
 
         # b) Find Work Email (Findymail) — Run-If: ... && !Skael Mailfinder.email
         #    Nicht nach einem Mailfinder-Fehler: der Lead wird ohnehin wiederholt.
+        #    Paid answer from an earlier attempt (verification failed afterwards) is reused, not bought again.
         if clean and not skael_email and not hard_error and CONFIG.use_findymail and findymail.api_key:
-            try:
-                out = findymail.find_work_email(clean, website_final)
-                findymail_raw = db.dumps(out.get("raw"))
-                findy_email = out.get("email") or ""
-            except ApiError as exc:
-                pruefe_zugang(exc, "Findymail")
-                hard_error = f"Findymail: {exc}"
+            if row["findymail_raw"] is not None:
+                findymail_raw = row["findymail_raw"]
+                daten = json.loads(findymail_raw)
+                kontakt = daten.get("contact") if isinstance(daten, dict) else None
+                findy_email = (kontakt if isinstance(kontakt, dict) else {}).get("email") or ""
+            else:
+                try:
+                    out = findymail.find_work_email(clean, website_final)
+                    findymail_raw = db.dumps(out.get("raw"))
+                    findy_email = out.get("email") or ""
+                    if findymail_raw is not None:  # keep it even if the verification below fails
+                        db.update(conn, "anreicherung", row["id"], {"findymail_raw": findymail_raw})
+                except ApiError as exc:
+                    pruefe_zugang(exc, "Findymail")
+                    hard_error = f"Findymail: {exc}"
 
         # c) Skael Validate GF — Run-If: Mailfinder.email || Findymail.email
         verify_gf = None

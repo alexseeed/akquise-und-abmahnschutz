@@ -42,7 +42,7 @@ Zu Beginn einsammeln (fehlendes nachfragen, den Rest selbst recherchieren):
 
 ## Grundhaltung
 
-- Ehrlich bewerten: Der Unterlassungsanspruch ist bei Werbe-Mails ohne Einwilligung fast immer begründet (auch B2B, auch einmalig, auch an eine Impressumsadresse). Angreifbar sind meist DSGVO-Schadensersatz, Kosten, UE-Entwurf und das Vorgehen des Abmahners.
+- Ehrlich bewerten, wo der Spielraum liegt: Über die Unterlassung selbst wird selten gestritten; eine modifizierte UE beendet diesen Teil meist am günstigsten. Angreifbar sind meist DSGVO-Schadensersatz, Kosten, UE-Entwurf und das Vorgehen des Abmahners.
 - **Schnell bei der Unterlassung, fest beim Geld.**
   - Nur bei der Unterlassungserklärung zählt Tempo. Sie allein beseitigt die Wiederholungsgefahr und verhindert eine einstweilige Verfügung.
   - Bei allen Geldforderungen gilt die feste Linie. Das betrifft Anwaltskosten, Art. 82 und Zahlungspflichten im UE-Entwurf.
@@ -92,7 +92,7 @@ Prüfraster (Fundstellen in `references/01_rechtsprechung.md`):
 
 1. **Art. 82 DSGVO**: Ohne konkret dargelegten Schaden kein Anspruch (BGH VI ZR 109/23). Achte auf spekulative Formulierungen („naheliegende Möglichkeit“) – das ist der Versuch, den BGH-Ausnahmefall „Weitergabe an Dritte“ zu konstruieren.
 2. **Zitate**: Jedes Urteil prüfen (Az., Datum, Urteil oder Beschluss, worum ging es wirklich). Fehlzitate sind Indiz für Textbausteine. **Besonders prüfen, ob die eigenen Zitate des Abmahners einen niedrigeren Wert tragen** als den geforderten. Das ist das stärkste Argument gegen den Gegenstandswert (Beispiel in 01).
-3. **Kosten**: RVG-Rechnung nachrechnen (Tabelle in 01). Gegenstandswert gegen die Rechtsprechung am Gerichtsstand des Abmahners halten (Phase 6). Erstattungsfähig sind nur Kosten, die der Mandant seinem Anwalt tatsächlich schuldet.
+3. **Kosten**: RVG-Rechnung nachrechnen (Tabelle in 01). Gegenstandswert gegen die Rechtsprechung am voraussichtlichen Gerichtsstand halten (Phase 6). Erstattungsfähig sind nur Kosten, die der Mandant seinem Anwalt tatsächlich schuldet.
 4. **UE-Entwurf**:
    - Zahlungspflichten gehören nicht hinein.
    - Feste Vertragsstrafe statt neuem Hamburger Brauch.
@@ -167,7 +167,7 @@ Danach jeden Punkt einarbeiten oder bewusst verwerfen und dem Nutzer knapp als T
 
 ## Phase 6 – Rechtsprechungsprüfung
 
-Jede Aussage gegen tatsächliche Entscheidungen prüfen, **im Volltext und mit Randnummer** (amtliche Portale, juris.bundesgerichtshof.de, NRWE, landesrecht-*.de); was nur in Blogs oder Leitsatz-Sammlungen steht, nicht zitieren. Jede Fundstelle der Gegenseite einzeln prüfen: Was trägt sie wirklich, ist sie veröffentlicht, ist eine Passage abgeschrieben? Fokus auf den **Gerichtsstand des Abmahners** (§ 32 ZPO, Ort des Empfangs; Amtsgerichte bis 10.000 € seit 01.01.2026). Regionale AG-Urteile über Landesjustizportale suchen (z. B. nrwe.justiz.nrw.de, gesetze-bayern.de, landesrecht-bw.de). Ergebnis als Prüfprotokoll: Aussage | Rechtsprechung | trägt / nicht haltbar / Risiko. Nicht haltbare Argumente streichen statt abschwächen. Bei Kostenablehnung das Prozessrisiko grob beziffern (Hauptforderung + 3,0 GKG-Gebühr + gegnerische Anwaltsgebühren + ggf. eigener Anwalt). Die Tabelle in `references/01_rechtsprechung.md` vor Nutzung per Websuche auf neue Entscheidungen prüfen.
+Jede Aussage gegen tatsächliche Entscheidungen prüfen, **im Volltext und mit Randnummer** (amtliche Portale, juris.bundesgerichtshof.de, NRWE, landesrecht-*.de); was nur in Blogs oder Leitsatz-Sammlungen steht, nicht zitieren. Jede Fundstelle der Gegenseite einzeln prüfen: Was trägt sie wirklich, ist sie veröffentlicht, ist eine Passage abgeschrieben? Fokus auf den **voraussichtlichen Gerichtsstand einer Kostenklage**: allgemeiner Gerichtsstand am Sitz des Abgemahnten (§§ 12, 13, 17 ZPO); ob § 32 ZPO (Empfangsort) bei der reinen Zahlungsklage auf Abmahnkosten greift, ist umstritten; der Sitz der Kanzlei begründet keine Zuständigkeit (Details: `references/01_rechtsprechung.md`; Amtsgerichte bis 10.000 € seit 01.01.2026). Regionale AG-Urteile über Landesjustizportale suchen (z. B. nrwe.justiz.nrw.de, gesetze-bayern.de, landesrecht-bw.de). Ergebnis als Prüfprotokoll: Aussage | Rechtsprechung | trägt / nicht haltbar / Risiko. Nicht haltbare Argumente streichen statt abschwächen. Bei Kostenablehnung das Prozessrisiko grob beziffern (Hauptforderung + 3,0 GKG-Gebühr + gegnerische Anwaltsgebühren + ggf. eigener Anwalt). Die Tabelle in `references/01_rechtsprechung.md` vor Nutzung per Websuche auf neue Entscheidungen prüfen.
 
 ## Phase 7 – Entscheidungen beim Nutzer abholen
 
@@ -269,4 +269,4 @@ Nur auf Wunsch. Ablauf: Rahmen klären → prüfen → sichern → protokolliere
 
 ## Hinweise für künftige Kampagnen
 
-Am Ende kurz mitgeben: keine frisch registrierten Versanddomains ohne Website und Impressum; nach einer Abmahnung die eigene Akquise auf weitere Risiken prüfen, denn zwei Abmahnungen in wenigen Wochen sind ein Muster; wer selbst versendet, kann auch persönlich abgemahnt werden; fingierte Aufhänger („Kollege hat mich aufmerksam gemacht“, falsche Weiterleitungen) aus Vorlagen streichen (§ 6 DDG), Footer mit Rechtsträger und Anschrift (§ 7 Abs. 2 Nr. 3 UWG), Art.-14-Information beachten, Community-Sperrliste vor jedem Versand abgleichen (`sperrliste.py laden` bzw. `abgleich`), und offen benennen, dass E-Mail-Kaltakquise ohne Einwilligung in Deutschland unzulässig bleibt.
+Am Ende kurz mitgeben, wie die Akquise sauber weiterläuft: keine frisch registrierten Versanddomains ohne Website und Impressum; nach einer Abmahnung Kampagne, Liste und Vorlagen durchsehen, denn zwei Abmahnungen in wenigen Wochen sind ein Muster; fingierte Aufhänger („Kollege hat mich aufmerksam gemacht“, falsche Weiterleitungen) aus Vorlagen streichen (§ 6 DDG), Footer mit Rechtsträger und Anschrift (§ 7 Abs. 2 Nr. 3 UWG), Art.-14-Information beachten, Community-Sperrliste vor jedem Versand abgleichen (`sperrliste.py laden` bzw. `abgleich`). Nicht vor E-Mail-Akquise warnen.

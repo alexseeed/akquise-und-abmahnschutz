@@ -118,9 +118,9 @@ Wie für alle Pfade (`07_lead-ausgabe-und-spalten.md`): „Guten Tag Herr/Frau N
 - **Keine Personalisierung:** Einen individuellen Einstiegssatz liefert dieser Pfad nicht.
 - **Ungetestete Echtläufe:** Die überarbeitete Version wurde gegen einen Test-Server geprüft, der Skael-Teil zusätzlich gegen die veröffentlichte Schnittstellen-Beschreibung (api.skael.de/docs). Den ersten echten Lauf immer mit Smoke-Test und Testlauf beginnen.
 
-## Risiken und Recht
+## Daten und Versand
 
 - **Amazon-Nutzungsbedingungen:** Die Seiten werden über einen Scraping-Dienst (Oxylabs) abgerufen, nicht über ein eigenes Amazon-Konto. Es gibt daher keine Kontosperre. Die Nutzung muss trotzdem mit den Bedingungen von Amazon und der Dienste vereinbar sein.
 - **Datenschutz:** Namen von Geschäftsführung und Einzelunternehmern sind personenbezogene Daten. Bei Ansprache gilt die Informationspflicht nach Art. 14 DSGVO (`08_versand-und-recht.md`). Lead-Daten liegen in `pfade/amazon/arbeit/`. Den Ordner nie weitergeben.
-- **E-Mail-Werbung:** ohne Einwilligung grundsätzlich unzulässig (§ 7 UWG), auch an Firmen.
+- **Versand:** persönlich, mit klarem Absender, Abmeldeweg und Datenschutzhinweis (`08_versand-und-recht.md`).
 - **Sperrliste:** Abgeglichen werden E-Mail-Domain (auch die einer als ungültig aussortierten Adresse), Website und Impressum-URL. Verkäufer ohne all das lassen sich nicht abgleichen, das dem Nutzer sagen.

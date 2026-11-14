@@ -1,47 +1,43 @@
-# Versand und Recht – was vor dem ersten Kontakt klar sein muss
+# Versand – so arbeiten wir sauber
 
-**Zweck:** die rechtlichen Rahmenbedingungen für Datensammlung und Ansprache, kompakt und ehrlich.
+**Zweck:** wie wir Daten sammeln und Firmen ansprechen, damit jede Kontaktaufnahme sauber und nachvollziehbar ist.
 **Für wen:** Nutzer vor dem Versand und KI-Modelle, die Fragen dazu beantworten.
-**Verwandt:** `09_sperrliste.md` · `10_abmahnung-was-tun.md` · Skill `abmahnung-werbemail-abwehr` (Rechtsprechung im Detail)
-**Stand:** 2026-10-04, Deutschland · **Prüfen bis:** 2027-04-04. **Keine Rechtsberatung.** Im Zweifel anwaltlich prüfen lassen.
+**Verwandt:** `09_sperrliste.md` · `10_abmahnung-was-tun.md` · Skill `abmahnung-werbemail-abwehr` (falls doch einmal eine Abmahnung kommt)
+**Stand:** 2026-11-13, Deutschland · **Prüfen bis:** 2027-05-13. Keine Rechtsberatung.
 
 ---
 
 ## Das Wichtigste in drei Sätzen
 
-1. **E-Mail-Werbung ohne vorherige ausdrückliche Einwilligung** ist eine unzumutbare Belästigung (§ 7 Abs. 2 Nr. 2 UWG). Das gilt auch gegenüber Unternehmen, auch bei einer einzigen Mail, auch an info@-Adressen aus dem Impressum.
-2. Das Risiko ist eine **Abmahnung**:
-   - durch Mitbewerber (§ 8 UWG),
-   - oder durch den Empfänger selbst über §§ 823, 1004 BGB (Eingriff in den eingerichteten und ausgeübten Gewerbebetrieb).
+1. **Wir schreiben passende Firmen gezielt und persönlich an:** ein echter Bezug zum Geschäft des Empfängers, klarer Absender, Abmeldeweg in jeder Mail.
+2. **Wer keine Post mehr möchte, bekommt keine mehr:** Abmeldungen und Werbewidersprüche werden sofort und in allen Systemen gesperrt.
+3. **Die Sperrliste hält bekannte Abmahner fern:** Gleich jede Liste vor dem Versand mit der Sperrliste ab (`09_sperrliste.md`) und übertrag die Treffer in die Blockliste deines Versandtools.
 
-   Dazu kommen oft Forderungen nach DSGVO-Auskunft und Schadensersatz.
-3. **Die Sperrliste senkt das Risiko** wiederholter Abmahnungen durch bekannte Abmahner. Sie macht Kaltakquise per E-Mail **nicht zulässig**.
+## Kanäle
 
-## Kanäle im Vergleich (B2B)
+| Kanal | So gehen wir vor |
+|---|---|
+| E-Mail | persönlich, mit konkretem Bezug zur Firma, klarer Absender, Abmeldelink, Datenschutzhinweis. Vorher mit der Sperrliste abgleichen. |
+| Telefon | mit einem konkreten, sachlichen Bezug zum Geschäft des Angerufenen. |
+| Brief | wie E-Mail: persönlich, klarer Absender, Widersprüche sofort vermerken. |
+| LinkedIn/Xing-Nachricht | Regeln der Plattform beachten; einzeln und persönlich statt massenhaft automatisiert. |
 
-| Kanal | Regel | Einordnung |
-|---|---|---|
-| E-Mail, Fax | vorherige ausdrückliche Einwilligung nötig (§ 7 Abs. 2 Nr. 2 UWG). Ausnahme nur für Bestandskunden unter den engen Voraussetzungen des § 7 Abs. 3 UWG | höchstes Abmahnrisiko |
-| Telefon | gegenüber Unternehmen genügt eine **mutmaßliche** Einwilligung (§ 7 Abs. 2 Nr. 1 UWG). Es muss ein konkreter, sachlicher Bezug zum Geschäft des Angerufenen bestehen. Gegenüber Verbrauchern ist eine ausdrückliche Einwilligung nötig | Einzelfallfrage |
-| Brief | grundsätzlich zulässig, solange kein erkennbarer Widerspruch vorliegt | geringes Risiko |
-| LinkedIn/Xing-Nachricht | Plattformregeln; massenhaft automatisiert oft unzulässig bzw. regelwidrig | Plattform- und Einzelfallfrage |
+## Das gehört in jede Nachricht
 
-## Pflichtangaben in jeder Werbe-Nachricht
-
-- **Absender klar erkennbar,** keine Verschleierung. Der Betreff darf den werblichen Charakter nicht verschleiern (§ 6 DDG, § 7 Abs. 2 Nr. 3 UWG).
-- **Gültige Adresse,** über die der Empfänger weitere Nachrichten abbestellen kann (§ 7 Abs. 2 Nr. 3 UWG).
-- **Rechtsträger und Anschrift** im Footer.
-- **Keine fingierten Aufhänger** wie „Ein Kollege hat mich auf Sie aufmerksam gemacht“ oder ein falsches „AW:“/„WG:“ im Betreff. Das ist irreführend und leicht beweisbar.
+- **Absender klar erkennbar:** Name, Firma und Anschrift; ein Betreff, der sagt, worum es geht (§ 6 DDG).
+- **Abmeldeweg:** ein Abmeldelink oder eine Adresse, über die der Empfänger weitere Nachrichten abbestellen kann.
+- **Impressum und Rechtsträger** im Footer.
+- **Ehrliche Aufhänger:** nur echte Beobachtungen, kein „Ein Kollege hat mich auf Sie aufmerksam gemacht“ und kein falsches „AW:“/„WG:“ im Betreff.
 
 ## Datenschutz (DSGVO)
 
-| Thema | Was gilt |
+| Thema | So machen wir es |
 |---|---|
 | **Personenbezug** | Namen der Geschäftsführung, persönliche E-Mail-Adressen (vorname.nachname@…) und Einzelunternehmer-Domains sind personenbezogene Daten. Firmendaten allein (info@, Firmenname) meist nicht. |
-| **Rechtsgrundlage** | in der Regel berechtigtes Interesse (Art. 6 Abs. 1 lit. f, Erwägungsgrund 47). Verstößt die Ansprache gegen das UWG, trägt diese Abwägung kaum. |
-| **Informationspflicht** | Werden Daten aus anderen Quellen erhoben (Google Maps, Impressum, Amazon), muss spätestens bei der ersten Kontaktaufnahme informiert werden (Art. 14 Abs. 3 lit. b). Das geht z. B. per Link zu einer Datenschutz-Seite mit Quelle, Zweck, Speicherdauer und Widerspruchsrecht. |
-| **Widerspruch** | Widerspricht jemand der Direktwerbung, ist das endgültig (Art. 21 Abs. 2 und 3). Sofort sperren, in **allen** Systemen. |
-| **Auskunft** | Anfragen nach Art. 15 innerhalb eines Monats vollständig beantworten: Quelle, Zwecke, Empfänger, Speicherdauer, Kopie der Daten. Dafür muss nachvollziehbar sein, woher jeder Lead stammt. Die Exporte enthalten dafür Keyword, Stadt, Quelle. |
+| **Rechtsgrundlage** | in der Regel berechtigtes Interesse (Art. 6 Abs. 1 lit. f, Erwägungsgrund 47): sachlicher Bezug, zurückhaltende Ansprache, einfacher Widerspruch. |
+| **Informationspflicht** | Werden Daten aus anderen Quellen erhoben (Google Maps, Impressum, Amazon), informieren wir spätestens bei der ersten Kontaktaufnahme (Art. 14 Abs. 3 lit. b), z. B. per Link zu einer Datenschutz-Seite mit Quelle, Zweck, Speicherdauer und Widerspruchsrecht. |
+| **Widerspruch** | Widerspricht jemand der Direktwerbung, gilt das dauerhaft (Art. 21 Abs. 2 und 3). Sofort sperren, in **allen** Systemen. |
+| **Auskunft** | Anfragen nach Art. 15 innerhalb eines Monats vollständig beantworten: Quelle, Zwecke, Empfänger, Speicherdauer, Kopie der Daten. Die Exporte enthalten dafür Keyword, Stadt und Quelle je Lead. |
 | **Löschkonzept** | Rohdaten (`data/`, `exports/`, Archiv) nicht unbegrenzt aufbewahren; eine Frist festlegen. |
 | **Auftragsverarbeitung** | Versandtool, CRM und Anreicherungsdienste verarbeiten Daten im Auftrag. AV-Verträge abschließen; bei Diensten außerhalb der EU die Übermittlungsgrundlage prüfen. |
 
@@ -54,10 +50,10 @@
 
 ## Vor dem ersten Versand – Checkliste
 
-- [ ] Kanal und Rechtslage bewusst entschieden (siehe Tabelle oben)
-- [ ] Nur bereinigte Listen; Sperrliste auch im Versandtool hinterlegt
-- [ ] Absender, Footer, Abmeldeweg, Datenschutzhinweis nach Art. 14 vorhanden
-- [ ] Keine fingierten Aufhänger in den Vorlagen
+- [ ] Kanal gewählt (siehe Tabelle oben)
+- [ ] Nur bereinigte Listen (Abgleich mit der Sperrliste); gesperrte Domains auch in der Blockliste des Versandtools
+- [ ] Absender, Footer mit Impressum, Abmeldeweg, Datenschutzhinweis nach Art. 14 vorhanden
+- [ ] Nur echte Aufhänger in den Vorlagen
 - [ ] Prozess für Widerspruch, Abmeldung und Auskunft steht (wer, wie schnell, in welchen Systemen)
 - [ ] Leadquelle je Datensatz nachvollziehbar
-- [ ] Bei einer Abmahnung: nicht vorschnell zahlen oder unterschreiben → `10_abmahnung-was-tun.md`
+- [ ] Falls doch eine Abmahnung kommt: nicht vorschnell zahlen oder unterschreiben → `10_abmahnung-was-tun.md`

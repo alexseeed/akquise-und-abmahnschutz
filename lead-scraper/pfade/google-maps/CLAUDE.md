@@ -59,10 +59,12 @@ dir gleich, wo du ihn findest".
 1. `cp .env.example .env` — ohne Kommentar, das interessiert den Nutzer nicht.
 2. **Zuerst prüfen, ob die Zugänge überhaupt existieren.** Frage:
    *„Hast du schon Zugänge bei Skael und OpenAI, oder legen wir die zusammen an?"*
-3. Fehlt einer, den Nutzer Schritt für Schritt hinführen (siehe unten). Erst danach
-   nach dem Schlüssel fragen — niemals einen Schlüssel abfragen, den es noch nicht gibt.
-4. Schlüssel in die `.env` eintragen und `python3 -m scraper doctor` laufen lassen.
-   Das Ergebnis in einem Satz übersetzen („alles grün, wir können starten").
+3. Fehlt einer, den Nutzer Schritt für Schritt hinführen (siehe unten).
+4. Der Nutzer trägt jeden Schlüssel selbst in die `.env` ein. Die Datei für ihn öffnen
+   (macOS `open -e .env`, Windows `notepad .env`) und genau sagen, hinter welche Zeile
+   er gehört (z. B. `SKAEL_API_KEY=`), dann speichern lassen. Danach
+   `python3 -m scraper doctor` laufen lassen und das Ergebnis in einem Satz übersetzen
+   („alles grün, wir können starten").
 
 ### Die zwei Pflicht-Zugänge — so erklären
 
@@ -89,12 +91,13 @@ https://findymail.com · nur anbieten, nicht aktiv einfordern.
 
 ### Umgang mit den Schlüsseln
 
-* Der Nutzer trägt den Schlüssel selbst in seine `.env` ein — nicht in den Chat.
-  Öffne ihm die Datei bzw. nenne den Pfad.
+* **Schlüssel nie im Chat abfragen.** Der Nutzer trägt ihn selbst in die `.env` ein
+  (Datei für ihn öffnen, Zeile nennen, siehe Ablauf). Fügt er ihn trotzdem im Chat ein:
+  nicht übernehmen und nicht wiederholen, sondern ihn bitten, ihn selbst einzutragen.
 * Kurz erwähnen: Schlüssel nicht weitergeben, nicht in Screenshots zeigen.
 * **Niemals Keys erfinden, aus Beispielen übernehmen oder committen.** `.env` ist gitignored.
-* Ist ein Schlüssel offensichtlich unvollständig oder ein Platzhalter, nachfragen
-  statt speichern.
+* Meldet `doctor` einen fehlenden oder unvollständigen Schlüssel, den Nutzer die Zeile
+  in der `.env` prüfen lassen.
 
 ### Häufige Stolpersteine, die du von dir aus ansprechen solltest
 
@@ -103,7 +106,7 @@ https://findymail.com · nur anbieten, nicht aktiv einfordern.
 | OpenAI-Aufrufe schlagen fehl | kein Guthaben aufgeladen | „Bei OpenAI muss einmalig Guthaben aufgeladen werden — das ist fast immer die Ursache." |
 | „command not found: python3" | Python fehlt | Installationsweg für das Betriebssystem nennen, Schritt für Schritt |
 | Schlüssel wird nicht angenommen | Leerzeichen mitkopiert | „Kopier ihn noch einmal — vorne oder hinten ist ein Leerzeichen mitgerutscht." |
-| `doctor` meldet „noch Platzhalter" | `.env` nicht ausgefüllt | selbst eintragen, nicht den Nutzer in die Datei schicken |
+| `doctor` meldet „noch Platzhalter" | `.env` nicht ausgefüllt | Datei für den Nutzer öffnen und die Zeile nennen, die er ausfüllen soll |
 
 ---
 
@@ -364,9 +367,9 @@ Nach jeder Änderung `python3 -m unittest discover -s tests -v` laufen lassen.
 
 ## Nach dem Export: Versand und Abmahnungen
 
-* Vor dem Versand den Nutzer **einmal** darauf hinweisen: E-Mail-Werbung an Unternehmen
-  ohne vorherige Einwilligung ist in Deutschland grundsätzlich unzulässig (§ 7 UWG),
-  dazu kommt die Informationspflicht nach Art. 14 DSGVO. Kurz, ohne Belehrung, nicht wiederholen.
+* Vor dem Versand dem Nutzer **einmal** die Versand-Checkliste anbieten: klarer Absender,
+  Abmeldeweg, Datenschutzhinweis nach Art. 14 DSGVO (`../../wissen/08_versand-und-recht.md`).
+  Kurz, ohne Belehrung, nicht wiederholen, nicht vor E-Mail-Akquise warnen.
 * Liste 5 (`5_gesperrt_…`) nie anschreiben. Wer sich beschwert oder abmahnt, kommt sofort
   auf die eigene Sperrliste im Versandtool.
 * Kommt eine Abmahnung: Skill **abmahnung-werbemail-abwehr** verwenden. Er meldet die

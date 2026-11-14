@@ -145,11 +145,11 @@ python3 -m ecom finden --system shopware5 --laender de,at,ch   (Stufe 0)
 **Vor dem Vollauf zu erledigen** (der Probelauf mit ≤ 186k Hosts ist nur als Messung erlaubt):
 
 1. **Anwaltliche Kurzprüfung**, ausdrücklich zu folgenden Punkten:
-   - **Teilnehmerhaftung des Betreibers:** Er liefert künftig zentral Ziele samt „Anlass“ in eine E-Mail-Pipeline. Daher den Zweck des Katalogs in Interessenabwägung und Nutzungsbedingungen auf zulässige Kanäle binden: Brief; Telefon nur in DE mit konkretem Bezug; E-Mail nur mit Einwilligung.
+   - **Teilnehmerhaftung des Betreibers:** Er liefert künftig zentral Ziele samt „Anlass“ in eine E-Mail-Pipeline. Daher den Zweck des Katalogs und die vorgesehenen Kanäle in Interessenabwägung und Nutzungsbedingungen beschreiben.
    - **Länderrecht:**
-     - AT: § 174 TKG 2021, Werbeanrufe auch B2B nur mit Einwilligung
+     - AT: § 174 TKG 2021
      - CH: Art. 3 Abs. 1 lit. o und u UWG-CH, Art. 19 revDSG
-     - `wissen/08` braucht eine Kanalregel je Land.
+     - `wissen/08` um Hinweise je Land ergänzen.
    - **Rollen:** getrennte oder gemeinsame Verantwortung (Art. 26) von Betreiber und Nutzern.
 2. **DSFA (Art. 35)** und Eintrag im Verzeichnis der Verarbeitungstätigkeiten. Dokumentierte Interessenabwägung nach Art. 6 Abs. 1 lit. f. Information nach Art. 14 auf der Bot-Seite. Art. 14 Abs. 5 lit. b trägt für kommerzielle Zwecke nur schwach (EDSA-Leitlinien 03/2026 Rn. 27, gelten für KI-Scraping und hier nur analog, Entwurf).
 3. **Hoster schriftlich:** Er bestätigt, dass HTTP-Crawling mit X Verbindungen/s erlaubt ist.
@@ -176,7 +176,7 @@ python3 -m ecom finden --system shopware5 --laender de,at,ch   (Stufe 0)
   - Problem: Kleine Segmente (SW5: am Ende vielleicht 500–1.500 versandfähige Leads [S]) würden von jedem Nutzer erneut angeschrieben. Das treibt Beschwerden und Abmahnungen und belastet die Sperrlisten-Gemeinschaft.
   - Für Segmente unter ~5.000 Hosts: Zuteilung mit Sperrfrist je Host und Token (z. B. 90 Tage) über einen kleinen Endpunkt (+1–2 Tage Bau).
   - Mindestens Segmentgröße und Zahl der Bearbeiter anzeigen.
-- **§ 7 UWG:** Die Rechtsregel bleibt, die Rolle des Betreibers ändert sich (siehe Punkt 1). Kanal im Interview **vor** `finden` abfragen.
+- **Kanal:** Die Rolle des Betreibers ändert sich (siehe Punkt 1). Kanal im Interview **vor** `finden` abfragen.
 
 ## 6. Phasen (jede mit Messung und Abbruchkriterium)
 

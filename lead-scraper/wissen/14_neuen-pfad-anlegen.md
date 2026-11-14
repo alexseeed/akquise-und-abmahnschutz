@@ -17,7 +17,7 @@
 2. **Quelle prüfen:**
    - Nutzungsbedingungen, Kosten, API statt Scraping wo möglich.
    - Personenbezug der Daten.
-   - Ergebnis im Abschnitt „Rechtliches“ der Wissensdatei.
+   - Ergebnis im Abschnitt „Daten und Versand“ der Wissensdatei.
 3. **Ordner anlegen** nach `pfade/_vorlage/README.md`: `ABLAUF.md`, `README.md`, `scripts/`, `referenzen/`.
 4. **Wiederverwenden statt neu bauen:**
 

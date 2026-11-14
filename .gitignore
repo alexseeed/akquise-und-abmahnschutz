@@ -1,8 +1,12 @@
 # Secrets and local data - never commit
 .env
+.env.*
+!.env.example
 *.db
 *.db-wal
 *.db-shm
 .DS_Store
 __pycache__/
 *.py[cod]
+*.log
+node_modules/

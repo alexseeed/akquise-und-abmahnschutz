@@ -48,4 +48,4 @@ Je mehr Unternehmen mitmachen, desto vollständiger wird die Sperrliste. Bedingu
 2. **Lieber neutral als falsch.** Unsichere Namen oder Geschlechter bekommen „Guten Tag“ statt einer falschen persönlichen Anrede.
 3. **Ehrliche Zahlen.** Fund- und Fehlerquoten werden genannt, nicht geschönt.
 4. **Gesperrt heißt gesperrt.** Firmen auf der Sperrliste werden nie angeschrieben, über keinen Kanal.
-5. **Kein Ersatz für Rechtsberatung.** Kaltakquise per E-Mail bleibt rechtlich riskant (`08_versand-und-recht.md`).
+5. **Sauber ansprechen.** Persönlich, mit klarem Absender, Abmeldeweg und Datenschutzhinweis; Widersprüche sofort sperren (`08_versand-und-recht.md`).

@@ -25,7 +25,7 @@ Die Tabelle ist eine Orientierung (ungeprüft gegen den aktuellen Stand der Tool
 
 - Zuerst nur an „Safe to Send“-Adressen, `Risky`/`Unknown` getrennt und vorsichtig.
 - Die Datenschutzerklärung ist ergänzt (`05_datenschutzerklaerung.md`).
-- E-Mail-Werbung an Firmen ohne Einwilligung bleibt rechtlich riskant (`wissen/08_versand-und-recht.md`).
+- Absender, Abmeldeweg und Datenschutzhinweis stehen in der Vorlage (Checkliste in `wissen/08_versand-und-recht.md`).
 
 ## Häufige Probleme
 

@@ -59,7 +59,7 @@ Wie im Interview (`../../wissen/02_zielgruppen-interview.md`):
 - **Was in der Auftragsdatei steht, nicht erneut fragen.**
 - **Nach jeder Runde** in eigenen Worten zusammenfassen und bestätigen lassen.
 - **Keine Fachbegriffe** (Prompt, Platzhalter, Confidence, Stufe, JSON).
-- **Den rechtlichen Hinweis zu § 7 UWG nicht wiederholen.** Er kam einmal im Interview.
+- **Keine Hinweise zu Recht oder Versand.** Die Versand-Checkliste kam einmal im Interview.
 
 **Budget:** so wenige Fragen wie möglich.
 

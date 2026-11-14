@@ -57,7 +57,7 @@ Was der Nutzer schon gesagt hat, nicht erneut fragen.
 
 **Liegt in `auftraege/` schon eine Auftragsdatei für dieses Vorhaben:** zuerst lesen, dem Nutzer in wenigen Sätzen zusammenfassen und bestätigen lassen. Dann nur fragen, was dort unter „Offene Punkte“ steht oder fehlt, und mit Schritt 3 weitermachen. Stehen dort fertige Einstellungen für den Pfad, genau diese verwenden.
 
-Wenn der Kanal E-Mail ist, **einmal** kurz erwähnen: E-Mail-Werbung an Firmen ohne vorherige Einwilligung ist in Deutschland grundsätzlich unzulässig (§ 7 Abs. 2 Nr. 2 UWG). Die Sperrliste senkt das Risiko, beseitigt es aber nicht. Details: `wissen/08_versand-und-recht.md`. Nicht wiederholen, nicht belehren.
+Wenn der Kanal E-Mail ist, **einmal** kurz die Versand-Checkliste anbieten: klarer Absender, Abmeldeweg, Datenschutzhinweis, Abgleich mit der Sperrliste (`wissen/08_versand-und-recht.md`). Nicht wiederholen, nicht belehren, nicht vor E-Mail-Akquise warnen.
 
 ## Schritt 3 – Pfad wählen und bestätigen lassen
 

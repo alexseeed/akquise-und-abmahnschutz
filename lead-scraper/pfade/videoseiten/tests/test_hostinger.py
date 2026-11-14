@@ -25,7 +25,7 @@ SECRET = "whsec_SUPERGEHEIM_42"
 MELDUNG = "https://n8n.example/webhook/GEHEIMPFAD"
 
 VMS = [{
-    "id": 1268054, "hostname": "srv1268054.hstgr.cloud", "state": "running", "plan": "KVM 1",
+    "id": 1000001, "hostname": "srv1000001.example", "state": "running", "plan": "KVM 1",
     "data_center_id": 17, "ipv4": [{"id": 1, "address": "203.0.113.10", "ptr": None}], "ipv6": None,
     "template": {"id": 1077, "name": "Ubuntu 24.04 LTS", "description": "Ubuntu 24.04 LTS"},
 }]
@@ -135,8 +135,8 @@ class PruefenTest(Basis):
         code, text = self.ausfuehren(["pruefen"], api)
         self.assertEqual(code, 0)
         self.assertIn("API-Schlüssel ist gültig", text)
-        for erwartet in ("1268054", "srv1268054.hstgr.cloud", "203.0.113.10", "läuft", "Ubuntu 24.04 LTS",
-                         "Frankfurt, DE", "KVM 1", "schluessel --vm 1268054"):
+        for erwartet in ("1000001", "srv1000001.example", "203.0.113.10", "läuft", "Ubuntu 24.04 LTS",
+                         "Frankfurt, DE", "KVM 1", "schluessel --vm 1000001"):
             self.assertIn(erwartet, text)
         self.assertKeinGeheimnis(text)
         methode, pfad, kopf, _ = api.anfragen[0]
@@ -194,13 +194,13 @@ class GeheimnisTest(Basis):
             aufrufe.append((args, input))
             return subprocess.CompletedProcess(args, 0, b"", b"")
 
-        api = FakeApi({("GET", "/api/vps/v1/virtual-machines/1268054"): VMS[0]})
+        api = FakeApi({("GET", "/api/vps/v1/virtual-machines/1000001"): VMS[0]})
         schluessel = Path(self.tmp.name) / "id_ed25519"
         schluessel.write_text("x")
         with mock.patch.object(hostinger.subprocess, "run", fake_run), \
                 mock.patch.object(hostinger, "SCHLUESSEL", schluessel), \
                 mock.patch.object(hostinger.shutil, "which", lambda n: f"/usr/bin/{n}"):
-            code, text = self.ausfuehren(["geheimnis", "--vm", "1268054"], api)
+            code, text = self.ausfuehren(["geheimnis", "--vm", "1000001"], api)
         self.assertEqual(code, 0, text)
         self.assertIn("SKAEL_WEBHOOK_SECRET", text)
         self.assertKeinGeheimnis(text)

@@ -27,8 +27,14 @@ SPALTEN_MUSTER = re.compile(r"mail|website|webseite|domain|url|homepage", re.I)
 AUSNAHMEN = re.compile(r"storefront|amazon|linkedin|maps|bild|image|logo", re.I)
 
 
+def _wert(wert):
+    """Cell value without the leading apostrophe Excel uses to keep text as text (e.g. '+49 …, '=…)."""
+    w = str(wert or "").strip()
+    return w[1:].strip() if w.startswith("'") else w
+
+
 def norm_domain(wert):
-    d = str(wert or "").strip().lower()
+    d = _wert(wert).lower()
     if not d or " " in d.strip():
         return ""
     if "@" in d:

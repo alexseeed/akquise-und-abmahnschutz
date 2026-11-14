@@ -1,6 +1,12 @@
 .env
+.env.*
+!.env.example
 data/
 exports/
+# Lead lists belong in data/ or exports/ - never in the repository or the skill ZIP
+*.csv
+*.xlsx
+*.xls
 __pycache__/
 *.py[cod]
 .venv/

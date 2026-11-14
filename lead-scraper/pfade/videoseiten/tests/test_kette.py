@@ -92,8 +92,10 @@ class KetteTest(unittest.TestCase):
 
             # without --probe the neutral template must be refused (placeholders left)
             r2 = subprocess.run([sys.executable, str(HIER / "server" / "generator.py"), "--vorlage", str(HIER / "vorlage" / "index.html"),
-                                 "--leads", str(mit_video), "--ziel", str(tmp / "x")], capture_output=True, text=True)
+                                 "--leads", str(mit_video), "--ziel", str(tmp / "x"), "--basis", "https://angebot.kunde.example"],
+                                capture_output=True, text=True)
             self.assertNotEqual(r2.returncode, 0)
+            self.assertIn("Platzhalter", r2.stderr)
 
             # mail list
             export = tmp / "1_zielgruppe.csv"

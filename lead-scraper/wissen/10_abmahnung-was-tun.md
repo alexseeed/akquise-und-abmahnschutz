@@ -67,5 +67,4 @@ Abmahnung als PDF in Claude legen: *„Ich habe diese Abmahnung wegen einer Werb
 
 - Keine frisch registrierten Versanddomains ohne Website und Impressum. Die Gegenseite prüft sie und nutzt sie für einen höheren Wert.
 - Zwei Abmahnungen in wenigen Wochen sind ein Muster. Nach der ersten die Kampagne, die Liste und die Vorlagen prüfen.
-- Wer selbst versendet, kann zusätzlich persönlich abgemahnt werden.
 - Abmahner-Domains sofort in alle Sperrlisten und an die Community-Sperrliste (`09_sperrliste.md`).

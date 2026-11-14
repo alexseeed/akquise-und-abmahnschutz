@@ -713,11 +713,13 @@ function finalisieren(s) {
   if (CFG.FIRMEN_AUSSCHLUSS.length && [s.firma, s.firma_bd].some((n) => n && CFG.FIRMEN_AUSSCHLUSS.some((w) => norm(n).includes(w)))) { raus(s, "firmen_ausschluss_nach_kontakt"); return; }
   s.status = "final"; S.funnel.final++;
 }
+// no new Bright Data attempt after a stop (Ctrl+C): the run ends cleanly, open blocks are collected on the next start
+const bdStopp = () => { if (ABORT) throw new StopError(STOPGRUND ?? "Abbruch"); };
 async function bdTrigger(chunk) {
   try {
     const a = await abrufen(`${BD_URL}/datasets/v3/trigger?dataset_id=gd_lhotzucw1etoe5iw1k&include_errors=true`, { method: "POST",
       headers: { Authorization: `Bearer ${BD}`, "Content-Type": "application/json" }, body: JSON.stringify(chunk.map((id) => ({ url: `https://www.amazon.de/sp?seller=${id}` }))) },
-      { label: "Bright Data", maxVersuche: CFG.MAX_RETRIES, timeoutMs: 60000, schlafen: pause, log: (m) => console.log(`\n  ${m}`) });
+      { label: "Bright Data", maxVersuche: CFG.MAX_RETRIES, timeoutMs: 60000, schlafen: pause, vorVersuch: bdStopp, log: (m) => console.log(`\n  ${m}`) });
     if (a.j?.snapshot_id) return a.j.snapshot_id;
     // 2xx without snapshot id: not triggered again (a second trigger could be charged twice)
     console.log(`\n  Bright Data: HTTP ${a.status} ohne Snapshot-ID ${a.text.slice(0, 160)}`); API_FEHL.bd++;
@@ -759,7 +761,7 @@ async function bdAbholen(snap, job) {
   try {
     // HTTP 202 = snapshot still being built: retried like a temporary error
     data = (await abrufen(`${BD_URL}/datasets/v3/snapshot/${snap}?format=json`, { headers: H }, { label: "Bright Data", maxVersuche: CFG.MAX_RETRIES,
-      timeoutMs: 120000, schlafen: pause, gueltig: (x) => Array.isArray(x.j) })).j;
+      timeoutMs: 120000, schlafen: pause, vorVersuch: bdStopp, gueltig: (x) => Array.isArray(x.j) })).j;
   } catch (e) {
     if (!(e instanceof ApiFehler)) throw e;
     if ([401, 402, 403].includes(e.status)) BD_AUS = `bd_http_${e.status}`;
@@ -948,7 +950,8 @@ function anreicherung(exp) {
 
 // ---------- MAIN ----------
 async function budgetRettung() {
-  ABORT = false;
+  ABORT = USER_ABBRUCH;                                                                   // a Ctrl+C before or during the budget stop wins
+  if (USER_ABBRUCH) return;
   const vorher = S.stufe;
   console.log(`\nBUDGET ERREICHT — gefundene Treffer werden noch geprüft, angereichert und exportiert …`);
   const treffer = Object.values(S.seller).some((s) => ["portfolio_ok", "qa_ok"].includes(s.status));

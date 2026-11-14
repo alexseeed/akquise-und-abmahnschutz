@@ -47,6 +47,22 @@ class VorschaubildTest(unittest.TestCase):
             generator.urllib.request.urlopen = alt
         self.assertNotIn("Python-urllib", gesehen["ua"])
 
+    def test_nur_rasterbild_kein_svg_oder_html(self):
+        def fake_urlopen(req, timeout=0):
+            return Antwort("text/html")
+
+        alt = generator.urllib.request.urlopen
+        generator.urllib.request.urlopen = fake_urlopen
+        try:
+            with tempfile.TemporaryDirectory() as tmp:
+                # Rasterbild-Endung gilt auch ohne Bild-Content-Type
+                name = generator.fetch_thumbnail("https://video.example/a/vorschau.PNG", Path(tmp) / "vorschau")
+                self.assertEqual(name, "vorschau.png")
+                with self.assertRaises(OSError):
+                    generator.fetch_thumbnail("https://video.example/a/bild.svg", Path(tmp) / "vorschau")
+        finally:
+            generator.urllib.request.urlopen = alt
+
 
 if __name__ == "__main__":
     unittest.main()

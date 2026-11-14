@@ -67,5 +67,25 @@ class CsvFormelschutzTest(unittest.TestCase):
             self.assertEqual(zeile["Website"], "https://example.com")
 
 
+class AbgleichTest(unittest.TestCase):
+    """Abgleich gegen die Sperrliste mit simulierter Liste."""
+
+    def test_excel_apostroph_wird_vor_abgleich_entfernt(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            liste = Path(tmp) / "liste.csv"
+            with liste.open("w", encoding="utf-8", newline="") as f:
+                w = csv.writer(f, delimiter=";")
+                w.writerow(["Firmenname", "Website"])
+                w.writerow(["Abmahner GmbH", "'abmahner.example"])
+            argv = ["sperrliste_abgleich.py", str(liste)]
+            with mock.patch("sys.argv", argv), \
+                    mock.patch.object(abgleich, "lade", return_value=({"abmahner.example"}, "test")), \
+                    redirect_stdout(io.StringIO()):
+                self.assertEqual(abgleich.main(), 0)
+            with (Path(tmp) / "liste_gesperrt.csv").open(encoding="utf-8-sig", newline="") as f:
+                gesperrt = list(csv.DictReader(f, delimiter=";"))
+            self.assertEqual([z["Firmenname"] for z in gesperrt], ["Abmahner GmbH"])
+
+
 if __name__ == "__main__":
     unittest.main()

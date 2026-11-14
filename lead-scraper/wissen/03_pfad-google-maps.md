@@ -113,10 +113,10 @@ Die Quoten hängen stark von der Branche und vom Profil ab. Erst der Testlauf sa
 - Die Skael-API liefert identische Anfragen innerhalb von 20 Minuten aus dem Zwischenspeicher, auch Fehlschläge. Beim Wiederholen beachten.
 - Der Prozess ist die Portierung eines Clay-Workbooks; Formeln und Prompts stammen von dort (`pfade/google-maps/docs/05_ABWEICHUNGEN.md`).
 
-## Rechtliches in Kürze
+## Daten und Versand in Kürze
 
 - **Datenquellen:** Google-Maps-Einträge und Impressen werden über einen Drittanbieter abgefragt. Dessen Nutzungsbedingungen und die von Google gelten.
 - **Personenbezogene Daten:** Namen der Geschäftsführung und persönliche E-Mail-Adressen sind personenbezogene Daten (DSGVO).
-- **Kaltakquise per E-Mail** ist ohne Einwilligung grundsätzlich unzulässig.
+- **Versand:** persönlich, mit klarem Absender, Abmeldeweg und Datenschutzhinweis; vorher mit der Sperrliste abgleichen.
 
 Mehr in `08_versand-und-recht.md`.

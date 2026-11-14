@@ -251,8 +251,10 @@ def export_csv(conn: sqlite3.Connection, *, only_ready: bool = True, path: Path 
 
     where = "WHERE ready_to_send=1 AND bereits_exportiert=0" if only_ready else ""
     alle = conn.execute(f"SELECT * FROM anreicherung {where} ORDER BY firmenname_final").fetchall()
-    # Konzerne und Filialketten auch hier ausschliessen — sonst weicht die
-    # Gesamtliste von den vier getrennten Listen ab.
+    # Konzerne und Filialketten, Dubletten und nachträglich nicht passende Firmen auch hier
+    # ausschliessen — sonst weicht die Gesamtliste von den vier getrennten Listen ab.
+    weg = {r[0] for r in conn.execute("SELECT id FROM datensaetze WHERE dedupe_status <> 'kept' OR is_icp = 0")}
+    alle = [r for r in alle if r["datensatz_id"] not in weg]
     pfad = db_mod.pfad(conn)
     rows = [_lead(r, pfad) for r in alle if not _ist_kette(r["firmenname_final"] or r["firmenname"])]
     sperre = sperrliste_mod.laden()

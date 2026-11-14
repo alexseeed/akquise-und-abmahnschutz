@@ -181,7 +181,7 @@ python3 -m ecom export
   - übergebene Shops,
   - versandfertige Leads,
   - wegen der Sperrliste aussortierte Firmen.
-- Einmal kurz auf § 7 UWG hinweisen (`../../wissen/08_versand-und-recht.md`). Stehen in der Auftragsdatei Punkte unter „Vor dem Versand offen“, sie im selben Satz nennen.
+- Einmal kurz die Versand-Checkliste anbieten (`../../wissen/08_versand-und-recht.md`). Stehen in der Auftragsdatei Punkte unter „Vor dem Versand offen“, sie im selben Satz nennen.
 
 ## Stellschrauben
 

@@ -120,7 +120,7 @@ Werkzeug: `python3 pfade/videoseiten/werkzeuge/hostinger.py` (Python ≥ 3.10, n
 5. `einrichten --vm <ID> --domain <angebot.kunde.de>`: Richtet Caddy, Firewall, Dienst und Aufräum-Cron ein und kann wiederholt werden. Ist `SKAEL_WEBHOOK_SECRET` (bzw. `MELDUNG_URL`) in `.env` gesetzt, wird es nach `/etc/seiten.env` übertragen.
 6. Seiten lokal mit `server/generator.py --ziel <ordner>` erzeugen, dann `hochladen --vm <ID> --seiten <ordner>`. Seiten, denen widersprochen wurde, und abgelaufene Seiten werden übersprungen.
 7. `status --vm <ID> --domain <angebot.kunde.de>`: Prüft DNS, HTTPS, `X-Robots-Tag`, `/api/m` sowie die Dienste `seiten-server` und `caddy`.
-8. Webhook-Geheimnis erst später aus Skael? Der Nutzer trägt es in `.env` ein, danach `geheimnis --vm <ID>`.
+8. Webhook-Geheimnis erst später aus Skael? `python3 werkzeuge/videos.py geheimnis --kampagne <id>` trägt es in `.env` ein (ABLAUF C6), danach `geheimnis --vm <ID>`.
 
 ---
 

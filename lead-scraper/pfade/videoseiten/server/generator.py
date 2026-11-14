@@ -5,7 +5,7 @@ The template contains exactly one block between `/* LEAD:START */` and
 `/* LEAD:END */`. For every lead that block is replaced by the lead's data;
 everything else (ABSENDER, SEITE, layout) stays as the customer designed it.
 
-    python3 generator.py --vorlage vorlage/index.html --leads leads.json --ziel /srv/seiten
+    python3 generator.py --vorlage vorlage/index.html --leads leads.json --ziel /srv/seiten --basis https://angebot.kunde.de
 
 leads.json: a list of objects in the fixed lead format plus video_url,
 video_vorschaubild, video_titel (and optionally seiten_id). Output per lead:
@@ -59,9 +59,11 @@ def new_seiten_id() -> str:
 
 
 def js_literal(data: dict) -> str:
-    """JSON that is safe inside <script>: no '</', no U+2028/2029."""
+    """JSON that is safe inside <script>: no '<', '>', '&' (so no '</script>' or '<!--'), no U+2028/2029."""
     text = json.dumps(data, ensure_ascii=False, indent=2)
-    return text.replace("</", "<\\/").replace("\u2028", "\\u2028").replace("\u2029", "\\u2029")
+    for zeichen, ersatz in (("<", "\\u003c"), (">", "\\u003e"), ("&", "\\u0026"), ("\u2028", "\\u2028"), ("\u2029", "\\u2029")):
+        text = text.replace(zeichen, ersatz)
+    return text
 
 
 def check_template(html: str, probe: bool) -> None:
@@ -75,8 +77,10 @@ def check_template(html: str, probe: bool) -> None:
         sys.exit("Vorlage enthält noch Platzhalter, Seiten werden nicht veröffentlicht:\n  " + "\n  ".join(open_values))
 
 
-def problems(lead: dict) -> list[str]:
-    errs = [f"{f} fehlt" for f in REQUIRED if not str(lead.get(f) or "").strip()]
+def problems(lead: dict, probe: bool = False) -> list[str]:
+    # --probe (approval preview, step A8) runs on leads without video yet: the template then shows its video placeholder
+    pflicht = [f for f in REQUIRED if not (probe and f == "video_url")]
+    errs = [f"{f} fehlt" for f in pflicht if not str(lead.get(f) or "").strip()]
     url = str(lead.get("video_url") or "")
     if url and (urlparse(url).scheme != "https" or "/embed/" not in url):
         errs.append("video_url ist keine https-Embed-Adresse")
@@ -87,6 +91,7 @@ def problems(lead: dict) -> list[str]:
 
 
 THUMB_TYPES = {"image/jpeg": ".jpg", "image/png": ".png", "image/webp": ".webp"}
+THUMB_SUFFIXES = {".jpg", ".jpeg", ".png", ".webp"}
 
 # Short retry (this file also runs on the server and must stay dependency-free, so it does not use
 # werkzeuge/wiederholen.py): 3 attempts, pauses 1 s and 2 s (+ up to 25 % jitter), Retry-After up to 10 s.
@@ -116,8 +121,11 @@ def fetch_thumbnail(url: str, target: Path) -> str:
         retry_after = None
         try:
             with urllib.request.urlopen(req, timeout=30) as resp:  # noqa: S310 (https enforced above)
-                # Skael serves JPEG under ".png": trust the content type, not the file name
-                suffix = THUMB_TYPES.get(resp.headers.get_content_type()) or Path(urlparse(url).path).suffix or ".jpg"
+                # Skael serves JPEG under ".png": trust the content type, not the file name.
+                # Without an image content type only a raster image suffix is accepted (never .svg, .html …).
+                suffix = THUMB_TYPES.get(resp.headers.get_content_type())
+                if not suffix and Path(urlparse(url).path).suffix.lower() in THUMB_SUFFIXES:
+                    suffix = Path(urlparse(url).path).suffix.lower()
                 daten = resp.read()
             break
         except urllib.error.HTTPError as exc:
@@ -128,6 +136,8 @@ def fetch_thumbnail(url: str, target: Path) -> str:
             if versuch >= THUMB_VERSUCHE:
                 raise OSError(f"{type(exc).__name__}: {exc}") from exc
         time.sleep(_pause(versuch, retry_after))
+    if not suffix:
+        raise OSError("keine Bilddatei (JPEG, PNG oder WebP)")
     target.with_suffix(suffix).write_bytes(daten)
     return "vorschau" + suffix
 
@@ -155,7 +165,7 @@ def build(args: argparse.Namespace) -> int:
     now = datetime.now(timezone.utc)
     result, failed = [], []
     for lead in leads:
-        errs = problems(lead)
+        errs = problems(lead, args.probe)
         if errs:
             failed.append({"externe_id": lead.get("externe_id"), "fehler": errs})
             continue
@@ -178,9 +188,10 @@ def build(args: argparse.Namespace) -> int:
         if not data["video_vorschaubild"] and (ziel / "assets" / "video-vorschau.svg").is_file():
             data["video_vorschaubild"] = "/assets/video-vorschau.svg"
 
-        video_origin = "{0.scheme}://{0.netloc}".format(urlparse(data["video_url"]))
         html = LEAD_BLOCK_RE.sub(lambda _: f"/* LEAD:START */\nconst LEAD = {js_literal(data)};\n/* LEAD:END */", template)
-        html = FRAME_SRC_RE.sub(f"frame-src {video_origin}", html)
+        if data["video_url"]:                       # empty only under --probe: keep the template's frame-src
+            video_origin = "{0.scheme}://{0.netloc}".format(urlparse(data["video_url"]))
+            html = FRAME_SRC_RE.sub(f"frame-src {video_origin}", html)
         # pages live at /v/<id>/, shared files at /assets/
         html = html.replace('"assets/', '"/assets/').replace("url(\"assets/", "url(\"/assets/")
         (page_dir / "index.html").write_text(html, encoding="utf-8")
@@ -207,8 +218,12 @@ def cleanup(args: argparse.Namespace) -> int:
     now = datetime.now(timezone.utc)
     removed = 0
     for meta_file in Path(args.ziel, "v").glob("*/.meta.json"):
-        meta = json.loads(meta_file.read_text(encoding="utf-8"))
-        if datetime.fromisoformat(meta["ablauf"]) <= now:
+        try:
+            meta = json.loads(meta_file.read_text(encoding="utf-8"))
+            abgelaufen = datetime.fromisoformat(meta["ablauf"]) <= now
+        except (OSError, ValueError, KeyError, TypeError):   # broken .meta.json: skip, never stop the daily run
+            continue
+        if abgelaufen:
             shutil.rmtree(meta_file.parent)
             removed += 1
     print(f"{removed} abgelaufene Seiten gelöscht.")
@@ -220,7 +235,7 @@ def main() -> int:
     p.add_argument("--ziel", required=True, help="Ordner, den der Webserver ausliefert")
     p.add_argument("--vorlage", help="index.html mit LEAD-Block")
     p.add_argument("--leads", help="leads.json")
-    p.add_argument("--basis", default="https://angebot.example", help="öffentliche Adresse, z. B. https://angebot.kunde.de")
+    p.add_argument("--basis", help="öffentliche Adresse, z. B. https://angebot.kunde.de (Pflicht, außer mit --probe)")
     p.add_argument("--laufzeit", type=int, default=90, help="Tage bis zur Löschung")
     p.add_argument("--probe", action="store_true", help="Platzhalter in der Vorlage erlauben (nur zum Testen)")
     p.add_argument("--aufraeumen", action="store_true", help="nur abgelaufene Seiten löschen")
@@ -229,6 +244,10 @@ def main() -> int:
         return cleanup(args)
     if not (args.vorlage and args.leads):
         p.error("--vorlage und --leads sind nötig")
+    if not args.basis:
+        if not args.probe:
+            p.error("--basis ist nötig, z. B. --basis https://angebot.kunde.de (sonst stimmen die Links in ergebnis.json nicht)")
+        args.basis = "https://angebot.example"
     return build(args)
 
 

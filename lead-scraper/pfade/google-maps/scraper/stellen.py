@@ -287,7 +287,7 @@ _KONTAKT = re.compile(
 def beschreibung_bereinigen(roh: Any, max_text: int = 4000) -> str:
     """Stellentext als Klartext, ohne Kontaktblock, E-Mail-Adressen und Telefonnummern.
 
-    Kontaktpersonen aus Stellenanzeigen werden nicht übernommen (wissen/05, Rechtliches).
+    Kontaktpersonen aus Stellenanzeigen werden nicht übernommen (wissen/05, Daten und Versand).
     Der Text dient nur dem Opener: 1–2 Anforderungen an Bewerber.
     """
     if not roh:
