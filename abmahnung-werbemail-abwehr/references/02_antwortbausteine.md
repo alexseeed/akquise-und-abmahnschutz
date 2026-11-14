@@ -61,7 +61,7 @@ Fundstellen vor Verwendung im Volltext prüfen; die Umsatzsteuer-Sätze nur, wen
 
 **Gegenstandswert** (immer, wenn er überhöht ist; Fundstellen vorher prüfen):
 
-> Den angesetzten Gegenstandswert von [Betrag] halten wir für überhöht. Ihre Abmahnung benennt eine einzelne E-Mail vom [Datum] an eine Geschäftsadresse Ihrer Mandantin. [Eigenes Zitat des Abmahners und was es tatsächlich trägt.] Für die einmalige Zusendung einer E-Mail an einen Gewerbebetrieb werden in der Rechtsprechung [Werte mit Fundstellen] angesetzt. Ein Regelwert von 6.000 € lässt sich auch aus BGH, Beschl. v. 20.05.2009 – I ZR 218/07 nicht ableiten; dort ging es um einen 15-seitigen Newsletter.
+> Den angesetzten Gegenstandswert von [Betrag] halten wir für überhöht. Ihre Abmahnung benennt eine einzelne E-Mail vom [Datum] an eine Geschäftsadresse Ihrer Mandantin. [Eigenes Zitat des Abmahners und was es tatsächlich trägt.] Für die einmalige Zusendung einer E-Mail an einen Gewerbebetrieb werden in der Rechtsprechung [Werte mit Fundstellen] angesetzt. Ein Regelwert von 6.000 € lässt sich auch aus BGH, Beschl. v. 20.05.2009 – I ZR 218/07 nicht ableiten; dort wurde der Wert in einem Kostenbeschluss ohne Begründung festgesetzt, und es ging um ein 15-seitiges Schriftstück an eine Anwaltskanzlei.
 
 „Ihre Abmahnung benennt eine einzelne E-Mail“ ist bewusst neutral. Es ist keine Behauptung, dass es nur eine Mail gab. Gab es weitere, den Satz anpassen.
 

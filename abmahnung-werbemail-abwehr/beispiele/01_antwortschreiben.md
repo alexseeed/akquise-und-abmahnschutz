@@ -13,7 +13,7 @@ Alle Namen, Adressen und Aktenzeichen sind erfunden. Das Beispiel zeigt Aufbau u
   - 664,26 € Anwaltskosten (1,3-Gebühr aus 6.000 €)
 - **Begründung des Gegenstandswerts:** Die Kanzlei stützt ihn auf AG München 142 C 1633/22.
 - **Frist und Zugang:** Das Schreiben ging am 29.09.2026 per Einwurf-Einschreiben zu. Am selben Tag lief auch die Frist ab.
-- **Entscheidung des Nutzers:** Standard, also Kosten erst nach Kostennote und Zahlungsnachweis (Variante B).
+- **Entscheidung des Nutzers:** Standard, also Kosten erst nach Darlegung der Kostenbelastung und, weil Umsatzsteuer verlangt wird, nach Rechnung der Abmahnerin (Variante B).
 
 ---
 
@@ -54,9 +54,9 @@ Einen Anspruch weisen wir zurück. Ein Verstoß gegen die DSGVO allein begründe
 
 **3. Kosten**
 
-Ein Erstattungsanspruch setzt voraus, dass Ihrer Mandantin Anwaltskosten tatsächlich entstanden sind und sie diese Ihnen gegenüber schuldet. Wir bitten daher um Übersendung einer Kopie der an Ihre Mandantin gerichteten Berechnung Ihrer Vergütung (§ 10 RVG) sowie eines Nachweises, dass Ihre Mandantin diese beglichen hat oder Ihnen gegenüber zu ihrer Zahlung verpflichtet ist. Eine Zahlung lehnen wir damit nicht ab. Nach Eingang der Unterlagen teilen wir Ihnen binnen 14 Tagen mit, in welcher Höhe wir die Forderung ausgleichen.
+Erstattungsfähig sind nur Kosten, zu deren Zahlung Ihre Mandantin im Innenverhältnis verpflichtet ist (BGH, Urt. v. 13.07.2023 – I ZR 152/21, Rn. 71). Wir bitten daher um Darlegung, dass Ihrer Mandantin Kosten in der geltend gemachten Höhe entstanden sind; bis dahin bestreiten wir dies mit Nichtwissen. Soweit Sie Umsatzsteuer geltend machen, bitten wir zudem um eine Rechnung Ihrer Mandantin mit gesondert ausgewiesener Umsatzsteuer (§ 14 Abs. 2 Satz 2 Nr. 1 UStG; BGH, Hinweisbeschl. v. 21.01.2021 – I ZR 87/20, Rn. 12, 16). Eine Zahlung lehnen wir damit nicht ab. Nach Eingang teilen wir Ihnen binnen 14 Tagen mit, in welcher Höhe wir die Forderung ausgleichen.
 
-Den angesetzten Gegenstandswert von 6.000,00 € halten wir für überhöht. Ihre Abmahnung benennt eine einzelne E-Mail vom 02.09.2026 an eine Geschäftsadresse Ihrer Mandantin. Das von Ihnen angeführte Urteil des AG München vom 05.08.2022 – 142 C 1633/22 setzt den Streitwert auf 3.000,00 € fest, und zwar für drei Werbe-E-Mails, die nach einem ausdrücklichen Widerspruch versandt wurden. Für die einmalige Zusendung einer E-Mail an einen Gewerbebetrieb werden noch niedrigere Werte angesetzt (OLG Hamm, Beschl. v. 09.12.2014 – 9 U 73/14, MMR 2015, 203: 1.000,00 €). Ein Regelwert von 6.000,00 € lässt sich auch aus BGH, Beschl. v. 20.05.2009 – I ZR 218/07 nicht ableiten; dort ging es um einen 15-seitigen Newsletter.
+Den angesetzten Gegenstandswert von 6.000,00 € halten wir für überhöht. Ihre Abmahnung benennt eine einzelne E-Mail vom 02.09.2026 an eine Geschäftsadresse Ihrer Mandantin. Das von Ihnen angeführte Urteil des AG München vom 05.08.2022 – 142 C 1633/22 setzt den Streitwert auf 3.000,00 € fest, und zwar für drei Werbe-E-Mails, die nach einem ausdrücklichen Widerspruch versandt wurden. Für die einmalige Zusendung einer E-Mail an einen Gewerbebetrieb werden noch niedrigere Werte angesetzt (OLG Hamm, Beschl. v. 09.12.2014 – 9 U 73/14, MMR 2015, 203: 1.000,00 €). Ein Regelwert von 6.000,00 € lässt sich auch aus BGH, Beschl. v. 20.05.2009 – I ZR 218/07 nicht ableiten; dort wurde der Wert in einem Kostenbeschluss ohne Begründung festgesetzt, und es ging um ein 15-seitiges Schriftstück an eine Anwaltskanzlei.
 
 **4. Auskunft nach Art. 15 DSGVO**
 
@@ -77,7 +77,7 @@ Fußzeile (§ 35a GmbHG): Muster Vertrieb GmbH · Sitz Stuttgart · Amtsgericht 
 
 **Was das Beispiel zeigt:**
 
-- **Kein Geld im ersten Schreiben.** Die Kosten werden weder gezahlt noch abgelehnt. Gefordert sind Nachweise, und der Gegenstandswert wird mit dem eigenen Zitat der Kanzlei gerügt.
+- **Kein Geld im ersten Schreiben.** Die Kosten werden weder gezahlt noch abgelehnt. Verlangt werden die Darlegung der Kostenbelastung (bis dahin mit Nichtwissen bestritten) und eine Rechnung der Abmahnerin, und der Gegenstandswert wird mit dem eigenen Zitat der Kanzlei gerügt. Eine Kostennote nach § 10 RVG wird nicht verlangt; darauf gibt es vor einem Prozess keinen Anspruch.
 - **Kein Satz über Tools, Listen oder Versanddomains.** Der Briefkopf nennt nur Firma, Anschrift und Telefon. Die Sperre ist neutral formuliert.
 - **Alle Nachweisforderungen stehen in diesem einen Schreiben.** Es gibt keine Rückfragen-Runde vor der UE.
-- **Nach Eingang der Kostennote:** Phase 10. Gezahlt wird auf Basis des eigenen Werts, mit „darüber hinausgehende Forderungen weisen wir zurück“.
+- **Nach Eingang von Darlegung oder Rechnung:** Phase 10. Gezahlt wird auf Basis des eigenen Werts, mit „Einen darüber hinausgehenden Anspruch Ihrer Mandantin sehen wir nicht.“ Nie „darüber hinausgehende Forderungen weisen wir zurück“ (`references/05_fallstricke.md`).
