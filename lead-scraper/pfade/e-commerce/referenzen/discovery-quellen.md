@@ -185,7 +185,7 @@ Realistisch für Shopware DE: **15.000–20.000 eindeutige Händler** [S]. Länd
 - **Folgen für dieses Paket:**
   - Ein Nutzer, der den Pfad für sich selbst laufen lässt, braucht einen **eigenen** Zugang.
   - Listen, die der Betreiber für Kunden baut und ausliefert, sind sehr wahrscheinlich **nicht** gedeckt. Ausweg: Der Kunde bucht selbst, oder es gibt eine schriftliche Freigabe bzw. Enterprise-Lizenz [S].
-- **Freie Quellen** (HTTP Archive, Common Crawl, eigene Erkennung) haben diese Einschränkung nicht. Für das Ansprechen gelten trotzdem UWG und DSGVO (`../../../wissen/08_versand-und-recht.md`).
+- **Freie Quellen** (HTTP Archive, Common Crawl, eigene Erkennung) haben diese Einschränkung nicht. Für das Ansprechen gilt die Versand-Checkliste (`../../../wissen/08_versand-und-recht.md`).
 - **GPL der Fingerprint-Regeln (WA):** siehe `fingerprints.md`, Abschnitt 8.
 
 ## 8. Offene Punkte

@@ -26,7 +26,7 @@ Start-Prompt für andere Modelle:
 | `05_pfad-recruiting.md` | Recruiting über die Firmen-Website: Firmen aus Google Maps, offene Stelle auf der eigenen Website erkennen, Opener zur Stelle; Kosten, Grenzen, Recht | Firmen gesucht sind, die gerade einstellen, und die Branche bekannt ist |
 | `06_pfad-e-commerce.md` | Onlineshops: erst Anforderungen klären, dann Shop-Liste prüfen (aktiver Shop, passt zum Shop-Profil, Traffic), anreichern und je Lead die fertige Mail ausgeben; Kosten, Grenzen, Recht | eine Liste von Onlineshops vorliegt |
 | `07_lead-ausgabe-und-spalten.md` | Ausgabedateien, Spalten, Ansprache-Regeln, Standardformat | die Liste in ein Versandtool soll |
-| `08_versand-und-recht.md` | UWG, DSGVO, Pflichtangaben, Quellen-Nutzungsbedingungen | vor dem ersten Versand |
+| `08_versand-und-recht.md` | so arbeiten wir sauber: Kanäle, Pflichtangaben, Datenschutz, Quellen-Nutzungsbedingungen, Checkliste | vor dem ersten Versand |
 | `09_sperrliste.md` | Community-Sperrliste: Abgleich, Melden, Widerspruch | Fragen zur Sperrliste |
 | `10_abmahnung-was-tun.md` | erste Schritte nach einer Abmahnung | eine Abmahnung ist da |
 | `11_zugaenge-und-kosten.md` | Konten, Schlüssel, Kostenhebel | vor der Einrichtung, vor großen Läufen |
@@ -47,4 +47,4 @@ Start-Prompt für andere Modelle:
 - Technische Details zu einem Pfad stehen in `pfade/<pfad>/referenzen/`. Hier steht nur, was Nutzer und KI für Entscheidungen brauchen.
 - Prüfen: `python3 werkzeuge/wissen_pruefen.py` (abgelaufene Fristen, fehlende Index-Einträge, tote Verweise, veraltete `WISSEN_KOMPLETT.md`).
 - Änderungen mit Datum in `CHANGELOG.md` festhalten.
-- Rechtsstand dieser Bibliothek: **Oktober 2026**. Rechtliche Aussagen vor Verwendung prüfen.
+- Stand dieser Bibliothek: **November 2026**.

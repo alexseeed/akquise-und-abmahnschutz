@@ -170,7 +170,7 @@ Dazu kommt ein JSON-Archiv mit allen Rohdaten. Details: `07_lead-ausgabe-und-spa
 - **Kein Sitzland-Filter:** Der Pfad prüft nicht, ob die Firma laut Impressum in den gewünschten Ländern sitzt (Interviewfrage D1). Das Shop-Profil prüft nur, was auf der Startseite steht (Sprache, Währung, Lieferländer). Ausländische Shops mit deutscher Seite verbrauchen deshalb weiter Credits und landen im Export. Clay filterte das auch nicht. Geplant als Schritt nach dem Impressum (`shop-katalog.md`, „Einbau“).
 - **Kein Telefon, kein LinkedIn:** Telefon-Wasserfall und LinkedIn-Suche waren im Clay-Workbook abgeschaltet und sind nicht nachgebaut.
 
-## Rechtliches
+## Daten und Versand
 
 - **Datenquellen:**
   - Startseite, Impressum und SimilarWeb-Daten werden über Skael abgefragt. Es gelten dessen Nutzungsbedingungen.
@@ -178,7 +178,7 @@ Dazu kommt ein JSON-Archiv mit allen Rohdaten. Details: `07_lead-ausgabe-und-spa
 - **Personenbezogene Daten:**
   - Namen und persönliche E-Mail-Adressen der Geschäftsführung sind personenbezogen.
   - Informationspflicht nach Art. 14 DSGVO beim Erstkontakt.
-- **Kaltakquise per E-Mail** ist ohne Einwilligung grundsätzlich unzulässig (§ 7 Abs. 2 Nr. 2 UWG). In Österreich gilt eine Impressum-Adresse ausdrücklich nicht als Einwilligung.
+- **Versand:** persönlich, mit klarem Absender, Abmeldeweg und Datenschutzhinweis (`08_versand-und-recht.md`). Für Österreich und die Schweiz gelten eigene Regeln; vor dem ersten Lauf dort klären.
 - **Sperrliste:** Der Abgleich ist eingebaut. Ohne ladbare Liste wird nicht exportiert.
 
 Mehr in `08_versand-und-recht.md`.

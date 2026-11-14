@@ -182,7 +182,7 @@ Adressen mit Status `Invalid` stehen nicht mehr im Feld E-Mail, sondern in der l
 
 Meldet das Skript „ACHTUNG: … Adressen sind ungeprüft“:
 
-- **Der Nutzer schreibt per E-Mail an:** einmal Phase 5 nachholen und das Standardformat neu erzeugen. Bleiben danach Adressen `Not Run`, nicht weiter wiederholen. Die Liste ausliefern, die Zahl nennen und sagen, dass diese Adressen nicht per E-Mail angeschrieben werden dürfen.
+- **Der Nutzer schreibt per E-Mail an:** einmal Phase 5 nachholen und das Standardformat neu erzeugen. Bleiben danach Adressen `Not Run`, nicht weiter wiederholen. Die Liste ausliefern, die Zahl nennen und sagen, dass diese Adressen erst nach einer Prüfung angeschrieben werden, sonst leidet die Absender-Reputation.
 - **Anderer Kanal (Telefon, Brief):** Die Meldung ist ohne Skael-Schlüssel normal. Weiter mit Phase 7.
 
 ## Phase 7: Sperrliste (immer)

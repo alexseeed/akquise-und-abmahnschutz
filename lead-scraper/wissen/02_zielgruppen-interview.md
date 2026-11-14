@@ -22,7 +22,7 @@
 | # | Frage an den Nutzer | Beispiel dazusagen | Wofür |
 |---|---|---|---|
 | A1 | „Was bietest du an – in einem Satz?“ | „Zum Beispiel: Wir bauen Vertriebssysteme für Großhändler.“ | Prüfprofil, Personalisierung |
-| A2 | „Wie willst du die Firmen ansprechen?“ | „Per E-Mail, Telefon, Brief, LinkedIn oder mit einem persönlichen Video?“ | Rechtlicher Hinweis, Videotitel ja/nein |
+| A2 | „Wie willst du die Firmen ansprechen?“ | „Per E-Mail, Telefon, Brief, LinkedIn oder mit einem persönlichen Video?“ | Versand-Checkliste (`08`), Videotitel ja/nein |
 
 ## Block B – Wer ist der Wunschkunde?
 

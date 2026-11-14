@@ -37,7 +37,7 @@ Je mehr Leute mitmachen, desto vollständiger wird die Sperrliste. **Bedingung d
 
 Nur die Sperrliste, ohne Scraper: `https://raw.githubusercontent.com/alexseeed/werbemail-sperrliste/main/data/sperrliste.txt` als Domain-Sperre ins eigene Versandtool importieren.
 
-**Wichtig:** E-Mail-Werbung an Unternehmen ohne vorherige Einwilligung ist in Deutschland grundsätzlich unzulässig (§ 7 Abs. 2 Nr. 2 UWG). Dazu kommen Pflichten aus der DSGVO, etwa die Information nach Art. 14. Die Sperrliste senkt das Risiko, beseitigt es aber nicht. Das Paket ersetzt keine Rechtsberatung (`lead-scraper/wissen/08_versand-und-recht.md`).
+**So arbeiten wir sauber:** persönliche Ansprache mit klarem Absender, Abmeldeweg und Datenschutzhinweis nach Art. 14 DSGVO; Widersprüche sofort sperren; jede Liste vor dem Versand mit der Sperrliste abgleichen. Die Checkliste steht in `lead-scraper/wissen/08_versand-und-recht.md`. Keine Rechtsberatung.
 
 ## Betreiber
 

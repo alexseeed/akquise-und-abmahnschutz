@@ -86,10 +86,10 @@ Weil Name oder Geschlecht nicht sicher genug waren. Eine falsche persönliche An
 | „Skael liefert seit 10 Abfragen in Folge kein Ergebnis“ | Skael oder das Internet ist gestört | innerhalb von 24 Stunden erneut starten; der Stand ist gespeichert, schon abgeschickte Abfragen werden dann nicht noch einmal berechnet |
 | „Skael lehnt alle Anfragen an … ab“ | Schnittstelle geändert oder `SKAEL_URL` falsch | nicht wiederholen, nichts wurde berechnet; an den Betreiber des Pakets melden |
 
-## Sperrliste und Recht
+## Sperrliste und Versand
 
-**Darf ich nach dem Abgleich bedenkenlos versenden?**
-Nein. Der Abgleich entfernt bekannte Abmahner. E-Mail-Werbung ohne Einwilligung bleibt grundsätzlich unzulässig (`08`).
+**Reicht der Abgleich vor dem Versand?**
+Der Abgleich entfernt bekannte Abmahner und gesperrte Adressen. Dazu gehören persönliche Ansprache, klarer Absender, Abmeldeweg und Datenschutzhinweis (Checkliste in `08`).
 
 **Eine Firma auf der Sperrliste ist ein Wunschkunde – was tun?**
 Nicht anschreiben, über keinen Kanal. Wer eine Abmahnung ausgesprochen hat, will keinen Kontakt.

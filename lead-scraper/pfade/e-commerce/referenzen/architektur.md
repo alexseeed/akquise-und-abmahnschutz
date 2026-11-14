@@ -14,7 +14,7 @@ Kennzeichnung:
 ## Inhalt
 
 1. Grundsätze · 2. Crawler · 3. Datenhaltung · 4. Impressum-Auswertung
-5. Register und Geschäftsführung · 6. E-Mail · 7. Recht im Detail
+5. Register und Geschäftsführung · 6. E-Mail · 7. Daten und Quellen im Detail
 
 
 > **Einordnung:** Recherche vom 08.10.2026 für spätere Ausbaustufen. **Nicht Teil des aktuellen Pfads.** Der Pfad ist ein Nachbau des Clay-Workbooks ECOM 2.0 (`../ABLAUF.md`). Er erkennt das Shopsystem nicht und braucht eine fertige Shop-Liste.
@@ -159,12 +159,12 @@ Ohne Registerzugang bleibt die Recherche per Agent wie im Amazon-Pfad, Phase 4 (
 ## 6. E-Mail
 
 1. **Impressum-E-Mail** übernehmen (Pflichtangabe, meist info@/service@) und mit Skael `verify_email` (3 Credits) prüfen. Catch-all-Domains (Status `Risky`) getrennt ausweisen; bei Shops kommen sie oft vor.
-2. **Persönliche Adresse der Geschäftsführung** (Skael `find_email_person`, 15 Credits je Treffer) nur ermitteln, wenn der geplante Kanal sie erlaubt. Sonst bringt sie keinen Nutzen, aber zusätzliches DSGVO-Risiko.
+2. **Persönliche Adresse der Geschäftsführung** (Skael `find_email_person`, 15 Credits je Treffer) nur ermitteln, wenn der geplante Kanal sie nutzt. Sonst bringt sie keinen Nutzen, nur zusätzliche Personendaten.
 3. **MX-Prüfung:** Die Standardbibliothek kann keine MX-Records abfragen. Das übernimmt Skael, oder `dnspython` kommt als optionales Paket dazu.
 
-## 7. Recht im Detail (keine Rechtsberatung)
+## 7. Daten und Quellen im Detail (keine Rechtsberatung)
 
-- **UWG § 7:** E-Mail-Werbung braucht eine vorherige ausdrückliche Einwilligung, auch B2B [V]. Telefon B2B: mutmaßliche Einwilligung, ein allgemeiner Sachbezug reicht nicht [S]. Österreich (§ 174 TKG 2021): Eine Adresse im Impressum ist **keine** Einwilligung [S, WKO].
+- **Versand:** wie in `../../../wissen/08_versand-und-recht.md`; für Österreich und die Schweiz gelten eigene Regeln, vor dem ersten Lauf dort klären.
 - **DSGVO:**
   - Namen der Geschäftsführung und Adressen von Einzelunternehmern sind personenbezogen.
   - CNIL gegen Kaspr (12/2024, 240.000 €): Dass Daten online stehen, rechtfertigt ihre Wiederverwendung nicht. Die Info nach Art. 14 gilt auch hier [S].
@@ -177,4 +177,4 @@ Ohne Registerzugang bleibt die Recherche per Agent wie im Amazon-Pfad, Phase 4 (
   - Eigene AGB der Händler können gelten [E].
   - Vertragliche Verbote bleiben auch bei nicht geschützten Datenbanken möglich (EuGH C-30/14 Ryanair) [S].
 
-Risikotabelle in Kurzform: `../../../wissen/06_pfad-e-commerce.md`, Abschnitt „Rechtliches“.
+Kurzform: `../../../wissen/06_pfad-e-commerce.md`, Abschnitt „Daten und Versand“.

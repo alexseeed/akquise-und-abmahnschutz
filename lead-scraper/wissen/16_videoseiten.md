@@ -1,6 +1,6 @@
 # Videoseiten – persönliches Video und eigene Landingpage je Lead
 
-**Zweck:** Wissen zum Pfad `pfade/videoseiten/`: was entsteht, was es kostet, was der Nutzer selbst tun muss, wie die Vorlage aufgebaut ist und was rechtlich zu beachten ist.
+**Zweck:** Wissen zum Pfad `pfade/videoseiten/`: was entsteht, was es kostet, was der Nutzer selbst tun muss, wie die Vorlage aufgebaut ist und wie Datenschutz und Versand sauber laufen.
 **Für wen:** Nutzer mit Rückfragen und KI-Modelle, die den Ablauf (`pfade/videoseiten/ABLAUF.md`) begleiten.
 **Verwandt:** `02_zielgruppen-interview.md` (Blöcke V und L) · `07_lead-ausgabe-und-spalten.md` (Lead-Format) · `08_versand-und-recht.md` · `11_zugaenge-und-kosten.md`
 
@@ -63,11 +63,11 @@ Beispiel: 500 Leads mit einem 1:50-Minuten-Video = 55.000 Credits = 55 €. Mit 
 
 **Branding:** `branding.py` liest Farben, Schriften und Logo von der Website, lädt die Schriften als Dateien herunter (nie per Link einbinden) und schreibt sie in die Kopie. Vor dem Klick lädt die Seite nichts von Dritten.
 
-## Datenschutz und Recht (Kurzfassung)
+## Datenschutz und Versand (Kurzfassung)
 
 - **An Skael** gehen nur Vorname, Firma, Domain, Website und die interne Kennung. Skael zeigt alles Übergebene ohne Anmeldung auf der Videoseite an, deshalb nie E-Mail oder Telefon.
 - **Link-Kennung:** 22 zufällige Zeichen, nicht der Skael-Token, nie Name oder Firma in der Adresse.
 - **Datenschutz-Information nach Art. 14 DSGVO** steht auf jeder Seite: Verantwortlicher, Daten, Quelle, Zweck, Speicherdauer. Die Quelle ist bewusst allgemein gehalten („Impressum … sowie weitere öffentlich zugängliche Quellen“, dazu `erfasst_am`). `quelle` und `quelle_url` aus dem Lead-Format bleiben intern als Nachweis und landen nie auf der Seite. Die Rechte stehen nur in der Datenschutzerklärung, nicht auf der Seite, und die Seite nennt keine IP-Übertragung (beides steht in der Datenschutzerklärung).
 - **„Keine weiteren Nachrichten – Datenlöschung vornehmen“:** löscht die Seite sofort und meldet die Kennung an den Server. Der Nutzer sperrt die Adresse im Mailtool und im Scraper (`ABLAUF.md`, Teil F).
 - **Datenschutzerklärung des Nutzers** muss die Videoseiten, Skael und den Server nennen (`anleitungen/05_datenschutzerklaerung.md`).
-- Werbe-Mails ohne Einwilligung bleiben nach § 7 Abs. 2 Nr. 2 UWG riskant (`08_versand-und-recht.md`). Die Seite senkt Angriffsflächen, ersetzt aber keine Rechtsberatung.
+- **Versand:** persönlich, mit klarem Absender, Abmeldeweg und Datenschutzhinweis (`08_versand-und-recht.md`). Keine Rechtsberatung.

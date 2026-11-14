@@ -42,7 +42,7 @@ Zu Beginn einsammeln (fehlendes nachfragen, den Rest selbst recherchieren):
 
 ## Grundhaltung
 
-- Ehrlich bewerten: Der Unterlassungsanspruch ist bei Werbe-Mails ohne Einwilligung fast immer begründet (auch B2B, auch einmalig, auch an eine Impressumsadresse). Angreifbar sind meist DSGVO-Schadensersatz, Kosten, UE-Entwurf und das Vorgehen des Abmahners.
+- Ehrlich bewerten, wo der Spielraum liegt: Über die Unterlassung selbst wird selten gestritten; eine modifizierte UE beendet diesen Teil meist am günstigsten. Angreifbar sind meist DSGVO-Schadensersatz, Kosten, UE-Entwurf und das Vorgehen des Abmahners.
 - **Schnell bei der Unterlassung, fest beim Geld.**
   - Nur bei der Unterlassungserklärung zählt Tempo. Sie allein beseitigt die Wiederholungsgefahr und verhindert eine einstweilige Verfügung.
   - Bei allen Geldforderungen gilt die feste Linie. Das betrifft Anwaltskosten, Art. 82 und Zahlungspflichten im UE-Entwurf.
@@ -269,4 +269,4 @@ Nur auf Wunsch. Ablauf: Rahmen klären → prüfen → sichern → protokolliere
 
 ## Hinweise für künftige Kampagnen
 
-Am Ende kurz mitgeben: keine frisch registrierten Versanddomains ohne Website und Impressum; nach einer Abmahnung die eigene Akquise auf weitere Risiken prüfen, denn zwei Abmahnungen in wenigen Wochen sind ein Muster; wer selbst versendet, kann auch persönlich abgemahnt werden; fingierte Aufhänger („Kollege hat mich aufmerksam gemacht“, falsche Weiterleitungen) aus Vorlagen streichen (§ 6 DDG), Footer mit Rechtsträger und Anschrift (§ 7 Abs. 2 Nr. 3 UWG), Art.-14-Information beachten, Community-Sperrliste vor jedem Versand abgleichen (`sperrliste.py laden` bzw. `abgleich`), und offen benennen, dass E-Mail-Kaltakquise ohne Einwilligung in Deutschland unzulässig bleibt.
+Am Ende kurz mitgeben, wie die Akquise sauber weiterläuft: keine frisch registrierten Versanddomains ohne Website und Impressum; nach einer Abmahnung Kampagne, Liste und Vorlagen durchsehen, denn zwei Abmahnungen in wenigen Wochen sind ein Muster; fingierte Aufhänger („Kollege hat mich aufmerksam gemacht“, falsche Weiterleitungen) aus Vorlagen streichen (§ 6 DDG), Footer mit Rechtsträger und Anschrift (§ 7 Abs. 2 Nr. 3 UWG), Art.-14-Information beachten, Community-Sperrliste vor jedem Versand abgleichen (`sperrliste.py laden` bzw. `abgleich`). Nicht vor E-Mail-Akquise warnen.

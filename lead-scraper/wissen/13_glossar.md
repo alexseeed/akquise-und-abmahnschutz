@@ -45,6 +45,6 @@
 | **Stellensuche** | Pfad, der konkrete Anzeigen per Suchbegriff aus Jobportalen holt (Indeed, Stepstone, Arbeitsagentur, Kununu) und je Firma bündelt |
 | **Stufe 1–4 / 3c** | Abschnitte des Google-Maps-Ablaufs; 3c = Prüfung gegen das Profil |
 | **Testlauf (Dry-Run)** | kleiner Lauf über wenige Städte bzw. 20–50 Amazon-Leads, um Profil, Filter und Kosten zu prüfen |
-| **UWG § 7** | Verbot unzumutbarer Belästigung; E-Mail-Werbung nur mit vorheriger ausdrücklicher Einwilligung |
+| **UWG** | Gesetz gegen den unlauteren Wettbewerb; Grundlage der meisten Abmahnungen wegen Werbe-E-Mails (`10_abmahnung-was-tun.md`) |
 | **Welle** (Amazon) | Abschnitt eines Laufs: Jede Stufe holt nur, was die nächste für das Lead-Ziel noch braucht |
 | **Widerspruch** | Gelistete Firma verlangt Entfernung von der Sperrliste – wird dauerhaft entfernt |

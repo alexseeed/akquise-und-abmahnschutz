@@ -124,10 +124,10 @@ Erwartung (ungeprüft): Die Stellen-Quote hängt stark von der Branche ab. Handw
 - **Nur der erste Geschäftsführer** aus dem Impressum; die Personalabteilung wird nicht gesucht.
 - **Anrede:** Der Anrede-Prompt setzt bei unsicheren Vornamen „Herr“. Die Exportspalte `Ansprache` ist deshalb nur bei Anrede-Sicherheit > 60 persönlich, sonst neutral.
 
-## Rechtliches in Kürze
+## Daten und Versand in Kürze
 
 - **Datenquellen:** öffentliche Unternehmens-Websites und Google Maps (über Skael). Jobportale nutzt dieser Pfad nicht; die Stellensuche bezieht sie über die Skael-Schnittstelle (Einordnung in `18_pfad-stellensuche.md`).
 - **Personenbezug:** Namen der Geschäftsführung und persönliche E-Mail-Adressen sind personenbezogen (DSGVO). Kontaktpersonen aus Stellenangeboten werden **nicht** übernommen.
-- **Ansprache:** E-Mail-Werbung ohne Einwilligung bleibt unzulässig (§ 7 Abs. 2 Nr. 2 UWG). Der Bezug auf eine öffentliche Stellenanzeige ändert daran nichts. Den Aufhänger nicht fingieren: nur Stellen nennen, die wirklich ausgeschrieben sind (Stichprobe!), Listen nicht wochenlang liegen lassen.
+- **Ansprache:** Die ausgeschriebene Stelle ist ein echter, sachlicher Aufhänger. Ihn nicht fingieren: nur Stellen nennen, die wirklich ausgeschrieben sind (Stichprobe!), Listen nicht wochenlang liegen lassen.
 
 Mehr in `08_versand-und-recht.md`.

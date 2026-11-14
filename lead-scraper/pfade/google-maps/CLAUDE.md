@@ -364,9 +364,9 @@ Nach jeder Änderung `python3 -m unittest discover -s tests -v` laufen lassen.
 
 ## Nach dem Export: Versand und Abmahnungen
 
-* Vor dem Versand den Nutzer **einmal** darauf hinweisen: E-Mail-Werbung an Unternehmen
-  ohne vorherige Einwilligung ist in Deutschland grundsätzlich unzulässig (§ 7 UWG),
-  dazu kommt die Informationspflicht nach Art. 14 DSGVO. Kurz, ohne Belehrung, nicht wiederholen.
+* Vor dem Versand dem Nutzer **einmal** die Versand-Checkliste anbieten: klarer Absender,
+  Abmeldeweg, Datenschutzhinweis nach Art. 14 DSGVO (`../../wissen/08_versand-und-recht.md`).
+  Kurz, ohne Belehrung, nicht wiederholen, nicht vor E-Mail-Akquise warnen.
 * Liste 5 (`5_gesperrt_…`) nie anschreiben. Wer sich beschwert oder abmahnt, kommt sofort
   auf die eigene Sperrliste im Versandtool.
 * Kommt eine Abmahnung: Skill **abmahnung-werbemail-abwehr** verwenden. Er meldet die

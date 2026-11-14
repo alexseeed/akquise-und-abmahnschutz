@@ -83,5 +83,5 @@ writeFileSync(CSV_OUT + ".tmp", "﻿" + out.join("\r\n") + "\r\n"); renameSync(C
 const n = roh.length - 1, pz = (x) => `${x} (${Math.round((x / n) * 100)} %)`;
 console.log(`Standardformat: ${n} Leads · Website ${pz(nWeb)} · E-Mail ${pz(nMail)} · persönliche Ansprache ${pz(nPers)}${angereichert ? "" : " · ohne Anreicherung: Ansprache immer neutral"}`);
 console.log(`E-Mail-Prüfung: ${["Safe to Send", "Risky", "Unknown", "Invalid", "Not Run"].filter((k) => nStatus[k]).map((k) => `${k} ${nStatus[k]}`).join(" · ") || "keine Adressen"}`);
-if (nStatus["Not Run"]) console.log(`ACHTUNG: ${nStatus["Not Run"]} Adressen sind ungeprüft (Not Run) und dürfen nicht per E-Mail angeschrieben werden. Nachholen: anreicherung.mjs mit SKAEL_API_KEY auf die MASTER-Datei ausführen, dann dieses Skript auf die Datei …_angereichert.csv.`);
+if (nStatus["Not Run"]) console.log(`ACHTUNG: ${nStatus["Not Run"]} Adressen sind ungeprüft (Not Run). Erst prüfen, dann anschreiben, sonst leidet die Absender-Reputation. Nachholen: anreicherung.mjs mit SKAEL_API_KEY auf die MASTER-Datei ausführen, dann dieses Skript auf die Datei …_angereichert.csv.`);
 console.log(`Datei: ${CSV_OUT}`);

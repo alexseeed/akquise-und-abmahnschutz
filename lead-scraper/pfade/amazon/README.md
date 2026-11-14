@@ -314,13 +314,13 @@ $env:KAMPAGNE="meine-liste"; $env:ZIEL="1000"; $env:BUDGET="36000"; node ..\amaz
 
 In der klassischen Eingabeaufforderung (cmd) heißt es `set ZIEL=1000`, ohne Anführungszeichen. Variablen, die du nicht mehr willst, mit `set NAME=` leeren. `caffeinate` gibt es unter Windows nicht: Für lange Läufe den Energiesparmodus abschalten.
 
-## 11. Rechtlicher Hinweis
+## 11. Daten und Versand
 
-Keine Rechtsberatung. Die Nutzung muss mit den Nutzungsbedingungen von Amazon und der eingesetzten Dienste vereinbar sein. Die Firmendaten auf Amazon-Verkäuferprofilen sind Pflichtangaben und öffentlich. Wer sie für Werbung oder Kontaktaufnahme verwendet, muss trotzdem **UWG** und **DSGVO** einhalten:
+Keine Rechtsberatung. Die Nutzung muss mit den Nutzungsbedingungen von Amazon und der eingesetzten Dienste vereinbar sein. Die Firmendaten auf Amazon-Verkäuferprofilen sind Pflichtangaben und öffentlich. So arbeiten wir damit sauber:
 
-- E-Mail-Werbung ohne Einwilligung ist in Deutschland auch an Unternehmen in der Regel unzulässig (§ 7 UWG).
-- Die Rechtsgrundlage für die Verarbeitung ist zu dokumentieren.
-- Beim Erstkontakt gilt die Informationspflicht (Art. 14 DSGVO).
-- Widersprüche gehören auf eine Sperrliste.
+- persönliche Ansprache mit klarem Absender und Abmeldeweg,
+- die Rechtsgrundlage der Verarbeitung dokumentieren,
+- beim Erstkontakt informieren (Art. 14 DSGVO),
+- Widersprüche sofort auf die Sperrliste.
 
-Vor dem produktiven Einsatz anwaltlich prüfen lassen.
+Checkliste: `../../wissen/08_versand-und-recht.md`.

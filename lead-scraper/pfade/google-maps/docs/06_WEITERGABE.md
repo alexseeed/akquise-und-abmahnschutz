@@ -78,20 +78,19 @@ Keine Ausgabe = keine echten Keys im Ordner.
 
 ---
 
-## 6. Rechtliches — kurz
+## 6. Daten und Versand — kurz
 
 Der Scraper sammelt Geschäftskontaktdaten aus öffentlichen Quellen (Google Maps,
-Impressen) und bereitet sie für Kaltakquise auf. Das ist in der EU nicht
-automatisch zulässig.
+Impressen) und bereitet sie für die persönliche Ansprache auf.
 
-Der Empfänger sollte vor dem ersten Versand klären:
+Vor dem ersten Versand steht:
 
 * **DSGVO:** Rechtsgrundlage für die Verarbeitung (i. d. R. berechtigtes Interesse
   nach Art. 6 Abs. 1 lit. f), Informationspflicht nach Art. 14, Löschkonzept
-* **UWG § 7:** E-Mail-Werbung an Unternehmen ohne vorherige Einwilligung ist in
-  Deutschland grundsätzlich unzulässig; die Ausnahmen sind eng
+* **Versand:** persönliche Ansprache, klarer Absender, Abmeldeweg
+  (`../../../wissen/08_versand-und-recht.md`)
 * **Nutzungsbedingungen** der eingesetzten APIs
 * **Community-Sperrliste:** Firmen aus `5_gesperrt_…csv` nie anschreiben. Kommt trotzdem eine
   Abmahnung, hilft der Skill `abmahnung-werbemail-abwehr` und meldet den Abmahner an die Liste.
 
-Das ist keine Rechtsberatung — bei ernsthafter Nutzung im Zweifel anwaltlich prüfen lassen.
+Das ist keine Rechtsberatung.

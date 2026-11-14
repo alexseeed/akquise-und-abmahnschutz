@@ -134,10 +134,10 @@ Erkenntnisse aus Lauf 1:
 - **Ohne belegte Website** keine Anreicherung: Die Firma steht in Liste 4 mit „keine eigene Website gefunden“.
 - **Ort:** Die Suche im Umkreis überschneidet sich zwischen Nachbarorten. Doppelte Anzeigen werden über Portal und Anzeigen-ID erkannt, doppelte Firmen über Website oder Namen.
 
-## Rechtliches in Kürze
+## Daten und Versand in Kürze
 
 - **Datenquelle:** Die Anzeigen kommen über die Skael-Schnittstelle, die die Portale abfragt. Wir lesen die Portale nicht selbst aus. Ob Nutzungsbedingungen der Portale berührt sind, ist eine Frage zwischen Skael und den Portalen; die Arbeitsagentur ist eine öffentliche Stelle. Genutzt werden nur Firmenangaben (wer stellt wen ein), keine Daten von Bewerbern.
 - **Kontaktpersonen aus Anzeigen werden nicht übernommen.** Der Stellentext wird vor dem Speichern gekürzt: Kontaktblock, E-Mail-Adressen und Telefonnummern fallen weg. Ansprechpartner kommen nur aus dem Impressum (Geschäftsführung).
-- **Ansprache:** E-Mail-Werbung ohne Einwilligung bleibt unzulässig (§ 7 Abs. 2 Nr. 2 UWG), auch mit Bezug auf eine öffentliche Anzeige. Den Aufhänger nicht fingieren: Liste zeitnah nutzen; das Datum der Anzeige steht in jeder Zeile.
+- **Ansprache:** Die ausgeschriebene Stelle ist ein echter, sachlicher Aufhänger. Ihn nicht fingieren: Liste zeitnah nutzen; das Datum der Anzeige steht in jeder Zeile.
 
 Mehr in `08_versand-und-recht.md`.

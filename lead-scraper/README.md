@@ -60,4 +60,4 @@ lead-scraper/
 
 ## Wichtig
 
-E-Mail-Werbung an Unternehmen ohne vorherige Einwilligung ist in Deutschland grundsätzlich unzulässig (§ 7 UWG). Die Sperrliste senkt das Risiko, beseitigt es aber nicht. Details stehen in `wissen/08_versand-und-recht.md`. Keine Rechtsberatung.
+So arbeiten wir sauber: persönliche Ansprache, klarer Absender, Abmeldeweg und Datenschutzhinweis; Widersprüche sofort sperren; vor dem Versand mit der Sperrliste abgleichen. Checkliste in `wissen/08_versand-und-recht.md`. Keine Rechtsberatung.

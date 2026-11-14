@@ -68,4 +68,4 @@ python3 -m scraper blockliste-import alte_leads.csv
 
 - Ohne Moderation sind **Falschmeldungen möglich**. Die harmlose Wirkung eines Eintrags (nur Werbe-Sperre) begrenzt den Schaden.
 - Firmen **ohne eigene Website** (z. B. manche Amazon-Seller) lassen sich nicht abgleichen.
-- Die Liste schützt nur vor **bekannten** Abmahnern. Sie macht Kaltakquise nicht zulässig (`08`).
+- Die Liste kennt nur **gemeldete** Abmahner. Deshalb gehören Abmeldeweg, Widerspruchsprozess und Blockliste im Versandtool trotzdem dazu (`08`).

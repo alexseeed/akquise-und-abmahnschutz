@@ -167,8 +167,7 @@ Der Prozess ist die Portierung eines Clay-Workbooks nach Python. Formeln, Prompt
 Schwellwerte und Reihenfolge wurden von dort übernommen (`docs/01_PROZESS.md`,
 `docs/05_ABWEICHUNGEN.md`). Zugangsdaten wurden keine übernommen.
 
-## Rechtliches
+## Daten und Versand
 
-E-Mail-Werbung an Unternehmen ohne vorherige Einwilligung ist in Deutschland grundsätzlich
-unzulässig (§ 7 UWG); dazu kommen die Pflichten aus der DSGVO (Art. 6, 14). Details in
-`docs/06_WEITERGABE.md`, Abschnitt 6. Keine Rechtsberatung.
+So arbeiten wir sauber: persönliche Ansprache, klarer Absender, Abmeldeweg, Datenschutzhinweis
+(DSGVO Art. 6, 14). Details in `docs/06_WEITERGABE.md`, Abschnitt 6. Keine Rechtsberatung.
