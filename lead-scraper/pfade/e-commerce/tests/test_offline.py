@@ -358,6 +358,27 @@ class FindymailGestoert:
         raise ApiError("Findymail HTTP 503: unbekannter Fehler", 503)
 
 
+class SkaelVerifikationErstGestoert(SkaelOhneTreffer):
+    def __init__(self):
+        super().__init__()
+        self.verify_aufrufe = 0
+
+    def verify_email(self, email):
+        self.verify_aufrufe += 1
+        if self.verify_aufrufe == 1:
+            raise ApiError("Skael HTTP 500", 500)
+        return super().verify_email(email)
+
+
+class FindymailZaehltAufrufe(FindymailMitTreffer):
+    def __init__(self):
+        self.aufrufe = 0
+
+    def find_work_email(self, full_name, company_domain):
+        self.aufrufe += 1
+        return super().find_work_email(full_name, company_domain)
+
+
 class FindymailPipelineTest(unittest.TestCase):
     """Skael findet nichts → Findymail springt ein. Leeres Guthaben lässt den Lead offen."""
 
@@ -397,6 +418,18 @@ class FindymailPipelineTest(unittest.TestCase):
         self.assertIsNone(lead["email_final"])
         self.assertEqual(lead["attempts"], 1)
         self.assertIn("Findymail", lead["error"])
+
+    def test_bezahlter_treffer_wird_nicht_erneut_gekauft(self):
+        skael = SkaelVerifikationErstGestoert()
+        findymail = FindymailZaehltAufrufe()
+        pipeline.stufe2c_emails(self.conn, skael, findymail)
+        lead = self.conn.execute("SELECT * FROM anreicherung").fetchone()
+        self.assertIsNone(lead["email_final"])
+        self.assertIsNotNone(lead["findymail_raw"])
+        pipeline.stufe2c_emails(self.conn, skael, findymail)
+        self.assertEqual(findymail.aufrufe, 1, "paid hit is reused, not bought again")
+        lead = self.conn.execute("SELECT * FROM anreicherung").fetchone()
+        self.assertEqual(lead["email_final"], "max.mueller@shop-a.de")
 
 
 class MigrationTest(unittest.TestCase):
