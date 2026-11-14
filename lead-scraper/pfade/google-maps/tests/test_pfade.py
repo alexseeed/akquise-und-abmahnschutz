@@ -81,7 +81,7 @@ TRAFFIC = {
 
 GF = {"alpha-spedition.de": "Max Mustermann", "beta-logistik.de": "Kim Lee",
       "shop-eins.de": "Sabine Schulz", "shop-zwei.de": "Paul Kurz",
-      "wilkes.de": "Marc Wilkes", "autohaus-staiger.de": "Peter Staiger", "os-kornwestheim.de": "Olaf Sailer"}
+      "musterfracht.de": "Marc Musterfracht", "autohaus-staiger.de": "Peter Staiger", "os-kornwestheim.de": "Olaf Sailer"}
 
 # --- job portals (shapes copied from real Skael answers, October 2026) ---------
 def _tage(n: int) -> str:
@@ -90,16 +90,16 @@ def _tage(n: int) -> str:
 
 INDEED = {"success": True, "data": {"jobs": [
     {"id": "i1", "title": "Berufskraftfahrer Stuttgart",
-     "company": {"name": "Wilkes GmbH", "website": "http://www.wilkes.de"},
+     "company": {"name": "Musterfracht GmbH", "website": "http://www.musterfracht.de"},
      "location": {"city": "Stuttgart", "postal_code": "70327", "country": "DE", "formatted": "70327 Stuttgart"},
      "salary": None, "date_published": f"{_tage(5)} 05:00:00",
-     "apply_url": "https://www.wilkes.de/news/berufskraftfahrer-stuttgart",
+     "apply_url": "https://www.musterfracht.de/news/berufskraftfahrer-stuttgart",
      "description_html": "<p>Für unsere Niederlassung in <b>Stuttgart-Wangen</b> suchen wir ab sofort einen "
                          "zuverlässigen Berufskraftfahrer.</p><p><b>Ihr Profil:</b></p><ul>"
                          "<li>Führerschein Klasse C/CE mit Kennzahl 95 und gültiger Fahrerkarte</li>"
                          "<li>Bereitschaft für Mehrtagestouren mit Übernachtungen</li></ul>"
-                         "<p>Bei Interesse senden Sie bitte Ihre Unterlagen an Herrn Marc Hettich "
-                         "(marc.hettich@wilkes.de), Tel. 0711/707100-11</p>"},
+                         "<p>Bei Interesse senden Sie bitte Ihre Unterlagen an Herrn Max Mustermann "
+                         "(max.mustermann@example.de), Tel. 0000/000000-00</p>"},
     {"id": "i2", "title": "BERUFSKRAFTFAHRER (M/W/D) Nahverkehr",
      "company": {"name": None, "website": None}, "location": {"city": "Stuttgart", "formatted": "Stuttgart"},
      "date_published": f"{_tage(10)} 05:00:00",
@@ -118,7 +118,7 @@ STEPSTONE = {"success": True, "data": {"jobs": [
      "company": {"name": "Autohaus Staiger GmbH", "url": None}, "location": {"formatted": "Stuttgart"},
      "date_posted": f"{_tage(1)}T15:03:05+00:00", "description": None},
     {"id": "s2", "title": "Kraftfahrer (m/w/d)", "url": "https://www.stepstone.de/jobs----2-inline.html",
-     "company": {"name": "Wilkes GmbH", "url": None}, "location": {"formatted": "Stuttgart"},
+     "company": {"name": "Musterfracht GmbH", "url": None}, "location": {"formatted": "Stuttgart"},
      "date_posted": f"{_tage(2)}T08:00:00+00:00"},
     {"id": "s3", "title": "Lastkraftfahrer (m/w/d)", "url": "https://www.stepstone.de/jobs----3-inline.html",
      "company": {"name": "O + S Offterdinger & Sailer GmbH", "url": None}, "location": {"formatted": "Kornwestheim"},
@@ -433,14 +433,14 @@ class TestStellensuche(Kampagne):
         self.assertEqual(st["i4"]["ausschluss"], "Personaldienstleister")
         self.assertEqual(st["aa2"]["ausschluss"], "Personaldienstleister")
         self.assertIsNone(st["i2"]["ausschluss"], "no company name, but an own apply domain")
-        self.assertNotIn("marc.hettich", st["i1"]["beschreibung"])
-        self.assertNotIn("Hettich", st["i1"]["beschreibung"], "contact block is cut off")
+        self.assertNotIn("max.mustermann", st["i1"]["beschreibung"])
+        self.assertNotIn("Mustermann", st["i1"]["beschreibung"], "contact block is cut off")
         self.assertIn("Führerschein Klasse C/CE", st["i1"]["beschreibung"])
 
         ds = self.rows("SELECT * FROM datensaetze WHERE dedupe_status='kept'")
-        wilkes = next(r for r in ds if (r["website_final"] or "").rstrip("/") == "https://wilkes.de")
-        self.assertEqual((wilkes["stellen_anzahl"], wilkes["stellen_portale"]), (2, "indeed, stepstone"))
-        self.assertEqual(wilkes["job_title"], "Berufskraftfahrer Stuttgart", "posting with text wins")
+        musterfracht = next(r for r in ds if (r["website_final"] or "").rstrip("/") == "https://musterfracht.de")
+        self.assertEqual((musterfracht["stellen_anzahl"], musterfracht["stellen_portale"]), (2, "indeed, stepstone"))
+        self.assertEqual(musterfracht["job_title"], "Berufskraftfahrer Stuttgart", "posting with text wins")
         os_firmen = [r for r in ds if (r["website_final"] or "").rstrip("/") == "https://os-kornwestheim.de"]
         self.assertEqual(len(os_firmen), 1, "two names, same verified domain → one company")
         self.assertEqual((os_firmen[0]["stellen_anzahl"], os_firmen[0]["stellen_portale"]),
@@ -449,16 +449,16 @@ class TestStellensuche(Kampagne):
         self.assertEqual((palmer["website_final"], palmer["domain_status"]), ("", "unverified"))
 
         domain_suche = sorted(b["company_name"] for b in self.endpunkte("find_domain"))
-        self.assertNotIn("Wilkes GmbH", domain_suche, "portal named the website, no paid lookup")
+        self.assertNotIn("Musterfracht GmbH", domain_suche, "portal named the website, no paid lookup")
         self.assertIn("timetrans-logistik.de", domain_suche)
         hinweis = next(b for b in self.endpunkte("find_domain") if b["company_name"] == "timetrans-logistik.de")
         self.assertEqual(hinweis["website"], "https://timetrans-logistik.de")
         self.assertEqual(len(self.endpunkte("icp_checker")), 0, "no profile → no website check")
 
         leads = {T.host_of(r["website_final"]): r for r in self.rows("SELECT * FROM anreicherung")}
-        self.assertEqual(set(leads), {"wilkes.de", "autohaus-staiger.de", "os-kornwestheim.de",
+        self.assertEqual(set(leads), {"musterfracht.de", "autohaus-staiger.de", "os-kornwestheim.de",
                                       "timetrans-logistik.de"})
-        w = leads["wilkes.de"]
+        w = leads["musterfracht.de"]
         self.assertEqual((w["strecke"], w["stellen_anzahl"], w["stelle_portal"]), ("rc", 2, "indeed"))
         self.assertTrue(w["personalisierung"].startswith("ich habe gesehen, dass Sie Berufskraftfahrer suchen"))
         self.assertEqual(w["ready_to_send"], 1)
@@ -467,12 +467,12 @@ class TestStellensuche(Kampagne):
         listen = self.export_listen()
         self.assertNotIn("3_unsicher", [k for k, v in listen.items() if v])
         gf = {r["Website"].rstrip("/"): r for r in listen["1_zielgruppe_geschaeftsfuehrer"]}
-        self.assertEqual(gf["https://wilkes.de"]["Offene Stellen (Anzahl)"], "2")
-        self.assertEqual(gf["https://wilkes.de"]["Link zur Anzeige"], "https://de.indeed.com/viewjob?jk=i1")
-        self.assertEqual(gf["https://wilkes.de"]["Kampagnen-Art"], "stellensuche")
+        self.assertEqual(gf["https://musterfracht.de"]["Offene Stellen (Anzahl)"], "2")
+        self.assertEqual(gf["https://musterfracht.de"]["Link zur Anzeige"], "https://de.indeed.com/viewjob?jk=i1")
+        self.assertEqual(gf["https://musterfracht.de"]["Kampagnen-Art"], "stellensuche")
         alle = listen["0_stellen"]
         self.assertEqual(len(alle), 7, "all accepted postings, one row each")
-        self.assertEqual({r["Firma in Lead-Liste"] for r in alle if "wilkes" in r["Website"]}, {"1 (Geschäftsführer)"})
+        self.assertEqual({r["Firma in Lead-Liste"] for r in alle if "musterfracht" in r["Website"]}, {"1 (Geschäftsführer)"})
         nicht = {r["Firmenname"]: r["Einstufung"] for r in listen["4_nicht_zielgruppe"]}
         self.assertEqual(nicht["Garten- und Landschaftsbau Palmer GmbH & Co. KG"], "keine eigene Website gefunden")
 
@@ -482,7 +482,7 @@ class TestStellensuche(Kampagne):
 
     def test_groessen_check_vor_der_website_suche(self):
         self.api.groesse = {"Autohaus Staiger": ("konzern", "über 10.000"),
-                            "Wilkes": ("oeffentlich_verband", "ca. 200 Mitarbeitende")}
+                            "Musterfracht": ("oeffentlich_verband", "ca. 200 Mitarbeitende")}
         ausgabe = self.anlegen("--icp-prompt", "prompts/beispiele/icp_ki_automation.txt")
         self.assertIn("Größen-Check vor der Website-Suche: an", ausgabe)
         status = self.cli("run", "--stage", "all")
@@ -491,13 +491,13 @@ class TestStellensuche(Kampagne):
         aufrufe = self.groesse_aufrufe()
         self.assertEqual(len(aufrufe), 6, "every company after 1k is checked once")
         self.assertEqual({(b["model"], b["temperature"]) for b in aufrufe}, {(CONFIG.model_groesse, 0.0)})
-        wilkes_prompt = next(b["messages"][0]["content"] for b in aufrufe if "Name: Wilkes GmbH" in b["messages"][0]["content"])
-        self.assertIn("Website (falls bekannt): https://wilkes.de", wilkes_prompt, "portal website is passed on")
+        musterfracht_prompt = next(b["messages"][0]["content"] for b in aufrufe if "Name: Musterfracht GmbH" in b["messages"][0]["content"])
+        self.assertIn("Website (falls bekannt): https://musterfracht.de", musterfracht_prompt, "portal website is passed on")
 
         self.assertNotIn("Autohaus Staiger GmbH", [b["company_name"] for b in self.endpunkte("find_domain")],
                          "no paid website search for a group company")
         self.assertIn("timetrans-logistik.de", [b["company_name"] for b in self.endpunkte("find_domain")])
-        self.assertFalse([b for u, b in self.api.bodies if u.split("?")[0].endswith("/icp_checker") and "wilkes" in u],
+        self.assertFalse([b for u, b in self.api.bodies if u.split("?")[0].endswith("/icp_checker") and "musterfracht" in u],
                          "excluded company with portal website is not checked against the profile")
 
         ds = {r["firmenname"]: r for r in self.rows("SELECT * FROM datensaetze")}
@@ -506,7 +506,7 @@ class TestStellensuche(Kampagne):
                          ("konzern", 0, "kept"))
         self.assertTrue(staiger["icp_reason"].startswith("Größen-Check: Konzern (über 10.000 Mitarbeitende) – "))
         self.assertIsNone(staiger["domain_status"])
-        self.assertEqual(json.loads(ds["Wilkes GmbH"]["groesse_raw"])["kategorie"], "oeffentlich_verband")
+        self.assertEqual(json.loads(ds["Musterfracht GmbH"]["groesse_raw"])["kategorie"], "oeffentlich_verband")
         self.assertEqual(ds["Garten- und Landschaftsbau Palmer GmbH & Co. KG"]["groesse_kategorie"], "mittelstand")
 
         leads = {T.host_of(r["website_final"]) for r in self.rows("SELECT * FROM anreicherung")}
@@ -515,9 +515,9 @@ class TestStellensuche(Kampagne):
         listen = self.export_listen()
         nicht = {r["Firmenname"]: r for r in listen["4_nicht_zielgruppe"]}
         self.assertEqual(nicht["Autohaus Staiger GmbH"]["Einstufung"], "Größen-Check: Konzern")
-        self.assertEqual(nicht["Wilkes GmbH"]["Einstufung"], "Größen-Check: öffentliche Hand/Verband")
-        self.assertTrue(nicht["Wilkes GmbH"]["Begründung"].startswith("Größen-Check: öffentliche Hand/Verband (ca. 200"))
-        self.assertNotIn("Wilkes GmbH", [r["Firmenname"] for r in listen["3_unsicher"]])
+        self.assertEqual(nicht["Musterfracht GmbH"]["Einstufung"], "Größen-Check: öffentliche Hand/Verband")
+        self.assertTrue(nicht["Musterfracht GmbH"]["Begründung"].startswith("Größen-Check: öffentliche Hand/Verband (ca. 200"))
+        self.assertNotIn("Musterfracht GmbH", [r["Firmenname"] for r in listen["3_unsicher"]])
 
         with self.assertRaises(SystemExit) as ctx:
             with contextlib.redirect_stderr(io.StringIO()):
@@ -569,7 +569,7 @@ class TestStellensuche(Kampagne):
             self.anlegen("--opener-prompt", "gibt_es_nicht.txt")
 
     def test_nur_stellen_ohne_kosten_fuer_anreicherung(self):
-        (self.tmp / "sperrliste.txt").write_text("wilkes.de\n", encoding="utf-8")
+        (self.tmp / "sperrliste.txt").write_text("musterfracht.de\n", encoding="utf-8")
         self.anlegen("--nur-stellen", "--portale", "indeed,stepstone")
         status = self.cli("run", "--stage", "all")
         self.assertIn("nur Stellenliste", status)
@@ -579,8 +579,8 @@ class TestStellensuche(Kampagne):
 
         listen = self.export_listen()
         self.assertEqual(sorted(listen), ["0_stellen", "1_firmen_mit_stellen", "5_gesperrt_sperrliste"])
-        self.assertFalse([r for r in listen["0_stellen"] if "wilkes" in r["Website"]], "blocked company left out")
-        self.assertEqual([r["Firmenname"] for r in listen["5_gesperrt_sperrliste"]], ["Wilkes GmbH"])
+        self.assertFalse([r for r in listen["0_stellen"] if "musterfracht" in r["Website"]], "blocked company left out")
+        self.assertEqual([r["Firmenname"] for r in listen["5_gesperrt_sperrliste"]], ["Musterfracht GmbH"])
         staiger = next(r for r in listen["1_firmen_mit_stellen"] if r["Firmenname"] == "Autohaus Staiger GmbH")
         self.assertEqual((staiger["Website"], staiger["Einstufung"]), ("", "Stelle offen, Website unbekannt"))
         self.assertEqual(staiger["Link zur Anzeige"], "https://www.stepstone.de/jobs----13816826-inline.html")
@@ -606,10 +606,10 @@ class TestStellensuche(Kampagne):
         st = {r["portal_id"]: r["ausschluss"] for r in self.rows("SELECT * FROM stellen")}
         self.assertEqual((st["s1"], st["s3"], st["s2"]), ("Titel enthält „c1e“", "Titel enthält „lastkraft“", None))
         kept = [r["firmenname"] for r in self.rows("SELECT * FROM datensaetze WHERE dedupe_status='kept'")]
-        self.assertEqual(kept, ["Wilkes GmbH"], "companies without remaining postings drop out")
+        self.assertEqual(kept, ["Musterfracht GmbH"], "companies without remaining postings drop out")
         listen = self.export_listen()
-        self.assertEqual([r["Firma"] for r in listen["0_stellen"]], ["Wilkes GmbH"])
-        self.assertEqual([r["Firmenname"] for r in listen["1_firmen_mit_stellen"]], ["Wilkes GmbH"])
+        self.assertEqual([r["Firma"] for r in listen["0_stellen"]], ["Musterfracht GmbH"])
+        self.assertEqual([r["Firmenname"] for r in listen["1_firmen_mit_stellen"]], ["Musterfracht GmbH"])
 
     def test_weiterblaettern_nach_erhoehung_der_seitenzahl(self):
         self.api.stepstone_mehr = True
@@ -695,6 +695,24 @@ class TestGoogleMapsUnveraendert(Kampagne):
         self.cli("run", "--stage", "2")
         with self.assertRaises(SystemExit):
             self.cli("stellensuche", "--suche", "Berufskraftfahrer")
+
+    def test_einzeln_schliesst_dubletten_und_nicht_icp_aus(self):
+        self.cli("init", "--keywords", "Spedition", "--countries", "DE",
+                 "--icp-prompt", "prompts/beispiele/icp_logistik.txt")
+        self.cli("run", "--stage", "all")
+        ids = [r[0] for r in self.rows("SELECT datensatz_id FROM anreicherung "
+                                       "WHERE ready_to_send=1 ORDER BY firmenname")]
+        self.assertEqual(len(ids), 2)
+        conn = sqlite3.connect(self.db)
+        conn.execute("UPDATE datensaetze SET dedupe_status='dropped_duplicate' WHERE id=?", (ids[0],))
+        conn.execute("UPDATE datensaetze SET is_icp=0 WHERE id=?", (ids[1],))
+        conn.commit()
+        conn.close()
+        self.cli("export", "--einzeln")
+        (datei,) = list((self.tmp / "exports").glob("leads_ready_*.csv"))
+        with datei.open(encoding="utf-8-sig") as fh:
+            zeilen = list(csv.DictReader(fh, delimiter=";"))
+        self.assertEqual(zeilen, [])
 
 
 class TestTestballon(Kampagne):
