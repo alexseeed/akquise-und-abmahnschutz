@@ -1,5 +1,9 @@
 # Änderungen
 
+## 3.2.2 – 2026-11-14 (ohne Terminal)
+
+- **Ohne Terminal:** `README.md` beschreibt den Abgleich als Satz an Claude statt als Befehl; `SKILL.md` sagt ausdrücklich, dass der Nutzer nie im Terminal arbeitet.
+
 ## 3.2.1 – 2026-11-14
 
 - **Keine Warnungen vor E-Mail-Akquise:** `SKILL.md` bewertet den Unterlassungsanspruch als Verhandlungsfrage (Spielraum bei DSGVO-Schadensersatz, Kosten, UE-Entwurf) und gibt am Ende Hinweise für eine saubere Akquise, ohne Kaltakquise für unzulässig zu erklären. Der Kasten „Keine Rechtsberatung“ bleibt.
