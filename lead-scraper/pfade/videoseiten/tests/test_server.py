@@ -1,4 +1,4 @@
-"""Offline test for server/server.py: webhook signatures with several secrets, objections, events."""
+"""Offline test for server/server.py: webhook signatures with several secrets, objections, events, bad bodies."""
 from __future__ import annotations
 
 import hashlib
@@ -74,6 +74,20 @@ class ServerTest(unittest.TestCase):
         self.assertEqual(self.webhook("falsch"), 401)
         zeilen = (self.daten / "skael.jsonl").read_text(encoding="utf-8")
         self.assertNotIn("1.2.3.4", zeilen)      # no IP stored
+
+    def signiert(self, body: bytes) -> int:
+        ts = str(int(time.time()))
+        sig = hmac.new(b"eins", ts.encode() + b"." + body, hashlib.sha256).hexdigest()
+        return self.post("/webhook/skael", body, {"X-SkaelReach-Signature": sig, "X-SkaelReach-Timestamp": ts})
+
+    def test_kein_objekt_oder_kaputtes_json_gibt_400(self):
+        self.assertEqual(self.signiert(b"[1, 2]"), 400)          # validly signed, but not an object
+        self.assertEqual(self.signiert(b"{kaputt"), 400)         # validly signed, invalid JSON
+        self.assertEqual(self.post("/api/m", b"[]"), 400)
+        self.assertEqual(self.post("/api/m", b'"text"'), 400)
+        self.assertEqual(self.post("/api/widerspruch", b"null"), 400)
+        self.assertEqual(self.post("/api/m", json.dumps({"seiten_id": self.sid, "ereignis": ["x"]}).encode()), 204)
+        self.assertEqual(self.webhook("eins"), 200)              # server still alive
 
     def test_messung_nur_bekannte_seiten_und_ereignisse(self):
         self.assertEqual(self.post("/api/m", json.dumps({"seiten_id": self.sid, "ereignis": "ohne_video"}).encode()), 204)

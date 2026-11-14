@@ -139,10 +139,12 @@ class Handler(BaseHTTPRequestHandler):
             daten = json.loads(roh)
         except ValueError:
             return self.antwort(400)
+        if not isinstance(daten, dict):
+            return self.antwort(400)
         sid = str(daten.get("seiten_id") or "")
         if self.path == "/api/m":
             ereignis = daten.get("ereignis")
-            if seite(sid) and ereignis in EREIGNISSE:
+            if seite(sid) and isinstance(ereignis, str) and ereignis in EREIGNISSE:   # a list would raise TypeError
                 anhaengen("ereignisse.jsonl", {"zeit": jetzt(), "seiten_id": sid, "ereignis": ereignis})
             return self.antwort(204)
         if self.path == "/api/widerspruch":
@@ -170,7 +172,12 @@ class Handler(BaseHTTPRequestHandler):
             for s in SECRETS)
         if not gueltig:
             return self.antwort(401)
-        daten = json.loads(roh)
+        try:
+            daten = json.loads(roh)
+        except ValueError:
+            return self.antwort(400)
+        if not isinstance(daten, dict):
+            return self.antwort(400)
         prospect = daten.get("prospect") or {}
         anhaengen("skael.jsonl", {
             "zeit": jetzt(),

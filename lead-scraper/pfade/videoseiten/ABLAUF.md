@@ -43,7 +43,7 @@ Alle Befehle in diesem Dokument laufen im Ordner `pfade/videoseiten/`.
    - Ansprache „Sie“ oder „du“: einmal fragen. Bei „du“ alle Texte in `SEITE.texte` und die festen Texte der Vorlage umstellen (Liste der Stellen: `wissen/16_videoseiten.md`, „Du-Fassung“).
    - Keine echten Kundenstimmen mit Zustimmung? Dann `"stimmen"` aus `SEITE.bausteine` streichen. Oder belegte Ergebnisse ohne Zitat zeigen (Name des Projekts, Rolle, Ergebnis) und `stimmen_hinweis` auf die Quelle ändern.
 7. **Vorschau:** `python3 -m http.server 8000 --directory arbeit/<k>/seite` starten, dem Nutzer `http://localhost:8000` nennen (in Claude Code/Codex mit Browser selbst öffnen). Platzhalter in `<…>` sind gelb markiert. Prüfen auf Handy- und Desktopbreite.
-8. **Freigabe:** erst wenn der Nutzer „passt“ sagt und `python3 server/generator.py --vorlage arbeit/<k>/seite/index.html --leads <leads.json> --ziel arbeit/<k>/probe --probe` ohne Fehler läuft und der Lauf ohne `--probe` keine offenen Platzhalter mehr meldet.
+8. **Freigabe:** erst wenn der Nutzer „passt“ sagt und `python3 server/generator.py --vorlage arbeit/<k>/seite/index.html --leads <leads.json> --ziel arbeit/<k>/probe --probe` ohne Fehler läuft und der Lauf ohne `--probe` (dafür mit `--basis https://angebot.<domain>`) keine offenen Platzhalter mehr meldet. Mit `--probe` brauchen die Leads noch kein Video, die Seite zeigt dann den Video-Platzhalter. Ohne `--probe` werden Leads ohne `video_url` übersprungen.
 
 ## B – Videos (je Liste)
 
@@ -86,7 +86,7 @@ Ergebnis `…_mit_landingpage.csv` mit den Spalten „Landingpage“ und „Vors
 
 ## F – Betrieb
 
-- **Datenlöschungen** (wöchentlich oder auf Nachfrage): `scp -i arbeit/ssh/id_ed25519 -o UserKnownHostsFile=arbeit/ssh/known_hosts root@<ip>:/srv/daten/widersprueche.jsonl arbeit/<k>/` und `python3 werkzeuge/versandliste.py loeschungen --datei arbeit/<k>/widersprueche.jsonl --leads <leads>_mit_video.json`. Die Adressen im Mailtool sperren und `python3 -m scraper --kampagne <k> blockliste-import <datenloeschungen.csv>` im Ordner `pfade/google-maps/`. Die Seite selbst ist dann schon gelöscht.
+- **Datenlöschungen** (wöchentlich oder auf Nachfrage): `scp -i arbeit/ssh/id_ed25519 -o UserKnownHostsFile=arbeit/ssh/known_hosts root@<ip>:/srv/daten/widersprueche.jsonl arbeit/<k>/` und `python3 werkzeuge/versandliste.py loeschungen --datei arbeit/<k>/widersprueche.jsonl --leads <leads>_mit_video.json`. Die Adressen im Mailtool sperren und `python3 -m scraper --kampagne <k> blockliste-import ../videoseiten/arbeit/<k>/datenloeschungen.csv` im Ordner `pfade/google-maps/`. Die Seite selbst ist dann schon gelöscht.
 - **Auswertung:** `ereignisse.jsonl` (Seitenaufrufe, Klicks) und `skael.jsonl` (Videoverlauf) auf dieselbe Weise holen und in Sätzen zusammenfassen: wie viele Seiten geöffnet, Videos gestartet, zu 75 % gesehen, Termin-Klicks.
 - Seiten verschwinden nach 90 Tagen von selbst.
 
