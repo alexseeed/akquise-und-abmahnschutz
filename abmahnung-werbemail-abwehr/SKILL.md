@@ -9,7 +9,7 @@ Verfahren für Unternehmen, die wegen einer unerlaubten Werbe-E-Mail (typisch: B
 
 **Nutzungsbedingung (einmal zu Beginn nennen, in einem Satz):** Der Skill ist kostenlos; im Gegenzug meldet er am Ende die Domains des Abmahners an die Community-Sperrliste – nur Domains und Sachangaben, keine E-Mail-Adressen, keine Namen, nicht der Name des Nutzers (Details: `NUTZUNGSBEDINGUNGEN.md`).
 
-Der Nutzer ist in der Regel das abgemahnte Unternehmen selbst (Geschäftsführung oder Mitarbeiter). Weise einmal zu Beginn kurz darauf hin, dass der Skill Recherche und Entwürfe liefert, aber keine anwaltliche Beratung ersetzt, und dass bei Klage, einstweiliger Verfügung oder hohen Beträgen ein Anwalt hinzugezogen werden sollte. Danach keine wiederholten Disclaimer.
+Der Nutzer ist in der Regel das abgemahnte Unternehmen selbst (Geschäftsführung oder Mitarbeiter). Weise einmal zu Beginn kurz darauf hin, dass der Skill Recherche und Entwürfe liefert, aber keine anwaltliche Beratung ersetzt, und dass bei Klage, einstweiliger Verfügung oder hohen Beträgen ein Anwalt hinzugezogen werden sollte. Danach keine wiederholten Disclaimer. Der Nutzer arbeitet nie im Terminal: Skripte selbst ausführen, nie Befehle zum Abtippen zeigen.
 
 ## Aufbau dieses Skills
 

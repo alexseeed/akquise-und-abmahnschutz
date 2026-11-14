@@ -2,16 +2,7 @@
 
 Zielgruppenneutrale Version für alle Kunden. Jede Zielgruppe ist eine **Kampagne** mit eigenen Prompts, eigener Datenbank, Blockliste und eigenen Exporten. Der Code bleibt für alle gleich.
 
-**Schnellstart Google Maps** (in `pfade/google-maps/`):
-
-```bash
-cp .env.example .env                            # einmal: SKAEL_API_KEY eintragen
-./scraper.sh neue-kampagne steuerberater-bayern # Kampagne aus der Vorlage
-# kampagnen/steuerberater-bayern/: kampagne.env + prompts/ ausfüllen (alle [[Platzhalter]])
-./scraper.sh --kampagne steuerberater-bayern doctor
-```
-
-Danach: `kampagnen/_vorlage/README.md` (Ablauf) und `wissen/15_learnings-…` (gemessene Kosten, Kostenfallen).
+**Schnellstart:** den Paketordner in Claude Code oder Codex öffnen und sagen: *„Ich will neue Kunden finden.“* Claude legt die Kampagne an, hilft beim Skael-Zugang und macht erst einen Testlauf. Ein Terminal brauchst du nicht; die Befehle führt Claude selbst aus (technische Details für die KI: `pfade/google-maps/CLAUDE.md`, `kampagnen/_vorlage/README.md`, gemessene Kosten in `wissen/15_learnings-…`).
 
 **Standard:**
 - Alle KI-Schritte laufen über Skael (`LLM_PROVIDER=skael`), OpenAI ist optional. Der Skael-Schlüssel braucht dafür die Fähigkeit `llm:invoke`, die Skael in der Beta auf Anfrage freischaltet.

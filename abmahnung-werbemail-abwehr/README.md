@@ -26,11 +26,7 @@ Ein öffentliches GitHub-Repository: https://github.com/alexseeed/werbemail-sper
 - **Inhalt:** Domains von Unternehmen, die wegen einer Werbe-E-Mail abgemahnt haben. Gesperrt wird jeweils die ganze Domain mit allen Subdomains und Adressen. Zusammengehörige Domains bilden eine Gruppe.
 - **Gemeldet** werden nur Domains und Sachangaben: Kanzlei-Domain, Monat, Forderungsspanne, Vorgehen, Status. Keine E-Mail-Adressen, keine Namen, nicht Ihr Firmenname.
 - **Automatisch:** Meldungen werden geprüft und in wenigen Minuten übernommen. Geprüft wird auf Format, existierende Domain, Schutzliste für Freemail und Plattformen sowie Missbrauchsgrenzen. Eine manuelle Freigabe gibt es nicht. Ab zwei unabhängigen Meldungen gilt ein Eintrag als „bestätigt“.
-- **Vor jeder Kampagne:**
-  ```bash
-  python3 scripts/sperrliste.py laden --out sperrliste.txt                      # Domain-Sperre importieren
-  python3 scripts/sperrliste.py abgleich --kontakte kontakte.csv --spalte email   # Kontaktliste bereinigen
-  ```
+- **Vor jeder Kampagne** sagst du Claude: *„Gleich meine Kontaktliste mit der Sperrliste ab.“* Claude schreibt eine bereinigte und eine gesperrte Liste (technisch: `scripts/sperrliste.py abgleich --kontakte kontakte.csv --spalte email`); die Domain-Sperre fürs Versandtool lädt Claude ebenso (technisch: `scripts/sperrliste.py laden --out sperrliste.txt`).
   Ohne Skript: `https://raw.githubusercontent.com/alexseeed/werbemail-sperrliste/main/data/sperrliste.txt` direkt im Versand- oder CRM-Tool als Domain-Sperrliste hinterlegen.
 
 ## Ordnerstruktur

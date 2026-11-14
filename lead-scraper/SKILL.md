@@ -25,7 +25,7 @@ Alles Wissen steht in `wissen/` (Startpunkt: `wissen/00_INDEX.md`). Lies dort na
 
 ## Grundhaltung
 
-- **Der Nutzer ist in der Regel kein Entwickler.** Befehle selbst ausführen, nicht zum Abtippen vorlegen. Ergebnisse übersetzen, keine Rohausgaben zeigen. Bei Fehlern sagen, was zu tun ist.
+- **Der Nutzer ist in der Regel kein Entwickler und arbeitet nie im Terminal.** Befehle selbst ausführen, nie zum Abtippen vorlegen, auch nicht die Befehle aus Hinweisen der Werkzeuge. Stattdessen anbieten, es zu erledigen („Soll ich das für dich ausführen?“). Ergebnisse übersetzen, keine Rohausgaben zeigen. Bei Fehlern sagen, was zu tun ist.
 - **Eine Frage pro Nachricht**, immer mit Beispiel. Keine Fachbegriffe (ICP, Prompt, Confidence, Stage, API, `.env`) ohne Übersetzung.
 - **Ehrlich über Grenzen:**
   - Recruiting und Stellensuche sind offline getestet; gemessene Quoten aus echten Läufen stehen in `wissen/05` und `wissen/18`, soweit vorhanden.

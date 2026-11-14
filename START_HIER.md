@@ -25,7 +25,9 @@ Je mehr Leute mitmachen, desto vollständiger wird die Sperrliste. **Bedingung d
 
 ## Für Nutzer
 
-1. **Skills installieren:** In Claude unter Einstellungen → Funktionen → Skills beide ZIPs aus `skills/` hochladen.
+Du brauchst kein Terminal. Alles läuft im Chat mit Claude Code oder Codex.
+
+1. **Paket holen und öffnen:** Auf GitHub bei `alexseeed/akquise-und-abmahnschutz` auf „Code“ → „Download ZIP“ und entpacken – oder in Claude Code bzw. Codex sagen: *„Hol mir github.com/alexseeed/akquise-und-abmahnschutz in einen neuen Ordner.“* Dann den Ordner in Claude Code oder Codex öffnen: Die beiden Skills `lead-scraper` und `abmahnung-werbemail-abwehr` sind damit sofort eingerichtet, ohne Installation. In Claude Code kannst du sie auch direkt aufrufen: `/lead-scraper`. Anderer Weg: In der Claude-App (Chat) beide ZIPs aus `skills/` unter Einstellungen → Funktionen → Skills hochladen.
 2. **Loslegen:** *„Ich will neue Kunden finden.“* Claude fragt nach Angebot, Wunschkunden, Fundort, Ländern und Umfang. Danach schlägt es den passenden Weg vor und macht erst einen Testlauf.
 3. **Voraussetzungen je Weg** (Details in `lead-scraper/wissen/11_zugaenge-und-kosten.md`):
    - **Google Maps:** Python 3.10+, eigener Zugang bei Skael (die KI läuft standardmäßig über Skael). OpenAI nur bei `LLM_PROVIDER=openai` oder `DOMAINSUCHE=openai`, dann mit aufgeladenem Guthaben.

@@ -2,6 +2,14 @@
 
 Neueste Einträge oben. Ein Eintrag je Änderung an Wissen, Pfaden oder Werkzeugen: Datum, was sich geändert hat und warum. So sieht jede KI und jeder Mensch, welcher Stand gilt und was neu ist.
 
+## 2026-11-14 (ohne Terminal)
+
+- **Kunden arbeiten nie im Terminal.** Anlass: Alle Kunden nutzen Claude Code oder Codex. Was sich ändert:
+  - `README.md` (hier, Stamm und Abmahnung) und `START_HIER.md`: Schnellstart und Abgleich als Satz an Claude statt Konsolenbefehle.
+  - `SKILL.md`: auch Befehle aus Hinweisen der Werkzeuge nie zum Abtippen zeigen, sondern anbieten, es zu erledigen.
+  - Die Skills sind beim Öffnen des Ordners in Claude Code (`.claude/skills/`) und Codex (`.agents/skills/`) sofort da, ohne Installation (`werkzeuge/test_skill_eintraege.py` prüft das).
+  - Hinweise für den Assistenten im Stammordner (`CLAUDE.md`, `AGENTS.md`).
+
 ## 2026-11-14
 
 - **Versand positiv beschreiben statt vor E-Mail-Akquise warnen.** `wissen/08_versand-und-recht.md` heißt jetzt „Versand – so arbeiten wir sauber“ (Kanäle, Pflichtangaben, Datenschutz, Checkliste); Abschnitte „Rechtliches“ heißen „Daten und Versand“; SKILL, README, START_HIER, Pfad-Doku, Prompts und Referenzen bieten die Versand-Checkliste an statt auf § 7 UWG hinzuweisen. Der Hinweis „Keine Rechtsberatung“ bleibt überall.
