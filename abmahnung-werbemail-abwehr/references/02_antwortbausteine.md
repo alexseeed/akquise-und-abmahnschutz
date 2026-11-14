@@ -13,13 +13,14 @@ Grundregel: **schnell bei der Unterlassung, fest beim Geld.** Alles kommt in **e
    - Bei Nicht-Kaufleuten ankündigen, dass das Original per Post folgt.
 2. **Art. 82**: Zurückweisen mit EuGH C-300/21, BGH VI ZR 109/23, EuGH C-655/23 (keine Straf-/Abschreckungsfunktion). Spekulationen benennen. Inhaltsabweichung als Argument (Textbausteine), nicht als Frage. Darlegung des Schadens verlangen.
 3. **Kosten. Standard ist Variante B, „erst Nachweis“:**
-   - Kostennote nach § 10 RVG und Nachweis der Zahlung oder Zahlungspflicht anfordern.
+   - Um Darlegung bitten, dass dem Abmahner Kosten in dieser Höhe entstanden sind, und die Kostenbelastung bis dahin mit Nichtwissen bestreiten. Einen vorprozessualen Anspruch auf die Kostennote nach § 10 RVG gibt es nicht; das Bestreiten hält aber die Beweislast beim Abmahner (`01_rechtsprechung.md`, Kosten).
+   - Verlangt der Abmahner Umsatzsteuer: eine Rechnung des Abmahners nach § 14 UStG anfordern.
    - Festhalten, dass eine Zahlung damit nicht abgelehnt wird.
    - Antwort binnen 14 Tagen nach Eingang zusagen.
    - Im selben Schreiben den Gegenstandswert rügen, wenn er über dem liegt, was die Rechtsprechung trägt. Am stärksten ist das mit den eigenen Zitaten des Abmahners.
 
    Die anderen Varianten nur auf ausdrücklichen Nutzerwunsch:
-   - Teilzahlung auf reduzierten Wert mit „darüber hinausgehende Forderungen weisen wir zurück“.
+   - Teilzahlung auf reduzierten Wert mit „einen darüber hinausgehenden Anspruch sehen wir nicht“ (nicht „weisen zurück“, das liest sich als Erfüllungsverweigerung und gibt Klageanlass).
    - Volle Zahlung ohne Anerkennung.
    - Ablehnung, nur bei belegbarem Missbrauch: Kostenbelastung des Mandanten mit Nichtwissen bestreiten und Rechtsmissbrauch vorbehalten (§ 242 BGB, BGH I ZR 83/23).
 
@@ -54,7 +55,9 @@ Grundregel: **schnell bei der Unterlassung, fest beim Geld.** Alles kommt in **e
 
 **Kosten, Variante B** (Standard):
 
-> Ein Erstattungsanspruch setzt voraus, dass Ihrer Mandantin Anwaltskosten tatsächlich entstanden sind und sie diese Ihnen gegenüber schuldet. Wir bitten daher um Übersendung einer Kopie der an Ihre Mandantin gerichteten Berechnung Ihrer Vergütung (§ 10 RVG) sowie eines Nachweises, dass Ihre Mandantin diese beglichen hat oder Ihnen gegenüber zu ihrer Zahlung verpflichtet ist. Eine Zahlung lehnen wir damit nicht ab. Nach Eingang der Unterlagen teilen wir Ihnen binnen 14 Tagen mit, in welcher Höhe wir die Forderung ausgleichen.
+> Erstattungsfähig sind nur Kosten, zu deren Zahlung Ihre Mandantin im Innenverhältnis verpflichtet ist (BGH, Urt. v. 13.07.2023 – I ZR 152/21, Rn. 71). Wir bitten daher um Darlegung, dass Ihrer Mandantin Kosten in der geltend gemachten Höhe entstanden sind; bis dahin bestreiten wir dies mit Nichtwissen. Soweit Sie Umsatzsteuer geltend machen, bitten wir zudem um eine Rechnung Ihrer Mandantin mit gesondert ausgewiesener Umsatzsteuer (§ 14 Abs. 2 Satz 2 Nr. 1 UStG; BGH, Hinweisbeschl. v. 21.01.2021 – I ZR 87/20, Rn. 12, 16). Eine Zahlung lehnen wir damit nicht ab. Nach Eingang teilen wir Ihnen binnen 14 Tagen mit, in welcher Höhe wir die Forderung ausgleichen.
+
+Fundstellen vor Verwendung im Volltext prüfen; die Umsatzsteuer-Sätze nur, wenn der Abmahner Umsatzsteuer verlangt.
 
 **Gegenstandswert** (immer, wenn er überhöht ist; Fundstellen vorher prüfen):
 
@@ -65,6 +68,49 @@ Grundregel: **schnell bei der Unterlassung, fest beim Geld.** Alles kommt in **e
 **Auskunft Art. 15:**
 
 > Das Auskunftsrecht nach Art. 15 DSGVO steht der betroffenen natürlichen Person zu, nicht Ihrer Mandantin als [Rechtsform]. Wir behandeln Ihr Schreiben gleichwohl als Auskunftsersuchen von [Name]. Da die Auskunft personenbezogene Daten von [Name] enthält, bitten wir um Vorlage einer von [ihm/ihr] persönlich erteilten Vollmacht oder um Ihre anwaltliche Versicherung, dass [Name] Sie persönlich beauftragt hat; danach erteilen wir die Auskunft umgehend über Ihre Kanzlei. Liegt beides bis zum [Datum] nicht vor, übersenden wir die Auskunft zur Wahrung der Frist des Art. 12 Abs. 3 DSGVO in einem verschlossenen, an [Name] persönlich adressierten Umschlag zu Händen Ihrer Kanzlei.
+
+## Zweite Runde: Kanzlei verweigert Darlegung oder Rechnung
+
+Typische Antwort: Annahme der UE, aber „kein Anspruch auf Rechnungsstellung“, die Kosten seien ein „eigener Leistungsanspruch“ (BFH XI R 27/14), dazu eine lange Liste von Streitwert-Entscheidungen. Vorgehen:
+
+1. Jede Fundstelle der Gegenseite im Volltext prüfen (Phase 6). Abgeschriebene Passagen mit dem Original vergleichen, nicht veröffentlichte Entscheidungen als solche benennen.
+2. Gegenanwalt-Check auf den Entwurf (Phase 5).
+3. Dem Nutzer zwei Varianten mit beziffertem Risiko vorlegen; er entscheidet. Bei Dienstleistern beide Schreiben plus Begleitschreiben (unten).
+
+**Variante A – Angebot gegen Rechnung** (Kosten aus einem begründeten Wert, Zahlung erst nach Rechnung):
+
+> Ohne Anerkennung einer Rechtspflicht sind wir bereit, die Kosten auf Grundlage eines Gegenstandswerts von [Wert] zu erstatten: [Berechnung]. Den Betrag von [Betrag] zahlen wir binnen zehn Tagen nach Eingang einer ordnungsgemäßen Rechnung Ihrer Mandantin. Einen darüber hinausgehenden Anspruch Ihrer Mandantin sehen wir nicht.
+
+Die Zahlung **nicht** an eine Rechnung „über [Betrag]“ knüpfen: Stellt der Abmahner eine Rechnung über die volle Forderung, tritt die Bedingung nie ein. Stärkere Alternative: den Betrag sofort zahlen und die Rechnung nachfordern (nimmt der Kanzlei den Klageanlass für diesen Teil, gibt aber den Rechnungshebel auf).
+
+**Variante B – Ablehnung** (nur auf ausdrücklichen Nutzerwunsch, mit Risiko):
+
+> Ihre Forderung über [Betrag] weisen wir zurück. Mit Schreiben vom [Datum] hatten wir angeboten, nach Darlegung der Kostenbelastung Ihrer Mandantin über eine Zahlung zu entscheiden. Diese Darlegung ist ausgeblieben. Stattdessen stützen Sie die Forderung ausdrücklich nicht auf die Erstattung von Rechtsanwaltskosten, sondern auf einen eigenen Leistungsanspruch Ihrer Mandantin. Für einen von Aufwendungen unabhängigen Vergütungsanspruch für die Abmahnung als solche gibt es keine Anspruchsgrundlage; eine Leistung Ihrer Mandantin haben wir nicht in Auftrag gegeben. In Betracht kommt allein der Ersatz tatsächlich entstandener und erforderlicher Kosten. Solche Kosten machen Sie nach Ihrem eigenen Vortrag gerade nicht geltend.
+
+Danach hilfsweise Gegenstandswert, Bestreiten und Zurückbehaltungsrecht. Risiko offen benennen: In der Sache sprechen Gerichte Abmahnkosten meist zu; gestritten wird über die Höhe.
+
+**Bausteine für beide Varianten:**
+
+> *BFH:* Der Bundesfinanzhof hat im Urteil vom 21.12.2016 – XI R 27/14 allein über die Umsatzsteuer entschieden und ausdrücklich festgehalten, dass diese Frage „nicht nach zivilrechtlichen, sondern ausschließlich nach den vom Unionsrecht geprägten umsatzsteuerrechtlichen Vorgaben zu beantworten“ ist (Rn. 29). Über Grund und Höhe des zivilrechtlichen Erstattungsanspruchs trifft das Urteil keine Aussage. Auch dort ging es um die nach dem RVG entstandenen Kosten des eingeschalteten Rechtsanwalts (Rn. 2).
+
+> *Rechnung:* Folgt man Ihrer Auffassung, dass Ihre Mandantin mit der Abmahnung an uns eine Leistung gegen Entgelt im Sinne von § 1 Abs. 1 Nr. 1 Satz 1 UStG erbracht hat, so hat sie diese an uns als Unternehmer für unser Unternehmen ausgeführt. Sie ist dann nach § 14 Abs. 2 Satz 2 Nr. 1 UStG verpflichtet, uns eine Rechnung mit gesondert ausgewiesener Umsatzsteuer zu erteilen. Bis zu deren Erteilung machen wir unser Zurückbehaltungsrecht geltend (BGH, Urt. v. 26.06.2014 – VII ZR 247/13). Bis zum 31.12.2026 genügt eine Rechnung auf Papier oder als PDF (§ 27 Abs. 38 Nr. 1 UStG).
+
+> *Gerichtsstand:* Für eine Zahlungsklage wären im Übrigen nicht die [Ort der Kanzlei] Gerichte zuständig, sondern das Gericht an unserem Sitz (§§ 12, 17 ZPO) oder allenfalls am Sitz Ihrer Mandantin.
+
+> *Nicht veröffentlichte Entscheidungen:* Die von Ihnen genannten Entscheidungen [Gerichte, Jahre] sind, soweit ersichtlich, nicht veröffentlicht. Sollten Sie sich weiter auf sie stützen, bitten wir um Übersendung von Abschriften.
+
+## Begleitschreiben an den Kunden (wenn der Nutzer Dienstleister ist)
+
+Pflicht in jedem Begleitschreiben:
+
+- **Nie „Empfehlung“, „empfehlen“, „empfohlen“.** Immer: „Wir würden an Ihrer Stelle … vorgehen. Die Entscheidung treffen Sie selbst.“ Auch Imperative vermeiden („bitte antworten Sie …“ → „wir würden … antworten“).
+- **Gerahmter Hinweis oben und am Ende** (Wortlaut):
+
+> **Wichtiger Hinweis – keine Rechtsberatung.** [Dienstleister] erbringt keine Rechtsdienstleistungen und keine Rechtsberatung. Die folgenden Unterlagen sind Recherche und Formulierungsentwürfe auf Grundlage öffentlich zugänglicher Rechtsprechung. Sie beschreiben, wie wir an Ihrer Stelle vorgehen würden. Die Entscheidung und die Verantwortung für den Versand liegen allein bei Ihnen. Für eine verbindliche rechtliche Einschätzung wenden Sie sich bitte an eine Rechtsanwältin oder einen Rechtsanwalt.
+
+- Inhalt: Stand und Fristen, was die Gegenseite schreibt und was davon hält (ehrlich, auch was für die Gegenseite spricht), Varianten mit bestem und ungünstigstem Fall in Euro, Schritte zum Versand, Verhalten bei Mahnbescheid oder Klage (sofort Anwalt, Widerspruch binnen zwei Wochen).
+- Will der Nutzer den Fall abgeben: „Mit diesen Unterlagen ist unsere Unterstützung in dieser Angelegenheit abgeschlossen; das weitere Vorgehen liegt bei Ihnen. Wenn Sie weitere Unterstützung benötigen, melden Sie sich gern.“ Dann keine Anweisungen „an uns weiterleiten“.
+- Vor dem PDF mit `grep -i 'empfehl\|empfohl'` prüfen und jede Seite auf Überlauf in die Fußzeile kontrollieren.
 
 ## UE-Muster
 

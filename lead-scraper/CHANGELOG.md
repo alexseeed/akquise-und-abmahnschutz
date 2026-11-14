@@ -2,6 +2,10 @@
 
 Neueste Einträge oben. Ein Eintrag je Änderung an Wissen, Pfaden oder Werkzeugen: Datum, was sich geändert hat und warum. So sieht jede KI und jeder Mensch, welcher Stand gilt und was neu ist.
 
+## 2026-11-12
+
+- **Abmahnung: Kostenstreit nach Erfahrungen aus einem echten Fall.** `wissen/10_abmahnung-was-tun.md`: Kosten erst nach Darlegung und, bei Umsatzsteuer, Rechnung des Abmahners statt Kostennote nach § 10 RVG (darauf gibt es vorprozessual keinen Anspruch); neuer Abschnitt „Wenn die Kanzlei antwortet“ (Annahme der UE, „eigener Leistungsanspruch“ nach BFH XI R 27/14, Streitwert-Listen, Mahnbescheid); aktuelle Linie für eine einzelne Mail 1.000 bis 3.000 €. Details im Skill `abmahnung-werbemail-abwehr` 3.2.
+
 ## 2026-11-10
 
 - **CSV-Formelschutz für alle Exporte (aus dem Stand vor dem Neubau übernommen und erweitert):** Zellen, die wie eine Tabellenformel beginnen (`=`, `+`, `-`, `@`, Tab, CR), bekommen einen Apostroph davor; Zahlen und Telefonnummern mit `+`/`-` bleiben unverändert (`csv_zelle`). Wieder versorgt: E-Commerce- und Google-Maps-Export (dort ein `_schreibe` für alle Listen, also auch Recruiting, Stellensuche und Stellenexport). Neu versorgt: Videoseiten-Versandlisten (`versandliste.py`: `links` und `loeschungen`) und der Sperrlisten-Abgleich (`_bereinigt`/`_gesperrt`). Die drei Amazon-Skripte hatten den Schutz schon (Bens `esc`), geprüft und unverändert gelassen. Je Export ein Test (`=SUMME(1)` wird neutralisiert, `+49 151 …` bleibt).

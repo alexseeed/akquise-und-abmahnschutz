@@ -1,5 +1,15 @@
 # Änderungen
 
+## 3.2 – November 2026
+
+Erfahrungen aus der zweiten Runde eines echten Falls (Kanzlei verweigert Nachweis und Rechnung):
+- **Kosten-Standard:** statt Kostennote nach § 10 RVG (kein vorprozessualer Anspruch, OLG Frankfurt 6 U 49/17) jetzt Darlegung verlangen, Kostenbelastung mit Nichtwissen bestreiten (BGH I ZR 152/21, Rn. 71 f.) und bei Umsatzsteuer die Rechnung des Abmahners nach § 14 Abs. 2 Satz 2 Nr. 1 UStG fordern; Zurückbehaltungsrecht bis zur Rechnung (BGH VII ZR 247/13).
+- **Zweite Runde** in `references/02_antwortbausteine.md`: Variante A (Angebot auf begründetem Wert gegen Rechnung, nicht an einen Rechnungsbetrag geknüpft), Variante B (Ablehnung), Bausteine zu BFH XI R 27/14 („eigener Leistungsanspruch“), Rechnung, Gerichtsstand und nicht veröffentlichten Entscheidungen.
+- **Rechtsprechung** (`references/01_rechtsprechung.md`) im Volltext geprüft und mit Randnummern: OLG Hamburg 15 W 32/25 (bis 1.000 €), KG 5 W 152/21 und 5 W 187/13, LG Hagen 2 O 278/13, OLG Hamm 9 U 73/14, BGH VI ZR 22/24 (keine Generalprävention), BGH I ZR 87/20, OLG Karlsruhe 6 U 255/21; Bewertung der von Abmahnern oft zitierten Streitwert-Liste; Gerichtsstand und Prozesskosten. LG München II 6 T 1583/17 nur noch als Sekundärquelle.
+- **Begleitschreiben:** nie „Empfehlung“, immer „wir würden an Ihrer Stelle … vorgehen“; gerahmter Hinweis „keine Rechtsberatung“ oben und am Ende; Formel für die Abgabe des Falls an den Kunden.
+- **Fallstricke:** Bedingung „Rechnung über [Betrag]“, „weisen zurück“ als Klageanlass, abgeschriebene Urteilspassagen, veraltetes UStG-Zitat, Sekundärquellen.
+- Phase 6 verlangt Volltextprüfung mit Randnummer; Phase 10 regelt die Verweigerung von Darlegung oder Rechnung. „Empfehlungen“ in Beweisprotokoll und Kampagnenhinweisen heißen jetzt „Hinweise“.
+
 ## 3.1 – Oktober 2026
 
 Feste Linie statt schnellem Nachgeben. Grundlage sind die Erfahrungen aus zwei echten Fällen mit Gegenanwalt-Check.
