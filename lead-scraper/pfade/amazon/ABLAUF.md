@@ -94,7 +94,13 @@ SMOKE=1 node ../amazon_seller_scraper.mjs
 
 Der Test macht höchstens 300 Abfragen (≈ 0,15 USD) und liefert bis zu 5 Leads in `leads_smoke_MASTER.csv`. Er nutzt eigene Dateien und berührt das echte Gedächtnis nicht. Einstellungen wie `ZIEL`, `BUDGET` oder Filter gelten im Smoke-Test nicht. Ist ein Skael-Schlüssel gesetzt, läuft die Anreicherung mit.
 
-Der Smoke-Test merkt sich seinen Stand. **Vor einer Wiederholung** (z. B. nach einem korrigierten Zugang) seine Dateien löschen, sonst ruft er nichts mehr ab: `rm -f *smoke*` (PowerShell: `Remove-Item *smoke*`).
+Der Smoke-Test merkt sich seinen Stand. **Vor einer Wiederholung** (z. B. nach einem korrigierten Zugang) seine Dateien löschen, sonst ruft er nichts mehr ab. Nur diese Dateien löschen, nicht `*smoke*` (das träfe auch eine Kampagne mit „smoke“ im Namen):
+
+```bash
+rm -f state_smoke.json delivered_smoke.json report_smoke.json smoke_seen_asins.json smoke_seller_cache.json anreicherung_smoke_state.json leads_smoke_MASTER* leads_smoke_20??-??-??_*
+```
+
+PowerShell: `Remove-Item state_smoke.json, delivered_smoke.json, report_smoke.json, smoke_seen_asins.json, smoke_seller_cache.json, anreicherung_smoke_state.json, leads_smoke_MASTER*, leads_smoke_20??-??-??_* -ErrorAction SilentlyContinue`
 
 Erfolg heißt:
 
@@ -229,7 +235,7 @@ python3 ../../../werkzeuge/sperrliste_abgleich.py <liste>_angereichert_standard.
 
 ## Wenn etwas klemmt
 
-**Vorübergehende API-Fehler wiederholen die Skripte selbst.** Das gilt für Oxylabs, Bright Data und Skael gleichermaßen (`wiederholen.mjs`). Netzwerkfehler, Zeitüberschreitungen, unlesbare Antworten und HTTP 408, 425, 429, 500, 502, 503 und 504 werden bis zu `MAX_RETRIES` Mal versucht (Standard 5). Dazwischen liegen 2, 4, 8 und 16 Sekunden Pause, bei 429 (Rate-Limit) 5, 10, 20 und 40 Sekunden. Eine Pause dauert höchstens 60 Sekunden, nennt die API eine Wartezeit (`Retry-After`), gilt diese. Dauerhafte Fehler (HTTP 400, 401, 402, 403, 404, Eingabe abgelehnt) brechen sofort ab, die Meldung der API steht dabei. Auf ein Skael-Ergebnis wird höchstens `SKAEL_MAX_WARTEZEIT` Sekunden gewartet, auf einen Bright-Data-Block höchstens `BD_TIMEOUT_MIN` Minuten. Danach holt der nächste Start es ab, ohne es neu zu bezahlen. Ist ein Skael-Auftrag aus vorübergehendem Grund gescheitert („timeout“, „unavailable“ …), wird er einmal neu eingereicht. Scheitert ein einzelner Lead oder Verkäufer auch nach allen Versuchen, bleibt er offen und der Lauf geht weiter. Am Ende steht eine Zeile „Fehler: …“ bzw. „Fehler in diesem Start: …“ mit der Anzahl. Ein Lauf hängt deshalb nie endlos. Läuft er scheinbar still, wartet er gerade eine Pause ab. Bei einer längeren Störung kann `MAX_RETRIES=8` helfen, ein Neustart setzt in jedem Fall am Checkpoint fort.
+**Vorübergehende API-Fehler wiederholen die Skripte selbst.** Das gilt für Oxylabs, Bright Data und Skael gleichermaßen (`wiederholen.mjs`). Netzwerkfehler, Zeitüberschreitungen, unlesbare Antworten und HTTP 408, 425, 429, 500, 502, 503 und 504 werden bis zu `MAX_RETRIES` Mal versucht (Standard 5). Dazwischen liegen 2, 4, 8 und 16 Sekunden Pause, bei 429 (Rate-Limit) 5, 10, 20 und 40 Sekunden. Eine Pause dauert höchstens 60 Sekunden, nennt die API eine Wartezeit (`Retry-After`), gilt diese. Dauerhafte Fehler (HTTP 400, 401, 402, 403, 404, Eingabe abgelehnt) brechen sofort ab, die Meldung der API steht dabei. Auf ein Skael-Ergebnis wird höchstens `SKAEL_MAX_WARTEZEIT` Sekunden gewartet, auf einen Bright-Data-Block höchstens `BD_TIMEOUT_MIN` Minuten. Danach holt der nächste Start es ab, ohne es neu zu bezahlen. Ist ein Skael-Auftrag aus vorübergehendem Grund gescheitert („timeout“, „unavailable“ …), wird er neu eingereicht, jeweils mit neuem Idempotency-Key, insgesamt bis zu `MAX_RETRIES` Versuche. Scheitert ein einzelner Lead oder Verkäufer auch nach allen Versuchen, bleibt er offen und der Lauf geht weiter. Am Ende steht eine Zeile „Fehler: …“ bzw. „Fehler in diesem Start: …“ mit der Anzahl. Ein Lauf hängt deshalb nie endlos. Läuft er scheinbar still, wartet er gerade eine Pause ab. Bei einer längeren Störung kann `MAX_RETRIES=8` helfen, ein Neustart setzt in jedem Fall am Checkpoint fort.
 
 | Meldung | Bedeutung | Was tun |
 |---|---|---|

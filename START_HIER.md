@@ -28,9 +28,9 @@ Je mehr Leute mitmachen, desto vollständiger wird die Sperrliste. **Bedingung d
 1. **Skills installieren:** In Claude unter Einstellungen → Funktionen → Skills beide ZIPs aus `skills/` hochladen.
 2. **Loslegen:** *„Ich will neue Kunden finden.“* Claude fragt nach Angebot, Wunschkunden, Fundort, Ländern und Umfang. Danach schlägt es den passenden Weg vor und macht erst einen Testlauf.
 3. **Voraussetzungen je Weg** (Details in `lead-scraper/wissen/11_zugaenge-und-kosten.md`):
-   - **Google Maps:** Python 3.10+, eigene Zugänge bei Skael und OpenAI.
-   - **Amazon:** eine Brand-Liste (z. B. SmartScout-Export) und Chrome mit amazon.de-Login und der Erweiterung „Claude in Chrome“.
-   - **E-Commerce:** eine Shop-Liste als CSV (Firmenname und/oder Website), Python 3.10+, dieselben Zugänge wie Google Maps.
+   - **Google Maps:** Python 3.10+, eigener Zugang bei Skael (die KI läuft standardmäßig über Skael). OpenAI nur bei `LLM_PROVIDER=openai` oder `DOMAINSUCHE=openai`, dann mit aufgeladenem Guthaben.
+   - **Amazon:** Node.js 18+, Oxylabs-Zugang (Pflicht); Bright Data für Kontaktdaten; Skael für E-Mail-Prüfung (Pflicht bei E-Mail-Versand), Website und Geschäftsführung. Zugänge in `pfade/amazon/.env`.
+   - **E-Commerce:** eine Shop-Liste als CSV (Firmenname und/oder Website), Python 3.10+, eigene Zugänge bei Skael und OpenAI.
 4. **Ergebnis:** Versandlisten ohne die Firmen auf der Sperrliste. Die gesperrten Firmen stehen in einer eigenen Datei – nie anschreiben.
 5. **Abmahnung bekommen?** Das PDF in Claude legen: *„Ich habe diese Abmahnung wegen einer Werbe-Mail bekommen, bitte prüfen.“*
 6. **Fragen zwischendurch:** einfach stellen. Die Antworten kommen aus der Wissensbibliothek. Mit einem anderen KI-Modell: `WISSEN_KOMPLETT.md` hochladen und den Start-Prompt aus `lead-scraper/wissen/00_INDEX.md` nutzen.

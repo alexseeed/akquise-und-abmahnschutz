@@ -82,7 +82,7 @@ node ../amazon_seller_scraper.mjs --pruefen      # Node-Version, Zugänge, 1 Tes
 SMOKE=1 node ../amazon_seller_scraper.mjs
 ```
 
-Der Smoke-Test nutzt eigene Dateien (`smoke_…`, Kampagne `smoke`) und berührt das echte Gedächtnis nicht. Ergebnis: `leads_smoke_MASTER.csv` mit bis zu 5 Leads. Der Smoke-Test ist fest eingestellt: `ZIEL`, `BUDGET` und Filter gelten dort nicht. Vor einer Wiederholung seine Dateien löschen (`rm -f *smoke*`), sonst ruft er nichts mehr ab.
+Der Smoke-Test nutzt eigene Dateien (`smoke_…`, Kampagne `smoke`) und berührt das echte Gedächtnis nicht. Ergebnis: `leads_smoke_MASTER.csv` mit bis zu 5 Leads. Der Smoke-Test ist fest eingestellt: `ZIEL`, `BUDGET` und Filter gelten dort nicht. Vor einer Wiederholung seine Dateien löschen, sonst ruft er nichts mehr ab: `rm -f state_smoke.json delivered_smoke.json report_smoke.json smoke_seen_asins.json smoke_seller_cache.json anreicherung_smoke_state.json leads_smoke_MASTER* leads_smoke_20??-??-??_*` (nicht `*smoke*`: das träfe auch eine Kampagne mit „smoke“ im Namen).
 
 **Schritt 2: Testlauf (50 Leads, höchstens 3.000 Abfragen, ca. 1,40 USD).**
 
